@@ -156,7 +156,10 @@ export function HowItWorks() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
       >
-        <div className="grid grid-cols-3 gap-3 md:gap-6 bg-white rounded-2xl shadow-lg p-4 md:p-6 border-2" style={{ borderColor: `${serviceColors.primary}15` }}>
+        <div
+          className="grid grid-cols-1 sm:grid-cols-3 gap-3 md:gap-6 bg-white rounded-2xl shadow-lg p-4 md:p-6 border-2"
+          style={{ borderColor: `${serviceColors.primary}15` }}
+        >
           <div className="text-center">
             <div className="text-2xl md:text-4xl font-bold mb-1" style={{ color: serviceColors.primary }}>3</div>
             <div className="text-xs md:text-sm text-gray-600">Simple Steps</div>
