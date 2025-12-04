@@ -329,19 +329,15 @@ export function HowItWorks() {
           </p>
         </motion.div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '1rem',
-        }}>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
 
           {/* DATING SEARCH - SPAN 2 */}
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            className="md:col-span-2 lg:col-span-2"
             style={{
-              gridColumn: 'span 2',
               background: 'linear-gradient(to bottom right, #0f172a, #1e293b)',
               color: 'white',
               borderRadius: '1.5rem',
@@ -392,7 +388,6 @@ export function HowItWorks() {
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             style={{
-              gridColumn: 'span 1',
               backgroundColor: 'white',
               borderRadius: '1.5rem',
               padding: '1.25rem',
@@ -455,9 +450,13 @@ export function HowItWorks() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
+            {/* FACE TRACE */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             style={{
-              gridColumn: 'span 1',
               backgroundColor: 'white',
               borderRadius: '1.5rem',
               padding: '1.25rem',
@@ -497,8 +496,8 @@ export function HowItWorks() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
+            className="md:col-span-2 lg:col-span-2"
             style={{
-              gridColumn: 'span 2',
               backgroundColor: '#064e3b',
               color: 'white',
               borderRadius: '1.5rem',
@@ -568,8 +567,8 @@ export function HowItWorks() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
+            className="md:col-span-2 lg:col-span-2"
             style={{
-              gridColumn: 'span 2',
               backgroundColor: 'white',
               borderRadius: '1.5rem',
               padding: '1.5rem',
