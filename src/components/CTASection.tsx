@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { TrendingUp, ArrowRight } from "lucide-react";
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 import { ctaContent } from "../lib/content";
 import { useService } from "../lib/ServiceContext";
 
