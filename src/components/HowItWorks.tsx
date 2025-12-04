@@ -450,11 +450,6 @@ export function HowItWorks() {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            {/* FACE TRACE */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             style={{
               backgroundColor: 'white',
@@ -464,21 +459,25 @@ export function HowItWorks() {
               border: '1px solid #f1f5f9',
             }}
           >
-            <div style={{
-              width: '2.5rem',
-              height: '2.5rem',
-              backgroundColor: '#eff6ff',
-              borderRadius: '0.75rem',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              marginBottom: '0.75rem',
-              border: '1px solid #dbeafe',
-            }}>
+            <div
+              style={{
+                width: '2.5rem',
+                height: '2.5rem',
+                backgroundColor: '#eff6ff',
+                borderRadius: '0.75rem',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                marginBottom: '0.75rem',
+                border: '1px solid #dbeafe',
+              }}
+            >
               <IconFingerprint style={{ width: '1.25rem', height: '1.25rem', color: colors.blue600 }} />
             </div>
             <h4 style={{ fontSize: '1.125rem', fontWeight: 700, color: '#0f172a' }}>Face Trace</h4>
-            <p style={{ color: '#64748b', fontSize: '0.75rem', marginBottom: '0.75rem' }}>AI face search & reverse image lookup.</p>
+            <p style={{ color: '#64748b', fontSize: '0.75rem', marginBottom: '0.75rem' }}>
+              AI face search & reverse image lookup.
+            </p>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '0.5rem' }}>
               <div style={{ backgroundColor: '#f8fafc', border: '1px solid #e2e8f0', padding: '0.75rem', borderRadius: '0.75rem', textAlign: 'center' }}>
