@@ -332,19 +332,21 @@ export function HowItWorks() {
           </p>
         </motion.div>
 
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '1rem',
-        }}>
+        <div
+          className="tools-grid"
+          style={{
+            display: 'grid',
+            gap: '1rem',
+          }}
+        >
 
           {/* DATING SEARCH - SPAN 2 */}
           <motion.div
+            className="tool-span-2"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             style={{
-              gridColumn: 'span 2',
               background: 'linear-gradient(to bottom right, #0f172a, #1e293b)',
               color: 'white',
               borderRadius: '1.5rem',
@@ -390,12 +392,12 @@ export function HowItWorks() {
 
           {/* 24/7 RADAR */}
           <motion.div
+            className="tool-span-1"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.1 }}
             style={{
-              gridColumn: 'span 1',
               backgroundColor: 'white',
               borderRadius: '1.5rem',
               padding: '1.25rem',
@@ -455,12 +457,12 @@ export function HowItWorks() {
 
           {/* FACE TRACE */}
           <motion.div
+            className="tool-span-1"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
             style={{
-              gridColumn: 'span 1',
               backgroundColor: 'white',
               borderRadius: '1.5rem',
               padding: '1.25rem',
@@ -496,12 +498,12 @@ export function HowItWorks() {
 
           {/* FIDELITY TEST - SPAN 2 */}
           <motion.div
+            className="tool-span-2"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.3 }}
             style={{
-              gridColumn: 'span 2',
               backgroundColor: '#064e3b',
               color: 'white',
               borderRadius: '1.5rem',
@@ -567,12 +569,12 @@ export function HowItWorks() {
 
           {/* FOLLOWING AI - SPAN 2 */}
           <motion.div
+            className="tool-span-2"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: 0.4 }}
             style={{
-              gridColumn: 'span 2',
               backgroundColor: 'white',
               borderRadius: '1.5rem',
               padding: '1.5rem',

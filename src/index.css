@@ -4353,3 +4353,29 @@ body {
     opacity: .5;
   }
 }
+
+/* Responsive layout for the "Our Tools" bento grid */
+.tools-grid {
+  grid-template-columns: 1fr;
+}
+
+.tool-span-1,
+.tool-span-2 {
+  grid-column: span 1;
+}
+
+@media (min-width: 640px) {
+  .tools-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .tool-span-2 {
+    grid-column: span 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .tools-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
