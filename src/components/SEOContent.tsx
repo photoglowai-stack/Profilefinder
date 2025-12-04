@@ -441,7 +441,7 @@ export function SEOContent() {
                 </div>
               </div>
 
-              <div className="mt-6 grid grid-cols-3 gap-3">
+              <div className="mt-6 grid grid-cols-2 sm:grid-cols-3 gap-3">
                 <div className="text-center p-3 bg-red-50 rounded-xl border border-red-100">
                   <p className="text-2xl mb-1" style={{ color: colors.primary }}>24/7</p>
                   <p className="text-[10px] text-gray-600">Surveillance</p>
