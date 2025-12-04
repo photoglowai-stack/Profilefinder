@@ -2,9 +2,9 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HeroNew } from "./components/HeroNew";
 import { StatsBar } from "./components/StatsBar";
 import { HowItWorks } from "./components/HowItWorks";
+import { UGCSection } from "./components/UGCSection";
 import { Testimonials } from "./components/Testimonials";
 import { StatsSection } from "./components/StatsSection";
-import { SEOContent } from "./components/SEOContent";
 import { SEOHead } from "./components/SEOHead";
 import { StructuredData } from "./components/StructuredData";
 import { ToolComparison } from "./components/ToolComparison";
@@ -24,9 +24,9 @@ function LandingPage() {
         <HeroNew />
         <StatsBar />
         <HowItWorks />
+        <UGCSection />
         <Testimonials />
         <StatsSection />
-        <SEOContent />
         <ToolComparison />
         <SEOBlogSection />
         <RelatedSearches />
