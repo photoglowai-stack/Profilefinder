@@ -58,9 +58,9 @@ export const UGCSection: React.FC = () => {
   return (
     <section
       id="ugc-videos"
-      className="py-16 bg-gradient-to-b from-white via-pink-50/30 to-white relative overflow-hidden font-sans"
+      className="py-16 bg-gradient-to-br from-[#ff5f6d] to-[#ffc371] relative overflow-hidden font-sans"
     >
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/30 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute top-0 left-1/4 w-96 h-96 bg-white/20 rounded-full blur-[100px] pointer-events-none" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-rose-600/10 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 relative z-10">
