@@ -157,9 +157,9 @@ export const serviceContent = {
   following: {
     hero: {
       badge: "Powered by Advanced AI",
-      title: "Following AI – your cheater AI",
-      titleHighlight: "for social signals",
-      description: "Following AI analyses who someone follows and interacts with on their public social media. Discover patterns you might miss before they move to Tinder or other platforms.",
+      title: "Following AI – Monitor Instagram",
+      titleHighlight: "subscriptions & follows",
+      description: "Following AI monitors who someone follows on Instagram and tracks subscription changes over time. See new follows, unfollows, and suspicious activity in real-time.",
       stats: [
         { label: "Real-time tracking", icon: "check" },
         { label: "Results in 1 min", icon: "clock" },
@@ -170,19 +170,19 @@ export const serviceContent = {
       title: "Choose your service",
       services: {
         dating: { name: "Dating Search", description: "Tinder & dating apps" },
-        following: { name: "Following AI", description: "Social signals" },
+        following: { name: "Following AI", description: "Instagram monitoring" },
         facetrace: { name: "Face Trace", description: "AI face search" },
         fidelity: { name: "Fidelity Test", description: "Trust analysis" }
       }
     },
     form: {
-      title: "Track Instagram subscriptions",
-      subtitle: "Discover who a person follows and who follows them on Instagram",
+      title: "Analyze Social Profile",
+      subtitle: "Monitor Instagram subscriptions: see who they follow, who follows them, and track changes over time",
       label: "Instagram username",
-      placeholder: "@username",
-      search: "Analyze profile",
+      placeholder: "@username (Instagram)",
+      search: "ANALYZE",
       searching: "Analyzing...",
-      bottomText: "847 people tracked subscriptions today.",
+      bottomText: "Only public Instagram profiles supported",
       badges: [
         "Guaranteed discretion",
         "Results in 1 min",

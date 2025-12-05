@@ -1,6 +1,248 @@
 @import "tailwindcss";
 
-/* Custom scrollbar */
+/* Import Inter Tight font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@200;300;400;500;600;700;800;900&display=swap');
+
+/* ===== GLOBAL TYPOGRAPHY - INTER TIGHT ===== */
+html,
+body {
+  font-family: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', sans-serif;
+}
+
+/* Typography Hierarchy */
+h1 {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 600;
+}
+
+h4 {
+  font-family: 'Inter Tight', sans-serif;
+  font-weight: 600;
+}
+
+p,
+span,
+a,
+button,
+input,
+textarea,
+label {
+  font-family: 'Inter Tight', sans-serif;
+}
+
+/* ===== THEME COLORS ===== */
+:root {
+  --theme-pink: #EF3E5C;
+  --theme-green: #10B981;
+}
+
+.theme-pink {
+  color: var(--theme-pink);
+}
+
+.bg-theme-pink {
+  background-color: var(--theme-pink);
+}
+
+.border-theme-pink {
+  border-color: var(--theme-pink);
+}
+
+.text-theme-pink {
+  color: var(--theme-pink);
+}
+
+.border-theme-green {
+  border-color: var(--theme-green);
+}
+
+.bg-theme-green {
+  background-color: var(--theme-green);
+}
+
+.text-theme-green {
+  color: var(--theme-green);
+}
+
+/* ===== NAVIGATION BUTTONS ===== */
+.nav-btn {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-btn:hover {
+  transform: translateY(-2px);
+}
+
+.nav-btn.active {
+  background-color: #F0526E;
+  color: white;
+  box-shadow: 0 8px 20px -4px rgba(240, 82, 110, 0.5);
+  border: none;
+}
+
+.nav-btn.inactive {
+  background-color: white;
+  color: #374151;
+  border: 1px solid #E5E7EB;
+}
+
+.nav-btn.inactive i {
+  color: #6B7280;
+}
+
+/* ===== PROFILE CARD (Dating Search) ===== */
+.profile-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.profile-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Radio Logic for Cards (Green Selection Effect) */
+input[type="radio"]:checked+div.profile-card,
+input[type="radio"]:checked+.profile-card {
+  border-color: #10B981 !important;
+  transform: scale(1.05);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.4);
+}
+
+input[type="radio"]:checked+div .label-box,
+input[type="radio"]:checked+.profile-card .label-box {
+  background-color: #10B981 !important;
+}
+
+input[type="radio"]:not(:checked)+div img,
+input[type="radio"]:not(:checked)+.profile-card img {
+  filter: grayscale(40%);
+  opacity: 0.9;
+}
+
+input[type="radio"]:checked+div img,
+input[type="radio"]:checked+.profile-card img {
+  filter: grayscale(0%);
+  opacity: 1;
+}
+
+/* ===== FORM INPUTS ===== */
+.custom-input {
+  transition: all 0.3s;
+}
+
+.custom-input:focus {
+  border-color: #EF3E5C;
+  box-shadow: 0 0 0 4px rgba(239, 62, 92, 0.1);
+  outline: none;
+}
+
+/* ===== UPLOAD ZONE (Dashed Border) ===== */
+.upload-zone {
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='16' ry='16' stroke='%23EF3E5CFF' stroke-width='2' stroke-dasharray='12%2c 12' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+  transition: all 0.3s;
+}
+
+.upload-zone:hover {
+  background-color: #FFF0F3;
+}
+
+/* ===== UTILITIES ===== */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ===== ANIMATIONS ===== */
+.fade-enter {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.animate-slide-in-up {
+  animation: slideInUp 0.6s ease-out;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out;
+}
+
+/* Mobile menu animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.mobile-menu-enter {
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Loading skeleton */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+.skeleton {
+  animation: shimmer 2s infinite linear;
+  background: linear-gradient(to right,
+      #f0f0f0 4%,
+      #e0e0e0 25%,
+      #f0f0f0 36%);
+  background-size: 1000px 100%;
+}
+
+/* ===== SCROLLBAR ===== */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -55,6 +297,7 @@ html {
 
 /* Reduced motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -83,80 +326,15 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-/* Custom animations */
-@keyframes slideInUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-slide-in-up {
-  animation: slideInUp 0.6s ease-out;
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.4s ease-out;
-}
-
-/* Mobile menu animation */
-@keyframes slideDown {
-  from {
-    transform: translateY(-100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.mobile-menu-enter {
-  animation: slideDown 0.3s ease-out;
-}
-
-/* Loading skeleton */
-@keyframes shimmer {
-  0% {
-    background-position: -1000px 0;
-  }
-  100% {
-    background-position: 1000px 0;
-  }
-}
-
-.skeleton {
-  animation: shimmer 2s infinite linear;
-  background: linear-gradient(
-    to right,
-    #f0f0f0 4%,
-    #e0e0e0 25%,
-    #f0f0f0 36%
-  );
-  background-size: 1000px 100%;
-}
-
 /* Print styles */
 @media print {
+
   nav,
   footer,
   .no-print {
     display: none !important;
   }
-  
+
   body {
     background: white !important;
   }

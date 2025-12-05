@@ -16,6 +16,7 @@ import { Footer } from "./components/Footer";
 import { ServiceProvider } from "./lib/ServiceContext";
 import { ServiceColorIndicator } from "./components/ui/ServiceColorIndicator";
 import { PaymentPage } from "./pages/PaymentPage";
+import { StickyGenderSelector } from "./components/StickyGenderSelector";
 
 function LandingPage() {
   return (
@@ -45,6 +46,7 @@ export default function App() {
       <StructuredData />
       <ServiceColorIndicator />
       <BrowserRouter>
+        <StickyGenderSelector />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/payment" element={<PaymentPage />} />

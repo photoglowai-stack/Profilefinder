@@ -1,13 +1,15 @@
 import { useState } from "react";
 import { motion } from "motion/react";
 import svgPaths from "../../imports/svg-osb8kvu2n8";
-import imgMan from "figma:asset/a09286d16cb2e61dcf74ec8ac8654c045da214eb.png";
-import imgWoman from "figma:asset/8efef5880f89d6834ee5c2665d6e6809b1da0c14.png";
 import { useService } from "../../lib/ServiceContext";
 import { serviceContent } from "../../lib/content";
 import { ServiceButton } from "../ui/ServiceButton";
 
 import { useNavigate } from "react-router-dom";
+
+// Avatars from public folder
+const imgMan = '/assets/avatars/dating-man-new.png';
+const imgWoman = '/assets/avatars/dating-woman-new.png';
 
 export function DatingForm() {
   const { selectedService } = useService();
@@ -40,67 +42,82 @@ export function DatingForm() {
 
       {/* Avatars Section */}
       <div className="mb-8 md:mb-10">
-        {/* Avatars Container */}
-        <div className="flex justify-center gap-4 md:gap-6">
-
+        <div className="flex justify-center gap-6 md:gap-10">
           {/* Man Avatar */}
           <motion.button
             onClick={() => setSelected("man")}
-            className={`relative rounded-[20px] shrink-0 w-[140px] h-[140px] md:w-[180px] md:h-[180px] transition-all ${selected === "man" ? "scale-105" : "hover:scale-105"
+            className={`group relative w-32 h-40 md:w-40 md:h-52 rounded-2xl transition-all duration-300 overflow-hidden ${selected === "man"
+              ? "ring-4 ring-[#EF3E5C] shadow-[0_0_30px_rgba(239,62,92,0.3)] scale-105"
+              : "hover:shadow-xl hover:-translate-y-1 grayscale-[30%] hover:grayscale-0"
               }`}
             whileTap={{ scale: 0.95 }}
           >
-            <div
-              className={`absolute border-4 border-solid inset-0 pointer-events-none rounded-[20px] transition-colors ${selected === "man" ? "border-green-500" : "border-slate-200"
-                }`}
-            />
-
-            <div className="absolute bottom-[30px] md:bottom-[39.67px] h-[140px] md:h-[180.53px] left-1/2 translate-x-[-50%] w-[132px] md:w-[170.67px]">
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgMan} />
-              </div>
+            <div className="absolute inset-0 bg-gray-100">
+              <img
+                src={imgMan}
+                alt="Man"
+                className="w-full h-full object-cover object-top"
+              />
             </div>
 
-            <div
-              className={`absolute bottom-[3.67px] content-stretch flex h-[48px] md:h-[60px] items-center justify-center left-[2.59%] right-[2.59%] rounded-bl-[15px] rounded-br-[15px] transition-colors ${selected === "man" ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66]" : "bg-[#dddddd]"
-                }`}
-            >
-              <div className={`flex flex-col font-['Inter_Tight:SemiBold',sans-serif] font-semibold justify-center leading-[0] relative shrink-0 text-[18px] md:text-[24px] text-center text-nowrap ${selected === "man" ? "text-white" : "text-black"
-                }`}>
-                <p className="leading-[28px] md:leading-[32px] whitespace-pre">{content.man}</p>
-              </div>
+            {/* Gradient Overlay & Label */}
+            <div className={`absolute inset-x-0 bottom-0 p-3 pt-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end items-center transition-all duration-300 ${selected === "man" ? "opacity-100" : "opacity-80 group-hover:opacity-100"}`}>
+              <span className="text-white font-['Inter_Tight:Bold',sans-serif] text-lg md:text-xl font-bold tracking-wide">
+                {content.man}
+              </span>
             </div>
+
+            {/* Selection Checkmark */}
+            {selected === "man" && (
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="absolute top-3 right-3 bg-[#EF3E5C] text-white rounded-full p-1.5 shadow-lg"
+              >
+                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </motion.div>
+            )}
           </motion.button>
 
           {/* Woman Avatar */}
           <motion.button
             onClick={() => setSelected("woman")}
-            className={`relative rounded-[20px] shrink-0 w-[140px] h-[140px] md:w-[180px] md:h-[180px] transition-all ${selected === "woman" ? "scale-105" : "hover:scale-105"
+            className={`group relative w-32 h-40 md:w-40 md:h-52 rounded-2xl transition-all duration-300 overflow-hidden ${selected === "woman"
+              ? "ring-4 ring-[#EF3E5C] shadow-[0_0_30px_rgba(239,62,92,0.3)] scale-105"
+              : "hover:shadow-xl hover:-translate-y-1 grayscale-[30%] hover:grayscale-0"
               }`}
             whileTap={{ scale: 0.95 }}
           >
-            <div
-              className={`absolute border-4 border-solid inset-0 pointer-events-none rounded-[20px] transition-colors ${selected === "woman" ? "border-green-500" : "border-slate-200"
-                }`}
-            />
-
-            <div className="absolute bottom-[30px] md:bottom-[39.66px] left-1/2 w-[132px] h-[140px] md:w-[170.67px] md:h-[170.67px] translate-x-[-50%]">
-              <div className="absolute inset-0 overflow-hidden pointer-events-none">
-                <img alt="" className="absolute left-0 max-w-none size-full top-0" src={imgWoman} />
-              </div>
+            <div className="absolute inset-0 bg-gray-100">
+              <img
+                src={imgWoman}
+                alt="Woman"
+                className="w-full h-full object-cover object-top"
+              />
             </div>
 
-            <div
-              className={`absolute bottom-[3.67px] content-stretch flex h-[48px] md:h-[60px] items-center justify-center left-[2.59%] right-[2.59%] rounded-bl-[15px] rounded-br-[15px] transition-colors ${selected === "woman" ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66]" : "bg-[#dddddd]"
-                }`}
-            >
-              <div className={`flex flex-col font-['Inter_Tight:SemiBold',sans-serif] font-semibold justify-center leading-[0] relative shrink-0 text-[18px] md:text-[24px] text-center text-nowrap ${selected === "woman" ? "text-white" : "text-black"
-                }`}>
-                <p className="leading-[28px] md:leading-[32px] whitespace-pre">{content.woman}</p>
-              </div>
+            {/* Gradient Overlay & Label */}
+            <div className={`absolute inset-x-0 bottom-0 p-3 pt-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end items-center transition-all duration-300 ${selected === "woman" ? "opacity-100" : "opacity-80 group-hover:opacity-100"}`}>
+              <span className="text-white font-['Inter_Tight:Bold',sans-serif] text-lg md:text-xl font-bold tracking-wide">
+                {content.woman}
+              </span>
             </div>
+
+            {/* Selection Checkmark */}
+            {selected === "woman" && (
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                className="absolute top-3 right-3 bg-[#EF3E5C] text-white rounded-full p-1.5 shadow-lg"
+              >
+                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </motion.div>
+            )}
           </motion.button>
-
         </div>
       </div>
 
@@ -111,8 +128,8 @@ export function DatingForm() {
             onClick={handleSearch}
             disabled={!selected || isSearching}
             className={`relative box-border content-stretch flex items-center justify-center px-[48px] md:px-[72px] py-[8px] rounded-[9999px] shrink-0 transition-all shadow-lg ${selected && !isSearching
-                ? "bg-black cursor-pointer hover:bg-gray-900 hover:shadow-xl"
-                : "bg-gray-400 cursor-not-allowed"
+              ? "bg-black cursor-pointer hover:bg-gray-900 hover:shadow-xl"
+              : "bg-gray-400 cursor-not-allowed"
               }`}
             whileHover={selected && !isSearching ? { scale: 1.02, y: -2 } : {}}
             whileTap={selected && !isSearching ? { scale: 0.98 } : {}}
