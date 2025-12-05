@@ -1,55 +1,47 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HeroNew } from "./components/HeroNew";
-import { StatsBar } from "./components/StatsBar";
-import { HowItWorks } from "./components/HowItWorks";
-import { UGCSection } from "./components/UGCSection";
-import { Testimonials } from "./components/Testimonials";
-import { StatsSection } from "./components/StatsSection";
-import { SEOHead } from "./components/SEOHead";
-import { StructuredData } from "./components/StructuredData";
-import { ToolComparison } from "./components/ToolComparison";
-import { SEOBlogSection } from "./components/SEOBlogSection";
-import { RelatedSearches } from "./components/RelatedSearches";
-import { CTASection } from "./components/CTASection";
-import { FAQ } from "./components/FAQ";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Navbar } from "./components/Navbar";
 import { Footer } from "./components/Footer";
+import { StickyCTA } from "./components/StickyCTA";
+import { BackToTop } from "./components/BackToTop";
+import { SEOHead } from "./components/SEOHead";
+import { SmoothScroll } from "./components/SmoothScroll";
+import { LanguageProvider } from "./contexts/LanguageContext";
+import { Home } from "./pages/Home";
+import { LegalNotice } from "./pages/LegalNotice";
+import { TermsOfSales } from "./pages/TermsOfSales";
+import { FONT_BODY } from "./styles/typography";
 import { ServiceProvider } from "./lib/ServiceContext";
-import { ServiceColorIndicator } from "./components/ui/ServiceColorIndicator";
-import { PaymentPage } from "./pages/PaymentPage";
-
-function LandingPage() {
-  return (
-    <>
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white overflow-x-hidden">
-        <HeroNew />
-        <StatsBar />
-        <HowItWorks />
-        <UGCSection />
-        <Testimonials />
-        <StatsSection />
-        <ToolComparison />
-        <SEOBlogSection />
-        <RelatedSearches />
-        <CTASection />
-        <FAQ />
-        <Footer />
-      </div>
-    </>
-  );
-}
 
 export default function App() {
   return (
-    <ServiceProvider>
-      <SEOHead />
-      <StructuredData />
-      <ServiceColorIndicator />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
-        </Routes>
-      </BrowserRouter>
-    </ServiceProvider>
+    <LanguageProvider>
+      <ServiceProvider>
+        <div style={{ fontFamily: FONT_BODY }}>
+          <SEOHead />
+          <SmoothScroll />
+
+          <Router>
+            {/* Lien d’accessibilité pour “passer au contenu” */}
+            <a href="#main" className="sr-only focus:not-sr-only">
+              Aller au contenu principal
+            </a>
+
+            <Navbar />
+
+            <main id="main">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/mentions-legales" element={<LegalNotice />} />
+                <Route path="/conditions-generales" element={<TermsOfSales />} />
+              </Routes>
+            </main>
+
+            <Footer />
+            <StickyCTA />
+            <BackToTop />
+          </Router>
+        </div>
+      </ServiceProvider>
+    </LanguageProvider>
   );
 }
