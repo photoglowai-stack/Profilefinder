@@ -8,8 +8,8 @@ import { ServiceButton } from "../ui/ServiceButton";
 import { useNavigate } from "react-router-dom";
 
 // Avatars from public folder
-const imgMan = '/assets/avatars/dating-man-new.png';
-const imgWoman = '/assets/avatars/dating-woman-new.png';
+const imgMan = '/assets/avatars/dating-man-3d.png';
+const imgWoman = '/assets/avatars/dating-woman-3d.png';
 
 export function DatingForm() {
   const { selectedService } = useService();
@@ -46,13 +46,16 @@ export function DatingForm() {
           {/* Man Avatar */}
           <motion.button
             onClick={() => setSelected("man")}
-            className={`group relative w-32 h-40 md:w-40 md:h-52 rounded-2xl transition-all duration-300 overflow-hidden ${selected === "man"
-              ? "ring-4 ring-[#EF3E5C] shadow-[0_0_30px_rgba(239,62,92,0.3)] scale-105"
-              : "hover:shadow-xl hover:-translate-y-1 grayscale-[30%] hover:grayscale-0"
+            className={`group relative w-32 h-40 md:w-40 md:h-52 rounded-2xl transition-all duration-300 overflow-hidden bg-white ${selected === "man"
+              ? "ring-[3px] ring-[#10B981] scale-105"
+              : "hover:scale-105"
               }`}
+            style={{
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+            }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="absolute inset-0 bg-gray-100">
+            <div className="h-[75%] w-full relative bg-white">
               <img
                 src={imgMan}
                 alt="Man"
@@ -60,37 +63,26 @@ export function DatingForm() {
               />
             </div>
 
-            {/* Gradient Overlay & Label */}
-            <div className={`absolute inset-x-0 bottom-0 p-3 pt-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end items-center transition-all duration-300 ${selected === "man" ? "opacity-100" : "opacity-80 group-hover:opacity-100"}`}>
+            <div className="h-[25%] w-full bg-[#EF3E5C] flex items-center justify-center">
               <span className="text-white font-['Inter_Tight:Bold',sans-serif] text-lg md:text-xl font-bold tracking-wide">
                 {content.man}
               </span>
             </div>
-
-            {/* Selection Checkmark */}
-            {selected === "man" && (
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="absolute top-3 right-3 bg-[#EF3E5C] text-white rounded-full p-1.5 shadow-lg"
-              >
-                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              </motion.div>
-            )}
           </motion.button>
 
           {/* Woman Avatar */}
           <motion.button
             onClick={() => setSelected("woman")}
-            className={`group relative w-32 h-40 md:w-40 md:h-52 rounded-2xl transition-all duration-300 overflow-hidden ${selected === "woman"
-              ? "ring-4 ring-[#EF3E5C] shadow-[0_0_30px_rgba(239,62,92,0.3)] scale-105"
-              : "hover:shadow-xl hover:-translate-y-1 grayscale-[30%] hover:grayscale-0"
+            className={`group relative w-32 h-40 md:w-40 md:h-52 rounded-2xl transition-all duration-300 overflow-hidden bg-white ${selected === "woman"
+              ? "ring-[3px] ring-[#10B981] scale-105"
+              : "hover:scale-105"
               }`}
+            style={{
+              boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+            }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="absolute inset-0 bg-gray-100">
+            <div className="h-[75%] w-full relative bg-white">
               <img
                 src={imgWoman}
                 alt="Woman"
@@ -98,25 +90,11 @@ export function DatingForm() {
               />
             </div>
 
-            {/* Gradient Overlay & Label */}
-            <div className={`absolute inset-x-0 bottom-0 p-3 pt-10 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end items-center transition-all duration-300 ${selected === "woman" ? "opacity-100" : "opacity-80 group-hover:opacity-100"}`}>
+            <div className="h-[25%] w-full bg-[#EF3E5C] flex items-center justify-center">
               <span className="text-white font-['Inter_Tight:Bold',sans-serif] text-lg md:text-xl font-bold tracking-wide">
                 {content.woman}
               </span>
             </div>
-
-            {/* Selection Checkmark */}
-            {selected === "woman" && (
-              <motion.div
-                initial={{ scale: 0, opacity: 0 }}
-                animate={{ scale: 1, opacity: 1 }}
-                className="absolute top-3 right-3 bg-[#EF3E5C] text-white rounded-full p-1.5 shadow-lg"
-              >
-                <svg className="w-4 h-4 md:w-5 md:h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                </svg>
-              </motion.div>
-            )}
           </motion.button>
         </div>
       </div>

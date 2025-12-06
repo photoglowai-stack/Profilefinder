@@ -4,8 +4,8 @@ import { useService } from '../lib/ServiceContext';
 import { motion } from 'motion/react';
 
 // Avatars pour Dating Search
-const AVATAR_MAN = '/assets/avatars/dating-man-new.png';
-const AVATAR_WOMAN = '/assets/avatars/dating-woman-new.png';
+const AVATAR_MAN = '/assets/avatars/dating-man-3d.png';
+const AVATAR_WOMAN = '/assets/avatars/dating-woman-3d.png';
 
 export const StickyGenderSelector = () => {
     const [isVisible, setIsVisible] = useState(false);
@@ -42,9 +42,9 @@ export const StickyGenderSelector = () => {
 
     // Configuration par service
     const serviceConfig: Record<string, { title: string; buttonText: string; icon?: string }> = {
-        dating: { title: 'Who are you looking for?', buttonText: 'SEARCH' },
+        dating: { title: 'Qui recherchez-vous ?', buttonText: 'SEARCH' },
         following: { title: 'Analyze Social Profile', buttonText: 'ANALYZE', icon: '⚡' },
-        facetrace: { title: 'Find via Photo', buttonText: 'SCAN', icon: '�' },
+        facetrace: { title: 'Find via Photo', buttonText: 'SCAN', icon: '' },
         fidelity: { title: 'Fidelity Test', buttonText: 'TEST FIDELITY', icon: '💔' }
     };
 
@@ -55,7 +55,7 @@ export const StickyGenderSelector = () => {
         switch (selectedService) {
             case 'dating':
                 return (
-                    <div className="flex gap-3 md:gap-4 justify-center">
+                    <div className="flex gap-4 justify-center">
                         {/* Man Option */}
                         <label className="cursor-pointer group relative">
                             <input
@@ -67,28 +67,24 @@ export const StickyGenderSelector = () => {
                                 onChange={() => setSelectedGender('man')}
                             />
                             <div
-                                className={`relative w-24 h-32 md:w-28 md:h-36 rounded-xl overflow-hidden transition-all duration-300 ${selectedGender === 'man'
-                                    ? 'ring-2 ring-[#10B981] shadow-[0_0_15px_rgba(16,185,129,0.4)] scale-105'
-                                    : 'hover:shadow-md grayscale-[30%] hover:grayscale-0'
+                                className={`relative w-28 h-36 rounded-xl overflow-hidden bg-white transition-all duration-300 ${selectedGender === 'man'
+                                    ? 'ring-[3px] ring-[#10B981] scale-105'
+                                    : 'hover:scale-105'
                                     }`}
+                                style={{
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                                }}
                             >
-                                <div className="absolute inset-0 bg-gray-100">
+                                <div className="h-[75%] w-full relative bg-white">
                                     <img
                                         src={AVATAR_MAN}
                                         alt="Man"
                                         className="w-full h-full object-cover object-top"
                                     />
                                 </div>
-                                <div className={`absolute inset-x-0 bottom-0 p-2 pt-6 bg-gradient-to-t from-black/80 to-transparent text-center transition-opacity duration-300 ${selectedGender === 'man' ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'}`}>
-                                    <span className="text-white font-bold text-xs md:text-sm uppercase tracking-wide">Man</span>
+                                <div className="h-[25%] w-full bg-[#EF3E5C] flex items-center justify-center">
+                                    <span className="text-white font-bold text-sm uppercase tracking-wide">Homme</span>
                                 </div>
-                                {selectedGender === 'man' && (
-                                    <div className="absolute top-2 right-2 bg-[#10B981] text-white rounded-full p-1 shadow-sm">
-                                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                    </div>
-                                )}
                             </div>
                         </label>
 
@@ -103,28 +99,24 @@ export const StickyGenderSelector = () => {
                                 onChange={() => setSelectedGender('woman')}
                             />
                             <div
-                                className={`relative w-24 h-32 md:w-28 md:h-36 rounded-xl overflow-hidden transition-all duration-300 ${selectedGender === 'woman'
-                                    ? 'ring-2 ring-[#10B981] shadow-[0_0_15px_rgba(16,185,129,0.4)] scale-105'
-                                    : 'hover:shadow-md grayscale-[30%] hover:grayscale-0'
+                                className={`relative w-28 h-36 rounded-xl overflow-hidden bg-white transition-all duration-300 ${selectedGender === 'woman'
+                                    ? 'ring-[3px] ring-[#10B981] scale-105'
+                                    : 'hover:scale-105'
                                     }`}
+                                style={{
+                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                                }}
                             >
-                                <div className="absolute inset-0 bg-gray-100">
+                                <div className="h-[75%] w-full relative bg-white">
                                     <img
                                         src={AVATAR_WOMAN}
                                         alt="Woman"
                                         className="w-full h-full object-cover object-top"
                                     />
                                 </div>
-                                <div className={`absolute inset-x-0 bottom-0 p-2 pt-6 bg-gradient-to-t from-black/80 to-transparent text-center transition-opacity duration-300 ${selectedGender === 'woman' ? 'opacity-100' : 'opacity-80 group-hover:opacity-100'}`}>
-                                    <span className="text-white font-bold text-xs md:text-sm uppercase tracking-wide">Woman</span>
+                                <div className="h-[25%] w-full bg-[#EF3E5C] flex items-center justify-center">
+                                    <span className="text-white font-bold text-sm uppercase tracking-wide">Femme</span>
                                 </div>
-                                {selectedGender === 'woman' && (
-                                    <div className="absolute top-2 right-2 bg-[#10B981] text-white rounded-full p-1 shadow-sm">
-                                        <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                                        </svg>
-                                    </div>
-                                )}
                             </div>
                         </label>
                     </div>
