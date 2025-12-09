@@ -303,34 +303,21 @@ export const ServiceFormWidget = () => {
 
     return (
         <div style={{ width: '100%', maxWidth: '520px', margin: '0 auto' }}>
-            {/* Tabs */}
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
-                {SERVICES.map((s) => (
-                    <TabButton
-                        key={s.id}
-                        active={selectedService === s.id}
-                        onClick={() => setSelectedService(s.id)}
-                        icon={s.icon}
-                        label={s.label}
-                    />
-                ))}
-            </div>
-
             {/* Card */}
             <div style={{
                 backgroundColor: 'white',
-                borderRadius: '24px',
+                borderRadius: '20px',
                 border: '3px solid #EF3E5C',
                 boxShadow: '0 20px 50px rgba(239, 62, 92, 0.25)',
-                padding: '24px',
+                padding: '16px',
             }}>
                 {/* Title */}
                 <h3 style={{
                     color: '#EF3E5C',
-                    fontSize: '13px',
+                    fontSize: '12px',
                     fontWeight: 700,
                     textAlign: 'center',
-                    marginBottom: '20px',
+                    marginBottom: '16px',
                     letterSpacing: '0.5px',
                 }}>
                     {activeConfig.title}
