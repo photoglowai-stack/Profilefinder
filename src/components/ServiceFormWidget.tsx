@@ -56,8 +56,9 @@ const CTAButton = ({ label, onClick, disabled }: {
     onClick: () => void;
     disabled?: boolean;
 }) => (
-    <div style={{ position: 'relative', flexShrink: 0 }}>
+    <div style={{ position: 'relative', flexShrink: 0, pointerEvents: 'auto' }}>
         <button
+            type="button"
             onClick={onClick}
             disabled={disabled}
             style={{
@@ -98,8 +99,8 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
     const [selected, setSelected] = useState<'man' | 'woman'>('man');
 
     const cardStyle = (isSelected: boolean): React.CSSProperties => ({
-        width: '100px',
-        height: '130px',
+        width: '112px',
+        height: '144px',
         borderRadius: '16px',
         overflow: 'hidden',
         cursor: 'pointer',
@@ -109,6 +110,8 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
         transition: 'all 0.2s ease',
         opacity: isSelected ? 1 : 0.75,
         flexShrink: 0,
+        display: 'flex',
+        flexDirection: 'column',
     });
 
     return (
@@ -117,11 +120,11 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
             <div style={{ display: 'flex', gap: '16px' }}>
                 {/* MAN Card */}
                 <div onClick={() => setSelected('man')} style={cardStyle(selected === 'man')}>
-                    <div style={{ height: '75%', backgroundColor: '#f9fafb', overflow: 'hidden' }}>
+                    <div style={{ height: '75%', backgroundColor: '#f9fafb', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <img
                             src="/assets/avatars/widget-man.png"
                             alt="Man"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                            style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center' }}
                         />
                     </div>
                     <div style={{
@@ -142,11 +145,11 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
 
                 {/* WOMAN Card */}
                 <div onClick={() => setSelected('woman')} style={cardStyle(selected === 'woman')}>
-                    <div style={{ height: '75%', backgroundColor: '#f9fafb', overflow: 'hidden' }}>
+                    <div style={{ height: '75%', backgroundColor: '#f9fafb', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <img
                             src="/assets/avatars/widget-woman.png"
                             alt="Woman"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                            style={{ width: '100%', height: '100%', objectFit: 'contain', objectPosition: 'center' }}
                         />
                     </div>
                     <div style={{
