@@ -92,7 +92,7 @@ export function FollowingForm() {
       <motion.button
         onClick={handleSearch}
         disabled={!username.trim() || isSearching}
-        className={`w-full relative box-border flex items-center justify-center px-12 py-4 rounded-full transition-all shadow-lg ${username.trim() && !isSearching
+        className={`relative w-full md:w-fit md:min-w-[220px] box-border overflow-hidden flex items-center justify-center px-10 py-3 rounded-full transition-all shadow-lg ${username.trim() && !isSearching
           ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-xl cursor-pointer"
           : "bg-gray-400 cursor-not-allowed"
           }`}
@@ -115,11 +115,11 @@ export function FollowingForm() {
               <Search className="w-6 h-6 text-white" />
               <span className="text-white text-lg md:text-xl font-semibold">{content.search}</span>
               <motion.div
-                className="absolute right-4"
+                className="absolute right-3 md:right-4 top-1/2 -translate-y-1/2"
                 animate={{ x: [0, 5, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
               >
-                <svg className="w-7 h-7" fill="none" viewBox="0 0 40 40">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 40 40">
                   <path d={svgPaths.p6a7c500} stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
                   <path d="M3.33333 20H36.6667" stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" />
                 </svg>
