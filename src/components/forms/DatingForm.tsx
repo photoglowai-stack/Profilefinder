@@ -3,7 +3,7 @@ import { motion } from "motion/react";
 import svgPaths from "../../imports/svg-osb8kvu2n8";
 import { useService } from "../../lib/ServiceContext";
 import { serviceContent } from "../../lib/content";
-import { ServiceButton } from "../ui/ServiceButton";
+import { getServiceTheme } from "../../lib/serviceThemes";
 
 import { useNavigate } from "react-router-dom";
 
@@ -15,6 +15,7 @@ export function DatingForm() {
   const { selectedService } = useService();
   const navigate = useNavigate();
   const content = serviceContent[selectedService].form;
+  const theme = getServiceTheme(selectedService);
   const [selected, setSelected] = useState<"man" | "woman" | null>(null);
   const [isSearching, setIsSearching] = useState(false);
 
@@ -47,7 +48,7 @@ export function DatingForm() {
           <motion.button
             onClick={() => setSelected("man")}
             className={`group relative w-32 h-40 md:w-40 md:h-52 rounded-2xl transition-all duration-300 overflow-hidden bg-white ${selected === "man"
-              ? "ring-[3px] ring-[#10B981] scale-105"
+              ? "ring-2 ring-green-500 ring-offset-2 bg-green-50 scale-105"
               : "hover:scale-105"
               }`}
             style={{
@@ -74,7 +75,7 @@ export function DatingForm() {
           <motion.button
             onClick={() => setSelected("woman")}
             className={`group relative w-32 h-40 md:w-40 md:h-52 rounded-2xl transition-all duration-300 overflow-hidden bg-white ${selected === "woman"
-              ? "ring-[3px] ring-[#10B981] scale-105"
+              ? "ring-2 ring-green-500 ring-offset-2 bg-green-50 scale-105"
               : "hover:scale-105"
               }`}
             style={{
@@ -105,9 +106,9 @@ export function DatingForm() {
           <motion.button
             onClick={handleSearch}
             disabled={!selected || isSearching}
-            className={`relative box-border content-stretch flex items-center justify-center px-[48px] md:px-[72px] py-[8px] rounded-[9999px] shrink-0 transition-all shadow-lg ${selected && !isSearching
-              ? "bg-black cursor-pointer hover:bg-gray-900 hover:shadow-xl"
-              : "bg-gray-400 cursor-not-allowed"
+            className={`relative box-border content-stretch flex items-center justify-center px-8 py-3 md:px-10 md:py-4 rounded-full shrink-0 transition-all shadow-lg ${selected && !isSearching
+              ? `${theme.primaryBg} ${theme.primaryHoverBg} ${theme.primaryText} cursor-pointer hover:shadow-xl`
+              : "bg-gray-400 text-white cursor-not-allowed"
               }`}
             whileHover={selected && !isSearching ? { scale: 1.02, y: -2 } : {}}
             whileTap={selected && !isSearching ? { scale: 0.98 } : {}}

@@ -1,6 +1,8 @@
 import { motion } from "motion/react";
 import { useService } from "../../lib/ServiceContext";
 import svgPaths from "../../imports/svg-wg56ef214f";
+import { ServiceType } from "../../lib/content";
+import { getServiceTheme } from "../../lib/serviceThemes";
 
 interface ServiceButtonProps {
   onClick: () => void;
@@ -9,30 +11,30 @@ interface ServiceButtonProps {
   searchText: string;
   searchingText: string;
   subtitle?: string;
+  serviceId?: ServiceType;
 }
 
-export function ServiceButton({ 
-  onClick, 
-  disabled, 
-  isSearching, 
-  searchText, 
+export function ServiceButton({
+  onClick,
+  disabled,
+  isSearching,
+  searchText,
   searchingText,
-  subtitle 
+  subtitle,
+  serviceId
 }: ServiceButtonProps) {
-  const { colors } = useService();
+  const { selectedService } = useService();
+  const theme = getServiceTheme(serviceId ?? selectedService);
 
   return (
     <motion.button
       onClick={onClick}
       disabled={disabled}
-      className={`relative box-border content-stretch flex items-center justify-center px-[48px] md:px-[72px] py-[8px] rounded-[9999px] shrink-0 transition-all shadow-lg ${
+      className={`relative box-border content-stretch flex items-center justify-center px-8 py-3 md:px-10 md:py-4 rounded-full shrink-0 transition-all shadow-lg ${
         !disabled && !isSearching
-          ? "cursor-pointer hover:shadow-xl"
-          : "bg-gray-400 cursor-not-allowed"
+          ? `${theme.primaryBg} ${theme.primaryHoverBg} ${theme.primaryText} cursor-pointer hover:shadow-xl`
+          : "bg-gray-400 text-white cursor-not-allowed"
       }`}
-      style={!disabled && !isSearching ? {
-        background: `linear-gradient(to right, ${colors.primary}, ${colors.secondary})`
-      } : {}}
       whileHover={!disabled && !isSearching ? { scale: 1.02, y: -2 } : {}}
       whileTap={!disabled && !isSearching ? { scale: 0.98 } : {}}
     >
