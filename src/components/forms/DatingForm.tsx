@@ -105,7 +105,7 @@ export function DatingForm() {
           <motion.button
             onClick={handleSearch}
             disabled={!selected || isSearching}
-            className={`relative w-full md:w-fit md:min-w-[240px] box-border content-stretch flex items-center justify-center px-[48px] md:px-[72px] py-[8px] rounded-[9999px] shrink-0 transition-all shadow-lg ${selected && !isSearching
+            className={`relative w-full md:w-fit md:min-w-[240px] box-border overflow-hidden content-stretch flex items-center justify-center px-[44px] md:px-[64px] py-[8px] rounded-[9999px] shrink-0 transition-all shadow-lg ${selected && !isSearching
               ? "bg-black cursor-pointer hover:bg-gray-900 hover:shadow-xl"
               : "bg-gray-400 cursor-not-allowed"
               }`}
@@ -130,7 +130,7 @@ export function DatingForm() {
             </div>
 
             {!isSearching && (
-              <div className="absolute right-[12px] size-[32px] md:size-[40px] top-1/2 translate-y-[-50%]">
+              <div className="absolute right-[12px] size-[32px] md:size-[36px] top-1/2 -translate-y-1/2">
                 <svg className="block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 40 40">
                   <g>
                     <path d={svgPaths.p6a7c500} stroke="white" strokeLinecap="round" strokeLinejoin="round" strokeWidth="3.33333" />
@@ -142,12 +142,12 @@ export function DatingForm() {
 
             {!isSearching && (
               <motion.div
-                className="absolute content-stretch flex flex-col items-center right-[-12px] md:right-[-16px] top-[24px] md:top-[32px]"
-                animate={{ y: [0, -8, 0] }}
+                className="absolute content-stretch flex flex-col items-center right-[4px] md:right-[10px] top-1/2 -translate-y-1/2"
+                animate={{ y: [0, -6, 0] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
               >
-                <div className="flex flex-col font-['Inter:Medium',sans-serif] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[36px] md:text-[48px] text-center text-nowrap text-slate-50">
-                  <p className="leading-[40px] md:leading-[48px] whitespace-pre">👆</p>
+                <div className="flex flex-col font-['Inter:Medium',sans-serif] font-medium justify-center leading-[0] not-italic relative shrink-0 text-[28px] md:text-[34px] text-center text-nowrap text-slate-50">
+                  <p className="leading-[32px] md:leading-[36px] whitespace-pre">👆</p>
                 </div>
               </motion.div>
             )}
