@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { ServiceSelector } from "./ServiceSelector";
 import { DatingForm } from "./forms/DatingForm";
 import { FollowingForm } from "./forms/FollowingForm";

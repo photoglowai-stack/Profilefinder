@@ -1,246 +1,304 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { Heart, Users, ScanFace, MessageCircle, Camera, ShieldAlert, LucideIcon } from 'lucide-react';
 import { useService } from '../lib/ServiceContext';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-// Avatars pour Dating Search
-const AVATAR_MAN = '/assets/avatars/dating-man-3d.png';
-const AVATAR_WOMAN = '/assets/avatars/dating-woman-3d.png';
+/**
+ * ------------------------------------------------------------------
+ * 1. CONFIGURATION & TYPES
+ * ------------------------------------------------------------------
+ */
+
+export type ServiceType = 'dating' | 'following' | 'facetrace' | 'fidelity';
+
+interface Assets {
+    man: string;
+    woman: string;
+    hand: string;
+}
+
+const ASSETS: Assets = {
+    man: "/assets/avatars/dating-man-3d.png",
+    woman: "/assets/avatars/dating-woman-3d.png",
+    hand: "https://em-content.zobj.net/source/apple/391/backhand-index-pointing-up_1f446.png",
+};
+
+const SERVICES = [
+    { id: 'dating' as ServiceType, label: 'Dating', icon: Heart, headerTitle: "Who are you looking for?" },
+    { id: 'following' as ServiceType, label: 'Social AI', icon: Users, headerTitle: "Analyze Social Profile" },
+    { id: 'facetrace' as ServiceType, label: 'Face', icon: ScanFace, headerTitle: "Biometric Face Scan" },
+    { id: 'fidelity' as ServiceType, label: 'Fidelity', icon: ShieldAlert, headerTitle: "Partner Fidelity Check" },
+];
+
+/**
+ * ------------------------------------------------------------------
+ * 2. SUB-COMPONENTS
+ * ------------------------------------------------------------------
+ */
+
+interface ServiceTabProps {
+    active: boolean;
+    onClick: () => void;
+    icon: LucideIcon;
+    label: string;
+}
+
+const ServiceTab: React.FC<ServiceTabProps> = ({ active, onClick, icon: Icon, label }) => (
+    <button
+        onClick={onClick}
+        className={`
+      flex-none px-3 py-2 rounded-xl font-bold text-[11px] flex items-center gap-1.5 transition-all duration-200 snap-center shadow-sm border
+      ${active
+                ? 'bg-[#EF3E5C] text-white border-[#EF3E5C] shadow-md scale-[1.02]'
+                : 'bg-white text-gray-500 border-gray-100 hover:bg-gray-50 hover:border-gray-200'
+            }
+    `}
+    >
+        <Icon size={14} className={active ? "text-white" : "text-gray-400"} />
+        <span className="whitespace-nowrap">{label}</span>
+    </button>
+);
+
+interface MagicButtonProps {
+    label: string;
+    onClick: () => void;
+    disabled?: boolean;
+}
+
+const MagicButton: React.FC<MagicButtonProps> = ({ label, onClick, disabled }) => (
+    <div className="relative w-[130px] min-w-[130px] max-w-[130px] h-[50px] min-h-[50px] flex-none group ml-2">
+        <button
+            onClick={onClick}
+            disabled={disabled}
+            className="w-full h-full bg-black rounded-full flex items-center justify-center shadow-xl hover:shadow-2xl hover:bg-gray-900 active:scale-95 transition-all cursor-pointer relative z-10 disabled:opacity-70 disabled:cursor-not-allowed"
+        >
+            <span className="text-white font-black text-sm tracking-wide">{label}</span>
+        </button>
+        <motion.img
+            src={ASSETS.hand}
+            className="absolute -bottom-3 -right-3 w-10 h-10 rotate-[-10deg] drop-shadow-xl pointer-events-none z-20"
+            alt="pointer"
+            animate={{ y: [0, -8, 0] }}
+            transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+        />
+    </div>
+);
+
+// --- Gender Card ---
+interface GenderCardProps {
+    label: string;
+    img: string;
+    selected: boolean;
+    onClick: () => void;
+}
+
+const GenderCard: React.FC<GenderCardProps> = ({ label, img, selected, onClick }) => (
+    <div
+        onClick={onClick}
+        className={`
+      group relative w-[70px] min-w-[70px] aspect-3/4 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 border-2 bg-white flex-none
+      ${selected
+                ? 'border-[#10B981] shadow-[0_4px_12px_rgba(16,185,129,0.3)] scale-[1.03] z-10'
+                : 'border-transparent hover:border-gray-100 shadow-sm opacity-80 hover:opacity-100'
+            }
+    `}
+    >
+        <div className="h-full w-full pb-5 bg-gray-50">
+            <img src={img} className="w-full h-full object-cover object-top" alt={label} />
+        </div>
+        <div className={`
+      absolute bottom-0 inset-x-0 py-1 text-center text-[9px] font-black uppercase tracking-wider text-white transition-colors duration-200
+      ${selected ? 'bg-[#10B981]' : 'bg-[#EF3E5C]'}
+    `}>
+            {label}
+        </div>
+    </div>
+);
+
+// --- Dating View ---
+interface DatingViewProps {
+    onSearch: (gender: 'man' | 'woman') => void;
+    isSearching?: boolean;
+}
+
+const DatingView: React.FC<DatingViewProps> = ({ onSearch, isSearching }) => {
+    const [selected, setSelected] = useState<'man' | 'woman'>('man');
+
+    return (
+        <div className="flex flex-row items-center justify-center gap-4 px-1 py-1">
+            <div className="flex gap-2">
+                <GenderCard label="MAN" img={ASSETS.man} selected={selected === 'man'} onClick={() => setSelected('man')} />
+                <GenderCard label="WOMAN" img={ASSETS.woman} selected={selected === 'woman'} onClick={() => setSelected('woman')} />
+            </div>
+            <MagicButton label={isSearching ? "..." : "SEARCH"} onClick={() => onSearch(selected)} disabled={isSearching} />
+        </div>
+    );
+};
+
+// --- Social View ---
+interface SocialViewProps {
+    onAnalyze: (username: string) => void;
+    isSearching?: boolean;
+}
+
+const SocialView: React.FC<SocialViewProps> = ({ onAnalyze, isSearching }) => {
+    const [username, setUsername] = useState('');
+
+    return (
+        <div className="flex flex-row items-center justify-between gap-3 w-full px-1 py-1">
+            <div className="relative flex-1 min-w-0">
+                <div className="absolute top-1/2 -translate-y-1/2 left-3 flex items-center pointer-events-none z-10">
+                    <div className="w-7 h-7 rounded-lg bg-linear-to-tr from-yellow-400 via-red-500 to-purple-500 flex items-center justify-center text-white shadow-sm">
+                        <Camera size={14} />
+                    </div>
+                </div>
+                <input
+                    type="text"
+                    placeholder="@username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    className="w-full pl-12 pr-3 h-[50px] min-h-[50px] bg-gray-50 border-2 border-gray-100 rounded-xl focus:bg-white focus:border-[#EF3E5C] focus:outline-none font-bold text-gray-800 transition-colors text-sm placeholder:text-gray-400"
+                />
+            </div>
+            <MagicButton label={isSearching ? "..." : "ANALYZE"} onClick={() => onAnalyze(username)} disabled={isSearching} />
+        </div>
+    );
+};
+
+// --- Upload View ---
+interface UploadViewProps {
+    icon: LucideIcon;
+    title: string;
+    desc: string;
+    btnText: string;
+    onAction: () => void;
+    isSearching?: boolean;
+}
+
+const UploadView: React.FC<UploadViewProps> = ({ icon: Icon, title, desc, btnText, onAction, isSearching }) => (
+    <div className="flex flex-row items-center justify-between gap-3 w-full px-1 py-1">
+        <div
+            onClick={onAction}
+            className="flex-1 h-[50px] min-h-[50px] border-2 border-dashed border-[#EF3E5C]/30 bg-[#EF3E5C]/5 rounded-xl flex items-center justify-start cursor-pointer hover:bg-[#EF3E5C]/10 transition-colors px-3 gap-3 min-w-0"
+        >
+            <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
+                <Icon size={16} className="text-[#EF3E5C]" />
+            </div>
+            <div className="flex flex-col justify-center overflow-hidden">
+                <span className="font-bold text-gray-800 text-xs whitespace-nowrap">{title}</span>
+                <span className="text-[9px] text-gray-500 whitespace-nowrap">{desc}</span>
+            </div>
+        </div>
+        <MagicButton label={isSearching ? "..." : btnText} onClick={onAction} disabled={isSearching} />
+    </div>
+);
+
+/**
+ * ------------------------------------------------------------------
+ * 3. MAIN WIDGET COMPONENT
+ * ------------------------------------------------------------------
+ */
 
 export const StickyGenderSelector = () => {
+    const { selectedService, setSelectedService } = useService();
     const [isVisible, setIsVisible] = useState(false);
-    const [selectedGender, setSelectedGender] = useState<'man' | 'woman'>('man');
-    const [instagramUsername, setInstagramUsername] = useState('');
-    const { selectedService } = useService();
+    const [isSearching, setIsSearching] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
-    // Ne pas afficher sur la page de paiement
     const isPaymentPage = location.pathname === '/payment';
+    const activeTab = selectedService;
+    const activeServiceConfig = SERVICES.find(s => s.id === activeTab) || SERVICES[0];
 
-    // Détecter le scroll pour afficher/masquer le composant
     useEffect(() => {
         const handleScroll = () => {
-            const scrollThreshold = 600;
-            setIsVisible(window.scrollY > scrollThreshold);
+            setIsVisible(window.scrollY > 600);
         };
-
         window.addEventListener('scroll', handleScroll);
+        handleScroll();
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    const handleAction = () => {
-        if (selectedService === 'dating') {
-            navigate(`/payment?gender=${selectedGender}&service=${selectedService}`);
-        } else {
-            navigate(`/payment?service=${selectedService}`);
-        }
-    };
-
-    // Ne pas afficher sur la page de paiement
     if (isPaymentPage) return null;
 
-    // Configuration par service
-    const serviceConfig: Record<string, { title: string; buttonText: string; icon?: string }> = {
-        dating: { title: 'Qui recherchez-vous ?', buttonText: 'SEARCH' },
-        following: { title: 'Analyze Social Profile', buttonText: 'ANALYZE', icon: '⚡' },
-        facetrace: { title: 'Find via Photo', buttonText: 'SCAN', icon: '' },
-        fidelity: { title: 'Fidelity Test', buttonText: 'TEST FIDELITY', icon: '💔' }
+    const handleSearch = (gender: 'man' | 'woman') => {
+        setIsSearching(true);
+        setTimeout(() => {
+            navigate(`/payment?gender=${gender}&service=dating`);
+            setIsSearching(false);
+        }, 500);
     };
 
-    const config = serviceConfig[selectedService] || serviceConfig.dating;
+    const handleAnalyze = (username: string) => {
+        setIsSearching(true);
+        setTimeout(() => {
+            navigate(`/payment?username=${username}&service=following`);
+            setIsSearching(false);
+        }, 500);
+    };
 
-    // Render different content based on service
-    const renderServiceContent = () => {
-        switch (selectedService) {
-            case 'dating':
-                return (
-                    <div className="flex gap-4 justify-center">
-                        {/* Man Option */}
-                        <label className="cursor-pointer group relative">
-                            <input
-                                type="radio"
-                                name="gender-sticky"
-                                value="man"
-                                className="hidden"
-                                checked={selectedGender === 'man'}
-                                onChange={() => setSelectedGender('man')}
-                            />
-                            <div
-                                className={`relative w-28 h-36 rounded-xl overflow-hidden bg-white transition-all duration-300 ${selectedGender === 'man'
-                                    ? 'ring-[3px] ring-[#10B981] scale-105'
-                                    : 'hover:scale-105'
-                                    }`}
-                                style={{
-                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                                }}
-                            >
-                                <div className="h-[75%] w-full relative bg-white">
-                                    <img
-                                        src={AVATAR_MAN}
-                                        alt="Man"
-                                        className="w-full h-full object-cover object-top"
-                                    />
-                                </div>
-                                <div className="h-[25%] w-full bg-[#EF3E5C] flex items-center justify-center">
-                                    <span className="text-white font-bold text-sm uppercase tracking-wide">Homme</span>
-                                </div>
-                            </div>
-                        </label>
+    const handleScan = () => {
+        setIsSearching(true);
+        setTimeout(() => {
+            navigate('/payment?service=facetrace');
+            setIsSearching(false);
+        }, 500);
+    };
 
-                        {/* Woman Option */}
-                        <label className="cursor-pointer group relative">
-                            <input
-                                type="radio"
-                                name="gender-sticky"
-                                value="woman"
-                                className="hidden"
-                                checked={selectedGender === 'woman'}
-                                onChange={() => setSelectedGender('woman')}
-                            />
-                            <div
-                                className={`relative w-28 h-36 rounded-xl overflow-hidden bg-white transition-all duration-300 ${selectedGender === 'woman'
-                                    ? 'ring-[3px] ring-[#10B981] scale-105'
-                                    : 'hover:scale-105'
-                                    }`}
-                                style={{
-                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
-                                }}
-                            >
-                                <div className="h-[75%] w-full relative bg-white">
-                                    <img
-                                        src={AVATAR_WOMAN}
-                                        alt="Woman"
-                                        className="w-full h-full object-cover object-top"
-                                    />
-                                </div>
-                                <div className="h-[25%] w-full bg-[#EF3E5C] flex items-center justify-center">
-                                    <span className="text-white font-bold text-sm uppercase tracking-wide">Femme</span>
-                                </div>
-                            </div>
-                        </label>
-                    </div>
-                );
-
-            case 'following':
-                return (
-                    <div className="w-full max-w-sm space-y-3">
-                        <div className="relative">
-                            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                                <svg className="w-6 h-6" fill="url(#instagram-gradient)" viewBox="0 0 24 24">
-                                    <defs>
-                                        <radialGradient id="instagram-gradient" r="150%" cx="30%" cy="107%">
-                                            <stop stopColor="#fdf497" offset="0" />
-                                            <stop stopColor="#fdf497" offset="0.05" />
-                                            <stop stopColor="#fd5949" offset="0.45" />
-                                            <stop stopColor="#d6249f" offset="0.6" />
-                                            <stop stopColor="#285AEB" offset="0.9" />
-                                        </radialGradient>
-                                    </defs>
-                                    <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                                </svg>
-                            </div>
-                            <input
-                                type="text"
-                                placeholder="@username (Instagram)"
-                                value={instagramUsername}
-                                onChange={(e) => setInstagramUsername(e.target.value)}
-                                className="custom-input w-full pl-14 pr-4 py-3 md:py-4 rounded-xl border-2 border-gray-200 text-base md:text-lg font-medium text-gray-800 placeholder-gray-400 bg-gray-50 focus:bg-white transition-colors"
-                            />
-                        </div>
-                        <p className="text-xs text-gray-400 text-center font-medium">
-                            <span className="mr-1">ℹ️</span> Only public Instagram profiles supported
-                        </p>
-                    </div>
-                );
-
-            case 'facetrace':
-                return (
-                    <div className="upload-zone w-full max-w-sm h-32 md:h-40 rounded-2xl flex flex-col items-center justify-center cursor-pointer group bg-gray-50 relative overflow-hidden">
-                        <input type="file" accept="image/*" className="absolute inset-0 opacity-0 cursor-pointer z-10" />
-                        <div className="bg-white p-3 rounded-full shadow-md mb-2 group-hover:scale-110 transition-transform">
-                            <svg className="w-6 h-6 md:w-8 md:h-8 text-[#EF3E5C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                            </svg>
-                        </div>
-                        <p className="text-gray-500 font-medium text-sm group-hover:text-[#EF3E5C] transition-colors">Drop a photo here</p>
-                        <p className="text-xs text-gray-400 mt-1">JPG, PNG supported</p>
-                    </div>
-                );
-
-            case 'fidelity':
-                return (
-                    <div className="upload-zone w-full max-w-sm h-32 md:h-40 rounded-2xl flex flex-col items-center justify-center cursor-pointer group bg-gray-50 relative overflow-hidden">
-                        <input type="file" multiple accept="image/*" className="absolute inset-0 opacity-0 cursor-pointer z-10" />
-                        <div className="bg-white p-3 rounded-full shadow-md mb-2 group-hover:scale-110 transition-transform">
-                            <svg className="w-6 h-6 md:w-8 md:h-8 text-[#EF3E5C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                            </svg>
-                        </div>
-                        <p className="text-gray-500 font-medium text-sm group-hover:text-[#EF3E5C] transition-colors">Upload chat screenshots</p>
-                        <p className="text-xs text-gray-400 mt-1">WhatsApp, iMessage, Instagram...</p>
-                    </div>
-                );
-
-            default:
-                return null;
-        }
+    const handleFidelityTest = () => {
+        setIsSearching(true);
+        setTimeout(() => {
+            navigate('/payment?service=fidelity');
+            setIsSearching(false);
+        }, 500);
     };
 
     return (
-        <motion.div
-            className="fixed bottom-4 left-1/2 z-50"
-            initial={{ opacity: 0, y: 100, x: '-50%' }}
-            animate={{
-                opacity: isVisible ? 1 : 0,
-                y: isVisible ? 0 : 100,
-                x: '-50%'
-            }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            style={{ pointerEvents: isVisible ? 'auto' : 'none' }}
-        >
-            {/* Main Container - Styled like the HTML reference */}
-            <div
-                className="bg-white rounded-[2rem] px-4 py-6 md:px-8 md:py-8 shadow-2xl flex flex-col md:flex-row items-center gap-4 md:gap-6 w-[calc(100vw-32px)] md:w-auto md:max-w-[750px]"
-                style={{
-                    border: '3px solid #EF3E5C',
-                    boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.25)'
-                }}
-            >
-                {/* Title */}
-                <h2 className="text-center md:text-left text-xl md:text-2xl font-extrabold tracking-tight text-[#EF3E5C] mb-2 md:mb-0 md:min-w-[180px]">
-                    {config.title}
-                </h2>
+        <AnimatePresence>
+            {isVisible && (
+                <motion.div
+                    initial={{ y: 200, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    exit={{ y: 200, opacity: 0 }}
+                    transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+                    className="fixed bottom-4 left-0 right-0 z-50 flex justify-center pointer-events-none"
+                >
+                    <div className="relative z-20 w-full max-w-[480px] mx-auto px-4 flex flex-col gap-3 pointer-events-auto">
+                        {/* Navigation Tabs */}
+                        <div className="flex overflow-x-auto no-scrollbar gap-2 pb-1 snap-x justify-center">
+                            {SERVICES.map((service) => (
+                                <ServiceTab
+                                    key={service.id}
+                                    active={activeTab === service.id}
+                                    onClick={() => setSelectedService(service.id)}
+                                    icon={service.icon}
+                                    label={service.label}
+                                />
+                            ))}
+                        </div>
 
-                {/* Dynamic Content based on service */}
-                {renderServiceContent()}
+                        {/* Main Card */}
+                        <div className="bg-white rounded-4xl border-[3px] border-[#EF3E5C] shadow-[0_20px_60px_-10px_rgba(239,62,92,0.3)] p-4 relative overflow-hidden">
+                            <h2 className="text-[#EF3E5C] text-xs font-extrabold text-center mb-3 tracking-wide uppercase opacity-90">
+                                {activeServiceConfig.headerTitle}
+                            </h2>
 
-                {/* Action Button */}
-                <div className="relative mt-4 md:mt-0 md:ml-4 shrink-0 z-20">
-                    <button
-                        onClick={handleAction}
-                        className="bg-black text-white text-lg md:text-xl font-bold px-8 md:px-10 py-3 md:py-4 rounded-full hover:bg-gray-900 transition-all shadow-xl hover:shadow-2xl active:scale-95 flex items-center gap-3 border-2 border-transparent hover:border-gray-700"
-                    >
-                        {config.buttonText}
-                        {config.icon && <span className="text-lg">{config.icon}</span>}
-                    </button>
-
-                    {/* Bouncing Hand Animation */}
-                    <motion.div
-                        className="absolute -bottom-10 -right-8 pointer-events-none z-30"
-                        animate={{ y: [0, -10, 0] }}
-                        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    >
-                        <img
-                            src="https://em-content.zobj.net/source/apple/391/backhand-index-pointing-up_1f446.png"
-                            className="w-14 h-14 md:w-16 md:h-16 -rotate-45 drop-shadow-xl"
-                            alt="Click here"
-                        />
-                    </motion.div>
-                </div>
-            </div>
-        </motion.div>
+                            <div className="w-full flex justify-center">
+                                {activeTab === 'dating' && <DatingView onSearch={handleSearch} isSearching={isSearching} />}
+                                {activeTab === 'following' && <SocialView onAnalyze={handleAnalyze} isSearching={isSearching} />}
+                                {activeTab === 'facetrace' && (
+                                    <UploadView icon={Camera} title="Upload Photo" desc="JPG/PNG Match" btnText="SCAN" onAction={handleScan} isSearching={isSearching} />
+                                )}
+                                {activeTab === 'fidelity' && (
+                                    <UploadView icon={MessageCircle} title="Upload Chat" desc="Analyze Logs" btnText="TEST" onAction={handleFidelityTest} isSearching={isSearching} />
+                                )}
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+        </AnimatePresence>
     );
 };
 

@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { MapPin, Briefcase, GraduationCap, Heart, Instagram, CheckCircle2 } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
 

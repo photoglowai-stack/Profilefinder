@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Heart, Users, ScanFace, MessageSquare } from "lucide-react";
 import { ServiceType, serviceContent } from "../lib/content";
 import { useService } from "../lib/ServiceContext";

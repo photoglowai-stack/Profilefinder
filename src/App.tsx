@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HeroNew } from "./components/HeroNew";
 import { StatsBar } from "./components/StatsBar";
 import { HowItWorks } from "./components/HowItWorks";
+import { ServiceFormWidget } from "./components/ServiceFormWidget";
 import { UGCSection } from "./components/UGCSection";
 import { Testimonials } from "./components/Testimonials";
 import { StatsSection } from "./components/StatsSection";
@@ -16,12 +17,12 @@ import { Footer } from "./components/Footer";
 import { ServiceProvider } from "./lib/ServiceContext";
 import { ServiceColorIndicator } from "./components/ui/ServiceColorIndicator";
 import { PaymentPage } from "./pages/PaymentPage";
-import { StickyGenderSelector } from "./components/StickyGenderSelector";
 
 function LandingPage() {
   return (
-    <>
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white overflow-x-hidden">
+    <div className="relative min-h-screen bg-slate-50">
+      {/* 1. Main Content */}
+      <main className="w-full mx-auto max-w-7xl pb-40">
         <HeroNew />
         <StatsBar />
         <HowItWorks />
@@ -34,8 +35,15 @@ function LandingPage() {
         <CTASection />
         <FAQ />
         <Footer />
+      </main>
+
+      {/* 2. Floating Action Dock Widget */}
+      <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-6 px-4 pointer-events-none">
+        <div className="pointer-events-auto w-full max-w-[480px]">
+          <ServiceFormWidget />
+        </div>
       </div>
-    </>
+    </div>
   );
 }
 
@@ -46,7 +54,6 @@ export default function App() {
       <StructuredData />
       <ServiceColorIndicator />
       <BrowserRouter>
-        <StickyGenderSelector />
         <Routes>
           <Route path="/" element={<LandingPage />} />
           <Route path="/payment" element={<PaymentPage />} />

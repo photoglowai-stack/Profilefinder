@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { SectionHeader } from "./ui/SectionHeader";
 import { useService } from "../lib/ServiceContext";
 import { serviceContent } from "../lib/content";

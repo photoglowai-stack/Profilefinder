@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { serviceColors } from "../lib/serviceColors";
 import { Heart, Users, ScanFace, MessageSquare } from "lucide-react";
 

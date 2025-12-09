@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Check, X } from "lucide-react";
 import { useService } from "../lib/ServiceContext";
 

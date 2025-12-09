@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Star, CheckCircle2 } from "lucide-react";
 import imgRectangle2 from "figma:asset/38184caaa6ab566a83195983852fd8b71d52beaf.png";
 import imgRectangle3 from "figma:asset/aadff942611a595d4d80d86e8dc34b1cd143c92f.png";

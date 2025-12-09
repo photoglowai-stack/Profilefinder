@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { Heart, Eye, Lock } from "lucide-react";
 import { SectionHeader } from "./ui/SectionHeader";
 import { statsContent } from "../lib/content";

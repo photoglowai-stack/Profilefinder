@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import { useService } from "../../lib/ServiceContext";
 import svgPaths from "../../imports/svg-wg56ef214f";
 
