@@ -1,9 +1,14 @@
 import { ServiceType } from "./content";
 
-export const SERVICE_COLOR_THEMES: Record<
-  ServiceType,
-  { primaryBg: string; primaryHoverBg: string; primaryText: string }
-> = {
+type ServiceTheme = { primaryBg: string; primaryHoverBg: string; primaryText: string };
+
+const DEFAULT_THEME: ServiceTheme = {
+  primaryBg: "bg-pink-600",
+  primaryHoverBg: "hover:bg-pink-700",
+  primaryText: "text-white"
+};
+
+export const SERVICE_COLOR_THEMES: Record<ServiceType, ServiceTheme> = {
   dating: {
     primaryBg: "bg-pink-600",
     primaryHoverBg: "hover:bg-pink-700",
@@ -26,6 +31,7 @@ export const SERVICE_COLOR_THEMES: Record<
   }
 };
 
-export function getServiceTheme(service: ServiceType) {
-  return SERVICE_COLOR_THEMES[service];
+export function getServiceTheme(service: ServiceType | undefined) {
+  if (!service) return DEFAULT_THEME;
+  return SERVICE_COLOR_THEMES[service] ?? DEFAULT_THEME;
 }
