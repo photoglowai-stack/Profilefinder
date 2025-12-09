@@ -43,51 +43,37 @@ export function DatingForm() {
         <div className="flex justify-center gap-4">
           {/* Man Avatar */}
           <motion.button
+            type="button"
             onClick={() => setSelected("man")}
-            className={`group relative w-24 h-32 md:w-28 md:h-36 rounded-xl transition-all duration-300 overflow-hidden bg-white border-2 ${selected === "man"
-                ? "border-[#10B981] ring-2 ring-[#10B981]/30 scale-105"
-                : "border-gray-200 hover:border-gray-300 hover:scale-102"
-              }`}
-            style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
-            whileTap={{ scale: 0.95 }}
+            className={`gender-card man w-32 md:w-36 ${selected === "man" ? "selected" : ""}`}
+            whileTap={{ scale: 0.96 }}
+            aria-pressed={selected === "man"}
           >
-            <div className="h-[75%] w-full relative bg-gray-50">
-              <img
-                src={imgMan}
-                alt="Man"
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-            <div className={`h-[25%] w-full flex items-center justify-center transition-colors ${selected === "man" ? "bg-[#10B981]" : "bg-[#EF3E5C]"
-              }`}>
-              <span className="text-white font-bold text-sm tracking-wide">
-                {content.man}
-              </span>
+            <img
+              src={imgMan}
+              alt="Man avatar"
+              className="gender-avatar"
+            />
+            <div className="gender-label">
+              {(content.man || "MAN").toString().toUpperCase()}
             </div>
           </motion.button>
 
           {/* Woman Avatar */}
           <motion.button
+            type="button"
             onClick={() => setSelected("woman")}
-            className={`group relative w-24 h-32 md:w-28 md:h-36 rounded-xl transition-all duration-300 overflow-hidden bg-white border-2 ${selected === "woman"
-                ? "border-[#10B981] ring-2 ring-[#10B981]/30 scale-105"
-                : "border-gray-200 hover:border-gray-300 hover:scale-102"
-              }`}
-            style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
-            whileTap={{ scale: 0.95 }}
+            className={`gender-card woman w-32 md:w-36 ${selected === "woman" ? "selected" : ""}`}
+            whileTap={{ scale: 0.96 }}
+            aria-pressed={selected === "woman"}
           >
-            <div className="h-[75%] w-full relative bg-gray-50">
-              <img
-                src={imgWoman}
-                alt="Woman"
-                className="w-full h-full object-cover object-top"
-              />
-            </div>
-            <div className={`h-[25%] w-full flex items-center justify-center transition-colors ${selected === "woman" ? "bg-[#10B981]" : "bg-[#EF3E5C]"
-              }`}>
-              <span className="text-white font-bold text-sm tracking-wide">
-                {content.woman}
-              </span>
+            <img
+              src={imgWoman}
+              alt="Woman avatar"
+              className="gender-avatar"
+            />
+            <div className="gender-label">
+              {(content.woman || "WOMAN").toString().toUpperCase()}
             </div>
           </motion.button>
         </div>
