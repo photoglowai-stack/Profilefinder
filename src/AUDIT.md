@@ -1,5 +1,10 @@
 # 🔍 Audit du Site ProfileFinder.ai
 
+## 🧭 Audit express (sélecteur de service)
+- Les pastilles de sélection sont visibles dès le hero et volent la vedette au titre principal ; elles gagneraient à apparaître seulement après un léger scroll.
+- Les libellés des services prennent beaucoup de place sur mobile et rendent les boutons plus larges que le reste des CTA.
+- L'alignement entre la taille des icônes et la hauteur des boutons manque d'harmonie, créant un léger déséquilibre visuel.
+
 ## ✅ Points Forts
 
 ### 1. **Design & UX**
