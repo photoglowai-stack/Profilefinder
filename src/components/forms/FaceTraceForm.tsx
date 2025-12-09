@@ -151,7 +151,7 @@ export function FaceTraceForm() {
       <motion.button
         onClick={handleSearch}
         disabled={!imageFile || isSearching}
-        className={`w-full relative box-border flex items-center justify-center px-12 py-4 rounded-full transition-all shadow-lg ${imageFile && !isSearching
+        className={`relative w-full md:w-fit md:min-w-[240px] box-border flex items-center justify-center px-12 py-4 rounded-full transition-all shadow-lg ${imageFile && !isSearching
             ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-xl cursor-pointer"
             : "bg-gray-400 cursor-not-allowed"
           }`}

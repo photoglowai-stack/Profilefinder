@@ -105,7 +105,7 @@ export function DatingForm() {
           <motion.button
             onClick={handleSearch}
             disabled={!selected || isSearching}
-            className={`relative box-border content-stretch flex items-center justify-center px-[48px] md:px-[72px] py-[8px] rounded-[9999px] shrink-0 transition-all shadow-lg ${selected && !isSearching
+            className={`relative w-full md:w-fit md:min-w-[240px] box-border content-stretch flex items-center justify-center px-[48px] md:px-[72px] py-[8px] rounded-[9999px] shrink-0 transition-all shadow-lg ${selected && !isSearching
               ? "bg-black cursor-pointer hover:bg-gray-900 hover:shadow-xl"
               : "bg-gray-400 cursor-not-allowed"
               }`}
