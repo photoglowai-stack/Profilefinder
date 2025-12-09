@@ -13,7 +13,7 @@ export function DatingForm() {
   const { selectedService } = useService();
   const navigate = useNavigate();
   const content = serviceContent[selectedService].form;
-  const [selected, setSelected] = useState<"man" | "woman" | null>(null);
+  const [selected, setSelected] = useState<"man" | "woman" | null>("man");
   const [isSearching, setIsSearching] = useState(false);
 
   const handleSearch = () => {
@@ -51,11 +51,11 @@ export function DatingForm() {
             style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="h-[75%] w-full relative bg-gray-50">
+            <div className="h-[75%] w-full relative bg-gray-50 flex items-center justify-center">
               <img
                 src={imgMan}
                 alt="Man"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-contain object-center"
               />
             </div>
             <div className={`h-[25%] w-full flex items-center justify-center transition-colors ${selected === "man" ? "bg-[#10B981]" : "bg-[#EF3E5C]"
@@ -76,11 +76,11 @@ export function DatingForm() {
             style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
             whileTap={{ scale: 0.95 }}
           >
-            <div className="h-[75%] w-full relative bg-gray-50">
+            <div className="h-[75%] w-full relative bg-gray-50 flex items-center justify-center">
               <img
                 src={imgWoman}
                 alt="Woman"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-contain object-center"
               />
             </div>
             <div className={`h-[25%] w-full flex items-center justify-center transition-colors ${selected === "woman" ? "bg-[#10B981]" : "bg-[#EF3E5C]"
