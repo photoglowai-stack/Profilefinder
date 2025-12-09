@@ -151,12 +151,12 @@ export function HeroNew() {
                         </motion.div>
 
                         {/* H1 - SEO Optimized & Dynamic */}
-                        <h1 className="text-white text-4xl md:text-6xl lg:text-7xl font-['Cal_Sans:SemiBold',sans-serif] leading-tight mb-4 md:mb-6 drop-shadow-2xl">
+                        <h1 className="hero-title drop-shadow-2xl mx-auto mb-4 md:mb-6">
                             {content.h1}
                         </h1>
 
                         {/* Subheading - SEO Optimized & Dynamic */}
-                        <p className="text-white text-base md:text-xl lg:text-2xl max-w-3xl mx-auto opacity-95 leading-relaxed mb-8 font-medium">
+                        <p className="hero-subtitle mx-auto mb-8">
                             {content.subtitle}
                         </p>
 

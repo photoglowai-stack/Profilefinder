@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { HeroNew } from "./components/HeroNew";
 import { StatsBar } from "./components/StatsBar";
 import { HowItWorks } from "./components/HowItWorks";
-import { ServiceFormWidget } from "./components/ServiceFormWidget";
 import { UGCSection } from "./components/UGCSection";
 import { Testimonials } from "./components/Testimonials";
 import { StatsSection } from "./components/StatsSection";
@@ -37,12 +36,6 @@ function LandingPage() {
         <Footer />
       </main>
 
-      {/* 2. Floating Action Dock Widget */}
-      <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-6 px-4 pointer-events-none">
-        <div className="pointer-events-auto w-full max-w-[480px]">
-          <ServiceFormWidget />
-        </div>
-      </div>
     </div>
   );
 }
