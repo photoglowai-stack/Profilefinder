@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useService } from '../lib/ServiceContext';
+import { ServiceType } from '../lib/content';
 import {
     Search, Globe, User, Check, Shield, Clock, Menu, X,
     Heart, Users, ScanFace, MessageSquare, Instagram,
@@ -8,7 +10,6 @@ import {
 } from 'lucide-react';
 
 // --- Types ---
-type TabType = 'dating' | 'following' | 'face' | 'fidelity';
 type GenderType = 'man' | 'woman';
 
 interface GenderCardProps {
@@ -30,7 +31,7 @@ interface UploadZoneProps {
 
 const HeroAntigravity: React.FC = () => {
     const navigate = useNavigate();
-    const [activeTab, setActiveTab] = useState<TabType>('dating');
+    const { selectedService, setSelectedService } = useService();
     const [selectedGender, setSelectedGender] = useState<GenderType>('man');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -46,17 +47,17 @@ const HeroAntigravity: React.FC = () => {
     ];
 
     const services = [
-        { id: 'dating' as TabType, label: 'Dating Search', icon: <Heart size={20} strokeWidth={2.5} /> },
-        { id: 'following' as TabType, label: 'Following AI', icon: <Users size={20} strokeWidth={2.5} /> },
-        { id: 'face' as TabType, label: 'Face Trace', icon: <ScanFace size={20} strokeWidth={2.5} /> },
-        { id: 'fidelity' as TabType, label: 'Fidelity Test', icon: <MessageSquare size={20} strokeWidth={2.5} /> },
+        { id: 'dating' as ServiceType, label: 'Dating Search', icon: <Heart size={20} strokeWidth={2.5} /> },
+        { id: 'following' as ServiceType, label: 'Following AI', icon: <Users size={20} strokeWidth={2.5} /> },
+        { id: 'facetrace' as ServiceType, label: 'Face Trace', icon: <ScanFace size={20} strokeWidth={2.5} /> },
+        { id: 'fidelity' as ServiceType, label: 'Fidelity Test', icon: <MessageSquare size={20} strokeWidth={2.5} /> },
     ];
 
     const trendingKeywords = [
         "Pimeyes Alternative", "Reverse Image Search", "Face Search Free", "Instagram Finder", "Tinder Profile Search", "AI Face Recognition"
     ];
 
-    const contentMap: Record<TabType, { h1: string; desc: string; instruction: string; cta: string; buttonIcon: React.ReactNode; buttonBg: string }> = {
+    const contentMap: Record<ServiceType, { h1: string; desc: string; instruction: string; cta: string; buttonIcon: React.ReactNode; buttonBg: string }> = {
         dating: {
             h1: "Find any profile on Tinder with AI Face Search",
             desc: "Uncover your partner's secrets with the #1 Tinder Profile Finder. More accurate than Pimeyes for dating apps.",
@@ -73,7 +74,7 @@ const HeroAntigravity: React.FC = () => {
             buttonIcon: <Instagram size={22} strokeWidth={2.5} />,
             buttonBg: "linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)"
         },
-        face: {
+        facetrace: {
             h1: "Track Digital Footprint & Web Activity",
             desc: "The ultimate Pimeyes alternative. Find every profile, blog post, and image trace across the entire web.",
             instruction: "UPLOAD PHOTO TO SCAN",
@@ -91,7 +92,7 @@ const HeroAntigravity: React.FC = () => {
         }
     };
 
-    const currentContent = contentMap[activeTab];
+    const currentContent = contentMap[selectedService];
 
     const handleSearch = () => {
         navigate('/payment');
@@ -321,7 +322,7 @@ const HeroAntigravity: React.FC = () => {
                     {services.map((service) => (
                         <button
                             key={service.id}
-                            onClick={() => setActiveTab(service.id)}
+                            onClick={() => setSelectedService(service.id)}
                             className="tab-btn"
                             style={{
                                 display: 'flex',
@@ -332,11 +333,11 @@ const HeroAntigravity: React.FC = () => {
                                 fontSize: '14px',
                                 fontWeight: 700,
                                 cursor: 'pointer',
-                                border: activeTab === service.id ? '2px solid #ff2e4d' : '2px solid transparent',
-                                backgroundColor: activeTab === service.id ? '#ff2e4d' : '#ffffff',
-                                color: activeTab === service.id ? '#ffffff' : '#475569',
-                                boxShadow: activeTab === service.id ? '0 8px 24px rgba(255,46,77,0.3)' : '0 2px 8px rgba(0,0,0,0.08)',
-                                transform: activeTab === service.id ? 'scale(1.05)' : 'scale(1)',
+                                border: selectedService === service.id ? '2px solid #ff2e4d' : '2px solid transparent',
+                                backgroundColor: selectedService === service.id ? '#ff2e4d' : '#ffffff',
+                                color: selectedService === service.id ? '#ffffff' : '#475569',
+                                boxShadow: selectedService === service.id ? '0 8px 24px rgba(255,46,77,0.3)' : '0 2px 8px rgba(0,0,0,0.08)',
+                                transform: selectedService === service.id ? 'scale(1.05)' : 'scale(1)',
                                 transition: 'all 0.3s ease'
                             }}
                         >
@@ -383,7 +384,7 @@ const HeroAntigravity: React.FC = () => {
                         </div>
 
                         {/* Content Switching */}
-                        {activeTab === 'dating' && (
+                        {selectedService === 'dating' && (
                             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
                                 <GenderCard
                                     gender="MAN"
@@ -403,7 +404,7 @@ const HeroAntigravity: React.FC = () => {
                             </div>
                         )}
 
-                        {activeTab === 'following' && (
+                        {selectedService === 'following' && (
                             <div style={{ display: 'flex', flexDirection: 'column', height: '300px', justifyContent: 'center' }}>
                                 <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
                                     <div style={{
@@ -455,7 +456,7 @@ const HeroAntigravity: React.FC = () => {
                             </div>
                         )}
 
-                        {activeTab === 'face' && (
+                        {selectedService === 'facetrace' && (
                             <div style={{ display: 'flex', flexDirection: 'column', height: '300px' }}>
                                 <UploadZone
                                     icon={<ScanFace size={48} strokeWidth={1.5} />}
@@ -467,7 +468,7 @@ const HeroAntigravity: React.FC = () => {
                             </div>
                         )}
 
-                        {activeTab === 'fidelity' && (
+                        {selectedService === 'fidelity' && (
                             <div style={{ display: 'flex', flexDirection: 'column', height: '300px' }}>
                                 <UploadZone
                                     icon={<MessageCircle size={48} strokeWidth={1.5} />}
