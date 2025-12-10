@@ -98,13 +98,13 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
     const [selected, setSelected] = useState<'man' | 'woman'>('man');
 
     const cardStyle = (isSelected: boolean): React.CSSProperties => ({
-        width: '120px',
-        height: '150px',
-        borderRadius: '24px',
+        width: '90px',
+        height: '115px',
+        borderRadius: '16px',
         overflow: 'hidden',
         cursor: 'pointer',
-        border: isSelected ? '3px solid #10B981' : '2px solid #cbd5e1',
-        boxShadow: isSelected ? '0 10px 30px rgba(16, 185, 129, 0.3)' : '0 4px 12px rgba(0,0,0,0.08)',
+        border: isSelected ? '2px solid #10B981' : '2px solid #cbd5e1',
+        boxShadow: isSelected ? '0 8px 20px rgba(16, 185, 129, 0.25)' : '0 2px 8px rgba(0,0,0,0.06)',
         transform: isSelected ? 'scale(1.02)' : 'scale(1)',
         transition: 'all 0.3s ease',
         opacity: isSelected ? 1 : 0.85,
@@ -113,9 +113,9 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
     });
 
     return (
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '24px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
             {/* Gender Cards Container */}
-            <div style={{ display: 'flex', gap: '20px' }}>
+            <div style={{ display: 'flex', gap: '12px' }}>
                 {/* MAN Card */}
                 <div onClick={() => setSelected('man')} style={cardStyle(selected === 'man')}>
                     {/* Checkmark */}
@@ -363,67 +363,34 @@ export const ServiceFormWidget = () => {
     };
 
     return (
-        <div style={{ width: '100%', maxWidth: '520px', margin: '0 auto' }}>
-            {/* Service Tabs */}
-            <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                gap: '6px',
-                marginBottom: '8px',
-                flexWrap: 'wrap'
-            }}>
-                {SERVICES.map((service) => {
-                    const Icon = service.icon;
-                    const isActive = selectedService === service.id;
-                    return (
-                        <button
-                            key={service.id}
-                            onClick={() => setSelectedService(service.id)}
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '4px',
-                                padding: '6px 12px',
-                                borderRadius: '9999px',
-                                fontSize: '11px',
-                                fontWeight: 700,
-                                border: isActive ? 'none' : '1px solid rgba(239, 62, 92, 0.3)',
-                                backgroundColor: isActive ? '#EF3E5C' : 'white',
-                                color: isActive ? 'white' : '#EF3E5C',
-                                cursor: 'pointer',
-                                transition: 'all 0.2s ease',
-                                boxShadow: isActive ? '0 4px 12px rgba(239, 62, 92, 0.3)' : 'none',
-                                transform: isActive ? 'scale(1.02)' : 'scale(1)'
-                            }}
-                        >
-                            <Icon size={12} />
-                            <span>{service.label}</span>
-                        </button>
-                    );
-                })}
-            </div>
-
-            {/* Card */}
+        <div style={{
+            width: '100%',
+            maxWidth: '400px',
+            margin: '0 auto',
+            padding: '0 12px',
+            boxSizing: 'border-box'
+        }}>
+            {/* Card - No service tabs */}
             <motion.div
                 style={{
                     backgroundColor: 'white',
-                    borderRadius: '20px',
-                    border: '3px solid #EF3E5C',
-                    boxShadow: '0 20px 50px rgba(239, 62, 92, 0.25)',
-                    padding: '16px',
+                    borderRadius: '16px',
+                    border: '2px solid #EF3E5C',
+                    boxShadow: '0 16px 40px rgba(239, 62, 92, 0.2)',
+                    padding: '12px',
                 }}
                 initial={false}
                 animate={{ scale: 1 }}
-                whileHover={{ boxShadow: '0 24px 60px rgba(239, 62, 92, 0.3)' }}
+                whileHover={{ boxShadow: '0 20px 50px rgba(239, 62, 92, 0.25)' }}
                 transition={{ duration: 0.2 }}
             >
                 {/* Title */}
                 <h3 style={{
                     color: '#EF3E5C',
-                    fontSize: '13px',
+                    fontSize: '11px',
                     fontWeight: 800,
                     textAlign: 'center',
-                    marginBottom: '12px',
+                    marginBottom: '10px',
                     letterSpacing: '0.5px',
                 }}>
                     {activeConfig.title}
