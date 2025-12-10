@@ -11,7 +11,7 @@ export function CTASection() {
   };
 
   return (
-    <section 
+    <section
       className="relative py-12 md:py-16 overflow-hidden"
       style={{
         background: `linear-gradient(to right, ${colors.primary}, ${colors.secondary}, ${colors.primary}dd)`
@@ -19,7 +19,7 @@ export function CTASection() {
     >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
+        <motion.div
           className="absolute w-64 h-64 md:w-96 md:h-96 bg-white/10 rounded-full blur-3xl top-0 left-1/4"
           animate={{
             y: [0, 50, 0],
@@ -31,7 +31,7 @@ export function CTASection() {
             ease: "easeInOut"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute w-64 h-64 md:w-96 md:h-96 bg-white/10 rounded-full blur-3xl bottom-0 right-1/4"
           animate={{
             y: [0, -50, 0],
@@ -54,17 +54,17 @@ export function CTASection() {
         >
           <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-1.5 rounded-full mb-5 md:mb-6">
             <TrendingUp className="w-4 h-4 text-white" />
-            <span className="text-white text-xs md:text-sm font-medium">20,000+ profiles detected</span>
+            <span className="text-white text-xs md:text-sm font-bold uppercase tracking-wide">20,000+ profiles detected</span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-5 font-bold">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-5 font-black tracking-tighter">
             {ctaContent.title}
           </h2>
-          
-          <p className="text-base md:text-lg lg:text-xl text-white/90 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed">
+
+          <p className="text-base md:text-lg lg:text-xl text-white/90 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed font-medium">
             {ctaContent.subtitle}
           </p>
-          
+
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4">
             <Button
               variant="secondary"

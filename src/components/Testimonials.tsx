@@ -12,7 +12,7 @@ const testimonialImages = [imgRectangle2, imgRectangle3, imgRectangle6];
 export function Testimonials() {
   const { selectedService } = useService();
   const content = serviceContent[selectedService].testimonials;
-  
+
   const testimonials = content.items.map((item, index) => ({
     img: testimonialImages[index],
     name: item.name,
@@ -43,18 +43,18 @@ export function Testimonials() {
             >
               <div className="flex items-center gap-4 mb-6">
                 <div className="relative flex-shrink-0">
-                  <img 
-                    src={testimonial.img} 
-                    alt={testimonial.name} 
-                    className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover ring-4 ring-pink-100" 
+                  <img
+                    src={testimonial.img}
+                    alt={testimonial.name}
+                    className="w-14 h-14 md:w-16 md:h-16 rounded-full object-cover ring-4 ring-pink-100"
                   />
                   <div className="absolute -bottom-1 -right-1 bg-[#22c55e] rounded-full p-1">
                     <CheckCircle2 className="w-3 h-3 md:w-4 md:h-4 text-white" />
                   </div>
                 </div>
                 <div>
-                  <p className="text-[#020817] font-semibold">{testimonial.name}</p>
-                  <p className="text-gray-500 text-sm">{testimonial.age}</p>
+                  <p className="text-slate-900 font-bold">{testimonial.name}</p>
+                  <p className="text-slate-500 text-sm font-medium">{testimonial.age}</p>
                 </div>
               </div>
 
@@ -64,7 +64,7 @@ export function Testimonials() {
                 ))}
               </div>
 
-              <p className="text-gray-600 leading-relaxed text-sm md:text-base">
+              <p className="text-slate-600 leading-relaxed text-sm md:text-base font-medium">
                 "{testimonial.text}"
               </p>
             </motion.article>

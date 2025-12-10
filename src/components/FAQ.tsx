@@ -24,14 +24,14 @@ export function FAQ() {
             transition={{ delay: index * 0.1 }}
             className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-all group border border-gray-100"
           >
-            <summary className="cursor-pointer text-base md:text-lg text-[#020817] list-none flex items-start justify-between group-hover:text-[#ff4e71] transition-colors">
+            <summary className="cursor-pointer text-base md:text-lg text-slate-800 font-bold list-none flex items-start justify-between group-hover:text-[#ff4e71] transition-colors">
               <span className="pr-4 flex-1">{faq.question}</span>
               <span className="text-2xl md:text-3xl text-[#ff4e71] group-open:rotate-45 transition-transform flex-shrink-0 leading-none">
                 +
               </span>
             </summary>
-            <motion.p 
-              className="mt-4 md:mt-6 text-gray-600 leading-relaxed pl-2 md:pl-4 border-l-4 border-[#ff4e71] text-sm md:text-base"
+            <motion.p
+              className="mt-4 md:mt-6 text-slate-600 leading-relaxed pl-2 md:pl-4 border-l-4 border-[#ff4e71] text-sm md:text-base font-medium"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}

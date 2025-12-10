@@ -28,7 +28,7 @@ export function StatsSection() {
         label="Statistics"
         title={statsContent.title}
       />
-      
+
       {/* SEO Intro Text */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
@@ -36,7 +36,7 @@ export function StatsSection() {
         viewport={{ once: true }}
         className="text-center max-w-4xl mx-auto mb-10 md:mb-12"
       >
-        <p className="text-gray-600 text-sm md:text-base leading-relaxed">
+        <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
           {statsContent.intro}
         </p>
       </motion.div>
@@ -54,15 +54,15 @@ export function StatsSection() {
           >
             {/* Animated background */}
             <div className="absolute inset-0 bg-gradient-to-br from-[#ff4e71]/10 to-[#ff7f66]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-            
+
             <div className="relative">
               <div className="mb-4 md:mb-5">
                 <item.icon className="w-10 h-10 md:w-12 md:h-12 mx-auto text-[#ff4e71]" />
               </div>
-              <p className="text-4xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] mb-3 md:mb-4 font-bold">
+              <p className="text-4xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] mb-3 md:mb-4 font-black tracking-tighter">
                 {item.stat}
               </p>
-              <p className="text-sm md:text-base text-gray-700 leading-relaxed">
+              <p className="text-sm md:text-base text-slate-600 leading-relaxed font-medium">
                 {item.text}
               </p>
             </div>
@@ -77,7 +77,7 @@ export function StatsSection() {
         viewport={{ once: true }}
         className="text-center max-w-4xl mx-auto mt-10 md:mt-12"
       >
-        <p className="text-gray-700 text-sm md:text-base leading-relaxed">
+        <p className="text-slate-600 text-sm md:text-base leading-relaxed font-medium">
           {statsContent.closing}
         </p>
       </motion.div>

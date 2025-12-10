@@ -94,6 +94,14 @@ const HeroAntigravity: React.FC = () => {
 
     const currentContent = contentMap[selectedService];
 
+    // Dynamic gradient backgrounds per service
+    const gradientMap: Record<ServiceType, string> = {
+        dating: 'linear-gradient(135deg, #ff4b5c 0%, #ff6b6b 50%, #ff9e75 100%)',
+        following: 'linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #c4b5fd 100%)',
+        facetrace: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #93c5fd 100%)',
+        fidelity: 'linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #f9a8d4 100%)'
+    };
+
     const handleSearch = () => {
         navigate('/payment');
     };
@@ -101,12 +109,13 @@ const HeroAntigravity: React.FC = () => {
     return (
         <section style={{
             width: '100%',
-            background: 'linear-gradient(135deg, #ff4b5c 0%, #ff6b6b 50%, #ff9e75 100%)',
+            background: gradientMap[selectedService],
             color: '#ffffff',
             fontFamily: "'Inter Tight', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
             overflow: 'hidden',
             position: 'relative',
-            paddingBottom: '80px'
+            paddingBottom: '80px',
+            transition: 'background 0.5s ease'
         }}>
 
             <style>{`
@@ -313,10 +322,10 @@ const HeroAntigravity: React.FC = () => {
                     display: 'flex',
                     flexWrap: 'wrap',
                     justifyContent: 'center',
-                    gap: '12px',
-                    marginBottom: '40px',
+                    gap: '8px',
+                    marginBottom: '32px',
                     width: '100%',
-                    maxWidth: '800px',
+                    maxWidth: '700px',
                     padding: '0 8px'
                 }}>
                     {services.map((service) => (
@@ -327,22 +336,22 @@ const HeroAntigravity: React.FC = () => {
                             style={{
                                 display: 'flex',
                                 alignItems: 'center',
-                                gap: '10px',
-                                padding: '14px 24px',
+                                gap: '6px',
+                                padding: '10px 16px',
                                 borderRadius: '9999px',
-                                fontSize: '14px',
+                                fontSize: '13px',
                                 fontWeight: 700,
                                 cursor: 'pointer',
-                                border: selectedService === service.id ? '2px solid #ff2e4d' : '2px solid transparent',
-                                backgroundColor: selectedService === service.id ? '#ff2e4d' : '#ffffff',
+                                border: selectedService === service.id ? '2px solid #10b981' : '2px solid transparent',
+                                backgroundColor: selectedService === service.id ? '#10b981' : '#ffffff',
                                 color: selectedService === service.id ? '#ffffff' : '#475569',
-                                boxShadow: selectedService === service.id ? '0 8px 24px rgba(255,46,77,0.3)' : '0 2px 8px rgba(0,0,0,0.08)',
-                                transform: selectedService === service.id ? 'scale(1.05)' : 'scale(1)',
+                                boxShadow: selectedService === service.id ? '0 6px 16px rgba(16,185,129,0.3)' : '0 2px 6px rgba(0,0,0,0.06)',
+                                transform: selectedService === service.id ? 'scale(1.02)' : 'scale(1)',
                                 transition: 'all 0.3s ease'
                             }}
                         >
-                            {service.icon}
-                            <span style={{ fontWeight: 800, letterSpacing: '0.02em' }}>{service.label}</span>
+                            {React.cloneElement(service.icon as React.ReactElement, { size: 16 })}
+                            <span style={{ fontWeight: 700, letterSpacing: '0.01em' }}>{service.label}</span>
                         </button>
                     ))}
                 </div>
