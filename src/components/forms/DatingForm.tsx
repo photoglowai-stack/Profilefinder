@@ -40,15 +40,15 @@ export function DatingForm() {
 
       {/* Avatars Section - Compact */}
       <div className="mb-6">
-        <div className="flex justify-center gap-4">
+        <div className="flex justify-center gap-5">
           {/* Man Avatar */}
           <motion.button
             onClick={() => setSelected("man")}
-            className={`group relative w-24 h-32 md:w-28 md:h-36 rounded-xl transition-all duration-300 overflow-hidden bg-white border-2 ${selected === "man"
-                ? "border-[#10B981] ring-2 ring-[#10B981]/30 scale-105"
-                : "border-gray-200 hover:border-gray-300 hover:scale-102"
+            className={`group relative w-32 h-40 md:w-36 md:h-48 rounded-2xl transition-all duration-300 overflow-hidden bg-white border-3 ${selected === "man"
+              ? "border-[#10B981] ring-4 ring-[#10B981]/30 scale-105"
+              : "border-gray-200 hover:border-gray-300 hover:scale-102"
               }`}
-            style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
+            style={{ boxShadow: selected === "man" ? '0 10px 30px rgba(16, 185, 129, 0.4)' : '0 6px 16px rgba(0,0,0,0.12)' }}
             whileTap={{ scale: 0.95 }}
           >
             <div className="h-[75%] w-full relative bg-gray-50">
@@ -69,11 +69,11 @@ export function DatingForm() {
           {/* Woman Avatar */}
           <motion.button
             onClick={() => setSelected("woman")}
-            className={`group relative w-24 h-32 md:w-28 md:h-36 rounded-xl transition-all duration-300 overflow-hidden bg-white border-2 ${selected === "woman"
-                ? "border-[#10B981] ring-2 ring-[#10B981]/30 scale-105"
-                : "border-gray-200 hover:border-gray-300 hover:scale-102"
+            className={`group relative w-32 h-40 md:w-36 md:h-48 rounded-2xl transition-all duration-300 overflow-hidden bg-white border-3 ${selected === "woman"
+              ? "border-[#10B981] ring-4 ring-[#10B981]/30 scale-105"
+              : "border-gray-200 hover:border-gray-300 hover:scale-102"
               }`}
-            style={{ boxShadow: '0 4px 12px rgba(0,0,0,0.08)' }}
+            style={{ boxShadow: selected === "woman" ? '0 10px 30px rgba(16, 185, 129, 0.4)' : '0 6px 16px rgba(0,0,0,0.12)' }}
             whileTap={{ scale: 0.95 }}
           >
             <div className="h-[75%] w-full relative bg-gray-50">
@@ -100,8 +100,8 @@ export function DatingForm() {
             onClick={handleSearch}
             disabled={!selected || isSearching}
             className={`relative flex items-center justify-center gap-3 px-8 py-3 rounded-full transition-all ${selected && !isSearching
-                ? "bg-black cursor-pointer hover:bg-gray-900 shadow-lg hover:shadow-xl"
-                : "bg-gray-300 cursor-not-allowed"
+              ? "bg-black cursor-pointer hover:bg-gray-900 shadow-lg hover:shadow-xl"
+              : "bg-gray-300 cursor-not-allowed"
               }`}
             whileHover={selected && !isSearching ? { scale: 1.02 } : {}}
             whileTap={selected && !isSearching ? { scale: 0.98 } : {}}
