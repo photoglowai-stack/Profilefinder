@@ -76,43 +76,41 @@ const UGCSection = () => {
       }} />
 
       <div style={{ maxWidth: '1760px', margin: '0 auto', padding: '0 24px', position: 'relative', zIndex: 10 }}>
-        {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px' }}>
-          <div>
-            <div style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              gap: '8px',
-              background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
-              color: 'white',
-              padding: '6px 16px',
-              borderRadius: '9999px',
-              fontSize: '12px',
-              fontWeight: 700,
-              marginBottom: '16px',
-              boxShadow: `0 4px 15px ${colors.primary}30`
-            }}>
-              <Heart size={14} fill="white" />
-              Wall of Love
-            </div>
-            <h2 style={{
-              fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
-              fontWeight: 900,
-              color: '#0f172a',
-              letterSpacing: '-0.02em',
-              margin: 0
-            }}>
-              Real Stories, <span style={{
-                background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
-              }}>Real Truth</span>.
-            </h2>
+        {/* Header - Centered */}
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+          <div style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
+            color: 'white',
+            padding: '6px 16px',
+            borderRadius: '9999px',
+            fontSize: '12px',
+            fontWeight: 700,
+            marginBottom: '16px',
+            boxShadow: `0 4px 15px ${colors.primary}30`
+          }}>
+            <Heart size={14} fill="white" />
+            Wall of Love
           </div>
+          <h2 style={{
+            fontSize: 'clamp(1.75rem, 4vw, 2.5rem)',
+            fontWeight: 900,
+            color: '#0f172a',
+            letterSpacing: '-0.02em',
+            margin: '0 auto 24px'
+          }}>
+            Real Stories, <span style={{
+              background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>Real Truth</span>.
+          </h2>
 
           {/* Navigation Buttons */}
-          <div style={{ display: 'flex', gap: '8px' }}>
+          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
             <button
               onClick={() => scroll('left')}
               style={{
@@ -153,22 +151,23 @@ const UGCSection = () => {
           </div>
         </div>
 
-        {/* Slider */}
+        {/* Slider - Centered */}
         <div
           ref={scrollRef}
           style={{
             display: 'flex',
-            gap: '20px',
+            gap: '24px',
             overflowX: 'auto',
             scrollSnapType: 'x mandatory',
             scrollBehavior: 'smooth',
             paddingBottom: '16px',
             msOverflowStyle: 'none',
-            scrollbarWidth: 'none'
+            scrollbarWidth: 'none',
+            justifyContent: 'center'
           }}
         >
           {TESTIMONIALS.map((item) => (
-            <div key={item.id} style={{ scrollSnapAlign: 'start', flexShrink: 0 }}>
+            <div key={item.id} style={{ scrollSnapAlign: 'center', flexShrink: 0 }}>
               <VideoCard data={item} colors={colors} />
             </div>
           ))}
