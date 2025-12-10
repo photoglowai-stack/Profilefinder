@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
-import { Star, ArrowRight, Shield, Lock } from "lucide-react";
+import { Star, ArrowRight, Shield } from "lucide-react";
 import { footerContent } from "../lib/content";
+import { useService } from "../lib/ServiceContext";
 
 const LOGO_URL = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg";
 
@@ -23,38 +24,45 @@ const footerLinks = {
 };
 
 export function Footer() {
+  const { colors } = useService();
+
   return (
-    <footer className="bg-gradient-to-br from-[#020817] via-[#1e293b] to-[#020817] text-white py-10 md:py-12">
+    <footer
+      className="text-white py-6 md:py-7"
+      style={{
+        background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`
+      }}
+    >
       <div className="max-w-[1760px] mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-10 mb-8 md:mb-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-4 md:mb-5">
           {/* Brand */}
           <div>
             <img
               src={LOGO_URL}
               alt="ProfileFinder"
-              className="h-8 md:h-10 mb-3 md:mb-4"
+              className="h-4 mb-1.5"
             />
-            <p className="text-gray-400 text-sm leading-relaxed mb-3 font-medium">
+            <p className="text-white/80 text-xs leading-relaxed mb-1.5 font-medium">
               {footerContent.tagline}
             </p>
-            <div className="flex gap-1" aria-label="Note: 5 sur 5 étoiles">
+            <div className="flex gap-0.5" aria-label="Note: 5 sur 5 étoiles">
               {[1, 2, 3, 4, 5].map((i) => (
-                <Star key={i} className="w-4 h-4 fill-[#fbbf24] text-[#fbbf24]" />
+                <Star key={i} className="w-3 h-3 fill-[#fbbf24] text-[#fbbf24]" />
               ))}
             </div>
           </div>
 
           {/* Liens utiles */}
           <div>
-            <h3 className="text-base md:text-lg mb-3 md:mb-4 font-extrabold tracking-tight">{footerContent.product}</h3>
-            <ul className="space-y-2 text-sm text-gray-400 font-medium">
+            <h3 className="text-sm mb-1.5 font-extrabold tracking-tight">{footerContent.product}</h3>
+            <ul className="space-y-1 text-xs text-white/80 font-medium">
               {footerLinks.useful.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="hover:text-white transition flex items-center gap-2 group"
+                    className="hover:text-white transition flex items-center gap-1.5 group"
                   >
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                     {link.label}
                   </a>
                 </li>
@@ -64,15 +72,15 @@ export function Footer() {
 
           {/* Ressources */}
           <div>
-            <h3 className="text-lg mb-4 md:mb-6 font-extrabold tracking-tight">{footerContent.company}</h3>
-            <ul className="space-y-3 text-sm md:text-base text-gray-400">
+            <h3 className="text-sm mb-1.5 font-extrabold tracking-tight">{footerContent.company}</h3>
+            <ul className="space-y-1 text-xs text-white/80 font-medium">
               {footerLinks.resources.map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
-                    className="hover:text-white transition flex items-center gap-2 group"
+                    className="hover:text-white transition flex items-center gap-1.5 group"
                   >
-                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                     {link.label}
                   </a>
                 </li>
@@ -82,11 +90,11 @@ export function Footer() {
 
           {/* Contact */}
           <div>
-            <h3 className="text-lg mb-4 md:mb-6 font-extrabold tracking-tight">{footerContent.legal}</h3>
-            <ul className="space-y-3 text-sm md:text-base text-gray-400">
+            <h3 className="text-sm mb-1.5 font-extrabold tracking-tight">{footerContent.legal}</h3>
+            <ul className="space-y-1 text-xs text-white/80 font-medium">
               {footerLinks.legal.slice(0, 2).map((link) => (
-                <li key={link.href} className="flex items-center gap-2">
-                  <ArrowRight className="w-4 h-4 flex-shrink-0" />
+                <li key={link.href} className="flex items-center gap-1.5">
+                  <ArrowRight className="w-3 h-3 flex-shrink-0" />
                   <a href={link.href} className="hover:text-white transition">
                     {link.label}
                   </a>
@@ -97,17 +105,17 @@ export function Footer() {
         </div>
 
         {/* Bottom section */}
-        <div className="border-t border-gray-700 pt-6 md:pt-8">
-          <div className="text-center text-gray-400">
-            <p className="mb-4 text-sm md:text-base">
+        <div className="border-t border-white/20 pt-3">
+          <div className="text-center text-white/70">
+            <p className="mb-2 text-xs font-medium">
               {footerContent.copyright}
             </p>
-            <div className="flex flex-wrap justify-center gap-4 md:gap-6 text-xs md:text-sm">
+            <div className="flex flex-wrap justify-center gap-2 md:gap-3 text-[10px]">
               {footerLinks.legal.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
-                  className="hover:text-white transition"
+                  className="hover:text-white transition font-medium"
                 >
                   {link.label}
                 </a>
@@ -118,13 +126,13 @@ export function Footer() {
 
         {/* Trust badge */}
         <motion.div
-          className="mt-8 text-center"
+          className="mt-3 text-center"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true }}
         >
-          <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full text-sm text-gray-300">
-            <Shield className="w-4 h-4" />
+          <div className="inline-flex items-center gap-1.5 bg-white/10 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] text-white/80 font-medium">
+            <Shield className="w-3 h-3" />
             <span>Secure and certified site</span>
           </div>
         </motion.div>

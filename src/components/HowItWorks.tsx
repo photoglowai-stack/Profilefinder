@@ -137,13 +137,13 @@ export function HowItWorks() {
           <IconSearch style={{ width: '0.875rem', height: '0.875rem' }} />
           <span className="text-xs font-semibold">How our Tinder profile finder works</span>
         </div>
-        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+        <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-slate-900 mb-6">
           Find someone on Tinder{' '}
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-orange-500 to-rose-500">
             in 3 simple steps
           </span>
         </h2>
-        <p className="text-base md:text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
+        <p className="text-base md:text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
           ProfileFinder turns hours of manual swiping into one fast Tinder profile search.
           Get a clear answer about hidden dating profiles in under 2 minutes.
         </p>
@@ -159,15 +159,15 @@ export function HowItWorks() {
         <div className="grid grid-cols-3 gap-3 md:gap-6 bg-white rounded-2xl shadow-lg p-4 md:p-6 border-2" style={{ borderColor: `${serviceColors.primary}15` }}>
           <div className="text-center">
             <div className="text-2xl md:text-4xl font-bold mb-1" style={{ color: serviceColors.primary }}>3</div>
-            <div className="text-xs md:text-sm text-gray-600">Simple Steps</div>
+            <div className="text-xs md:text-sm text-slate-600 font-medium">Simple Steps</div>
           </div>
           <div className="text-center border-x border-gray-200">
             <div className="text-2xl md:text-4xl font-bold mb-1" style={{ color: serviceColors.primary }}>30s</div>
-            <div className="text-xs md:text-sm text-gray-600">Average Time</div>
+            <div className="text-xs md:text-sm text-slate-600 font-medium">Average Time</div>
           </div>
           <div className="text-center">
             <div className="text-2xl md:text-4xl font-bold mb-1" style={{ color: serviceColors.primary }}>95%</div>
-            <div className="text-xs md:text-sm text-gray-600">Success Rate</div>
+            <div className="text-xs md:text-sm text-slate-600 font-medium">Success Rate</div>
           </div>
         </div>
       </motion.div>
@@ -285,12 +285,12 @@ export function HowItWorks() {
 
                   <div className="flex-1">
                     {/* Title */}
-                    <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-3">
+                    <h3 className="text-xl md:text-2xl font-extrabold tracking-tight text-slate-900 mb-3">
                       {step.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-4">
+                    <p className="text-slate-600 text-sm md:text-base leading-relaxed mb-4 font-medium">
                       {step.description}
                     </p>
 

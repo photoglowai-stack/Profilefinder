@@ -98,43 +98,74 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
     const [selected, setSelected] = useState<'man' | 'woman'>('man');
 
     const cardStyle = (isSelected: boolean): React.CSSProperties => ({
-        width: '100px',
-        height: '130px',
-        borderRadius: '16px',
+        width: '120px',
+        height: '150px',
+        borderRadius: '24px',
         overflow: 'hidden',
         cursor: 'pointer',
-        border: isSelected ? '3px solid #10B981' : '2px solid #e5e7eb',
-        boxShadow: isSelected ? '0 8px 20px rgba(16, 185, 129, 0.3)' : '0 2px 8px rgba(0,0,0,0.1)',
-        transform: isSelected ? 'scale(1.05)' : 'scale(1)',
-        transition: 'all 0.2s ease',
-        opacity: isSelected ? 1 : 0.75,
+        border: isSelected ? '3px solid #10B981' : '2px solid #cbd5e1',
+        boxShadow: isSelected ? '0 10px 30px rgba(16, 185, 129, 0.3)' : '0 4px 12px rgba(0,0,0,0.08)',
+        transform: isSelected ? 'scale(1.02)' : 'scale(1)',
+        transition: 'all 0.3s ease',
+        opacity: isSelected ? 1 : 0.85,
         flexShrink: 0,
+        position: 'relative',
     });
 
     return (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '24px' }}>
             {/* Gender Cards Container */}
-            <div style={{ display: 'flex', gap: '16px' }}>
+            <div style={{ display: 'flex', gap: '20px' }}>
                 {/* MAN Card */}
                 <div onClick={() => setSelected('man')} style={cardStyle(selected === 'man')}>
-                    <div style={{ height: '75%', backgroundColor: '#f9fafb', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {/* Checkmark */}
+                    {selected === 'man' && (
+                        <div style={{
+                            position: 'absolute',
+                            top: '12px',
+                            right: '12px',
+                            width: '28px',
+                            height: '28px',
+                            borderRadius: '50%',
+                            backgroundColor: 'white',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 10,
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                        }}>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M13.5 4L6 11.5L2.5 8" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </div>
+                    )}
+                    <div style={{ height: '70%', backgroundColor: 'white', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                         <img
                             src="/assets/avatars/widget-man.png"
                             alt="Man"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+                            style={{
+                                width: '110%',
+                                height: '110%',
+                                objectFit: 'cover',
+                                objectPosition: 'center',
+                                position: 'absolute',
+                                left: '50%',
+                                top: '50%',
+                                transform: 'translate(-50%, -50%)'
+                            }}
                         />
                     </div>
                     <div style={{
-                        height: '25%',
+                        height: '30%',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: selected === 'man' ? '#10B981' : '#EF3E5C',
+                        backgroundColor: selected === 'man' ? '#10B981' : '#94a3b8',
                         color: 'white',
-                        fontSize: '12px',
-                        fontWeight: 800,
+                        fontSize: '13px',
+                        fontWeight: 900,
                         textTransform: 'uppercase',
-                        letterSpacing: '0.5px',
+                        letterSpacing: '1px',
                     }}>
                         MAN
                     </div>
@@ -142,24 +173,54 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
 
                 {/* WOMAN Card */}
                 <div onClick={() => setSelected('woman')} style={cardStyle(selected === 'woman')}>
-                    <div style={{ height: '75%', backgroundColor: '#f9fafb', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    {/* Checkmark */}
+                    {selected === 'woman' && (
+                        <div style={{
+                            position: 'absolute',
+                            top: '12px',
+                            right: '12px',
+                            width: '28px',
+                            height: '28px',
+                            borderRadius: '50%',
+                            backgroundColor: 'white',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            zIndex: 10,
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                        }}>
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                                <path d="M13.5 4L6 11.5L2.5 8" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                        </div>
+                    )}
+                    <div style={{ height: '70%', backgroundColor: 'white', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
                         <img
                             src="/assets/avatars/widget-woman.png"
                             alt="Woman"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
+                            style={{
+                                width: '110%',
+                                height: '110%',
+                                objectFit: 'cover',
+                                objectPosition: 'center',
+                                position: 'absolute',
+                                left: '50%',
+                                top: '50%',
+                                transform: 'translate(-50%, -50%)'
+                            }}
                         />
                     </div>
                     <div style={{
-                        height: '25%',
+                        height: '30%',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: selected === 'woman' ? '#10B981' : '#EF3E5C',
+                        backgroundColor: selected === 'woman' ? '#10B981' : '#94a3b8',
                         color: 'white',
-                        fontSize: '12px',
-                        fontWeight: 800,
+                        fontSize: '13px',
+                        fontWeight: 900,
                         textTransform: 'uppercase',
-                        letterSpacing: '0.5px',
+                        letterSpacing: '1px',
                     }}>
                         WOMAN
                     </div>
@@ -314,11 +375,11 @@ export const ServiceFormWidget = () => {
                 {/* Title */}
                 <h3 style={{
                     color: '#EF3E5C',
-                    fontSize: '12px',
-                    fontWeight: 700,
+                    fontSize: '15px',
+                    fontWeight: 800,
                     textAlign: 'center',
                     marginBottom: '16px',
-                    letterSpacing: '0.5px',
+                    letterSpacing: '1px',
                 }}>
                     {activeConfig.title}
                 </h3>
