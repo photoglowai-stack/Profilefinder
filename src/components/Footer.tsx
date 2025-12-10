@@ -40,7 +40,13 @@ export function Footer() {
             <img
               src={LOGO_URL}
               alt="ProfileFinder"
-              className="h-4 mb-1.5"
+              style={{
+                height: '24px',
+                maxHeight: '24px',
+                width: 'auto',
+                maxWidth: '80px'
+              }}
+              className="mb-1.5"
             />
             <p className="text-white/80 text-xs leading-relaxed mb-1.5 font-medium">
               {footerContent.tagline}
