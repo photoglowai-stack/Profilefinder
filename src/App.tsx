@@ -25,8 +25,8 @@ function LandingPage() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show widget after scrolling past the Hero section (approximately 800px)
-      setShowWidget(window.scrollY > 800);
+      // Show widget after scrolling past more of the page (1200px) to avoid covering mobile screen
+      setShowWidget(window.scrollY > 1200);
     };
 
     window.addEventListener('scroll', handleScroll);

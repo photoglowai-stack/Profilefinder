@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Star, ArrowRight, Shield, Lock } from "lucide-react";
-import imgWebsiteLogo from "figma:asset/4b7948bf098fa302d0479c7e50133880ecda62bd.png";
 import { footerContent } from "../lib/content";
+
+const LOGO_URL = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg";
 
 const footerLinks = {
   useful: [
@@ -29,9 +30,9 @@ export function Footer() {
           {/* Brand */}
           <div>
             <img
-              src={imgWebsiteLogo}
+              src={LOGO_URL}
               alt="ProfileFinder"
-              className="h-7 md:h-9 mb-3 md:mb-4 brightness-0 invert"
+              className="h-8 md:h-10 mb-3 md:mb-4"
             />
             <p className="text-gray-400 text-sm leading-relaxed mb-3 font-medium">
               {footerContent.tagline}

@@ -169,19 +169,14 @@ const HeroAntigravity: React.FC = () => {
                 marginTop: '8px'
             }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                    <div style={{
-                        width: '36px',
-                        height: '36px',
-                        backgroundColor: '#ffffff',
-                        borderRadius: '50%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        color: '#1e293b',
-                        boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
-                    }}>
-                        <Search size={20} strokeWidth={3} />
-                    </div>
+                    <img
+                        src="https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg"
+                        alt="ProfileFinder"
+                        style={{
+                            height: '32px',
+                            width: 'auto'
+                        }}
+                    />
                     <span style={{ fontSize: '24px', fontWeight: 900, letterSpacing: '-0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
                         ProfileFinder
                     </span>
