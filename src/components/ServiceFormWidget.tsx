@@ -117,11 +117,11 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
             <div style={{ display: 'flex', gap: '16px' }}>
                 {/* MAN Card */}
                 <div onClick={() => setSelected('man')} style={cardStyle(selected === 'man')}>
-                    <div style={{ height: '75%', backgroundColor: '#f9fafb', overflow: 'hidden' }}>
+                    <div style={{ height: '75%', backgroundColor: '#f9fafb', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <img
                             src="/assets/avatars/widget-man.png"
                             alt="Man"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
                         />
                     </div>
                     <div style={{
@@ -142,11 +142,11 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
 
                 {/* WOMAN Card */}
                 <div onClick={() => setSelected('woman')} style={cardStyle(selected === 'woman')}>
-                    <div style={{ height: '75%', backgroundColor: '#f9fafb', overflow: 'hidden' }}>
+                    <div style={{ height: '75%', backgroundColor: '#f9fafb', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                         <img
                             src="/assets/avatars/widget-woman.png"
                             alt="Woman"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center' }}
                         />
                     </div>
                     <div style={{
