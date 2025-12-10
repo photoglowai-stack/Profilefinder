@@ -66,16 +66,33 @@ export function CTASection() {
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4">
-            <Button
-              variant="secondary"
-              size="lg"
-              onClick={scrollToTop}
-              icon={ArrowRight}
-              iconPosition="right"
-              className="w-full sm:w-auto"
+            <motion.div
+              animate={{
+                scale: [1, 1.02, 1],
+                boxShadow: [
+                  '0 0 0 0 rgba(255,255,255,0.4)',
+                  '0 0 0 10px rgba(255,255,255,0)',
+                  '0 0 0 0 rgba(255,255,255,0)'
+                ]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className="rounded-full"
             >
-              {ctaContent.button}
-            </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                onClick={scrollToTop}
+                icon={ArrowRight}
+                iconPosition="right"
+                className="w-full sm:w-auto"
+              >
+                {ctaContent.button}
+              </Button>
+            </motion.div>
 
             <Button
               variant="outline"

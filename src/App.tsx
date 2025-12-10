@@ -25,8 +25,15 @@ function LandingPage() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show widget after scrolling past more of the page (1200px) to avoid covering mobile screen
-      setShowWidget(window.scrollY > 1200);
+      const scrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      // Hide widget when near bottom (footer area) - within 400px of bottom
+      const isNearBottom = scrollY + windowHeight > documentHeight - 400;
+
+      // Show widget after scrolling past hero (1200px) but hide near footer
+      setShowWidget(scrollY > 1200 && !isNearBottom);
     };
 
     window.addEventListener('scroll', handleScroll);

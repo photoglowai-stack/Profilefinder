@@ -364,22 +364,67 @@ export const ServiceFormWidget = () => {
 
     return (
         <div style={{ width: '100%', maxWidth: '520px', margin: '0 auto' }}>
-            {/* Card */}
+            {/* Service Tabs */}
             <div style={{
-                backgroundColor: 'white',
-                borderRadius: '20px',
-                border: '3px solid #EF3E5C',
-                boxShadow: '0 20px 50px rgba(239, 62, 92, 0.25)',
-                padding: '16px',
+                display: 'flex',
+                justifyContent: 'center',
+                gap: '6px',
+                marginBottom: '8px',
+                flexWrap: 'wrap'
             }}>
+                {SERVICES.map((service) => {
+                    const Icon = service.icon;
+                    const isActive = selectedService === service.id;
+                    return (
+                        <button
+                            key={service.id}
+                            onClick={() => setSelectedService(service.id)}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                padding: '6px 12px',
+                                borderRadius: '9999px',
+                                fontSize: '11px',
+                                fontWeight: 700,
+                                border: isActive ? 'none' : '1px solid rgba(239, 62, 92, 0.3)',
+                                backgroundColor: isActive ? '#EF3E5C' : 'white',
+                                color: isActive ? 'white' : '#EF3E5C',
+                                cursor: 'pointer',
+                                transition: 'all 0.2s ease',
+                                boxShadow: isActive ? '0 4px 12px rgba(239, 62, 92, 0.3)' : 'none',
+                                transform: isActive ? 'scale(1.02)' : 'scale(1)'
+                            }}
+                        >
+                            <Icon size={12} />
+                            <span>{service.label}</span>
+                        </button>
+                    );
+                })}
+            </div>
+
+            {/* Card */}
+            <motion.div
+                style={{
+                    backgroundColor: 'white',
+                    borderRadius: '20px',
+                    border: '3px solid #EF3E5C',
+                    boxShadow: '0 20px 50px rgba(239, 62, 92, 0.25)',
+                    padding: '16px',
+                }}
+                initial={false}
+                animate={{ scale: 1 }}
+                whileHover={{ boxShadow: '0 24px 60px rgba(239, 62, 92, 0.3)' }}
+                transition={{ duration: 0.2 }}
+            >
                 {/* Title */}
                 <h3 style={{
                     color: '#EF3E5C',
-                    fontSize: '15px',
+                    fontSize: '13px',
                     fontWeight: 800,
                     textAlign: 'center',
-                    marginBottom: '16px',
-                    letterSpacing: '1px',
+                    marginBottom: '12px',
+                    letterSpacing: '0.5px',
                 }}>
                     {activeConfig.title}
                 </h3>
@@ -417,7 +462,7 @@ export const ServiceFormWidget = () => {
                         isLoading={isLoading}
                     />
                 )}
-            </div>
+            </motion.div>
         </div>
     );
 };
