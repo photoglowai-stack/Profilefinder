@@ -5,12 +5,12 @@ const seoData = {
   dating: {
     title: "Tinder profile search with AI | ProfileFinder",
     description: "Discreet Tinder profile search tool powered by AI. Run a Tinder profile lookup with just a name, age and city to see if someone is active on dating apps.",
-    keywords: "tinder profile search, tinder profile lookup, search tinder profiles, find someone on tinder, how does tinder work, tinder chat, ai dating app, cheating apps, how to catch a cheater"
+    keywords: "tinder profile search, tinder profile lookup, search tinder profiles, find someone on tinder, how does tinder work, tinder chat, ai dating app, dating safety, relationship verification"
   },
   following: {
     title: "Following AI - Track Social Signals | ProfileFinder",
     description: "Following AI analyses who someone follows and interacts with on their public social media. Detect patterns before they move to Tinder or other platforms.",
-    keywords: "following ai, instagram tracker, social signals, cheater ai, instagram followers, track instagram, social media monitoring"
+    keywords: "following ai, instagram tracker, social signals, relationship risk ai, instagram followers, track instagram, social media monitoring"
   },
   facetrace: {
     title: "Face Trace - AI face search & reverse image search | ProfileFinder",
@@ -20,7 +20,7 @@ const seoData = {
   fidelity: {
     title: "Fidelity Test - Structured relationship analysis | ProfileFinder",
     description: "Interactive checklist that helps you evaluate behavior patterns. Turn vague suspicion into clear signals with AI-powered relationship analysis.",
-    keywords: "fidelity test, how to catch a cheater, cheater ai, define a cheater, relationship analysis, trust issues, infidelity detection"
+    keywords: "fidelity test, verify hidden activity, relationship risk ai, assess trust issues, relationship analysis, trust issues, infidelity detection"
   }
 };
 

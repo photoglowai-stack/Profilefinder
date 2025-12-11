@@ -4,17 +4,17 @@ import { useService } from "../lib/ServiceContext";
 
 const datingSearches = [
   { icon: Search, text: "Tinder Profile Search", popular: true },
-  { icon: Heart, text: "Cheaterbuster AI Free", popular: true },
-  { icon: Shield, text: "How to Catch a Cheater", popular: true },
+  { icon: Heart, text: "Profile Safety Check", popular: true },
+  { icon: Shield, text: "Verify Dating Activity", popular: true },
   { icon: Eye, text: "Tinder Profile Lookup", popular: false },
   { icon: Users, text: "Dating Apps Search", popular: false },
   { icon: TrendingUp, text: "Swindler Buster", popular: false },
   { icon: Search, text: "AI Dating App", popular: false },
-  { icon: Heart, text: "Cheater AI Detection", popular: false },
+  { icon: Heart, text: "Behavior Risk Detection", popular: false },
   { icon: Shield, text: "Online Dating Check", popular: false },
   { icon: Eye, text: "How Does Tinder Work", popular: false },
   { icon: Users, text: "Hinge vs Bumble", popular: false },
-  { icon: Search, text: "Define a Cheater", popular: false },
+  { icon: Search, text: "Relationship Red Flags", popular: false },
 ];
 
 const facetraceSearches = [
@@ -22,9 +22,9 @@ const facetraceSearches = [
   { icon: Search, text: "PimEyes Alternative", popular: true },
   { icon: Eye, text: "Reverse Face Search", popular: true },
   { icon: Image, text: "Facial Recognition Search", popular: true },
-  { icon: UserSearch, text: "OnlyFans Finder", popular: true },
+  { icon: UserSearch, text: "Creator Profile Finder", popular: true },
   { icon: Users, text: "Instagram Finder", popular: true },
-  { icon: Search, text: "Pornstar by Face", popular: false },
+  { icon: Search, text: "Public Figure Face Match", popular: false },
   { icon: Eye, text: "Face ID Search Free", popular: false },
   { icon: Image, text: "Reverse Image Search People", popular: false },
   { icon: ScanFace, text: "TinEye Alternative", popular: false },
@@ -37,10 +37,10 @@ export function RelatedSearches() {
 
   // Only show for dating and facetrace services
   if (selectedService !== "dating" && selectedService !== "facetrace") return null;
-  
+
   const searches = selectedService === "dating" ? datingSearches : facetraceSearches;
-  const titleText = selectedService === "dating" 
-    ? "Related Dating Profile Searches" 
+  const titleText = selectedService === "dating"
+    ? "Related Dating Profile Searches"
     : "Related Face Search & Image Recognition Queries";
 
   return (
@@ -59,8 +59,8 @@ export function RelatedSearches() {
           {titleText}
         </h2>
         <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
-          {selectedService === "dating" 
-            ? "Explore popular search terms and discover how our CheatBuster AI can help you find the truth"
+          {selectedService === "dating"
+            ? "Explore popular search terms and discover how our AI helps you validate online dating activity."
             : "Discover popular facial recognition and reverse image search tools powered by advanced AI"}
         </p>
       </motion.div>
@@ -88,17 +88,17 @@ export function RelatedSearches() {
                   HOT
                 </div>
               )}
-              
+
               <div className={`flex-shrink-0 p-2 rounded-lg ${
-                item.popular 
-                  ? "bg-gradient-to-br from-[#ff4e71] to-[#ff7f66]" 
+                item.popular
+                  ? "bg-gradient-to-br from-[#ff4e71] to-[#ff7f66]"
                   : "bg-gray-100 group-hover:bg-gradient-to-br group-hover:from-[#ff4e71] group-hover:to-[#ff7f66]"
               } transition-all`}>
                 <Icon className={`w-4 h-4 ${
                   item.popular ? "text-white" : "text-gray-600 group-hover:text-white"
                 } transition-colors`} strokeWidth={2} />
               </div>
-              
+
               <span className={`text-xs md:text-sm text-left flex-1 ${
                 item.popular ? "text-[#020817] font-medium" : "text-gray-700 group-hover:text-[#020817]"
               } transition-colors`}>
@@ -132,19 +132,19 @@ export function RelatedSearches() {
                 Tinder Chat Analysis
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Heated Affairs Search
+                Secure Profile Review
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                DoubleList Monitoring
+                Community Safety Monitoring
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Find Someone on OnlyFans
+                Creator Platform Lookup
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Emotionally Unavailable Signs
+                Emotional Availability Signs
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Cheating Apps Detection
+                Risky App Detection
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
                 SocialCatfish Alternative
@@ -165,10 +165,10 @@ export function RelatedSearches() {
                 PimEyes.com Alternative
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                Pornstar Search Engine
+                Social Profile Search Engine
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                Name That Pornstar
+                Public Figure Recognition
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
                 Instagram Profile Photo Download
@@ -177,7 +177,7 @@ export function RelatedSearches() {
                 Facebook People Search
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                AI Porn Finder
+                AI Content Safety Detection
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
                 StarByFace
@@ -192,7 +192,7 @@ export function RelatedSearches() {
                 Instagram Account Lookup
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                Porn Image Search
+                Sensitive Image Filter
               </span>
               <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
                 GeoSpy AI
@@ -210,7 +210,7 @@ export function RelatedSearches() {
         className="mt-8 text-center"
       >
         <p className="text-sm text-gray-500">
-          Trusted by over <span className="font-semibold text-[#ff4e71]">500,000+</span> users worldwide for 
+          Trusted by over <span className="font-semibold text-[#ff4e71]">500,000+</span> users worldwide for
           {selectedService === "dating" ? " accurate dating profile searches" : " facial recognition and reverse image searches"}
         </p>
       </motion.div>

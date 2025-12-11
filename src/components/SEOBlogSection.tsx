@@ -6,7 +6,7 @@ const blogArticles = {
   facetrace: [
     {
       title: "PimEyes vs FaceCheck ID: Complete Comparison Guide 2024",
-      excerpt: "Discover the differences between PimEyes, Pim Eyes, and FaceCheck ID. Learn which reverse face search tool offers the best facial recognition search capabilities, OnlyFans finder features, and Instagram finder accuracy.",
+      excerpt: "Discover the differences between PimEyes, Pim Eyes, and FaceCheck ID. Learn which reverse face search tool offers the best facial recognition search capabilities, creator discovery, and Instagram finder accuracy.",
       tags: ["PimEyes", "Face Search", "Comparison"]
     },
     {
@@ -15,18 +15,18 @@ const blogArticles = {
       tags: ["TinEye", "Yandex", "Tutorial"]
     },
     {
-      title: "OnlyFans Finder & Instagram Finder: Complete Social Media Search Guide",
-      excerpt: "Learn how to find someone on OnlyFans and Instagram using face ID search free tools. Our guide covers OnlyFans search, only fans finder, Instagram account lookup, Instagram profile photo download, and social searcher techniques.",
-      tags: ["OnlyFans", "Instagram", "Guide"]
+      title: "Creator Finder & Instagram Finder: Complete Social Media Search Guide",
+      excerpt: "Learn how to find creators and Instagram accounts using face ID search tools. Our guide covers creator lookups, Instagram account discovery, Instagram profile photo download, and privacy-friendly social search techniques.",
+      tags: ["Creators", "Instagram", "Guide"]
     },
     {
-      title: "Pornstar by Face Search: How AI Porn Finder Technology Works",
-      excerpt: "Understanding pornstar finder and pornstar search engines. Learn about pornstar by face technology, reverse image search porn, porn image search, name that pornstar tools, and AI porn finder accuracy for identifying adult performers.",
-      tags: ["Adult Search", "AI Technology", "Recognition"]
+      title: "Responsible Face Recognition: How AI Matching Technology Works",
+      excerpt: "Understand modern face-matching engines. Learn about public figure matching technology, reverse image safety filters, sensitive image detection, and ethical guidelines for using recognition tools.",
+      tags: ["AI Technology", "Safety", "Recognition"]
     },
     {
       title: "Face Search Engine Comparison: FaceSeek, StarByFace, Doppelganger Finder",
-      excerpt: "Compare top face search engines including FaceSeek, StarByFace, doppelganger finder, and face check ID services. Discover which facial recognition search tool offers the best AI face search free features and accuracy.",
+      excerpt: "Compare top face search engines including FaceSeek, StarByFace, doppelganger finder, and FaceCheck ID services. Discover which facial recognition search tool offers the best AI face search free features and accuracy.",
       tags: ["Face Search", "Tools Review", "Comparison"]
     },
     {
@@ -116,24 +116,22 @@ export function SEOBlogSection() {
         </h3>
         <div className="text-sm text-gray-700 leading-relaxed space-y-3 max-w-5xl mx-auto">
           <p>
-            Our <strong>FaceCheck ID</strong> platform serves as the ultimate alternative to <strong>PimEyes</strong> (Pim Eyes, PimEye, PimEyes.com), 
-            offering advanced <strong>reverse face search</strong> and <strong>facial recognition search</strong> capabilities. 
-            Whether you need an <strong>OnlyFans finder</strong>, <strong>Instagram finder</strong>, or comprehensive <strong>pornstar by face</strong> search, 
+            Our <strong>FaceCheck ID</strong> platform serves as the ultimate alternative to <strong>PimEyes</strong> (Pim Eyes, PimEye, PimEyes.com),
+            offering advanced <strong>reverse face search</strong> and <strong>facial recognition search</strong> capabilities.
+            Whether you need a <strong>creator profile finder</strong>, <strong>Instagram finder</strong>, or comprehensive social profile search,
             our AI-powered technology delivers accurate results faster than traditional tools.
           </p>
           <p>
-            Unlike <strong>TinEye</strong> (tineye, tinyeye, tineyes) or <strong>Yandex reverse search</strong> (images search yandex, поиск по картинке), 
-            we specialize in <strong>face ID search free</strong> services with advanced <strong>AI face search</strong> algorithms. 
-            Our platform combines the functionality of <strong>FaceSeek</strong>, <strong>StarByFace</strong>, and <strong>doppelganger finder</strong> tools 
-            while adding unique features like <strong>Instagram profile photo download</strong> (insta pfp, ig pic profile, get instadp) 
+            Unlike <strong>TinEye</strong> (tineye, tinyeye, tineyes) or <strong>Yandex reverse search</strong> (images search yandex, поиск по картинке),
+            we specialize in <strong>face ID search free</strong> services with advanced <strong>AI face search</strong> algorithms.
+            Our platform combines the functionality of <strong>FaceSeek</strong>, <strong>StarByFace</strong>, and <strong>doppelganger finder</strong> tools
+            while adding unique features like <strong>Instagram profile photo download</strong> (insta pfp, ig pic profile, getinstadp)
             and <strong>Facebook image search</strong> capabilities.
           </p>
           <p>
-            For adult content searches, our <strong>pornstar finder</strong> and <strong>AI porn finder</strong> technology enables 
-            <strong>reverse image search porn</strong>, <strong>porn image search</strong>, and accurate <strong>pornstar search</strong> results. 
-            Use our "name that pornstar" (namethatpornstar, name that porn) feature to identify performers instantly. 
-            Additionally, our <strong>social searcher</strong> helps you perform <strong>Instagram account lookup</strong>, 
-            <strong>Facebook profile search</strong>, <strong>OnlyFans search</strong>, and comprehensive profile verification across all platforms.
+            We include <strong>sensitive image filters</strong> and <strong>content safety checks</strong> to prevent misuse,
+            alongside an integrated <strong>social searcher</strong> that supports <strong>Instagram account lookup</strong>,
+            <strong>Facebook profile search</strong>, and comprehensive profile verification across platforms.
           </p>
         </div>
       </motion.div>

@@ -9,7 +9,7 @@ const UGCSection = () => {
   const TESTIMONIALS = [
     {
       id: 1,
-      videoUrl: "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Cheater.mp4",
+      videoUrl: "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/relationship-proof.mp4",
       author: "@julie_investigate",
       role: "Verified User",
       quote: "I had a doubt, now I have proof. Thanks ProfileFinder.",
@@ -25,7 +25,7 @@ const UGCSection = () => {
     },
     {
       id: 3,
-      videoUrl: "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Worst%20fear%20came%20true%20%20%23catchingcheaters%20%23tinder%20%23profilefinder%20%23betrayal%20%23breakuptiktok%20%23breakups.mp4",
+      videoUrl: "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/real-story-profilefinder.mp4",
       author: "@sarah_truth",
       role: "Daily User",
       quote: "Found him in 2 minutes flat. It's almost scary how effective it is.",

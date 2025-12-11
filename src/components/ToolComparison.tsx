@@ -18,7 +18,7 @@ const comparisonData = {
         values: [true, true, false, true]
       },
       {
-        name: "OnlyFans Finder",
+        name: "Creator Profile Finder",
         values: [true, false, false, false]
       },
       {
@@ -26,7 +26,7 @@ const comparisonData = {
         values: [true, false, false, false]
       },
       {
-        name: "Pornstar by Face Search",
+        name: "Public Figure Face Match",
         values: [true, true, false, false]
       },
       {
@@ -162,10 +162,10 @@ export function ToolComparison() {
         className="mt-12 text-center"
       >
         <p className="text-sm text-gray-600 max-w-4xl mx-auto">
-          <strong className="text-[#ff4e71]">FaceCheck ID</strong> combines the best features of PimEyes (Pim Eyes, PimEye), 
-          TinEye (TinyEye, TinEyes), Yandex reverse search, and more into one powerful platform. 
-          Perform reverse face search, facial recognition search, OnlyFans finder, Instagram finder, 
-          pornstar by face search, and comprehensive reverse image search people - all with industry-leading accuracy 
+          <strong className="text-[#ff4e71]">FaceCheck ID</strong> combines the best features of PimEyes (Pim Eyes, PimEye),
+          TinEye (TinyEye, TinEyes), Yandex reverse search, and more into one powerful platform.
+          Perform reverse face search, facial recognition search, creator profile discovery, Instagram finder,
+          public figure face matching, and comprehensive reverse image search people - all with industry-leading accuracy
           and the fastest results. Better than PimEyes.com, FaceSeek, StarByFace, and other alternatives.
         </p>
       </motion.div>
