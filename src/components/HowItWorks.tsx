@@ -524,8 +524,8 @@ export function HowItWorks() {
                   </div>
                   <span style={{ fontSize: '0.75rem', fontWeight: 700, color: colors.emerald400, textTransform: 'uppercase' }}>Fidelity Test</span>
                 </div>
-                <h4 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem' }}>How to catch a cheater</h4>
-                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem' }}>Evaluate behavior against classic cheating patterns.</p>
+                <h4 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.5rem' }}>Verify hidden activity</h4>
+                <p style={{ color: 'rgba(255,255,255,0.7)', fontSize: '0.875rem' }}>Evaluate behavior against classic boundary-crossing patterns.</p>
               </div>
 
               {/* Chat Visual */}
@@ -596,7 +596,7 @@ export function HowItWorks() {
               </div>
               <span style={{ backgroundColor: '#f1f5f9', padding: '0.25rem 0.75rem', borderRadius: '9999px', fontSize: '10px', fontWeight: 700, color: '#475569' }}>Cheater AI</span>
             </div>
-            <p style={{ color: '#64748b', fontSize: '0.875rem' }}>Reviews public follows and likes to reveal patterns before cheaters move to dating apps.</p>
+            <p style={{ color: '#64748b', fontSize: '0.875rem' }}>Reviews public follows and likes to reveal patterns before conversations shift to dating apps.</p>
           </motion.div>
 
         </div>

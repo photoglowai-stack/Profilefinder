@@ -124,7 +124,7 @@ export const serviceContent = {
         },
         {
           question: "Is ProfileFinder just another AI dating app?",
-          answer: "ProfileFinder is not an AI dating app that tries to match you with new people. Instead, it is a relationship-intelligence tool: it helps you verify whether someone you already know is active on Tinder or similar platforms. Our goal is not to encourage cheating apps, but to give you clarity so you can decide what to do next."
+          answer: "ProfileFinder is not an AI dating app that tries to match you with new people. Instead, it is a relationship-intelligence tool: it helps you verify whether someone you already know is active on Tinder or similar platforms. Our goal is not to encourage intrusive apps, but to give you clarity so you can decide what to do next."
         },
         {
           question: "How does the Radar feature work?",
@@ -141,11 +141,11 @@ export const serviceContent = {
       sections: [
         {
           title: "Dating Search – find hidden Tinder profiles",
-          content: "Dating Search is the core of ProfileFinder. Use it when you want to know if someone has a hidden Tinder profile or still uses dating apps in secret. With one search, you can run a targeted Tinder profile search based on their name, age and city, then review any matching profiles. It is the fastest way to find someone on Tinder when you only have limited information. Instead of manually creating fake accounts or risky cheating apps, you use a safe, purpose-built investigation tool."
+          content: "Dating Search is the core of ProfileFinder. Use it when you want to know if someone has a hidden Tinder profile or still uses dating apps in secret. With one search, you can run a targeted Tinder profile search based on their name, age and city, then review any matching profiles. It is the fastest way to find someone on Tinder when you only have limited information. Instead of manually creating fake accounts or using risky third-party apps, you use a safe, purpose-built investigation tool."
         },
         {
           title: "Why people use ProfileFinder instead of random search tools",
-          content: "Most online tools were built for casual curiosity or general reverse image search. ProfileFinder is different. It focuses on real-life relationship questions like 'Is my boyfriend on Tinder?', 'Is my girlfriend still on dating apps?', 'Can I trust what they tell me?' By combining Tinder profile search, face recognition search and cheater-oriented analysis, we give you concrete data instead of rumours."
+          content: "Most online tools were built for casual curiosity or general reverse image search. ProfileFinder is different. It focuses on real-life relationship questions like 'Is my boyfriend on Tinder?', 'Is my girlfriend still on dating apps?', 'Can I trust what they tell me?' By combining Tinder profile search, face recognition search and trust-focused analysis, we give you concrete data instead of rumours."
         },
         {
           title: "Search dating profiles anywhere in the world",
@@ -232,7 +232,7 @@ export const serviceContent = {
         {
           number: "3",
           title: "Get structured alerts",
-          description: "Instead of scrolling endlessly through their followers, you get a structured view of behaviour that often appears before cheaters move conversations to Tinder chat or other platforms.",
+          description: "Instead of scrolling endlessly through their followers, you get a structured view of behaviour that often appears before conversations move to Tinder chat or other platforms.",
           features: [
             "Real-time notifications",
             "Behavior scoring",
@@ -270,8 +270,8 @@ export const serviceContent = {
       title: "Frequently Asked Questions",
       items: [
         {
-          question: "How does Following AI work as a cheater AI?",
-          answer: "Following AI analyses who someone follows and interacts with on their public social media. Think of it as a discreet cheater AI that looks for patterns you might miss: sudden bursts of following new attractive profiles, late-night likes, or heavy interaction with the same few people. Instead of scrolling endlessly through their followers, you get a structured view of behaviour."
+          question: "How does Following AI act as a relationship risk monitor?",
+          answer: "Following AI analyses who someone follows and interacts with on their public social media. Think of it as a discreet relationship risk monitor that looks for patterns you might miss: sudden bursts of following new attractive profiles, late-night likes, or heavy interaction with the same few people. Instead of scrolling endlessly through their followers, you get a structured view of behaviour."
         },
         {
           question: "Can the person know I'm tracking them?",
@@ -292,7 +292,7 @@ export const serviceContent = {
       sections: [
         {
           title: "Social signal analysis for relationship intelligence",
-          content: "Following AI reviews public follows, likes and comments to reveal patterns that often appear before cheaters move conversations to dating apps. It highlights unusual spikes in attention to new people, recurring late-night interactions and hidden accounts. Combined with Dating Search, it gives you a broader picture than a traditional cheating app without ever needing access to their phone."
+          content: "Following AI reviews public follows, likes and comments to reveal patterns that often appear before conversations move to dating apps. It highlights unusual spikes in attention to new people, recurring late-night interactions and hidden accounts. Combined with Dating Search, it gives you a broader picture than a traditional surveillance app without ever needing access to their phone."
         },
         {
           title: "Digital red flags detection",
@@ -524,7 +524,7 @@ export const serviceContent = {
         {
           number: "1",
           title: "Answer targeted questions",
-          description: "The Fidelity Test is an interactive checklist that helps you evaluate whether someone's behaviour matches classic cheating patterns. Answer precise questions about phone habits, trips, money, social media and dating app usage.",
+          description: "The Fidelity Test is an interactive checklist that helps you evaluate whether someone's behaviour matches classic boundary-crossing patterns. Answer precise questions about phone habits, trips, money, social media and dating app usage.",
           features: [
             "Communication patterns",
             "Travel behaviour",
@@ -546,7 +546,7 @@ export const serviceContent = {
         {
           number: "3",
           title: "Get actionable recommendations",
-          description: "Receive clear next steps, from running another Tinder profile lookup to using Face Trace. While no system can define a cheater with 100% certainty, this structured approach is far more reliable than guessing.",
+          description: "Receive clear next steps, from running another Tinder profile lookup to using Face Trace. While no system can assess trust issues with 100% certainty, this structured approach is far more reliable than guessing.",
           features: [
             "Risk percentage",
             "Recommended actions",
@@ -584,12 +584,12 @@ export const serviceContent = {
       title: "Frequently Asked Questions",
       items: [
         {
-          question: "How does the Fidelity Test work to catch a cheater?",
-          answer: "The Fidelity Test is an interactive checklist that helps you evaluate whether someone's behaviour matches classic cheating patterns. Instead of reading random 'how to catch a cheater' articles, you answer precise questions about phone habits, trips, money, social media and dating app usage. Our AI then scores the risk level and suggests next steps."
+          question: "How does the Fidelity Test work to confirm hidden activity?",
+          answer: "The Fidelity Test is an interactive checklist that helps you evaluate whether someone's behaviour matches classic boundary-crossing patterns. Instead of reading random 'how to verify hidden activity' articles, you answer precise questions about phone habits, trips, money, social media and dating app usage. Our AI then scores the risk level and suggests next steps."
         },
         {
-          question: "Can the Fidelity Test define a cheater with certainty?",
-          answer: "While no system can define a cheater with 100% certainty, the Fidelity Test turns vague suspicion into clearer signals. It combines your observations with AI analysis to estimate the likelihood that boundaries are being crossed, helping you make an informed decision about what to do next."
+          question: "Can the Fidelity Test assess trust issues with certainty?",
+          answer: "While no system can assess trust issues with 100% certainty, the Fidelity Test turns vague suspicion into clearer signals. It combines your observations with AI analysis to estimate the likelihood that boundaries are being crossed, helping you make an informed decision about what to do next."
         },
         {
           question: "Are screenshots stored?",
@@ -606,19 +606,19 @@ export const serviceContent = {
       ]
     },
     seoContent: {
-      title: "Fidelity Test – a structured way to catch a cheater",
+      title: "Fidelity Test – a structured way to confirm hidden activity",
       sections: [
         {
           title: "From vague doubt to clear signals",
-          content: "The Fidelity Test is an interactive checklist that helps you evaluate whether someone's behaviour matches classic cheating patterns. Instead of reading random 'how to catch a cheater' articles, you answer precise questions about phone habits, trips, money, social media and dating app usage. Our AI then scores the risk level and suggests next steps, from running another Tinder profile lookup to using Face Trace."
+          content: "The Fidelity Test is an interactive checklist that helps you evaluate whether someone's behaviour matches classic boundary-crossing patterns. Instead of reading random 'how to verify hidden activity' articles, you answer precise questions about phone habits, trips, money, social media and dating app usage. Our AI then scores the risk level and suggests next steps, from running another Tinder profile lookup to using Face Trace."
         },
         {
-          title: "How to catch a cheater with structured analysis",
-          content: "Learning how to catch a cheater requires a systematic approach. The Fidelity Test combines behavioral psychology with AI analysis to identify red flags: secretive phone behavior, unexplained absences, financial inconsistencies, and suspicious social media activity. While we never claim to define a cheater with absolute certainty, this structured approach is far more reliable than guessing or endlessly searching 'how to catch a cheater' online."
+          title: "How to confirm hidden activity with structured analysis",
+          content: "Learning how to verify hidden activity requires a systematic approach. The Fidelity Test combines behavioral psychology with AI analysis to identify red flags: secretive phone behavior, unexplained absences, financial inconsistencies, and suspicious social media activity. While we never claim to assess trust issues with absolute certainty, this structured approach is far more reliable than guessing or endlessly searching 'how to verify hidden activity' online."
         },
         {
-          title: "Understanding modern cheating patterns",
-          content: "To define a cheater in the digital age means understanding their online behavior patterns. Our Fidelity Test looks for signs of emotionally unavailable partners, secret cheating apps usage, or suspicious activity on dating platforms. The AI identifies patterns that might indicate infidelity, from hidden profiles to suspicious communication behaviors, giving you concrete data to make informed decisions."
+          title: "Understanding modern boundary-crossing patterns",
+          content: "To assess trust issues in the digital age means understanding their online behavior patterns. Our Fidelity Test looks for signs of emotionally unavailable partners, secret accounts usage, or suspicious activity on dating platforms. The AI identifies patterns that might indicate infidelity, from hidden profiles to suspicious communication behaviors, giving you concrete data to make informed decisions."
         }
       ]
     }
@@ -665,17 +665,17 @@ export const metaContent = {
   },
   tools: {
     title: "Tinder search, face search & Fidelity Test tools | ProfileFinder",
-    description: "Explore ProfileFinder tools: Tinder profile search, AI face search, social Following AI and Fidelity Test – a discreet way to catch cheaters and reveal hidden dating profiles."
+    description: "Explore ProfileFinder tools: Tinder profile search, AI face search, social Following AI and Fidelity Test – a discreet way to surface hidden activity and reveal hidden dating profiles."
   }
 };
 
 // Hero intro paragraph (80-120 words for SEO)
-export const heroIntroText = "ProfileFinder is an AI-powered Tinder profile finder that turns hours of swiping into one fast search. Instead of guessing whether your partner is on Tinder or other cheating apps, you launch a single Tinder profile search. Our engine compares the details you provide—first name, age and location—to live dating profiles and returns the closest matches. The result: a discreet, data-driven way to check if someone is really using dating apps, without touching their phone or logging into their account. It is not a playful AI dating app; it is a serious tool for people who just want the truth.";
+export const heroIntroText = "ProfileFinder is an AI-powered Tinder profile finder that turns hours of swiping into one fast search. Instead of guessing whether your partner is on Tinder or other monitoring apps, you launch a single Tinder profile search. Our engine compares the details you provide—first name, age and location—to live dating profiles and returns the closest matches. The result: a discreet, data-driven way to check if someone is really using dating apps, without touching their phone or logging into their account. It is not a playful AI dating app; it is a serious tool for people who just want the truth.";
 
 // Stats section content
 export const statsContent = {
   title: "Why people use ProfileFinder instead of random search tools",
-  intro: "Most online tools were built for casual curiosity or general reverse image search. ProfileFinder is different. It focuses on real-life relationship questions like 'Is my boyfriend on Tinder?', 'Is my girlfriend still on dating apps?', 'Can I trust what they tell me?' By combining Tinder profile search, face recognition search and cheater-oriented analysis, we give you concrete data instead of rumours.",
+  intro: "Most online tools were built for casual curiosity or general reverse image search. ProfileFinder is different. It focuses on real-life relationship questions like 'Is my boyfriend on Tinder?', 'Is my girlfriend still on dating apps?', 'Can I trust what they tell me?' By combining Tinder profile search, face recognition search and trust-focused analysis, we give you concrete data instead of rumours.",
   stats: [
     {
       value: "60%",
