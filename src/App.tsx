@@ -22,6 +22,7 @@ import { PaymentPage } from "./pages/PaymentPage";
 
 function LandingPage() {
   const [showWidget, setShowWidget] = useState(false);
+  const [bottomInset, setBottomInset] = useState(24);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,6 +39,25 @@ function LandingPage() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const updateInset = () => {
+      const viewport = window.visualViewport;
+      if (!viewport) return;
+
+      const chromeHeight = window.innerHeight - viewport.height - viewport.offsetTop;
+      setBottomInset(24 + Math.max(0, chromeHeight));
+    };
+
+    updateInset();
+    window.visualViewport?.addEventListener('resize', updateInset);
+    window.addEventListener('scroll', updateInset, { passive: true });
+
+    return () => {
+      window.visualViewport?.removeEventListener('resize', updateInset);
+      window.removeEventListener('scroll', updateInset);
+    };
   }, []);
 
   return (
@@ -68,13 +88,14 @@ function LandingPage() {
             transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.6 }}
             style={{
               position: 'fixed',
-              bottom: '24px',
+              bottom: `calc(env(safe-area-inset-bottom, 0px) + ${bottomInset}px)`,
               left: 0,
               right: 0,
               zIndex: 9999,
               display: 'flex',
               justifyContent: 'center',
-              pointerEvents: 'none'
+              pointerEvents: 'none',
+              transform: 'translateZ(0)'
             }}
           >
             <div style={{
