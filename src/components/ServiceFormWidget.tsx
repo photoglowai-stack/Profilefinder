@@ -139,19 +139,26 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
                             </svg>
                         </div>
                     )}
-                    <div style={{ height: '70%', backgroundColor: 'white', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                    <div
+                        style={{
+                            height: '70%',
+                            backgroundColor: '#f8fafc',
+                            overflow: 'hidden',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            position: 'relative',
+                            padding: '6px',
+                        }}
+                    >
                         <img
-                            src="/assets/avatars/widget-man.png"
+                            src="https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(6).svg"
                             alt="Man"
                             style={{
-                                width: '110%',
-                                height: '110%',
-                                objectFit: 'cover',
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'contain',
                                 objectPosition: 'center',
-                                position: 'absolute',
-                                left: '50%',
-                                top: '50%',
-                                transform: 'translate(-50%, -50%)'
                             }}
                         />
                     </div>
@@ -194,19 +201,26 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
                             </svg>
                         </div>
                     )}
-                    <div style={{ height: '70%', backgroundColor: 'white', overflow: 'hidden', display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+                    <div
+                        style={{
+                            height: '70%',
+                            backgroundColor: '#f8fafc',
+                            overflow: 'hidden',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            position: 'relative',
+                            padding: '6px',
+                        }}
+                    >
                         <img
-                            src="/assets/avatars/widget-woman.png"
+                            src="https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/FEMME.svg"
                             alt="Woman"
                             style={{
-                                width: '110%',
-                                height: '110%',
-                                objectFit: 'cover',
+                                width: '100%',
+                                height: '100%',
+                                objectFit: 'contain',
                                 objectPosition: 'center',
-                                position: 'absolute',
-                                left: '50%',
-                                top: '50%',
-                                transform: 'translate(-50%, -50%)'
                             }}
                         />
                     </div>
