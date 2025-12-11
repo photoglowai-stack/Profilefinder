@@ -124,6 +124,7 @@ export function FidelityForm() {
         {previews.length === 0 ? (
           <label
             htmlFor="screenshots-upload"
+            onClick={handleBrowseClick}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -131,6 +132,14 @@ export function FidelityForm() {
                 ? "border-[#ff4e71] bg-gradient-to-br from-red-50 to-orange-50"
                 : "border-gray-300 hover:border-[#ff4e71] hover:bg-gradient-to-br hover:from-red-50 hover:to-orange-50"
               }`}
+            role="button"
+            tabIndex={0}
+            onKeyDown={event => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                handleBrowseClick();
+              }
+            }}
           >
             <div className="p-3 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] rounded-xl mb-3 group-hover:scale-110 transition-transform">
               <Upload className="w-6 h-6 text-white" />
