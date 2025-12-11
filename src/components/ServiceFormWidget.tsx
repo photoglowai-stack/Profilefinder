@@ -112,6 +112,25 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
         position: 'relative',
     });
 
+    const avatarContainerStyle: React.CSSProperties = {
+        height: '70%',
+        backgroundColor: '#f8fafc',
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        position: 'relative',
+        padding: 0,
+    };
+
+    const avatarImageStyle: React.CSSProperties = {
+        width: '115%',
+        height: '115%',
+        objectFit: 'cover',
+        objectPosition: 'center 42%',
+        transform: 'translateY(2%)',
+    };
+
     return (
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
             {/* Gender Cards Container */}
@@ -140,26 +159,12 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
                         </div>
                     )}
                     <div
-                        style={{
-                            height: '70%',
-                            backgroundColor: '#f8fafc',
-                            overflow: 'hidden',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            position: 'relative',
-                            padding: '6px',
-                        }}
+                        style={avatarContainerStyle}
                     >
                         <img
                             src="https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(6).svg"
                             alt="Man"
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'contain',
-                                objectPosition: 'center',
-                            }}
+                            style={avatarImageStyle}
                         />
                     </div>
                     <div style={{
@@ -202,26 +207,12 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
                         </div>
                     )}
                     <div
-                        style={{
-                            height: '70%',
-                            backgroundColor: '#f8fafc',
-                            overflow: 'hidden',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            position: 'relative',
-                            padding: '6px',
-                        }}
+                        style={avatarContainerStyle}
                     >
                         <img
                             src="https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/FEMME.svg"
                             alt="Woman"
-                            style={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'contain',
-                                objectPosition: 'center',
-                            }}
+                            style={avatarImageStyle}
                         />
                     </div>
                     <div style={{
