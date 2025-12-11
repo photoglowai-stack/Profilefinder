@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Upload, Image as ImageIcon, AlertCircle } from "lucide-react";
 import { useService } from "../../lib/ServiceContext";
@@ -12,6 +12,19 @@ export function FaceTraceForm() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSearching, setIsSearching] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const formatFileSize = (size: number) => {
+    if (size < 1024) return `${size} B`;
+    if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+    return `${(size / (1024 * 1024)).toFixed(2)} MB`;
+  };
+
+  const clearFileInput = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -23,6 +36,18 @@ export function FaceTraceForm() {
       };
       reader.readAsDataURL(file);
     }
+
+    clearFileInput();
+  };
+
+  const handleBrowseClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleRemoveFile = () => {
+    setImageFile(null);
+    setImagePreview(null);
+    clearFileInput();
   };
 
   const handleSearch = () => {
@@ -59,6 +84,15 @@ export function FaceTraceForm() {
           {content.label || 'Upload a profile photo'}
         </label>
 
+        <input
+          ref={fileInputRef}
+          id="photo-upload"
+          type="file"
+          accept="image/*"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+
         {!imagePreview ? (
           <label
             htmlFor="photo-upload"
@@ -69,13 +103,6 @@ export function FaceTraceForm() {
             </div>
             <p className="text-gray-700 mb-1 font-medium text-sm">{content.uploadText || 'Click to upload a photo'}</p>
             <p className="text-xs text-gray-500">{content.uploadHint || 'JPG, PNG, WEBP (max. 10MB)'}</p>
-            <input
-              id="photo-upload"
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-            />
           </label>
         ) : (
           <motion.div
@@ -89,10 +116,7 @@ export function FaceTraceForm() {
               className="w-full h-48 object-cover rounded-xl border-2 border-gray-200"
             />
             <button
-              onClick={() => {
-                setImageFile(null);
-                setImagePreview(null);
-              }}
+              onClick={handleRemoveFile}
               className="absolute -top-2 -right-2 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] text-white p-2 rounded-full hover:scale-110 transition-transform shadow-lg"
             >
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -101,6 +125,54 @@ export function FaceTraceForm() {
             </button>
           </motion.div>
         )}
+      </div>
+
+      {/* Uploaded Files Overview */}
+      <div className="mb-5">
+        <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold text-gray-800">Uploaded files</p>
+              <p className="text-xs text-gray-500">Keep track of what will be analyzed.</p>
+            </div>
+            <button
+              type="button"
+              onClick={handleBrowseClick}
+              className="text-xs font-semibold text-white bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] px-3 py-1.5 rounded-full hover:shadow-md transition-shadow"
+            >
+              Add / Replace
+            </button>
+          </div>
+
+          <div className="mt-3">
+            {imageFile ? (
+              <div className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+                <div>
+                  <p className="text-sm font-medium text-gray-800 truncate max-w-[200px]">{imageFile.name}</p>
+                  <p className="text-xs text-gray-500">{formatFileSize(imageFile.size)}</p>
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={handleBrowseClick}
+                    className="text-xs font-semibold text-[#ff4e71] hover:text-[#ff7f66]"
+                  >
+                    Replace
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleRemoveFile}
+                    className="text-xs font-semibold text-gray-500 hover:text-gray-700"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <p className="text-xs text-gray-500">No file uploaded yet.</p>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Alert - Compact */}
