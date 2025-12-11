@@ -12,6 +12,7 @@ export function FaceTraceForm() {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSearching, setIsSearching] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const formatFileSize = (size: number) => {
@@ -26,18 +27,41 @@ export function FaceTraceForm() {
     }
   };
 
+  const handleFileRead = (file: File) => {
+    setImageFile(file);
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result as string);
+    };
+    reader.readAsDataURL(file);
+  };
+
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setImageFile(file);
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setImagePreview(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+      handleFileRead(file);
     }
 
     clearFileInput();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) {
+      handleFileRead(file);
+      clearFileInput();
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
   };
 
   const handleBrowseClick = () => {
@@ -96,13 +120,26 @@ export function FaceTraceForm() {
         {!imagePreview ? (
           <label
             htmlFor="photo-upload"
-            className="group border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:border-[#ff4e71] hover:bg-gradient-to-br hover:from-red-50 hover:to-orange-50 transition-all"
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            className={`group border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all ${isDragging
+                ? "border-[#ff4e71] bg-gradient-to-br from-red-50 to-orange-50"
+                : "border-gray-300 hover:border-[#ff4e71] hover:bg-gradient-to-br hover:from-red-50 hover:to-orange-50"
+              }`}
           >
             <div className="p-3 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] rounded-xl mb-3 group-hover:scale-110 transition-transform">
               <Upload className="w-6 h-6 text-white" />
             </div>
-            <p className="text-gray-700 mb-1 font-medium text-sm">{content.uploadText || 'Click to upload a photo'}</p>
+            <p className="text-gray-700 mb-1 font-medium text-sm">{content.uploadText || 'Drag & drop a photo or click browse'}</p>
             <p className="text-xs text-gray-500">{content.uploadHint || 'JPG, PNG, WEBP (max. 10MB)'}</p>
+            <button
+              type="button"
+              onClick={handleBrowseClick}
+              className="mt-3 inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-full text-xs font-semibold text-gray-700 shadow-sm hover:border-[#ff4e71] hover:text-[#ff4e71]"
+            >
+              Browse files
+            </button>
           </label>
         ) : (
           <motion.div
