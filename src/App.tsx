@@ -26,6 +26,7 @@ import ActivityTracker from "./pages/ActivityTracker";
 import FaceTrace from "./pages/FaceTrace";
 import DatingSearchWizard from "./pages/DatingSearchWizard";
 import ServiceNavbar from "./components/ServiceNavbar";
+import ScrollToTop from "./components/ScrollToTop";
 
 // Page gradient for Chat Analysis (orange)
 const CHAT_ANALYSIS_GRADIENT = 'linear-gradient(135deg, #FF6B6B 0%, #FFA502 100%)';
@@ -156,6 +157,7 @@ function App() {
 function AppContent() {
   return (
     <>
+      <ScrollToTop />
       <SEOHead />
       <StructuredData />
       <ServiceColorIndicator />
