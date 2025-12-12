@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import {
-    Instagram, ShieldCheck, Check, CheckCircle2, Lock, Mail,
+    ShieldCheck, Check, CheckCircle2, Lock, Mail,
     ArrowRight, Loader2, FileText, EyeOff, AlertTriangle,
     Users, Link, Camera, User
 } from 'lucide-react';
 import ServiceNavbar from '../components/ServiceNavbar';
 import { Footer } from '../components/Footer';
-import { useService } from '../lib/ServiceContext';
 import '../styles/activity-tracker.css';
 
 // Log items (English)
@@ -60,13 +59,14 @@ const PROFILES = [
     }
 ];
 
-export default function ActivityTracker() {
-    // Set service context for colors
-    const { setSelectedService, colors } = useService();
+// Page colors (orange gradient)
+const PAGE_COLORS = {
+    primary: '#ff4e71',
+    secondary: '#ffb347'
+};
 
-    useEffect(() => {
-        setSelectedService('following');
-    }, [setSelectedService]);
+export default function ActivityTracker() {
+    // State (removed useService - using fixed page colors)
 
     // State
     const [progress, setProgress] = useState(0);
@@ -202,9 +202,9 @@ export default function ActivityTracker() {
     };
 
     return (
-        <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)` }}>
-            {/* ServiceNavbar - Same as Hero */}
-            <ServiceNavbar />
+        <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${PAGE_COLORS.primary} 0%, ${PAGE_COLORS.secondary} 100%)` }}>
+            {/* ServiceNavbar with page colors */}
+            <ServiceNavbar primaryColor={PAGE_COLORS.primary} secondaryColor={PAGE_COLORS.secondary} />
 
             {/* Main Content */}
             <div className="activity-tracker-wrapper">
@@ -495,7 +495,7 @@ export default function ActivityTracker() {
             </div>
 
             {/* Footer */}
-            <Footer />
+            <Footer primaryColor={PAGE_COLORS.primary} secondaryColor={PAGE_COLORS.secondary} />
         </div>
     );
 }

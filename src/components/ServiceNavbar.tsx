@@ -4,11 +4,13 @@ import { Globe, User, Menu, X } from 'lucide-react';
 const LOGO_URL = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg";
 
 interface ServiceNavbarProps {
-    /** Primary gradient color for mobile menu background */
+    /** Primary gradient color */
     primaryColor?: string;
+    /** Secondary gradient color */
+    secondaryColor?: string;
 }
 
-export default function ServiceNavbar({ primaryColor = '#ff4e71' }: ServiceNavbarProps) {
+export default function ServiceNavbar({ primaryColor = '#ff4e71', secondaryColor = '#ffb347' }: ServiceNavbarProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     return (
@@ -33,13 +35,13 @@ export default function ServiceNavbar({ primaryColor = '#ff4e71' }: ServiceNavba
                 maxWidth: '1280px',
                 margin: '0 auto',
                 width: '100%',
-                backdropFilter: 'blur(12px)',
-                backgroundColor: 'rgba(255,255,255,0.05)',
+                background: `linear-gradient(135deg, ${primaryColor}, ${secondaryColor})`,
                 borderBottom: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: '0 0 16px 16px',
                 marginTop: '8px',
                 position: 'relative',
-                color: 'white'
+                color: 'white',
+                boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
             }}>
                 {/* Logo */}
                 <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', textDecoration: 'none', color: 'white' }}>

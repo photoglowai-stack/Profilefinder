@@ -15,7 +15,7 @@ import { RelatedSearches } from "./components/RelatedSearches";
 import { CTASection } from "./components/CTASection";
 import { FAQ } from "./components/FAQ";
 import { Footer } from "./components/Footer";
-import { ServiceProvider, useService } from "./lib/ServiceContext";
+import { ServiceProvider } from "./lib/ServiceContext";
 import { ServiceColorIndicator } from "./components/ui/ServiceColorIndicator";
 import { ServiceFormWidget } from "./components/ServiceFormWidget";
 import { PaymentPage } from "./pages/PaymentPage";
@@ -26,24 +26,25 @@ import ActivityTracker from "./pages/ActivityTracker";
 import FaceTrace from "./pages/FaceTrace";
 import ServiceNavbar from "./components/ServiceNavbar";
 
+// Page colors for Chat Analysis (orange gradient)
+const CHAT_ANALYSIS_COLORS = {
+  primary: '#FF6B6B',
+  secondary: '#FFA502'
+};
+
 // Wrapper component to receive photos from route state
 function ChatAnalysisPage() {
   const location = useLocation();
   const photos = (location.state as any)?.photos || [];
-  const { setSelectedService, colors } = useService();
-
-  useEffect(() => {
-    setSelectedService('fidelity');
-  }, [setSelectedService]);
 
   return (
-    <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)` }}>
-      <ServiceNavbar />
+    <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${CHAT_ANALYSIS_COLORS.primary} 0%, ${CHAT_ANALYSIS_COLORS.secondary} 100%)` }}>
+      <ServiceNavbar primaryColor={CHAT_ANALYSIS_COLORS.primary} secondaryColor={CHAT_ANALYSIS_COLORS.secondary} />
       <ChatAnalysisCard
         photos={photos}
         paymentUrl="/payment"
       />
-      <Footer />
+      <Footer primaryColor={CHAT_ANALYSIS_COLORS.primary} secondaryColor={CHAT_ANALYSIS_COLORS.secondary} />
     </div>
   );
 }

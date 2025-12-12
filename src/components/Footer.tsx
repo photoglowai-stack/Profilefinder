@@ -23,14 +23,25 @@ const footerLinks = {
   ]
 };
 
-export function Footer() {
+interface FooterProps {
+  /** Override primary gradient color */
+  primaryColor?: string;
+  /** Override secondary gradient color */
+  secondaryColor?: string;
+}
+
+export function Footer({ primaryColor, secondaryColor }: FooterProps = {}) {
   const { colors } = useService();
+
+  // Use custom colors if provided, otherwise fall back to service context
+  const primary = primaryColor || colors.primary;
+  const secondary = secondaryColor || colors.secondary;
 
   return (
     <footer
       className="text-white py-6 md:py-7"
       style={{
-        background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`
+        background: `linear-gradient(135deg, ${primary}, ${secondary})`
       }}
     >
       <div className="max-w-[1760px] mx-auto px-4 md:px-8">

@@ -6,7 +6,6 @@ import {
 } from 'lucide-react';
 import ServiceNavbar from '../components/ServiceNavbar';
 import { Footer } from '../components/Footer';
-import { useService } from '../lib/ServiceContext';
 import '../styles/face-trace.css';
 
 // ============================================
@@ -93,16 +92,18 @@ const getSourceStyle = (key: MockResult['sourceKey']) => {
 // ============================================
 // MAIN COMPONENT
 // ============================================
+
+// Page colors (orange gradient)
+const PAGE_COLORS = {
+    primary: '#FF6B6B',
+    secondary: '#FFA502'
+};
+
 export default function FaceTrace() {
     const location = useLocation();
     const uploadedImage = (location.state as { image?: string })?.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80";
 
-    // Set service context for colors
-    const { setSelectedService, colors } = useService();
-
-    useEffect(() => {
-        setSelectedService('facetrace');
-    }, [setSelectedService]);
+    // State (removed useService - using fixed page colors)
 
     // State
     const [progress, setProgress] = useState(0);
@@ -210,9 +211,9 @@ export default function FaceTrace() {
     };
 
     return (
-        <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)` }}>
-            {/* ServiceNavbar - Same as Hero */}
-            <ServiceNavbar />
+        <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${PAGE_COLORS.primary} 0%, ${PAGE_COLORS.secondary} 100%)` }}>
+            {/* ServiceNavbar with page colors */}
+            <ServiceNavbar primaryColor={PAGE_COLORS.primary} secondaryColor={PAGE_COLORS.secondary} />
 
             {/* Main Content */}
             <div className="face-trace-wrapper">
@@ -487,7 +488,7 @@ export default function FaceTrace() {
             </div>
 
             {/* Footer */}
-            <Footer />
+            <Footer primaryColor={PAGE_COLORS.primary} secondaryColor={PAGE_COLORS.secondary} />
         </div>
     );
 }

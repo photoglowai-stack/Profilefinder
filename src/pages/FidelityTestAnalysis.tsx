@@ -6,7 +6,6 @@ import {
 } from 'lucide-react';
 import ServiceNavbar from '../components/ServiceNavbar';
 import { Footer } from '../components/Footer';
-import { useService } from '../lib/ServiceContext';
 import '../styles/fidelity-analysis.css';
 
 // Log items with lucide icons
@@ -33,13 +32,14 @@ Saying "Don't worry about it" is a common way to avoid the truth.
 
 ... [BLURRED]`;
 
-export default function FidelityTestAnalysis() {
-    // Set service context for colors
-    const { setSelectedService, colors } = useService();
+// Page colors (orange gradient)
+const PAGE_COLORS = {
+    primary: '#ff4e71',
+    secondary: '#ffb347'
+};
 
-    useEffect(() => {
-        setSelectedService('fidelity');
-    }, [setSelectedService]);
+export default function FidelityTestAnalysis() {
+    // State (removed useService - using fixed page colors)
 
     // State
     const [progress, setProgress] = useState(0);
@@ -167,9 +167,9 @@ export default function FidelityTestAnalysis() {
 
 
     return (
-        <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)` }}>
-            {/* ServiceNavbar - Same as Hero */}
-            <ServiceNavbar />
+        <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${PAGE_COLORS.primary} 0%, ${PAGE_COLORS.secondary} 100%)` }}>
+            {/* ServiceNavbar with page colors */}
+            <ServiceNavbar primaryColor={PAGE_COLORS.primary} secondaryColor={PAGE_COLORS.secondary} />
 
             {/* Main Content with Gradient Background */}
             <div className="fidelity-analysis-wrapper">
@@ -538,7 +538,7 @@ export default function FidelityTestAnalysis() {
             </div>
 
             {/* Footer */}
-            <Footer />
+            <Footer primaryColor={PAGE_COLORS.primary} secondaryColor={PAGE_COLORS.secondary} />
         </div>
     );
 }
