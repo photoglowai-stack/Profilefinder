@@ -408,7 +408,7 @@ export default function DatingSearchWizard() {
 
                         {/* Map Container */}
                         <div className="dating-map-container" style={{ marginBottom: '16px' }}>
-                            <div ref={mapContainerRef} />
+                            <div ref={mapContainerRef} style={{ width: '100%', height: '100%' }} />
                             <div style={{
                                 position: 'absolute',
                                 bottom: '8px',
