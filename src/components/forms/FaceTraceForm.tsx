@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Upload, Image as ImageIcon, AlertCircle } from "lucide-react";
-import { useService } from "../../lib/ServiceContext";
 import { serviceContent } from "../../lib/content";
 import { useNavigate } from "react-router-dom";
 
 export function FaceTraceForm() {
-  const { selectedService } = useService();
   const navigate = useNavigate();
-  const content = serviceContent[selectedService].form;
+  // Force the type since this form is only rendered for 'facetrace' service
+  const content = serviceContent.facetrace.form;
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [isSearching, setIsSearching] = useState(false);

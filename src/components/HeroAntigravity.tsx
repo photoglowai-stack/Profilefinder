@@ -6,7 +6,7 @@ import {
     Search, Globe, User, Check, Shield, Clock, Menu, X,
     Heart, Users, ScanFace, MessageSquare, Instagram,
     MessageCircle, Fingerprint, TrendingUp, Star,
-    UploadCloud, Lock, Activity, ArrowRight
+    UploadCloud, Activity, ArrowRight
 } from 'lucide-react';
 import { FidelityForm } from './forms/FidelityForm';
 
@@ -36,6 +36,7 @@ const HeroAntigravity: React.FC = () => {
     const [selectedGender, setSelectedGender] = useState<GenderType>('man');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [faceTraceImage, setFaceTraceImage] = useState<string | null>(null);
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [faceTraceFile, setFaceTraceFile] = useState<File | null>(null);
 
     const handleFaceTraceUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -510,7 +511,7 @@ const HeroAntigravity: React.FC = () => {
                                 transition: 'all 0.3s ease'
                             }}
                         >
-                            {React.cloneElement(service.icon as React.ReactElement, { size: 16 })}
+                            {React.cloneElement(service.icon as React.ReactElement<{ size?: number }>, { size: 16 })}
                             <span style={{ fontWeight: 700, letterSpacing: '0.01em' }}>{service.label}</span>
                         </button>
                     ))}

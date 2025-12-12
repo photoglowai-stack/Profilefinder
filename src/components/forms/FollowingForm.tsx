@@ -1,14 +1,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Instagram, Search } from "lucide-react";
-import { useService } from "../../lib/ServiceContext";
 import { serviceContent } from "../../lib/content";
 import { useNavigate } from "react-router-dom";
 
 export function FollowingForm() {
-  const { selectedService } = useService();
   const navigate = useNavigate();
-  const content = serviceContent[selectedService].form;
+  // Force the type since this form is only rendered for 'following' service
+  const content = serviceContent.following.form;
   const [username, setUsername] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
