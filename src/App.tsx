@@ -24,6 +24,7 @@ import ChatAnalysisCard from "./components/ChatAnalysisCard";
 import FidelityTestAnalysis from "./pages/FidelityTestAnalysis";
 import ActivityTracker from "./pages/ActivityTracker";
 import FaceTrace from "./pages/FaceTrace";
+import DatingSearchWizard from "./pages/DatingSearchWizard";
 import ServiceNavbar from "./components/ServiceNavbar";
 
 // Page gradient for Chat Analysis (orange)
@@ -167,6 +168,7 @@ function AppContent() {
         <Route path="/fidelity-test/analysis" element={<FidelityTestAnalysis />} />
         <Route path="/activity-tracker" element={<ActivityTracker />} />
         <Route path="/face-trace" element={<FaceTrace />} />
+        <Route path="/dating-search" element={<DatingSearchWizard />} />
       </Routes>
     </>
   );
