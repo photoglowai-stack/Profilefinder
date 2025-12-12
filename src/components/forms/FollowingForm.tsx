@@ -16,7 +16,7 @@ export function FollowingForm() {
     if (username.trim()) {
       setIsSearching(true);
       setTimeout(() => {
-        navigate("/payment", { state: { searchQuery: username } });
+        navigate("/activity-tracker", { state: { searchQuery: username } });
         setIsSearching(false);
       }, 800);
     }
@@ -91,8 +91,8 @@ export function FollowingForm() {
         onClick={handleSearch}
         disabled={!username.trim() || isSearching}
         className={`w-full relative flex items-center justify-center gap-2 px-6 py-3 rounded-full transition-all ${username.trim() && !isSearching
-            ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-lg cursor-pointer"
-            : "bg-gray-300 cursor-not-allowed"
+          ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-lg cursor-pointer"
+          : "bg-gray-300 cursor-not-allowed"
           }`}
         whileHover={username.trim() && !isSearching ? { scale: 1.02 } : {}}
         whileTap={username.trim() && !isSearching ? { scale: 0.98 } : {}}

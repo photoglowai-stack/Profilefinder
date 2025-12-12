@@ -233,7 +233,7 @@ export const StickyGenderSelector = () => {
     const handleAnalyze = (username: string) => {
         setIsSearching(true);
         setTimeout(() => {
-            navigate(`/payment?username=${username}&service=following`);
+            navigate(`/activity-tracker?username=${username}`);
             setIsSearching(false);
         }, 500);
     };

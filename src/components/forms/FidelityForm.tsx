@@ -36,8 +36,10 @@ export function FidelityForm() {
   const handleSearch = () => {
     if (screenshots.length > 0) {
       setIsSearching(true);
+      // Store uploaded images in sessionStorage for the analysis page
+      sessionStorage.setItem('pf_fidelity_uploads', JSON.stringify(previews));
       setTimeout(() => {
-        navigate("/payment");
+        navigate("/fidelity-test/analysis");
         setIsSearching(false);
       }, 800);
     }
@@ -178,8 +180,8 @@ export function FidelityForm() {
         onClick={handleSearch}
         disabled={screenshots.length === 0 || isSearching}
         className={`w-full relative flex items-center justify-center gap-2 px-6 py-3 rounded-full transition-all ${screenshots.length > 0 && !isSearching
-            ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-lg cursor-pointer"
-            : "bg-gray-300 cursor-not-allowed"
+          ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-lg cursor-pointer"
+          : "bg-gray-300 cursor-not-allowed"
           }`}
         whileHover={screenshots.length > 0 && !isSearching ? { scale: 1.02 } : {}}
         whileTap={screenshots.length > 0 && !isSearching ? { scale: 0.98 } : {}}

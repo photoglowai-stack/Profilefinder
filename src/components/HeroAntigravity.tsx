@@ -8,6 +8,7 @@ import {
     MessageCircle, Fingerprint, TrendingUp, Star,
     UploadCloud, Lock, Activity, ArrowRight
 } from 'lucide-react';
+import { FidelityForm } from './forms/FidelityForm';
 
 // --- Types ---
 type GenderType = 'man' | 'woman';
@@ -34,6 +35,25 @@ const HeroAntigravity: React.FC = () => {
     const { selectedService, setSelectedService } = useService();
     const [selectedGender, setSelectedGender] = useState<GenderType>('man');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [faceTraceImage, setFaceTraceImage] = useState<string | null>(null);
+    const [faceTraceFile, setFaceTraceFile] = useState<File | null>(null);
+
+    const handleFaceTraceUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setFaceTraceFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setFaceTraceImage(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+    const clearFaceTraceImage = () => {
+        setFaceTraceImage(null);
+        setFaceTraceFile(null);
+    };
 
     // --- Images ---
     const avatarMan = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(6).svg";
@@ -102,9 +122,7 @@ const HeroAntigravity: React.FC = () => {
         fidelity: 'linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #f9a8d4 100%)'
     };
 
-    const handleSearch = () => {
-        navigate('/payment');
-    };
+
 
     return (
         <section style={{
@@ -609,91 +627,248 @@ const HeroAntigravity: React.FC = () => {
 
                         {selectedService === 'facetrace' && (
                             <div style={{ display: 'flex', flexDirection: 'column', height: '300px' }}>
-                                <UploadZone
-                                    icon={<ScanFace size={48} strokeWidth={1.5} />}
-                                    title="Drag & Drop Photo"
-                                    subtitle="JPG, PNG (Max 10MB)"
-                                    accentColor="#ff4b5c"
-                                    badge={<Fingerprint size={16} />}
-                                />
+                                {!faceTraceImage ? (
+                                    <label
+                                        htmlFor="facetrace-upload"
+                                        style={{
+                                            position: 'relative',
+                                            flex: 1,
+                                            marginBottom: '16px',
+                                            cursor: 'pointer',
+                                            overflow: 'hidden',
+                                            borderRadius: '16px',
+                                            border: '4px dashed #e2e8f0',
+                                            backgroundColor: 'rgba(248,250,252,0.5)',
+                                            transition: 'all 0.3s',
+                                            color: '#ff4b5c'
+                                        }}
+                                    >
+                                        <div
+                                            className="animate-scan"
+                                            style={{
+                                                position: 'absolute',
+                                                left: 0,
+                                                right: 0,
+                                                height: '3px',
+                                                backgroundColor: '#ff4b5c',
+                                                boxShadow: '0 0 20px #ff4b5c',
+                                                zIndex: 10,
+                                                pointerEvents: 'none'
+                                            }}
+                                        />
+                                        <div style={{
+                                            position: 'absolute',
+                                            inset: 0,
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            gap: '16px',
+                                            padding: '24px'
+                                        }}>
+                                            <div style={{
+                                                width: '80px',
+                                                height: '80px',
+                                                backgroundColor: '#ffffff',
+                                                borderRadius: '50%',
+                                                boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                color: '#ff4b5c',
+                                                position: 'relative',
+                                                zIndex: 20,
+                                                border: '4px solid #f1f5f9'
+                                            }}>
+                                                <ScanFace size={48} strokeWidth={1.5} />
+                                                <div style={{
+                                                    position: 'absolute',
+                                                    bottom: '-4px',
+                                                    right: '-4px',
+                                                    backgroundColor: '#1e293b',
+                                                    color: '#ffffff',
+                                                    borderRadius: '50%',
+                                                    padding: '6px',
+                                                    border: '4px solid #ffffff'
+                                                }}>
+                                                    <Fingerprint size={16} />
+                                                </div>
+                                            </div>
+                                            <div style={{ textAlign: 'center', zIndex: 20 }}>
+                                                <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#1e293b', letterSpacing: '-0.02em', marginBottom: '8px' }}>
+                                                    Drag & Drop Photo
+                                                </h3>
+                                                <p style={{
+                                                    fontSize: '12px',
+                                                    color: '#64748b',
+                                                    fontWeight: 700,
+                                                    backgroundColor: 'rgba(255,255,255,0.6)',
+                                                    padding: '4px 12px',
+                                                    borderRadius: '9999px',
+                                                    border: '1px solid #e2e8f0',
+                                                    display: 'inline-block'
+                                                }}>
+                                                    JPG, PNG (Max 10MB)
+                                                </p>
+                                            </div>
+                                            <div style={{
+                                                backgroundColor: '#1e293b',
+                                                color: '#ffffff',
+                                                fontSize: '12px',
+                                                fontWeight: 800,
+                                                padding: '10px 20px',
+                                                borderRadius: '12px',
+                                                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                gap: '8px',
+                                                marginTop: '8px',
+                                                cursor: 'pointer'
+                                            }}>
+                                                <UploadCloud size={16} strokeWidth={3} />
+                                                Browse Files
+                                            </div>
+                                        </div>
+                                        <input
+                                            id="facetrace-upload"
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleFaceTraceUpload}
+                                            style={{ display: 'none' }}
+                                        />
+                                    </label>
+                                ) : (
+                                    <div style={{
+                                        position: 'relative',
+                                        flex: 1,
+                                        marginBottom: '16px',
+                                        borderRadius: '16px',
+                                        overflow: 'hidden',
+                                        border: '4px solid #22c55e'
+                                    }}>
+                                        <img
+                                            src={faceTraceImage}
+                                            alt="Preview"
+                                            style={{
+                                                width: '100%',
+                                                height: '100%',
+                                                objectFit: 'cover'
+                                            }}
+                                        />
+                                        <button
+                                            onClick={clearFaceTraceImage}
+                                            style={{
+                                                position: 'absolute',
+                                                top: '12px',
+                                                right: '12px',
+                                                backgroundColor: '#ff4b5c',
+                                                color: '#ffffff',
+                                                border: 'none',
+                                                borderRadius: '50%',
+                                                width: '32px',
+                                                height: '32px',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                cursor: 'pointer',
+                                                boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
+                                            }}
+                                        >
+                                            <X size={18} strokeWidth={3} />
+                                        </button>
+                                        <div style={{
+                                            position: 'absolute',
+                                            bottom: '12px',
+                                            left: '12px',
+                                            backgroundColor: '#22c55e',
+                                            color: '#ffffff',
+                                            padding: '6px 12px',
+                                            borderRadius: '8px',
+                                            fontSize: '12px',
+                                            fontWeight: 700,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '6px'
+                                        }}>
+                                            <Check size={14} strokeWidth={3} />
+                                            Photo ready
+                                        </div>
+                                    </div>
+                                )}
                             </div>
                         )}
 
                         {selectedService === 'fidelity' && (
-                            <div style={{ display: 'flex', flexDirection: 'column', height: '300px' }}>
-                                <UploadZone
-                                    icon={<MessageCircle size={48} strokeWidth={1.5} />}
-                                    title="Upload Screenshot"
-                                    subtitle="WhatsApp, Tinder, SMS"
-                                    accentColor="#0f172a"
-                                    badge={<Lock size={16} />}
-                                />
+                            <div style={{ marginTop: '-12px' }}>
+                                <FidelityForm />
                             </div>
                         )}
 
-                        {/* Action Button */}
-                        <button
-                            onClick={handleSearch}
-                            className="hero-btn shimmer-effect"
-                            style={{
-                                position: 'relative',
-                                width: '100%',
-                                background: currentContent.buttonBg,
-                                color: '#ffffff',
-                                borderRadius: '9999px',
-                                padding: '16px 24px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                border: '1px solid rgba(255,255,255,0.1)',
-                                cursor: 'pointer',
-                                overflow: 'hidden',
-                                marginTop: '8px',
-                                boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
-                                transition: 'transform 0.3s'
-                            }}
-                        >
-                            <div
-                                className="shimmer-bar"
+                        {/* Action Button - Only for non-fidelity services */}
+                        {selectedService !== 'fidelity' && (
+                            <button
+                                onClick={() => navigate('/payment')}
+                                className="hero-btn shimmer-effect"
                                 style={{
-                                    position: 'absolute',
-                                    inset: 0,
-                                    background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
-                                    transform: 'translateX(-150%) skewX(-15deg)'
-                                }}
-                            />
-
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '16px', position: 'relative', zIndex: 20 }}>
-                                <span style={{ opacity: 0.9 }}>
-                                    {currentContent.buttonIcon}
-                                </span>
-                                <span style={{
-                                    fontSize: '18px',
-                                    fontWeight: 900,
-                                    letterSpacing: '0.1em',
-                                    textTransform: 'uppercase',
-                                    textShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                                }}>
-                                    {currentContent.cta}
-                                </span>
-                                <ArrowRight size={20} strokeWidth={3} />
-                            </div>
-
-                            <span
-                                className="animate-float"
-                                style={{
-                                    position: 'absolute',
-                                    right: '16px',
-                                    bottom: '8px',
-                                    fontSize: '30px',
-                                    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
-                                    zIndex: 30,
-                                    pointerEvents: 'none'
+                                    position: 'relative',
+                                    width: '100%',
+                                    background: currentContent.buttonBg,
+                                    color: '#ffffff',
+                                    borderRadius: '9999px',
+                                    padding: '16px 24px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    border: '1px solid rgba(255,255,255,0.1)',
+                                    cursor: 'pointer',
+                                    overflow: 'hidden',
+                                    marginTop: '8px',
+                                    boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
+                                    transition: 'transform 0.3s'
                                 }}
                             >
-                                👆
-                            </span>
-                        </button>
+                                <div
+                                    className="shimmer-bar"
+                                    style={{
+                                        position: 'absolute',
+                                        inset: 0,
+                                        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+                                        transform: 'translateX(-150%) skewX(-15deg)'
+                                    }}
+                                />
+
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', position: 'relative', zIndex: 20 }}>
+                                    <span style={{ opacity: 0.9 }}>
+                                        {currentContent.buttonIcon}
+                                    </span>
+                                    <span style={{
+                                        fontSize: '18px',
+                                        fontWeight: 900,
+                                        letterSpacing: '0.1em',
+                                        textTransform: 'uppercase',
+                                        textShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                                    }}>
+                                        {currentContent.cta}
+                                    </span>
+                                    <ArrowRight size={20} strokeWidth={3} />
+                                </div>
+
+                                <span
+                                    className="animate-float"
+                                    style={{
+                                        position: 'absolute',
+                                        right: '16px',
+                                        bottom: '8px',
+                                        fontSize: '30px',
+                                        filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+                                        zIndex: 30,
+                                        pointerEvents: 'none'
+                                    }}
+                                >
+                                    👆
+                                </span>
+                            </button>
+                        )}
 
                         {/* Social Proof */}
                         <div style={{

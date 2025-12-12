@@ -1,0 +1,274 @@
+/* ===== FIDELITY ANALYSIS PAGE - SCOPED STYLES ===== */
+
+/* Normal page wrapper with gradient background - integrates with site layout */
+.fidelity-analysis-wrapper {
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem 4rem 1rem;
+    background: linear-gradient(to bottom right, #FF6B6B, #FFA502);
+    font-family: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Red blinking cursor for typing effect */
+.typing-cursor::after {
+    content: '';
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background-color: #EF4444;
+    margin-left: 2px;
+    vertical-align: sub;
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Blur text content for gate overlay */
+.blur-content {
+    filter: blur(8px) !important;
+    user-select: none;
+    transition: filter 0.8s ease;
+    opacity: 0.7;
+}
+
+/* Friendly Scanner (Orange/Pink) */
+.scan-line {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, transparent, rgba(255, 107, 107, 0.1));
+    border-bottom: 3px solid rgba(255, 107, 107, 0.6);
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+    animation: softScan 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    pointer-events: none;
+}
+
+@keyframes softScan {
+    0% {
+        top: -100%;
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 1;
+    }
+
+    100% {
+        top: 120%;
+        opacity: 0;
+    }
+}
+
+/* Fade in up animation */
+.fade-in-up {
+    animation: fadeInUp 0.4s ease-out forwards;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* IMPORTANT: fadeIn keyframes for animate-[fadeIn_0.5s_0.2s_forwards] */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+/* Custom scrollbar for logs */
+.custom-scroll::-webkit-scrollbar {
+    width: 4px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+    background: #fed7aa;
+    border-radius: 10px;
+}
+
+/* Main card styling */
+.fidelity-card {
+    position: relative;
+    width: 100%;
+    max-width: 28rem;
+    background-color: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Thumbnail styling */
+.fidelity-thumbnail {
+    aspect-ratio: 4 / 5;
+    background-color: #f9fafb;
+    border-radius: 1rem;
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #f3f4f6;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+.fidelity-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.9;
+    transition: transform 0.7s;
+}
+
+.fidelity-thumbnail:hover img {
+    transform: scale(1.05);
+}
+
+/* Progress bar container */
+.fidelity-progress-container {
+    background-color: rgba(255, 237, 213, 0.5);
+    border-radius: 1rem;
+    padding: 1rem;
+    border: 1px solid #fed7aa;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* Progress bar */
+.fidelity-progress-bar {
+    height: 0.75rem;
+    background-color: #fed7aa;
+    border-radius: 9999px;
+    overflow: hidden;
+    margin-bottom: 0.75rem;
+}
+
+.fidelity-progress-fill {
+    height: 100%;
+    background: linear-gradient(to right, #fb923c, #ef4444);
+    transition: all 0.3s ease-out;
+    box-shadow: 0 0 10px rgba(249, 115, 22, 0.3);
+}
+
+/* Report box */
+.fidelity-report-box {
+    background-color: white;
+    border-radius: 1rem;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s;
+}
+
+/* Gate overlay */
+.fidelity-gate-overlay {
+    position: absolute;
+    inset: 0;
+    background-color: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    z-index: 30;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    transition: all 0.7s;
+}
+
+.fidelity-gate-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.fidelity-gate-overlay.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Submit button */
+.fidelity-submit-btn {
+    width: 100%;
+    background-color: #111827;
+    color: white;
+    font-weight: 700;
+    padding: 0.875rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s;
+}
+
+.fidelity-submit-btn:hover:not(:disabled) {
+    background-color: #000;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+}
+
+.fidelity-submit-btn:active:not(:disabled) {
+    transform: scale(0.95);
+}
+
+.fidelity-submit-btn:disabled {
+    opacity: 0.8;
+    cursor: not-allowed;
+}
+
+/* Email input */
+.fidelity-email-input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 2.5rem;
+    border-radius: 0.75rem;
+    border: 1px solid #e5e7eb;
+    background-color: #f9fafb;
+    font-size: 0.875rem;
+    color: #111827;
+    font-weight: 500;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    outline: none;
+    transition: all 0.2s;
+}
+
+.fidelity-email-input:focus {
+    background-color: white;
+    border-color: #f97316;
+    box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1);
+}
+
+.fidelity-email-input::placeholder {
+    color: #9ca3af;
+}

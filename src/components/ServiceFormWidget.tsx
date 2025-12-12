@@ -410,7 +410,7 @@ export const ServiceFormWidget = () => {
                 )}
                 {selectedService === 'following' && (
                     <SocialView
-                        onAnalyze={(u) => handleAction(`/payment?username=${u}&service=following`)}
+                        onAnalyze={(u) => handleAction(`/activity-tracker?username=${u}`)}
                         isLoading={isLoading}
                     />
                 )}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import HeroAntigravity from "./components/HeroAntigravity";
 import { StatsBar } from "./components/StatsBar";
@@ -19,6 +19,24 @@ import { ServiceProvider } from "./lib/ServiceContext";
 import { ServiceColorIndicator } from "./components/ui/ServiceColorIndicator";
 import { ServiceFormWidget } from "./components/ServiceFormWidget";
 import { PaymentPage } from "./pages/PaymentPage";
+import ScreenshotAnalysis from "./components/ScreenshotAnalysis";
+import ChatAnalysisCard from "./components/ChatAnalysisCard";
+import FidelityTestAnalysis from "./pages/FidelityTestAnalysis";
+import ActivityTracker from "./pages/ActivityTracker";
+
+// Wrapper component to receive photos from route state
+function ChatAnalysisPage() {
+  const location = useLocation();
+  const photos = (location.state as any)?.photos || [];
+
+  return (
+    <ChatAnalysisCard
+      photos={photos}
+      paymentUrl="/payment"
+    />
+  );
+}
+
 
 function LandingPage() {
   const [showWidget, setShowWidget] = useState(false);
@@ -118,16 +136,29 @@ function App() {
   return (
     <BrowserRouter>
       <ServiceProvider>
-        <SEOHead />
-        <StructuredData />
-        <ServiceColorIndicator />
-
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/payment" element={<PaymentPage />} />
-        </Routes>
+        <AppContent />
       </ServiceProvider>
     </BrowserRouter>
+  );
+}
+
+// Separate component to use useLocation hook inside BrowserRouter
+function AppContent() {
+  return (
+    <>
+      <SEOHead />
+      <StructuredData />
+      <ServiceColorIndicator />
+
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/analysis" element={<ScreenshotAnalysis />} />
+        <Route path="/chat-analysis" element={<ChatAnalysisPage />} />
+        <Route path="/fidelity-test/analysis" element={<FidelityTestAnalysis />} />
+        <Route path="/activity-tracker" element={<ActivityTracker />} />
+      </Routes>
+    </>
   );
 }
 
