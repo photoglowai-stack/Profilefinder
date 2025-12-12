@@ -812,6 +812,8 @@ const HeroAntigravity: React.FC = () => {
                                         navigate('/face-trace', { state: { image: faceTraceImage } });
                                     } else if (selectedService === 'following') {
                                         navigate('/activity-tracker');
+                                    } else if (selectedService === 'dating') {
+                                        navigate('/dating-search');
                                     } else {
                                         navigate('/payment');
                                     }

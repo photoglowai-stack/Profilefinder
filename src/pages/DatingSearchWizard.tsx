@@ -31,6 +31,9 @@ const TOAST_MESSAGES = [
 // Page gradient (Dating = red-orange)
 const PAGE_GRADIENT = 'linear-gradient(180deg, #F87171 0%, #FBBF24 100%)';
 
+// Logo URL
+const LOGO_URL = 'https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/LOGO%20PROFILEFINDER%20HD%20REALIST.svg';
+
 // ============================================
 // MAIN COMPONENT
 // ============================================
@@ -250,23 +253,28 @@ export default function DatingSearchWizard() {
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
                         <h1 style={{ fontSize: '20px', fontWeight: 800, color: '#111', letterSpacing: '-0.02em' }}>ProfileFinder</h1>
 
-                        {/* Detective Icon */}
+                        {/* Detective Icon / Logo */}
                         <div style={{
                             position: 'absolute',
                             left: '50%',
                             top: '24px',
                             transform: 'translateX(-50%)',
-                            width: '48px',
-                            height: '48px',
+                            width: '56px',
+                            height: '56px',
                             backgroundColor: '#f3f4f6',
                             borderRadius: '50%',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             border: '1px solid #e5e7eb',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                            overflow: 'hidden'
                         }}>
-                            <span style={{ fontSize: '24px' }}>🕵️‍♂️</span>
+                            <img
+                                src={LOGO_URL}
+                                alt="ProfileFinder"
+                                style={{ width: '40px', height: '40px' }}
+                            />
                         </div>
 
                         {/* Status */}
@@ -377,8 +385,8 @@ export default function DatingSearchWizard() {
                             Where is <span style={{ color: '#111' }}>{targetName || 'Target'}</span> right now?
                         </h2>
 
-                        {/* Location Input */}
-                        <div style={{ position: 'relative', marginBottom: '16px', zIndex: 50 }}>
+                        {/* Location Input - Higher z-index to overlay map */}
+                        <div style={{ position: 'relative', marginBottom: '16px', zIndex: 1000 }}>
                             <div className="dating-input-wrapper">
                                 <Search size={16} style={{ color: '#9ca3af' }} />
                                 <input
