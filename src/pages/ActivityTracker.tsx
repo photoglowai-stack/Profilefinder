@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import {
     Instagram, ShieldCheck, Check, CheckCircle2, Lock, Mail,
     ArrowRight, Loader2, FileText, EyeOff, AlertTriangle,
-    Users, Link, Camera
+    Users, Link, Camera, User
 } from 'lucide-react';
 import ServiceNavbar from '../components/ServiceNavbar';
 import { Footer } from '../components/Footer';
