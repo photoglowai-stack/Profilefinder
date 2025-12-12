@@ -59,11 +59,8 @@ const PROFILES = [
     }
 ];
 
-// Page colors (orange gradient)
-const PAGE_COLORS = {
-    primary: '#ff4e71',
-    secondary: '#ffb347'
-};
+// Page gradient - same as Hero dating style
+const PAGE_GRADIENT = 'linear-gradient(135deg, #ff4b5c 0%, #ff6b6b 50%, #ff9e75 100%)';
 
 export default function ActivityTracker() {
     // State (removed useService - using fixed page colors)
@@ -202,7 +199,7 @@ export default function ActivityTracker() {
     };
 
     return (
-        <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${PAGE_COLORS.primary} 0%, ${PAGE_COLORS.secondary} 100%)` }}>
+        <div style={{ minHeight: '100vh', background: PAGE_GRADIENT }}>
             {/* ServiceNavbar with page colors */}
             <ServiceNavbar />
 

@@ -26,11 +26,8 @@ import ActivityTracker from "./pages/ActivityTracker";
 import FaceTrace from "./pages/FaceTrace";
 import ServiceNavbar from "./components/ServiceNavbar";
 
-// Page colors for Chat Analysis (orange gradient)
-const CHAT_ANALYSIS_COLORS = {
-  primary: '#FF6B6B',
-  secondary: '#FFA502'
-};
+// Page gradient for Chat Analysis (orange)
+const CHAT_ANALYSIS_GRADIENT = 'linear-gradient(135deg, #FF6B6B 0%, #FFA502 100%)';
 
 // Wrapper component to receive photos from route state
 function ChatAnalysisPage() {
@@ -38,7 +35,7 @@ function ChatAnalysisPage() {
   const photos = (location.state as any)?.photos || [];
 
   return (
-    <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${CHAT_ANALYSIS_COLORS.primary} 0%, ${CHAT_ANALYSIS_COLORS.secondary} 100%)` }}>
+    <div style={{ minHeight: '100vh', background: CHAT_ANALYSIS_GRADIENT }}>
       <ServiceNavbar />
       <ChatAnalysisCard
         photos={photos}

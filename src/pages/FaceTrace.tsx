@@ -93,11 +93,8 @@ const getSourceStyle = (key: MockResult['sourceKey']) => {
 // MAIN COMPONENT
 // ============================================
 
-// Page colors (orange gradient)
-const PAGE_COLORS = {
-    primary: '#FF6B6B',
-    secondary: '#FFA502'
-};
+// Page gradient (orange)
+const PAGE_GRADIENT = 'linear-gradient(135deg, #FF6B6B 0%, #FFA502 100%)';
 
 export default function FaceTrace() {
     const location = useLocation();
@@ -211,7 +208,7 @@ export default function FaceTrace() {
     };
 
     return (
-        <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${PAGE_COLORS.primary} 0%, ${PAGE_COLORS.secondary} 100%)` }}>
+        <div style={{ minHeight: '100vh', background: PAGE_GRADIENT }}>
             {/* ServiceNavbar with page colors */}
             <ServiceNavbar />
 
