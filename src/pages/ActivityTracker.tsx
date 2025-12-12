@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import ServiceNavbar from '../components/ServiceNavbar';
 import { Footer } from '../components/Footer';
+import { useService } from '../lib/ServiceContext';
 import '../styles/activity-tracker.css';
 
 // Log items (English)
@@ -60,6 +61,13 @@ const PROFILES = [
 ];
 
 export default function ActivityTracker() {
+    // Set service context for colors
+    const { setSelectedService, colors } = useService();
+
+    useEffect(() => {
+        setSelectedService('following');
+    }, [setSelectedService]);
+
     // State
     const [progress, setProgress] = useState(0);
     const [currentLogIndex, setCurrentLogIndex] = useState(0);
@@ -194,7 +202,7 @@ export default function ActivityTracker() {
     };
 
     return (
-        <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #ff4e71 0%, #ff7f66 50%, #ffb347 100%)' }}>
+        <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)` }}>
             {/* ServiceNavbar - Same as Hero */}
             <ServiceNavbar />
 

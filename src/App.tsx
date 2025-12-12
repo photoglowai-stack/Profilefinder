@@ -15,7 +15,7 @@ import { RelatedSearches } from "./components/RelatedSearches";
 import { CTASection } from "./components/CTASection";
 import { FAQ } from "./components/FAQ";
 import { Footer } from "./components/Footer";
-import { ServiceProvider } from "./lib/ServiceContext";
+import { ServiceProvider, useService } from "./lib/ServiceContext";
 import { ServiceColorIndicator } from "./components/ui/ServiceColorIndicator";
 import { ServiceFormWidget } from "./components/ServiceFormWidget";
 import { PaymentPage } from "./pages/PaymentPage";
@@ -30,9 +30,14 @@ import ServiceNavbar from "./components/ServiceNavbar";
 function ChatAnalysisPage() {
   const location = useLocation();
   const photos = (location.state as any)?.photos || [];
+  const { setSelectedService, colors } = useService();
+
+  useEffect(() => {
+    setSelectedService('fidelity');
+  }, [setSelectedService]);
 
   return (
-    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #FF6B6B 0%, #FFA502 100%)' }}>
+    <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)` }}>
       <ServiceNavbar />
       <ChatAnalysisCard
         photos={photos}

@@ -6,6 +6,7 @@ import {
 } from 'lucide-react';
 import ServiceNavbar from '../components/ServiceNavbar';
 import { Footer } from '../components/Footer';
+import { useService } from '../lib/ServiceContext';
 import '../styles/face-trace.css';
 
 // ============================================
@@ -95,6 +96,13 @@ const getSourceStyle = (key: MockResult['sourceKey']) => {
 export default function FaceTrace() {
     const location = useLocation();
     const uploadedImage = (location.state as { image?: string })?.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80";
+
+    // Set service context for colors
+    const { setSelectedService, colors } = useService();
+
+    useEffect(() => {
+        setSelectedService('facetrace');
+    }, [setSelectedService]);
 
     // State
     const [progress, setProgress] = useState(0);
@@ -202,7 +210,7 @@ export default function FaceTrace() {
     };
 
     return (
-        <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #FF6B6B 0%, #FFA502 100%)' }}>
+        <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)` }}>
             {/* ServiceNavbar - Same as Hero */}
             <ServiceNavbar />
 
