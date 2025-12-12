@@ -213,7 +213,7 @@ export default function FaceTrace() {
     return (
         <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${PAGE_COLORS.primary} 0%, ${PAGE_COLORS.secondary} 100%)` }}>
             {/* ServiceNavbar with page colors */}
-            <ServiceNavbar primaryColor={PAGE_COLORS.primary} secondaryColor={PAGE_COLORS.secondary} />
+            <ServiceNavbar />
 
             {/* Main Content */}
             <div className="face-trace-wrapper">
@@ -488,7 +488,7 @@ export default function FaceTrace() {
             </div>
 
             {/* Footer */}
-            <Footer primaryColor={PAGE_COLORS.primary} secondaryColor={PAGE_COLORS.secondary} />
+            <Footer />
         </div>
     );
 }

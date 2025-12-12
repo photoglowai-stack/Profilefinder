@@ -169,7 +169,7 @@ export default function FidelityTestAnalysis() {
     return (
         <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${PAGE_COLORS.primary} 0%, ${PAGE_COLORS.secondary} 100%)` }}>
             {/* ServiceNavbar with page colors */}
-            <ServiceNavbar primaryColor={PAGE_COLORS.primary} secondaryColor={PAGE_COLORS.secondary} />
+            <ServiceNavbar />
 
             {/* Main Content with Gradient Background */}
             <div className="fidelity-analysis-wrapper">
@@ -538,7 +538,7 @@ export default function FidelityTestAnalysis() {
             </div>
 
             {/* Footer */}
-            <Footer primaryColor={PAGE_COLORS.primary} secondaryColor={PAGE_COLORS.secondary} />
+            <Footer />
         </div>
     );
 }

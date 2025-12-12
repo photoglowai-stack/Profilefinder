@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Star, ArrowRight, Shield } from "lucide-react";
 import { footerContent } from "../lib/content";
-import { useService } from "../lib/ServiceContext";
 
 const LOGO_URL = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg";
 
@@ -23,25 +22,13 @@ const footerLinks = {
   ]
 };
 
-interface FooterProps {
-  /** Override primary gradient color */
-  primaryColor?: string;
-  /** Override secondary gradient color */
-  secondaryColor?: string;
-}
-
-export function Footer({ primaryColor, secondaryColor }: FooterProps = {}) {
-  const { colors } = useService();
-
-  // Use custom colors if provided, otherwise fall back to service context
-  const primary = primaryColor || colors.primary;
-  const secondary = secondaryColor || colors.secondary;
-
+export function Footer() {
   return (
     <footer
       className="text-white py-6 md:py-7"
       style={{
-        background: `linear-gradient(135deg, ${primary}, ${secondary})`
+        backgroundColor: 'rgba(0,0,0,0.1)',
+        backdropFilter: 'blur(8px)'
       }}
     >
       <div className="max-w-[1760px] mx-auto px-4 md:px-8">

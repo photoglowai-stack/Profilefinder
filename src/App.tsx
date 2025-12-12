@@ -39,12 +39,12 @@ function ChatAnalysisPage() {
 
   return (
     <div style={{ minHeight: '100vh', background: `linear-gradient(135deg, ${CHAT_ANALYSIS_COLORS.primary} 0%, ${CHAT_ANALYSIS_COLORS.secondary} 100%)` }}>
-      <ServiceNavbar primaryColor={CHAT_ANALYSIS_COLORS.primary} secondaryColor={CHAT_ANALYSIS_COLORS.secondary} />
+      <ServiceNavbar />
       <ChatAnalysisCard
         photos={photos}
         paymentUrl="/payment"
       />
-      <Footer primaryColor={CHAT_ANALYSIS_COLORS.primary} secondaryColor={CHAT_ANALYSIS_COLORS.secondary} />
+      <Footer />
     </div>
   );
 }
