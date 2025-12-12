@@ -115,7 +115,7 @@ const UGCSection = () => {
             margin: '0 auto 24px'
           }}>
             Real Stories, <span style={{
-              background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
+              background: 'linear-gradient(135deg, #ec4899, #f472b6)',
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',
@@ -303,14 +303,19 @@ const VideoCard: React.FC<VideoCardProps> = ({ data, colors, isActive, videoRef 
             videoRef(el);
           }}
           src={data.videoUrl}
-          preload="auto"
+          preload="metadata"
           loop
           muted={isMuted}
           playsInline
+          poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='498' viewBox='0 0 280 498'%3E%3Crect fill='%231e293b' width='280' height='498'/%3E%3C/svg%3E"
           style={{
             width: '100%',
             height: '100%',
-            objectFit: 'cover'
+            objectFit: 'cover',
+            backgroundColor: '#1e293b'
+          }}
+          onError={(e) => {
+            console.error('Video load error:', data.videoUrl);
           }}
         />
 
