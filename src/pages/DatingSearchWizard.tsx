@@ -2,9 +2,12 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
     Search, ChevronDown, Check, Lock, UserCircle, MapPin,
-    Cloud, Building, Users, Loader2, ArrowRight, Mail
+    Cloud, Building, Users, Loader2, ArrowRight
 } from 'lucide-react';
+import ServiceNavbar from '../components/ServiceNavbar';
+import { Footer } from '../components/Footer';
 import 'leaflet/dist/leaflet.css';
+import '../styles/dating-search.css';
 
 // ============================================
 // TYPES
@@ -69,7 +72,6 @@ export default function DatingSearchWizard() {
         const id = ++toastIdRef.current;
         setToasts(prev => [...prev, { id, name, action }]);
 
-        // Auto remove after 4s
         setTimeout(() => {
             setToasts(prev => prev.map(t => t.id === id ? { ...t, exiting: true } : t));
             setTimeout(() => {
@@ -78,7 +80,6 @@ export default function DatingSearchWizard() {
         }, 4000);
     }, []);
 
-    // Start toast cycle
     useEffect(() => {
         let index = 0;
         const interval = setInterval(() => {
@@ -87,7 +88,6 @@ export default function DatingSearchWizard() {
             index++;
         }, 6000);
 
-        // First toast after 2s
         const firstTimeout = setTimeout(() => {
             addToast(TOAST_MESSAGES[0].name, TOAST_MESSAGES[0].action);
         }, 2000);
@@ -104,12 +104,10 @@ export default function DatingSearchWizard() {
     const goToStep = (step: number) => {
         setCurrentStep(step);
 
-        // Initialize map when entering step 3
         if (step === 3) {
             setTimeout(() => initMap(), 200);
         }
 
-        // Start loading animation for step 4
         if (step === 4) {
             startLoading();
         }
@@ -138,14 +136,13 @@ export default function DatingSearchWizard() {
             maxZoom: 19
         }).addTo(mapRef.current);
 
-        // Fix blank map issue
         setTimeout(() => {
             mapRef.current?.invalidateSize();
         }, 100);
     };
 
     // ============================================
-    // LOCATION SEARCH (Nominatim)
+    // LOCATION SEARCH
     // ============================================
     const handleLocationSearch = (query: string) => {
         setLocationInput(query);
@@ -185,12 +182,10 @@ export default function DatingSearchWizard() {
         if (mapRef.current) {
             const L = await import('leaflet');
 
-            // Remove existing marker
             if (markerRef.current) {
                 mapRef.current.removeLayer(markerRef.current);
             }
 
-            // Custom red icon
             const redIcon = L.divIcon({
                 className: 'custom-div-icon',
                 html: "<div style='background-color:#EF4444; width:12px; height:12px; border-radius:50%; border:2px solid white; box-shadow:0 0 10px rgba(239,68,68,0.5);'></div>",
@@ -200,7 +195,6 @@ export default function DatingSearchWizard() {
 
             markerRef.current = L.marker([parseFloat(lat), parseFloat(lon)], { icon: redIcon }).addTo(mapRef.current);
 
-            // Cinematic fly to
             mapRef.current.flyTo([parseFloat(lat), parseFloat(lon)], 12, {
                 animate: true,
                 duration: 2.5
@@ -215,11 +209,9 @@ export default function DatingSearchWizard() {
         setLoadingPercent(0);
         setActiveLogs([1]);
 
-        // Activate logs progressively
         setTimeout(() => setActiveLogs(prev => [...prev, 2]), 1000);
         setTimeout(() => setActiveLogs(prev => [...prev, 3]), 2000);
 
-        // Progress bar
         let progress = 0;
         const interval = setInterval(() => {
             progress += 1;
@@ -248,363 +240,342 @@ export default function DatingSearchWizard() {
     // RENDER
     // ============================================
     return (
-        <div style={{ minHeight: '100vh', background: PAGE_GRADIENT }} className="flex items-center justify-center p-4">
-            {/* Custom Styles */}
-            <style>{`
-                @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap');
-                
-                .wizard-card { font-family: 'Inter Tight', sans-serif; }
-                
-                .btn-primary {
-                    background: linear-gradient(90deg, #F87171 0%, #EC4899 100%);
-                    box-shadow: 0 4px 14px 0 rgba(236, 72, 153, 0.39);
-                    transition: transform 0.2s ease, box-shadow 0.2s ease;
-                }
-                .btn-primary:active { transform: scale(0.98); box-shadow: none; }
-                
-                .progress-segment {
-                    height: 6px;
-                    border-radius: 99px;
-                    background-color: #E5E7EB;
-                    transition: background-color 0.3s ease;
-                }
-                .progress-segment.active {
-                    background: linear-gradient(90deg, #EF4444, #F59E0B);
-                }
-                
-                .step-content {
-                    display: none;
-                    animation: fadeIn 0.4s ease-out;
-                }
-                .step-content.active { display: block; }
-                
-                @keyframes fadeIn {
-                    from { opacity: 0; transform: translateY(5px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-                
-                @keyframes popIn {
-                    0% { transform: scale(0); opacity: 0; }
-                    100% { transform: scale(1); opacity: 1; }
-                }
-                .check-circle { animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-                
-                .custom-input {
-                    background-color: #E5E7EB;
-                    border: none;
-                    transition: box-shadow 0.2s;
-                }
-                .custom-input:focus {
-                    background-color: #F3F4F6;
-                    box-shadow: 0 0 0 2px #F87171;
-                }
-                
-                .suggestion-item {
-                    padding: 12px 16px;
-                    cursor: pointer;
-                    font-size: 14px;
-                    color: #374151;
-                    border-bottom: 1px solid #f9fafb;
-                    transition: background 0.2s;
-                    display: flex;
-                    align-items: center;
-                    gap: 8px;
-                }
-                .suggestion-item:hover { background-color: #fff1f2; color: #ef4444; }
-                .suggestion-item:last-child { border-bottom: none; }
-                
-                @keyframes slideIn {
-                    from { transform: translateX(100%); opacity: 0; }
-                    to { transform: translateX(0); opacity: 1; }
-                }
-                @keyframes slideOut {
-                    from { transform: translateX(0); opacity: 1; }
-                    to { transform: translateX(100%); opacity: 0; }
-                }
-                .toast-enter { animation: slideIn 0.3s ease-out; }
-                .toast-exit { animation: slideOut 0.3s ease-in; }
-            `}</style>
+        <div style={{ minHeight: '100vh', background: PAGE_GRADIENT }}>
+            <ServiceNavbar />
 
-            {/* Main Card */}
-            <div className="wizard-card w-full max-w-[500px] bg-white rounded-3xl shadow-2xl p-6 relative flex flex-col min-h-[500px]">
+            <div className="dating-search-wrapper">
+                <div className="dating-card">
 
-                {/* HEADER */}
-                <div className="flex justify-between items-center mb-6">
-                    <h1 className="text-2xl font-extrabold text-black tracking-tight">ProfileFinder</h1>
+                    {/* HEADER */}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                        <h1 style={{ fontSize: '20px', fontWeight: 800, color: '#111', letterSpacing: '-0.02em' }}>ProfileFinder</h1>
 
-                    {/* Detective Icon */}
-                    <div className="absolute left-1/2 top-6 transform -translate-x-1/2">
-                        <div className="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center border border-gray-200 shadow-sm">
-                            <span className="text-2xl">🕵️‍♂️</span>
+                        {/* Detective Icon */}
+                        <div style={{
+                            position: 'absolute',
+                            left: '50%',
+                            top: '24px',
+                            transform: 'translateX(-50%)',
+                            width: '48px',
+                            height: '48px',
+                            backgroundColor: '#f3f4f6',
+                            borderRadius: '50%',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            border: '1px solid #e5e7eb',
+                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                        }}>
+                            <span style={{ fontSize: '24px' }}>🕵️‍♂️</span>
                         </div>
-                    </div>
 
-                    {/* Status */}
-                    <div className="flex items-center gap-2">
-                        <span className="text-xs font-medium text-gray-600">Thinking..</span>
-                        <div className="relative">
-                            <img
-                                src="https://ui-avatars.com/api/?name=User&background=000&color=fff"
-                                alt="User"
-                                className="w-9 h-9 rounded-full border-2 border-green-500 p-0.5"
-                            />
-                            <div className="absolute -top-1 -right-1 bg-green-500 text-white rounded-full w-3.5 h-3.5 flex items-center justify-center text-[8px] border border-white">
-                                ✔
+                        {/* Status */}
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                            <span style={{ fontSize: '12px', fontWeight: 500, color: '#6b7280' }}>Thinking..</span>
+                            <div style={{ position: 'relative' }}>
+                                <img
+                                    src="https://ui-avatars.com/api/?name=User&background=000&color=fff"
+                                    alt="User"
+                                    style={{ width: '36px', height: '36px', borderRadius: '50%', border: '2px solid #22c55e', padding: '2px' }}
+                                />
+                                <div style={{
+                                    position: 'absolute',
+                                    top: '-4px',
+                                    right: '-4px',
+                                    backgroundColor: '#22c55e',
+                                    color: 'white',
+                                    borderRadius: '50%',
+                                    width: '14px',
+                                    height: '14px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    fontSize: '8px',
+                                    border: '2px solid white'
+                                }}>✔</div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                {/* Progress Bar */}
-                <div className="grid grid-cols-4 gap-2 mb-8">
-                    {[1, 2, 3, 4].map((seg) => (
-                        <div
-                            key={seg}
-                            className={`progress-segment ${currentStep >= seg ? 'active' : ''}`}
-                        />
-                    ))}
-                </div>
-
-                {/* ==================== STEP 1: NAME ==================== */}
-                <div className={`step-content ${currentStep === 1 ? 'active' : ''}`}>
-                    <h2 className="text-xl font-bold text-gray-900 mb-6">What is his/her name?</h2>
-
-                    <div className="bg-gray-200 rounded-xl px-4 py-3 mb-6 flex items-center gap-3">
-                        <span className="text-xl">🕵️</span>
-                        <input
-                            type="text"
-                            value={targetName}
-                            onChange={(e) => setTargetName(e.target.value)}
-                            placeholder="His/her name"
-                            className="bg-transparent w-full outline-none text-gray-700 font-medium placeholder-gray-500 text-lg"
-                        />
+                    {/* Progress Bar */}
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '32px' }}>
+                        {[1, 2, 3, 4].map((seg) => (
+                            <div
+                                key={seg}
+                                className={`dating-progress-segment ${currentStep >= seg ? 'active' : ''}`}
+                            />
+                        ))}
                     </div>
 
-                    <div className="bg-slate-500 text-white rounded-xl p-3 text-xs mb-8 flex gap-2 items-start shadow-sm">
-                        <span className="text-yellow-300 text-base">💡</span>
-                        <p className="leading-relaxed opacity-90">Our system detects similar names automatically (like "Alex", "Alek", "Lex")</p>
-                    </div>
+                    {/* ==================== STEP 1: NAME ==================== */}
+                    <div className={`dating-step ${currentStep === 1 ? 'active' : ''}`}>
+                        <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#111', marginBottom: '24px' }}>What is his/her name?</h2>
 
-                    <button
-                        onClick={() => goToStep(2)}
-                        className="w-full btn-primary text-white font-bold py-4 rounded-full text-lg shadow-lg flex items-center justify-center gap-2 mt-auto hover:shadow-xl"
-                    >
-                        <Search size={22} />
-                        <span>Check if he is on a dating app</span>
-                        <ArrowRight size={20} className="ml-1" />
-                    </button>
-                </div>
-
-                {/* ==================== STEP 2: AGE ==================== */}
-                <div className={`step-content ${currentStep === 2 ? 'active' : ''}`}>
-                    <h2 className="text-xl font-bold text-gray-900 mb-6">What is his/her age?</h2>
-
-                    <div className="relative mb-6">
-                        <div className="bg-gray-200 rounded-xl px-4 py-3 flex items-center justify-between">
-                            <span className="text-gray-700 font-bold">{targetAge}</span>
-                            <ChevronDown size={20} className="text-gray-500" />
-                        </div>
-                        <select
-                            value={targetAge}
-                            onChange={(e) => setTargetAge(e.target.value)}
-                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                        >
-                            {Array.from({ length: 13 }, (_, i) => 18 + i).map((age) => (
-                                <option key={age} value={age}>{age}{age === 30 ? '+' : ''}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div className="bg-slate-500 text-white rounded-xl p-3 text-xs mb-2 flex gap-2 items-start shadow-sm">
-                        <span className="text-yellow-300 text-base">💡</span>
-                        <p className="leading-relaxed opacity-90">Our AI analyzes profiles across platforms to estimate age with high accuracy.</p>
-                    </div>
-                    <div className="bg-slate-500 text-white rounded-xl p-3 text-xs mb-8 flex gap-2 items-center shadow-sm">
-                        <div className="bg-green-500 rounded text-[10px] p-0.5">
-                            <Check size={12} className="text-white" />
-                        </div>
-                        <p className="leading-relaxed opacity-90">No account needed. 100% discreet.</p>
-                    </div>
-
-                    <button
-                        onClick={() => goToStep(3)}
-                        className="w-full btn-primary text-white font-bold py-4 rounded-full text-lg shadow-lg flex items-center justify-center gap-2 mt-auto hover:shadow-xl"
-                    >
-                        <Search size={22} />
-                        <span>Check if he is on a dating app</span>
-                        <ArrowRight size={20} className="ml-1" />
-                    </button>
-                </div>
-
-                {/* ==================== STEP 3: LOCATION ==================== */}
-                <div className={`step-content ${currentStep === 3 ? 'active' : ''}`}>
-                    <h2 className="text-xl font-bold text-gray-900 mb-2">
-                        Where is <span className="text-gray-900">{targetName || 'Target'}</span> right now?
-                    </h2>
-
-                    {/* Location Input */}
-                    <div className="relative mb-4 z-50">
-                        <div className="bg-gray-200 rounded-lg px-3 py-2.5 flex items-center gap-2">
-                            <Search size={16} className="text-gray-400" />
+                        <div className="dating-input-wrapper" style={{ marginBottom: '24px' }}>
+                            <span style={{ fontSize: '20px' }}>🕵️</span>
                             <input
                                 type="text"
-                                value={locationInput}
-                                onChange={(e) => handleLocationSearch(e.target.value)}
-                                placeholder="Enter a city (e.g. Paris)"
-                                className="bg-transparent w-full outline-none text-gray-600 text-sm placeholder-gray-400 font-medium"
+                                value={targetName}
+                                onChange={(e) => setTargetName(e.target.value)}
+                                placeholder="His/her name"
                             />
                         </div>
 
-                        {/* Suggestions Dropdown */}
-                        {showSuggestions && suggestions.length > 0 && (
-                            <div className="absolute top-full left-0 w-full bg-white rounded-b-xl shadow-lg border border-gray-100 z-50 max-h-[150px] overflow-y-auto">
-                                {suggestions.map((place, idx) => (
-                                    <div
-                                        key={idx}
-                                        className="suggestion-item"
-                                        onClick={() => selectLocation(place.lat, place.lon, place.display_name)}
-                                    >
-                                        <MapPin size={16} className="text-gray-400" />
-                                        <span>{place.display_name.split(',').slice(0, 2).join(',')}</span>
-                                    </div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Map Container */}
-                    <div className="rounded-xl overflow-hidden shadow-md border border-gray-100 mb-4 h-40 relative bg-gray-50">
-                        <div ref={mapContainerRef} className="w-full h-full" style={{ pointerEvents: 'none' }} />
-                        <div className="absolute bottom-2 right-2 bg-white/90 px-2 py-1 rounded text-[10px] font-bold text-gray-600 shadow-sm z-[400] flex items-center gap-1">
-                            <span className="text-green-500">📡</span> Live Sat
-                        </div>
-                    </div>
-
-                    <div className="bg-slate-500 text-white rounded-xl p-3 text-xs mb-8 flex gap-2 items-center shadow-sm">
-                        <span className="text-red-400 text-base">📍</span>
-                        <p className="leading-relaxed opacity-90">Find out where he might be using real-time profile data.</p>
-                    </div>
-
-                    <button
-                        onClick={() => goToStep(4)}
-                        className="w-full btn-primary text-white font-bold py-4 rounded-full text-lg shadow-lg flex items-center justify-center gap-2 mt-auto hover:shadow-xl"
-                    >
-                        <Search size={22} />
-                        <span>Start Full Scan</span>
-                        <ArrowRight size={20} className="ml-1" />
-                    </button>
-                </div>
-
-                {/* ==================== STEP 4: LOADING ==================== */}
-                <div className={`step-content ${currentStep === 4 ? 'active' : ''} pt-4`}>
-                    <div className="flex justify-between items-end mb-2">
-                        <h2 className="text-lg font-bold text-pink-600">Scan Finished!</h2>
-                        <span className="text-lg font-bold text-gray-900">{loadingPercent}%</span>
-                    </div>
-
-                    <div className="h-4 w-full bg-gray-100 rounded-full overflow-hidden mb-8">
-                        <div
-                            className="h-full bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 transition-all ease-out duration-300"
-                            style={{ width: `${loadingPercent}%` }}
-                        />
-                    </div>
-
-                    <div className="space-y-4">
-                        {/* Log 1 */}
-                        <div className={`flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100 ${!activeLogs.includes(1) ? 'opacity-50' : ''}`}>
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-sm ${activeLogs.includes(1) ? 'bg-green-100 text-green-500' : 'bg-white text-gray-400'}`}>
-                                {activeLogs.includes(1) ? <Check size={16} /> : <Cloud size={16} />}
-                            </div>
-                            <span className="text-sm font-semibold text-gray-600">Fetching database records...</span>
+                        <div className="dating-info-box" style={{ marginBottom: '32px' }}>
+                            <span style={{ fontSize: '16px' }}>💡</span>
+                            <p style={{ lineHeight: 1.5, opacity: 0.9 }}>Our system detects similar names automatically (like "Alex", "Alek", "Lex")</p>
                         </div>
 
-                        {/* Log 2 */}
-                        <div className={`flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100 ${!activeLogs.includes(2) ? 'opacity-50' : ''}`}>
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-sm ${activeLogs.includes(2) ? 'bg-green-100 text-green-500' : 'bg-white text-gray-400'}`}>
-                                {activeLogs.includes(2) ? <Check size={16} /> : <Building size={16} />}
-                            </div>
-                            <span className="text-sm font-semibold text-gray-600">Filtering Business Accounts...</span>
-                        </div>
-
-                        {/* Log 3 */}
-                        <div className={`flex items-center gap-3 p-3 bg-gray-50 rounded-xl border border-gray-100 ${!activeLogs.includes(3) ? 'opacity-50' : ''}`}>
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center shadow-sm ${activeLogs.includes(3) ? 'bg-green-100 text-green-500' : 'bg-white text-gray-400'}`}>
-                                {activeLogs.includes(3) ? <Check size={16} /> : <Users size={16} />}
-                            </div>
-                            <span className="text-sm font-semibold text-gray-600">Checking Mutual Friends...</span>
-                        </div>
-                    </div>
-                </div>
-
-                {/* ==================== STEP 5: RESULT GATE ==================== */}
-                <div className={`step-content ${currentStep === 5 ? 'active' : ''} pt-8 text-center`}>
-
-                    <div className="inline-block relative mb-4">
-                        <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center check-circle">
-                            <div className="w-10 h-10 bg-green-500 rounded-full flex items-center justify-center shadow-lg">
-                                <Check size={24} className="text-white" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <h2 className="text-3xl font-extrabold text-gray-900 mb-2">Result Ready!</h2>
-                    <p className="text-sm text-gray-500 mb-8 max-w-xs mx-auto leading-relaxed">
-                        Analysis complete. We've compiled a secure report with <span className="bg-green-100 text-green-700 font-bold px-2 py-0.5 rounded">3 key findings</span>.
-                    </p>
-
-                    <form onSubmit={handleSubmit} className="space-y-4">
-                        <input
-                            type="email"
-                            required
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            placeholder="name@example.com"
-                            className="w-full border-2 border-green-400 rounded-xl px-4 py-3.5 text-center text-gray-700 outline-none focus:ring-2 focus:ring-green-200 transition-shadow font-medium text-lg placeholder-gray-400"
-                        />
-
-                        <button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="w-full bg-gray-900 hover:bg-black text-white font-bold py-4 rounded-xl text-lg shadow-xl hover:shadow-2xl transition-all transform active:scale-[0.98] flex items-center justify-center gap-2"
-                        >
-                            {isSubmitting ? (
-                                <>
-                                    <Loader2 size={20} className="animate-spin" />
-                                    Processing...
-                                </>
-                            ) : (
-                                <>
-                                    <span>Unlock Report</span>
-                                    <ArrowRight size={18} />
-                                </>
-                            )}
+                        <button onClick={() => goToStep(2)} className="dating-btn-primary">
+                            <Search size={20} />
+                            <span>Check if he is on a dating app</span>
+                            <ArrowRight size={18} />
                         </button>
-                    </form>
+                    </div>
 
-                    <div className="flex justify-center gap-6 mt-8 text-xs font-semibold text-gray-400">
-                        <span className="flex items-center gap-1.5">
-                            <Lock size={14} className="text-green-500" /> Secure
-                        </span>
-                        <span className="flex items-center gap-1.5">
-                            <UserCircle size={14} className="text-gray-500" /> Private
-                        </span>
+                    {/* ==================== STEP 2: AGE ==================== */}
+                    <div className={`dating-step ${currentStep === 2 ? 'active' : ''}`}>
+                        <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#111', marginBottom: '24px' }}>What is his/her age?</h2>
+
+                        <div style={{ position: 'relative', marginBottom: '24px' }}>
+                            <div className="dating-input-wrapper" style={{ justifyContent: 'space-between' }}>
+                                <span style={{ fontWeight: 700, color: '#374151' }}>{targetAge}</span>
+                                <ChevronDown size={20} style={{ color: '#9ca3af' }} />
+                            </div>
+                            <select
+                                value={targetAge}
+                                onChange={(e) => setTargetAge(e.target.value)}
+                                style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }}
+                            >
+                                {Array.from({ length: 13 }, (_, i) => 18 + i).map((age) => (
+                                    <option key={age} value={age}>{age}{age === 30 ? '+' : ''}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div className="dating-info-box" style={{ marginBottom: '8px' }}>
+                            <span style={{ fontSize: '16px' }}>💡</span>
+                            <p style={{ lineHeight: 1.5, opacity: 0.9 }}>Our AI analyzes profiles across platforms to estimate age with high accuracy.</p>
+                        </div>
+                        <div className="dating-info-box" style={{ marginBottom: '32px' }}>
+                            <div style={{ backgroundColor: '#22c55e', borderRadius: '4px', padding: '2px', display: 'flex' }}>
+                                <Check size={12} style={{ color: 'white' }} />
+                            </div>
+                            <p style={{ lineHeight: 1.5, opacity: 0.9 }}>No account needed. 100% discreet.</p>
+                        </div>
+
+                        <button onClick={() => goToStep(3)} className="dating-btn-primary">
+                            <Search size={20} />
+                            <span>Check if he is on a dating app</span>
+                            <ArrowRight size={18} />
+                        </button>
+                    </div>
+
+                    {/* ==================== STEP 3: LOCATION ==================== */}
+                    <div className={`dating-step ${currentStep === 3 ? 'active' : ''}`}>
+                        <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#111', marginBottom: '8px' }}>
+                            Where is <span style={{ color: '#111' }}>{targetName || 'Target'}</span> right now?
+                        </h2>
+
+                        {/* Location Input */}
+                        <div style={{ position: 'relative', marginBottom: '16px', zIndex: 50 }}>
+                            <div className="dating-input-wrapper">
+                                <Search size={16} style={{ color: '#9ca3af' }} />
+                                <input
+                                    type="text"
+                                    value={locationInput}
+                                    onChange={(e) => handleLocationSearch(e.target.value)}
+                                    placeholder="Enter a city (e.g. Paris)"
+                                    style={{ fontSize: '14px' }}
+                                />
+                            </div>
+
+                            {showSuggestions && suggestions.length > 0 && (
+                                <div className="dating-suggestions">
+                                    {suggestions.map((place, idx) => (
+                                        <div
+                                            key={idx}
+                                            className="dating-suggestion-item"
+                                            onClick={() => selectLocation(place.lat, place.lon, place.display_name)}
+                                        >
+                                            <MapPin size={16} style={{ color: '#9ca3af' }} />
+                                            <span>{place.display_name.split(',').slice(0, 2).join(',')}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+
+                        {/* Map Container */}
+                        <div className="dating-map-container" style={{ marginBottom: '16px' }}>
+                            <div ref={mapContainerRef} />
+                            <div style={{
+                                position: 'absolute',
+                                bottom: '8px',
+                                right: '8px',
+                                backgroundColor: 'rgba(255,255,255,0.9)',
+                                padding: '4px 8px',
+                                borderRadius: '4px',
+                                fontSize: '10px',
+                                fontWeight: 700,
+                                color: '#6b7280',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                zIndex: 400
+                            }}>
+                                <span style={{ color: '#22c55e' }}>📡</span> Live Sat
+                            </div>
+                        </div>
+
+                        <div className="dating-info-box" style={{ marginBottom: '32px' }}>
+                            <span style={{ fontSize: '16px', color: '#ef4444' }}>📍</span>
+                            <p style={{ lineHeight: 1.5, opacity: 0.9 }}>Find out where he might be using real-time profile data.</p>
+                        </div>
+
+                        <button onClick={() => goToStep(4)} className="dating-btn-primary">
+                            <Search size={20} />
+                            <span>Start Full Scan</span>
+                            <ArrowRight size={18} />
+                        </button>
+                    </div>
+
+                    {/* ==================== STEP 4: LOADING ==================== */}
+                    <div className={`dating-step ${currentStep === 4 ? 'active' : ''}`} style={{ paddingTop: '16px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '8px' }}>
+                            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#ec4899' }}>Scan Finished!</h2>
+                            <span style={{ fontSize: '18px', fontWeight: 700, color: '#111' }}>{loadingPercent}%</span>
+                        </div>
+
+                        <div style={{ height: '16px', width: '100%', backgroundColor: '#f3f4f6', borderRadius: '9999px', overflow: 'hidden', marginBottom: '32px' }}>
+                            <div
+                                style={{
+                                    height: '100%',
+                                    background: 'linear-gradient(to right, #fb923c, #ec4899, #a855f7)',
+                                    transition: 'width 0.3s ease-out',
+                                    width: `${loadingPercent}%`
+                                }}
+                            />
+                        </div>
+
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                            <div className={`dating-log-item ${!activeLogs.includes(1) ? 'inactive' : ''}`}>
+                                <div className={`dating-log-icon ${activeLogs.includes(1) ? 'done' : 'pending'}`}>
+                                    {activeLogs.includes(1) ? <Check size={16} /> : <Cloud size={16} />}
+                                </div>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Fetching database records...</span>
+                            </div>
+
+                            <div className={`dating-log-item ${!activeLogs.includes(2) ? 'inactive' : ''}`}>
+                                <div className={`dating-log-icon ${activeLogs.includes(2) ? 'done' : 'pending'}`}>
+                                    {activeLogs.includes(2) ? <Check size={16} /> : <Building size={16} />}
+                                </div>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Filtering Business Accounts...</span>
+                            </div>
+
+                            <div className={`dating-log-item ${!activeLogs.includes(3) ? 'inactive' : ''}`}>
+                                <div className={`dating-log-icon ${activeLogs.includes(3) ? 'done' : 'pending'}`}>
+                                    {activeLogs.includes(3) ? <Check size={16} /> : <Users size={16} />}
+                                </div>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Checking Mutual Friends...</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    {/* ==================== STEP 5: RESULT GATE ==================== */}
+                    <div className={`dating-step ${currentStep === 5 ? 'active' : ''}`} style={{ paddingTop: '32px', textAlign: 'center', alignItems: 'center' }}>
+
+                        <div className="dating-check-circle" style={{ marginBottom: '16px' }}>
+                            <div style={{
+                                width: '80px',
+                                height: '80px',
+                                backgroundColor: '#dcfce7',
+                                borderRadius: '50%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center'
+                            }}>
+                                <div style={{
+                                    width: '40px',
+                                    height: '40px',
+                                    backgroundColor: '#22c55e',
+                                    borderRadius: '50%',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    boxShadow: '0 4px 12px rgba(34, 197, 94, 0.4)'
+                                }}>
+                                    <Check size={24} style={{ color: 'white' }} />
+                                </div>
+                            </div>
+                        </div>
+
+                        <h2 style={{ fontSize: '28px', fontWeight: 800, color: '#111', marginBottom: '8px' }}>Result Ready!</h2>
+                        <p style={{ fontSize: '14px', color: '#6b7280', marginBottom: '32px', maxWidth: '280px', lineHeight: 1.6 }}>
+                            Analysis complete. We've compiled a secure report with <span style={{ backgroundColor: '#dcfce7', color: '#15803d', fontWeight: 700, padding: '2px 8px', borderRadius: '4px' }}>3 key findings</span>.
+                        </p>
+
+                        <form onSubmit={handleSubmit} style={{ width: '100%', display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                            <input
+                                type="email"
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="name@example.com"
+                                className="dating-email-input"
+                            />
+
+                            <button type="submit" disabled={isSubmitting} className="dating-btn-dark">
+                                {isSubmitting ? (
+                                    <>
+                                        <Loader2 size={20} className="animate-spin" />
+                                        Processing...
+                                    </>
+                                ) : (
+                                    <>
+                                        <span>Unlock Report</span>
+                                        <ArrowRight size={18} />
+                                    </>
+                                )}
+                            </button>
+                        </form>
+
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginTop: '32px', fontSize: '12px', fontWeight: 600, color: '#9ca3af' }}>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <Lock size={14} style={{ color: '#22c55e' }} /> Secure
+                            </span>
+                            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                                <UserCircle size={14} style={{ color: '#6b7280' }} /> Private
+                            </span>
+                        </div>
                     </div>
                 </div>
             </div>
 
+            <Footer />
+
             {/* Social Proof Toasts */}
-            <div className="fixed bottom-6 right-6 z-50 flex flex-col gap-3">
+            <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 50, display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {toasts.map((toast) => (
                     <div
                         key={toast.id}
-                        className={`flex items-center gap-3 bg-gray-900/95 text-white px-4 py-3 rounded-xl shadow-2xl ${toast.exiting ? 'toast-exit' : 'toast-enter'}`}
-                        style={{ backdropFilter: 'blur(12px)', minWidth: '250px' }}
+                        className={toast.exiting ? 'dating-toast-exit' : 'dating-toast-enter'}
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            backgroundColor: 'rgba(17, 24, 39, 0.95)',
+                            color: 'white',
+                            padding: '12px 16px',
+                            borderRadius: '12px',
+                            boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.25)',
+                            backdropFilter: 'blur(12px)',
+                            minWidth: '250px'
+                        }}
                     >
-                        <div className="relative flex-shrink-0">
-                            <div className="w-2 h-2 bg-pink-500 rounded-full animate-pulse" />
-                        </div>
-                        <div className="text-sm">
-                            <span className="font-bold">{toast.name}</span> {toast.action}
+                        <div style={{ width: '8px', height: '8px', backgroundColor: '#ec4899', borderRadius: '50%', animation: 'pulse 2s infinite' }} />
+                        <div style={{ fontSize: '14px' }}>
+                            <span style={{ fontWeight: 700 }}>{toast.name}</span> {toast.action}
                         </div>
                     </div>
                 ))}
