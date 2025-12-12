@@ -188,7 +188,7 @@ const ChatAnalysisCard: React.FC<ChatAnalysisCardProps> = ({
     };
 
     return (
-        <div className="bg-gradient-to-br from-[#FF6B6B] to-[#FFA502] min-h-screen flex items-center justify-center p-4">
+        <div className="flex items-center justify-center p-4 py-8">
             {/* Styles for animations */}
             <style>{`
         .typing-cursor::after {
@@ -254,17 +254,19 @@ const ChatAnalysisCard: React.FC<ChatAnalysisCardProps> = ({
 
             {/* Main Card */}
             <div className="relative w-full max-w-md bg-white rounded-[2rem] shadow-2xl overflow-hidden flex flex-col h-auto">
-                {/* Header */}
+                {/* Header - Same style as Fidelity Test */}
                 <div className="px-6 py-4 text-center border-b border-gray-50 bg-white z-20">
-                    <div className="flex items-center justify-center gap-2 mb-1">
-                        <div className="w-7 h-7 bg-gradient-to-r from-red-500 to-orange-500 rounded-lg flex items-center justify-center text-white shadow-sm">
-                            <i className="fas fa-robot text-sm" />
-                        </div>
-                        <span className="font-bold text-xl text-gray-800 tracking-tight">
+                    <div className="flex flex-col items-center">
+                        <img
+                            src="https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/LOGO%20PROFILEFINDER%20HD%20REALIST.svg"
+                            alt="ProfileFinder"
+                            className="w-14 h-14 drop-shadow-lg animate-pulse"
+                        />
+                        <span className="font-bold text-xl text-gray-800 tracking-tight mt-2">
                             ProfileFinder AI
                         </span>
                     </div>
-                    <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold">
+                    <p className="text-[10px] text-gray-400 uppercase tracking-widest font-bold mt-1">
                         Deep Chat Analysis v2.4
                     </p>
                 </div>

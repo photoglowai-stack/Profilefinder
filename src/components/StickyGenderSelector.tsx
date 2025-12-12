@@ -241,7 +241,7 @@ export const StickyGenderSelector = () => {
     const handleScan = () => {
         setIsSearching(true);
         setTimeout(() => {
-            navigate('/payment?service=facetrace');
+            navigate('/face-trace');
             setIsSearching(false);
         }, 500);
     };

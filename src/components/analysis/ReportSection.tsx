@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { Check, Mail, Loader2, ArrowRight, ShieldCheck, Lock } from 'lucide-react';
 
 interface ReportSectionProps {
     typedText: string;
@@ -57,13 +58,13 @@ export const ReportSection: React.FC<ReportSectionProps> = ({
                 {/* INLINE GATE */}
                 <div
                     className={`absolute inset-0 bg-white/90 backdrop-blur-sm z-20 flex flex-col items-center justify-center p-4 transition-opacity duration-500 ${showGate
-                            ? "opacity-100 pointer-events-auto"
-                            : "opacity-0 pointer-events-none"
+                        ? "opacity-100 pointer-events-auto"
+                        : "opacity-0 pointer-events-none"
                         }`}
                 >
                     <div className="w-full max-w-[280px] text-center">
-                        <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mb-3 text-xl shadow-sm mx-auto border border-emerald-100">
-                            <i className="fas fa-check" />
+                        <div className="w-10 h-10 bg-emerald-50 text-emerald-600 rounded-full flex items-center justify-center mb-3 shadow-sm mx-auto border border-emerald-100">
+                            <Check size={20} />
                         </div>
 
                         <h4 className="font-bold text-lg text-gray-900 mb-1">
@@ -79,7 +80,7 @@ export const ReportSection: React.FC<ReportSectionProps> = ({
                         <form className="w-full space-y-3" onSubmit={onSubmit}>
                             <div className="relative group text-left">
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                    <i className="fas fa-envelope text-gray-400 text-xs" />
+                                    <Mail size={14} className="text-gray-400" />
                                 </div>
                                 <input
                                     ref={emailInputRef}
@@ -97,13 +98,13 @@ export const ReportSection: React.FC<ReportSectionProps> = ({
                             >
                                 {isSubmitting ? (
                                     <>
-                                        <i className="fas fa-circle-notch fa-spin" />{" "}
+                                        <Loader2 size={14} className="animate-spin" />{" "}
                                         Loading...
                                     </>
                                 ) : (
                                     <>
                                         <span>Reveal Results</span>
-                                        <i className="fas fa-arrow-right text-xs" />
+                                        <ArrowRight size={14} />
                                     </>
                                 )}
                             </button>
@@ -111,11 +112,11 @@ export const ReportSection: React.FC<ReportSectionProps> = ({
 
                         <div className="mt-3 flex items-center justify-center gap-3 text-[9px] text-gray-400 font-medium">
                             <span className="flex items-center gap-1">
-                                <i className="fas fa-shield-alt text-green-500" /> Secure
+                                <ShieldCheck size={10} className="text-green-500" /> Secure
                             </span>
                             <span className="bg-gray-200 w-1 h-1 rounded-full" />
                             <span className="flex items-center gap-1">
-                                <i className="fas fa-lock" /> Private
+                                <Lock size={10} /> Private
                             </span>
                         </div>
                     </div>

@@ -807,7 +807,15 @@ const HeroAntigravity: React.FC = () => {
                         {/* Action Button - Only for non-fidelity services */}
                         {selectedService !== 'fidelity' && (
                             <button
-                                onClick={() => navigate('/payment')}
+                                onClick={() => {
+                                    if (selectedService === 'facetrace') {
+                                        navigate('/face-trace', { state: { image: faceTraceImage } });
+                                    } else if (selectedService === 'following') {
+                                        navigate('/activity-tracker');
+                                    } else {
+                                        navigate('/payment');
+                                    }
+                                }}
                                 className="hero-btn shimmer-effect"
                                 style={{
                                     position: 'relative',

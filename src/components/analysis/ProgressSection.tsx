@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { Check } from 'lucide-react';
 
 interface ProgressSectionProps {
     progress: number;
@@ -51,7 +52,7 @@ export const ProgressSection: React.FC<ProgressSectionProps> = ({
                         className="flex items-center gap-2 text-[10px] text-gray-600 check-anim shrink-0"
                     >
                         <div className="w-3.5 h-3.5 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
-                            <i className="fas fa-check text-[8px]" />
+                            <Check size={8} />
                         </div>
                         <span className="font-medium truncate">{log}</span>
                     </div>

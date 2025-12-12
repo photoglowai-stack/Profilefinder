@@ -26,10 +26,10 @@ export function FaceTraceForm() {
   };
 
   const handleSearch = () => {
-    if (imageFile) {
+    if (imageFile && imagePreview) {
       setIsSearching(true);
       setTimeout(() => {
-        navigate("/payment");
+        navigate("/face-trace", { state: { image: imagePreview } });
         setIsSearching(false);
       }, 800);
     }
@@ -150,8 +150,8 @@ export function FaceTraceForm() {
         onClick={handleSearch}
         disabled={!imageFile || isSearching}
         className={`w-full relative flex items-center justify-center gap-2 px-6 py-3 rounded-full transition-all ${imageFile && !isSearching
-            ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-lg cursor-pointer"
-            : "bg-gray-300 cursor-not-allowed"
+          ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-lg cursor-pointer"
+          : "bg-gray-300 cursor-not-allowed"
           }`}
         whileHover={imageFile && !isSearching ? { scale: 1.02 } : {}}
         whileTap={imageFile && !isSearching ? { scale: 0.98 } : {}}

@@ -420,7 +420,7 @@ export const ServiceFormWidget = () => {
                         title="Upload Photo"
                         subtitle="JPG/PNG Match"
                         btnLabel="SCAN"
-                        onAction={() => handleAction('/payment?service=facetrace')}
+                        onAction={() => handleAction('/face-trace')}
                         isLoading={isLoading}
                     />
                 )}

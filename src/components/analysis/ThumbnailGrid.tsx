@@ -1,4 +1,5 @@
 import React from 'react';
+import { Check, Loader2 } from 'lucide-react';
 
 interface ThumbnailGridProps {
     photos: string[];
@@ -14,17 +15,17 @@ export const ThumbnailGrid: React.FC<ThumbnailGridProps> = ({ photos, isComplete
                 </h3>
                 <span
                     className={`text-[10px] font-bold flex items-center gap-1.5 px-2 py-0.5 rounded-full border ${isComplete
-                            ? "text-green-600 bg-green-50 border-green-100"
-                            : "text-blue-600 bg-blue-50 border-blue-100"
+                        ? "text-green-600 bg-green-50 border-green-100"
+                        : "text-blue-600 bg-blue-50 border-blue-100"
                         }`}
                 >
                     {isComplete ? (
                         <>
-                            <i className="fas fa-check" /> Done
+                            <Check size={10} /> Done
                         </>
                     ) : (
                         <>
-                            <i className="fas fa-circle-notch fa-spin" /> Processing
+                            <Loader2 size={10} className="animate-spin" /> Processing
                         </>
                     )}
                 </span>

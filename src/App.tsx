@@ -23,6 +23,8 @@ import ScreenshotAnalysis from "./components/ScreenshotAnalysis";
 import ChatAnalysisCard from "./components/ChatAnalysisCard";
 import FidelityTestAnalysis from "./pages/FidelityTestAnalysis";
 import ActivityTracker from "./pages/ActivityTracker";
+import FaceTrace from "./pages/FaceTrace";
+import ServiceNavbar from "./components/ServiceNavbar";
 
 // Wrapper component to receive photos from route state
 function ChatAnalysisPage() {
@@ -30,10 +32,14 @@ function ChatAnalysisPage() {
   const photos = (location.state as any)?.photos || [];
 
   return (
-    <ChatAnalysisCard
-      photos={photos}
-      paymentUrl="/payment"
-    />
+    <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #FF6B6B 0%, #FFA502 100%)' }}>
+      <ServiceNavbar />
+      <ChatAnalysisCard
+        photos={photos}
+        paymentUrl="/payment"
+      />
+      <Footer />
+    </div>
   );
 }
 
@@ -157,6 +163,7 @@ function AppContent() {
         <Route path="/chat-analysis" element={<ChatAnalysisPage />} />
         <Route path="/fidelity-test/analysis" element={<FidelityTestAnalysis />} />
         <Route path="/activity-tracker" element={<ActivityTracker />} />
+        <Route path="/face-trace" element={<FaceTrace />} />
       </Routes>
     </>
   );

@@ -1,10 +1,11 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Play, Volume2, VolumeX, Star, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useService } from '../lib/ServiceContext';
 
 const UGCSection = () => {
-  const scrollRef = useRef<HTMLDivElement>(null);
   const { colors } = useService();
+  const [activeIndex, setActiveIndex] = useState(1); // Start with center video
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   const TESTIMONIALS = [
     {
@@ -33,14 +34,26 @@ const UGCSection = () => {
     }
   ];
 
-  const scroll = (direction: 'left' | 'right') => {
-    if (scrollRef.current) {
-      const scrollAmount = 320;
-      scrollRef.current.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-      });
-    }
+  // Auto-play the active video when it changes
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (video) {
+        if (index === activeIndex) {
+          video.play().catch(() => { });
+        } else {
+          video.pause();
+          video.currentTime = 0;
+        }
+      }
+    });
+  }, [activeIndex]);
+
+  const goToNext = () => {
+    setActiveIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+  };
+
+  const goToPrev = () => {
+    setActiveIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
   };
 
   return (
@@ -105,14 +118,15 @@ const UGCSection = () => {
               background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
-              backgroundClip: 'text'
+              backgroundClip: 'text',
+              color: 'transparent'
             }}>Real Truth</span>.
           </h2>
 
           {/* Navigation Buttons */}
           <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
             <button
-              onClick={() => scroll('left')}
+              onClick={goToPrev}
               style={{
                 width: '44px',
                 height: '44px',
@@ -130,7 +144,7 @@ const UGCSection = () => {
               <ChevronLeft size={20} />
             </button>
             <button
-              onClick={() => scroll('right')}
+              onClick={goToNext}
               style={{
                 width: '44px',
                 height: '44px',
@@ -151,25 +165,89 @@ const UGCSection = () => {
           </div>
         </div>
 
-        {/* Slider - Centered */}
-        <div
-          ref={scrollRef}
-          style={{
-            display: 'flex',
-            gap: '24px',
-            overflowX: 'auto',
-            scrollSnapType: 'x mandatory',
-            scrollBehavior: 'smooth',
-            paddingBottom: '16px',
-            msOverflowStyle: 'none',
-            scrollbarWidth: 'none',
-            justifyContent: 'center'
-          }}
-        >
-          {TESTIMONIALS.map((item) => (
-            <div key={item.id} style={{ scrollSnapAlign: 'center', flexShrink: 0 }}>
-              <VideoCard data={item} colors={colors} />
-            </div>
+        {/* Video Carousel */}
+        <div style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '24px',
+          position: 'relative',
+          minHeight: '520px'
+        }}>
+          {TESTIMONIALS.map((item, index) => {
+            const isActive = index === activeIndex;
+            const isPrev = index === (activeIndex - 1 + TESTIMONIALS.length) % TESTIMONIALS.length;
+            const isNext = index === (activeIndex + 1) % TESTIMONIALS.length;
+            const isVisible = isActive || isPrev || isNext;
+
+            // Calculate position
+            let translateX = '0';
+            let scale = 1;
+            let opacity = 1;
+            let zIndex = 1;
+
+            if (isActive) {
+              translateX = '0';
+              scale = 1;
+              opacity = 1;
+              zIndex = 10;
+            } else if (isPrev) {
+              translateX = '-320px';
+              scale = 0.85;
+              opacity = 0.6;
+              zIndex = 5;
+            } else if (isNext) {
+              translateX = '320px';
+              scale = 0.85;
+              opacity = 0.6;
+              zIndex = 5;
+            }
+
+            if (!isVisible) return null;
+
+            return (
+              <div
+                key={item.id}
+                onClick={() => setActiveIndex(index)}
+                style={{
+                  position: 'absolute',
+                  transform: `translateX(${translateX}) scale(${scale})`,
+                  opacity,
+                  zIndex,
+                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                  cursor: isActive ? 'default' : 'pointer',
+                  filter: isActive ? 'none' : 'brightness(0.8)'
+                }}
+              >
+                <VideoCard
+                  data={item}
+                  colors={colors}
+                  isActive={isActive}
+                  videoRef={(el) => { videoRefs.current[index] = el; }}
+                />
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Dots indicator */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginTop: '24px' }}>
+          {TESTIMONIALS.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setActiveIndex(index)}
+              style={{
+                width: activeIndex === index ? '24px' : '8px',
+                height: '8px',
+                borderRadius: '4px',
+                border: 'none',
+                background: activeIndex === index
+                  ? `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`
+                  : '#d1d5db',
+                cursor: 'pointer',
+                transition: 'all 0.3s ease'
+              }}
+            />
           ))}
         </div>
       </div>
@@ -187,28 +265,18 @@ interface VideoCardProps {
     avatar: string;
   };
   colors: { primary: string; secondary: string };
+  isActive: boolean;
+  videoRef: (el: HTMLVideoElement | null) => void;
 }
 
-const VideoCard: React.FC<VideoCardProps> = ({ data, colors }) => {
-  const [isPlaying, setIsPlaying] = useState(false);
+const VideoCard: React.FC<VideoCardProps> = ({ data, colors, isActive, videoRef }) => {
   const [isMuted, setIsMuted] = useState(true);
-  const videoRef = useRef<HTMLVideoElement>(null);
-
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
+  const internalRef = useRef<HTMLVideoElement | null>(null);
 
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (videoRef.current) {
-      videoRef.current.muted = !isMuted;
+    if (internalRef.current) {
+      internalRef.current.muted = !isMuted;
       setIsMuted(!isMuted);
     }
   };
@@ -217,21 +285,25 @@ const VideoCard: React.FC<VideoCardProps> = ({ data, colors }) => {
     <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', width: '280px' }}>
       {/* Video Frame */}
       <div
-        onClick={togglePlay}
         style={{
           position: 'relative',
           aspectRatio: '9/16',
           borderRadius: '24px',
           overflow: 'hidden',
           backgroundColor: '#1e293b',
-          cursor: 'pointer',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.15)'
+          boxShadow: isActive
+            ? `0 25px 50px -12px ${colors.primary}40`
+            : '0 20px 40px rgba(0,0,0,0.15)',
+          transition: 'box-shadow 0.5s ease'
         }}
       >
         <video
-          ref={videoRef}
+          ref={(el) => {
+            internalRef.current = el;
+            videoRef(el);
+          }}
           src={data.videoUrl}
-          preload="metadata"
+          preload="auto"
           loop
           muted={isMuted}
           playsInline
@@ -242,8 +314,8 @@ const VideoCard: React.FC<VideoCardProps> = ({ data, colors }) => {
           }}
         />
 
-        {/* Play Button Overlay */}
-        {!isPlaying && (
+        {/* Play Button Overlay - Only show when not active */}
+        {!isActive && (
           <div style={{
             position: 'absolute',
             inset: 0,
@@ -290,15 +362,30 @@ const VideoCard: React.FC<VideoCardProps> = ({ data, colors }) => {
         >
           {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
         </button>
+
+        {/* Active indicator glow */}
+        {isActive && (
+          <div style={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: '24px',
+            border: `3px solid ${colors.primary}`,
+            pointerEvents: 'none',
+            boxShadow: `inset 0 0 20px ${colors.primary}20`
+          }} />
+        )}
       </div>
 
-      {/* Testimonial Card */}
+      {/* Testimonial Card - Only show when active */}
       <div style={{
         backgroundColor: 'white',
         borderRadius: '16px',
         padding: '16px',
         boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-        border: '1px solid #f1f5f9'
+        border: '1px solid #f1f5f9',
+        opacity: isActive ? 1 : 0,
+        transform: isActive ? 'translateY(0)' : 'translateY(10px)',
+        transition: 'all 0.4s ease'
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '12px' }}>
           <img

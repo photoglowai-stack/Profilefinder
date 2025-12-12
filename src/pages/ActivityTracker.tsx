@@ -2,8 +2,10 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import {
     Instagram, ShieldCheck, Check, CheckCircle2, Lock, Mail,
     ArrowRight, Loader2, FileText, EyeOff, AlertTriangle,
-    Users, Link, Camera, User, Globe, Menu, X
+    Users, Link, Camera
 } from 'lucide-react';
+import ServiceNavbar from '../components/ServiceNavbar';
+import { Footer } from '../components/Footer';
 import '../styles/activity-tracker.css';
 
 // Log items (English)
@@ -70,7 +72,6 @@ export default function ActivityTracker() {
     const [email, setEmail] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [toasts, setToasts] = useState<Array<{ id: number; name: string; action: string }>>([]);
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     // Refs
     const logListRef = useRef<HTMLDivElement>(null);
@@ -194,124 +195,67 @@ export default function ActivityTracker() {
 
     return (
         <div style={{ minHeight: '100vh', background: 'linear-gradient(135deg, #ff4e71 0%, #ff7f66 50%, #ffb347 100%)' }}>
-            {/* CSS for responsive nav */}
-            <style>{`
-                @media (max-width: 768px) {
-                    .desktop-nav { display: none !important; }
-                    .mobile-menu-btn { display: flex !important; }
-                }
-                @media (min-width: 769px) {
-                    .mobile-menu-btn { display: none !important; }
-                    .mobile-menu { display: none !important; }
-                }
-            `}</style>
-
-            {/* Navbar */}
-            <nav style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '16px 24px',
-                maxWidth: '1280px',
-                margin: '0 auto',
-                width: '100%',
-                backdropFilter: 'blur(12px)',
-                backgroundColor: 'rgba(255,255,255,0.05)',
-                borderBottom: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '0 0 16px 16px',
-                marginTop: '8px',
-                position: 'relative',
-                color: 'white'
-            }}>
-                <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', textDecoration: 'none', color: 'white' }}>
-                    <img
-                        src="https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg"
-                        alt="ProfileFinder"
-                        loading="lazy"
-                        style={{ height: '32px', width: 'auto' }}
-                    />
-                    <span style={{ fontSize: 'clamp(18px, 4vw, 24px)', fontWeight: 900, letterSpacing: '-0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
-                        ProfileFinder
-                    </span>
-                </a>
-
-                <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '32px', fontWeight: 600, fontSize: '15px' }}>
-                    {['Search Profile', 'Blog', 'Affiliate Program'].map((item) => (
-                        <a key={item} href="#" style={{ color: 'rgba(255,255,255,0.8)', textDecoration: 'none', transition: 'color 0.2s', padding: '8px 0' }}
-                            onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'}
-                            onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.8)'}
-                        >{item}</a>
-                    ))}
-                </div>
-
-                <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '8px 12px', borderRadius: '12px', fontWeight: 600, fontSize: '14px' }}>
-                        <Globe size={16} /><span>EN</span>
-                    </div>
-                    <button style={{
-                        display: 'flex', alignItems: 'center', gap: '8px', border: '1px solid rgba(255,255,255,0.3)',
-                        backgroundColor: 'rgba(255,255,255,0.1)', padding: '10px 20px', borderRadius: '9999px',
-                        color: '#ffffff', fontSize: '14px', fontWeight: 700, cursor: 'pointer', backdropFilter: 'blur(8px)'
-                    }}>
-                        <User size={18} /><span>Profile</span>
-                    </button>
-                </div>
-
-                <button className="mobile-menu-btn" onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    style={{
-                        display: 'none', alignItems: 'center', justifyContent: 'center', width: '44px', height: '44px',
-                        border: '1px solid rgba(255,255,255,0.3)', backgroundColor: 'rgba(255,255,255,0.1)', borderRadius: '12px',
-                        color: '#ffffff', cursor: 'pointer'
-                    }}>
-                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
-
-                {isMenuOpen && (
-                    <div className="mobile-menu" style={{
-                        position: 'absolute', top: '100%', left: 0, right: 0, backgroundColor: 'rgba(0,0,0,0.95)',
-                        backdropFilter: 'blur(20px)', borderRadius: '0 0 24px 24px', padding: '24px',
-                        display: 'flex', flexDirection: 'column', gap: '16px', zIndex: 100, marginTop: '8px'
-                    }}>
-                        {['Search Profile', 'Blog', 'Affiliate Program'].map((item) => (
-                            <a key={item} href="#" onClick={() => setIsMenuOpen(false)}
-                                style={{
-                                    color: 'rgba(255,255,255,0.9)', textDecoration: 'none', fontSize: '18px', fontWeight: 600,
-                                    padding: '12px 16px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.05)'
-                                }}>{item}</a>
-                        ))}
-                    </div>
-                )}
-            </nav>
+            {/* ServiceNavbar - Same as Hero */}
+            <ServiceNavbar />
 
             {/* Main Content */}
             <div className="activity-tracker-wrapper">
                 <div className="activity-card">
 
-                    {/* Header */}
+                    {/* Header - Same style as Fidelity Test */}
                     <div style={{
-                        padding: '20px 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                        borderBottom: '1px solid #fff7ed', backgroundColor: 'rgba(255,255,255,0.95)',
-                        backdropFilter: 'blur(12px)', position: 'sticky', top: 0, zIndex: 20
+                        padding: '20px 24px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                        borderBottom: '1px solid #fff7ed',
+                        backgroundColor: 'rgba(255,255,255,0.95)',
+                        backdropFilter: 'blur(12px)',
+                        position: 'sticky',
+                        top: 0,
+                        zIndex: 20
                     }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                            <div style={{
-                                width: '40px', height: '40px', background: 'linear-gradient(135deg, #ec4899, #f97316)',
-                                borderRadius: '12px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                color: 'white', boxShadow: '0 8px 16px rgba(236,72,153,0.3)'
-                            }}>
-                                <Instagram style={{ width: '22px', height: '22px' }} />
-                            </div>
-                            <div>
-                                <h1 style={{ fontWeight: 700, color: '#111827', fontSize: '16px', margin: 0 }}>Insta Monitor</h1>
+                        {/* Centered Logo at top - the scanner */}
+                        <div style={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            width: '100%'
+                        }}>
+                            <img
+                                src="https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/LOGO%20PROFILEFINDER%20HD%20REALIST.svg"
+                                alt="ProfileFinder"
+                                style={{
+                                    width: '56px',
+                                    height: '56px',
+                                    filter: 'drop-shadow(0 8px 16px rgba(236, 72, 153, 0.3))',
+                                    animation: 'pulse 2s infinite'
+                                }}
+                            />
+                            <h1 style={{
+                                fontWeight: 800,
+                                color: '#111827',
+                                fontSize: '18px',
+                                margin: '8px 0 0 0',
+                                letterSpacing: '-0.02em'
+                            }}>ProfileFinder AI</h1>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '4px' }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                                    <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#22c55e', animation: 'pulse 2s infinite' }}></span>
-                                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#6b7280' }}>Live 🔴</span>
+                                    <span style={{
+                                        width: '8px',
+                                        height: '8px',
+                                        borderRadius: '50%',
+                                        backgroundColor: '#22c55e',
+                                        animation: 'pulse 2s infinite'
+                                    }}></span>
+                                    <span style={{ fontSize: '11px', fontWeight: 700, color: '#6b7280', letterSpacing: '0.05em' }}>Online & Ready</span>
+                                </div>
+                                <span style={{ width: '4px', height: '4px', borderRadius: '50%', backgroundColor: '#d1d5db' }}></span>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '10px', color: '#9ca3af', fontWeight: 600 }}>
+                                    <ShieldCheck style={{ width: '12px', height: '12px', color: '#22c55e' }} />
+                                    Private
                                 </div>
                             </div>
-                        </div>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px', fontSize: '10px', color: '#6b7280', fontWeight: 600, backgroundColor: '#f3f4f6', padding: '6px 10px', borderRadius: '9999px' }}>
-                            <User style={{ width: '12px', height: '12px', color: '#6b7280' }} />
-                            Stealth Mode
                         </div>
                     </div>
 
@@ -541,6 +485,9 @@ export default function ActivityTracker() {
                     </div>
                 </div>
             </div>
+
+            {/* Footer */}
+            <Footer />
         </div>
     );
 }
