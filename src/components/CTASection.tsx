@@ -57,8 +57,18 @@ export function CTASection() {
             <span className="text-white text-xs md:text-sm font-bold uppercase tracking-wide">20,000+ profiles detected</span>
           </div>
 
-          <h2 className="text-3xl md:text-4xl lg:text-5xl text-white mb-3 md:mb-5 font-black tracking-tighter">
-            {ctaContent.title}
+          <h2
+            style={{
+              fontSize: 'clamp(1.75rem, 5vw, 3rem)',
+              fontWeight: 900,
+              color: 'white',
+              marginBottom: '16px',
+              letterSpacing: '-0.03em',
+              lineHeight: 1.1,
+              fontFamily: "'Inter Tight', system-ui, sans-serif"
+            }}
+          >
+            Ready to Find <span style={{ fontStyle: 'italic' }}>the Truth?</span>
           </h2>
 
           <p className="text-base md:text-lg lg:text-xl text-white/90 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed font-medium">

@@ -5,13 +5,15 @@ interface SectionHeaderProps {
   title: string;
   description?: string;
   highlightedWords?: string[];
+  italic?: boolean;
 }
 
 export function SectionHeader({
   label,
   title,
   description,
-  highlightedWords = []
+  highlightedWords = [],
+  italic = true
 }: SectionHeaderProps) {
   const highlightText = (text: string) => {
     if (highlightedWords.length === 0) return text;
@@ -21,7 +23,14 @@ export function SectionHeader({
       highlightedWords.some(word => word.toLowerCase() === part.toLowerCase()) ? (
         <span
           key={index}
-          className="text-transparent bg-clip-text bg-gradient-to-r from-[#ff4e71] to-[#ff7f66]"
+          style={{
+            background: 'linear-gradient(135deg, #ff4e71, #ff7f66)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+            fontStyle: italic ? 'italic' : 'normal',
+            fontWeight: 900
+          }}
         >
           {part}
         </span>
@@ -36,18 +45,58 @@ export function SectionHeader({
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="text-center mb-10 md:mb-12"
+      style={{
+        textAlign: 'center',
+        marginBottom: '48px',
+        fontFamily: "'Inter Tight', system-ui, sans-serif"
+      }}
     >
       {label && (
-        <span className="text-[#ff4e71] uppercase tracking-[0.15em] text-xs md:text-sm mb-3 block font-bold">
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'linear-gradient(135deg, #ff4e71, #ff7f66)',
+            color: 'white',
+            padding: '8px 20px',
+            borderRadius: '9999px',
+            fontSize: '12px',
+            fontWeight: 700,
+            marginBottom: '20px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            boxShadow: '0 4px 20px rgba(255, 78, 113, 0.3)'
+          }}
+        >
           {label}
-        </span>
+        </div>
       )}
-      <h2 className="text-3xl md:text-4xl text-slate-900 mb-3 md:mb-4 font-black tracking-tighter">
+      <h2
+        style={{
+          fontSize: 'clamp(1.75rem, 5vw, 3rem)',
+          fontWeight: 900,
+          color: '#0f172a',
+          letterSpacing: '-0.03em',
+          margin: '0 auto 16px',
+          lineHeight: 1.1,
+          fontFamily: "'Inter Tight', system-ui, sans-serif"
+        }}
+      >
         {highlightText(title)}
       </h2>
       {description && (
-        <p className="text-base md:text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
+        <p
+          style={{
+            fontSize: 'clamp(0.95rem, 2vw, 1.125rem)',
+            color: '#64748b',
+            maxWidth: '720px',
+            margin: '0 auto',
+            lineHeight: 1.7,
+            fontWeight: 500,
+            fontFamily: "'Inter Tight', system-ui, sans-serif"
+          }}
+        >
           {description}
         </p>
       )}

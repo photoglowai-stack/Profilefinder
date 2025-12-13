@@ -26,7 +26,9 @@ export function StatsSection() {
     <section className="max-w-[1760px] mx-auto px-4 md:px-8 py-12 md:py-16">
       <SectionHeader
         label="Statistics"
-        title={statsContent.title}
+        title="The Numbers Don't Lie"
+        description="See why thousands trust ProfileFinder for relationship clarity"
+        highlightedWords={["Don't Lie"]}
       />
 
       {/* SEO Intro Text */}

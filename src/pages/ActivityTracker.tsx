@@ -4,8 +4,7 @@ import {
     ArrowRight, Loader2, FileText, EyeOff, AlertTriangle,
     Users, Link, Camera, User
 } from 'lucide-react';
-import ServiceNavbar from '../components/ServiceNavbar';
-import { Footer } from '../components/Footer';
+import { ServiceLayout } from '../components/layouts/ServiceLayout';
 import '../styles/activity-tracker.css';
 
 // Log items (English)
@@ -59,8 +58,7 @@ const PROFILES = [
     }
 ];
 
-// Page gradient - same as Hero dating style
-const PAGE_GRADIENT = 'linear-gradient(135deg, #ff4b5c 0%, #ff6b6b 50%, #ff9e75 100%)';
+// Page gradient is now handled by ServiceLayout
 
 export default function ActivityTracker() {
     // State (removed useService - using fixed page colors)
@@ -199,11 +197,7 @@ export default function ActivityTracker() {
     };
 
     return (
-        <div style={{ minHeight: '100vh', background: PAGE_GRADIENT }}>
-            {/* ServiceNavbar with page colors */}
-            <ServiceNavbar />
-
-            {/* Main Content */}
+        <ServiceLayout variant="activity">
             <div className="activity-tracker-wrapper">
                 <div className="activity-card">
 
@@ -490,9 +484,6 @@ export default function ActivityTracker() {
                     </div>
                 </div>
             </div>
-
-            {/* Footer */}
-            <Footer />
-        </div>
+        </ServiceLayout>
     );
 }

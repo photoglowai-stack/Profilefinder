@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { Sparkles, CheckCircle2, Clock, Shield } from "lucide-react";
 import imgWebsiteLogo from "figma:asset/4b7948bf098fa302d0479c7e50133880ecda62bd.png";
-import { Button } from "./ui/button";
 import { useService } from "../lib/ServiceContext";
 import { serviceContent, navigationContent } from "../lib/content";
 
@@ -14,7 +13,7 @@ export function Hero() {
     }}>
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div 
+        <motion.div
           className="absolute w-[600px] h-[600px] bg-white/10 rounded-full blur-3xl -top-32 -left-32"
           animate={{
             scale: [1, 1.2, 1],
@@ -26,7 +25,7 @@ export function Hero() {
             ease: "easeInOut"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute w-[500px] h-[500px] bg-white/10 rounded-full blur-3xl -bottom-32 -right-32"
           animate={{
             scale: [1.2, 1, 1.2],
@@ -38,7 +37,7 @@ export function Hero() {
             ease: "easeInOut"
           }}
         />
-        <motion.div 
+        <motion.div
           className="absolute w-[400px] h-[400px] bg-pink-300/10 rounded-full blur-3xl top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
           animate={{
             scale: [1, 1.1, 1],
@@ -53,20 +52,20 @@ export function Hero() {
       </div>
 
       {/* Navigation */}
-      <motion.nav 
+      <motion.nav
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
         className="relative max-w-[1760px] mx-auto px-4 md:px-6 py-1.5 md:py-2 flex items-center justify-between"
       >
-        <motion.div 
+        <motion.div
           className="flex items-center gap-1.5"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.2 }}
         >
           <img src={imgWebsiteLogo} alt="ProfileFinder" className="max-h-8 max-w-[120px] h-auto w-auto object-contain drop-shadow-lg" style={{ height: '32px', maxHeight: '32px' }} />
         </motion.div>
-        
+
         <div className="hidden md:flex items-center gap-3">
           <a href="#how-it-works" className="text-white hover:text-white/80 transition text-xs">
             {navigationContent.howItWorks}
@@ -97,7 +96,7 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <motion.div 
+          <motion.div
             className="inline-flex items-center gap-2 bg-white/25 backdrop-blur-md px-5 py-2 rounded-full mb-6 md:mb-8 border border-white/40 shadow-xl"
             whileHover={{ scale: 1.05 }}
           >
@@ -111,7 +110,7 @@ export function Hero() {
               {content.titleHighlight}
             </span>
           </h1>
-          
+
           <p className="text-white text-sm md:text-lg lg:text-xl max-w-3xl mx-auto opacity-95 leading-relaxed mb-8 md:mb-10 px-2">
             {content.description}
           </p>
@@ -119,7 +118,7 @@ export function Hero() {
           {/* Trust indicators - Enhanced */}
           <div className="flex flex-wrap items-center justify-center gap-3 md:gap-5">
             {content.stats.map((stat, index) => (
-              <motion.div 
+              <motion.div
                 key={index}
                 className="flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full border border-white/30 shadow-lg"
                 whileHover={{ scale: 1.05, backgroundColor: "rgba(255, 255, 255, 0.25)" }}

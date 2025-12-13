@@ -4,8 +4,7 @@ import {
     Search, ChevronDown, Check, Lock, UserCircle, MapPin,
     Cloud, Building, Users, Loader2, ArrowRight
 } from 'lucide-react';
-import ServiceNavbar from '../components/ServiceNavbar';
-import { Footer } from '../components/Footer';
+import { ServiceLayout } from '../components/layouts/ServiceLayout';
 import 'leaflet/dist/leaflet.css';
 import '../styles/dating-search.css';
 
@@ -28,8 +27,7 @@ const TOAST_MESSAGES = [
     { name: "Emma K.", action: "discovered a secret profile" }
 ];
 
-// Page gradient (Dating = red-orange)
-const PAGE_GRADIENT = 'linear-gradient(180deg, #F87171 0%, #FBBF24 100%)';
+// Page gradient is now handled by ServiceLayout
 
 // Logo URL
 const LOGO_URL = 'https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/LOGO%20PROFILEFINDER%20HD%20REALIST.svg';
@@ -243,8 +241,7 @@ export default function DatingSearchWizard() {
     // RENDER
     // ============================================
     return (
-        <div style={{ minHeight: '100vh', background: PAGE_GRADIENT }}>
-            <ServiceNavbar />
+        <ServiceLayout variant="dating">
 
             <div className="dating-search-wrapper">
                 <div className="dating-card">
@@ -560,8 +557,6 @@ export default function DatingSearchWizard() {
                 </div>
             </div>
 
-            <Footer />
-
             {/* Social Proof Toasts */}
             <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 50, display: 'flex', flexDirection: 'column', gap: '12px' }}>
                 {toasts.map((toast) => (
@@ -588,6 +583,6 @@ export default function DatingSearchWizard() {
                     </div>
                 ))}
             </div>
-        </div>
+        </ServiceLayout>
     );
 }

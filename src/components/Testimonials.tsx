@@ -24,10 +24,10 @@ export function Testimonials() {
     <section id="testimonials" className="bg-gradient-to-b from-white via-pink-50/30 to-white py-12 md:py-16">
       <div className="max-w-[1760px] mx-auto px-4 md:px-8">
         <SectionHeader
-          label={content.title}
-          title={content.subtitle}
-          description=""
-          highlightedWords={["users"]}
+          label="Testimonials"
+          title="Real Users, Real Results"
+          description="Join thousands who discovered the truth they needed"
+          highlightedWords={["Real Results"]}
         />
 
         <div className="grid md:grid-cols-3 gap-4 md:gap-6">

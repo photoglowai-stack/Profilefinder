@@ -39,9 +39,6 @@ export function RelatedSearches() {
   if (selectedService !== "dating" && selectedService !== "facetrace") return null;
 
   const searches = selectedService === "dating" ? datingSearches : facetraceSearches;
-  const titleText = selectedService === "dating"
-    ? "Related Dating Profile Searches"
-    : "Related Face Search & Image Recognition Queries";
 
   return (
     <section className="max-w-[1400px] mx-auto px-4 md:px-8 py-12 md:py-16 bg-gradient-to-br from-gray-50 to-white">
@@ -51,14 +48,47 @@ export function RelatedSearches() {
         viewport={{ once: true }}
         className="text-center mb-10"
       >
-        <div className="inline-flex items-center gap-2 bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] px-4 py-2 rounded-full mb-4">
-          <TrendingUp className="w-4 h-4 text-white" />
-          <span className="text-white text-sm font-medium">Popular Searches</span>
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '8px',
+            background: 'linear-gradient(135deg, #ff4e71, #ff7f66)',
+            color: 'white',
+            padding: '8px 20px',
+            borderRadius: '9999px',
+            fontSize: '12px',
+            fontWeight: 700,
+            marginBottom: '20px',
+            textTransform: 'uppercase',
+            letterSpacing: '0.08em',
+            boxShadow: '0 4px 20px rgba(255, 78, 113, 0.3)'
+          }}
+        >
+          <TrendingUp className="w-4 h-4" />
+          Popular Searches
         </div>
-        <h2 className="text-2xl md:text-3xl text-[#020817] mb-3">
-          {titleText}
+        <h2 style={{
+          fontSize: 'clamp(1.75rem, 4vw, 2.25rem)',
+          fontWeight: 900,
+          color: '#0f172a',
+          marginBottom: '12px',
+          letterSpacing: '-0.03em',
+          fontFamily: "'Inter Tight', system-ui, sans-serif"
+        }}>
+          {selectedService === "dating"
+            ? <>Discover What <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Others Are Searching</span></>
+            : <>Explore <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Face Recognition Tools</span></>
+          }
         </h2>
-        <p className="text-gray-600 text-sm md:text-base max-w-2xl mx-auto">
+        <p style={{
+          color: '#64748b',
+          fontSize: '1rem',
+          fontWeight: 500,
+          maxWidth: '640px',
+          margin: '0 auto',
+          fontFamily: "'Inter Tight', system-ui, sans-serif"
+        }}>
           {selectedService === "dating"
             ? "Explore popular search terms and discover how our AI helps you validate online dating activity."
             : "Discover popular facial recognition and reverse image search tools powered by advanced AI"}
@@ -77,11 +107,10 @@ export function RelatedSearches() {
               transition={{ delay: index * 0.05 }}
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.98 }}
-              className={`relative group flex items-center gap-2 md:gap-3 p-3 md:p-4 rounded-xl md:rounded-2xl border-2 transition-all ${
-                item.popular
-                  ? "bg-gradient-to-br from-red-50 to-orange-50 border-[#ff4e71] shadow-md"
-                  : "bg-white border-gray-200 hover:border-[#ff4e71] shadow-sm"
-              }`}
+              className={`relative group flex items-center gap-2 md:gap-3 p-3 md:p-4 rounded-xl md:rounded-2xl border-2 transition-all ${item.popular
+                ? "bg-gradient-to-br from-red-50 to-orange-50 border-[#ff4e71] shadow-md"
+                : "bg-white border-gray-200 hover:border-[#ff4e71] shadow-sm"
+                }`}
             >
               {item.popular && (
                 <div className="absolute -top-2 -right-2 bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] text-white text-[10px] px-2 py-0.5 rounded-full shadow-lg font-medium">
@@ -89,19 +118,16 @@ export function RelatedSearches() {
                 </div>
               )}
 
-              <div className={`flex-shrink-0 p-2 rounded-lg ${
-                item.popular
-                  ? "bg-gradient-to-br from-[#ff4e71] to-[#ff7f66]"
-                  : "bg-gray-100 group-hover:bg-gradient-to-br group-hover:from-[#ff4e71] group-hover:to-[#ff7f66]"
-              } transition-all`}>
-                <Icon className={`w-4 h-4 ${
-                  item.popular ? "text-white" : "text-gray-600 group-hover:text-white"
-                } transition-colors`} strokeWidth={2} />
+              <div className={`flex-shrink-0 p-2 rounded-lg ${item.popular
+                ? "bg-gradient-to-br from-[#ff4e71] to-[#ff7f66]"
+                : "bg-gray-100 group-hover:bg-gradient-to-br group-hover:from-[#ff4e71] group-hover:to-[#ff7f66]"
+                } transition-all`}>
+                <Icon className={`w-4 h-4 ${item.popular ? "text-white" : "text-gray-600 group-hover:text-white"
+                  } transition-colors`} strokeWidth={2} />
               </div>
 
-              <span className={`text-xs md:text-sm text-left flex-1 ${
-                item.popular ? "text-[#020817] font-medium" : "text-gray-700 group-hover:text-[#020817]"
-              } transition-colors`}>
+              <span className={`text-xs md:text-sm text-left flex-1 ${item.popular ? "text-[#020817] font-medium" : "text-gray-700 group-hover:text-[#020817]"
+                } transition-colors`}>
                 {item.text}
               </span>
             </motion.button>

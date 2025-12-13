@@ -34,12 +34,31 @@ const UGCSection = () => {
     }
   ];
 
+  // Preload all videos on mount and handle autoplay
+  useEffect(() => {
+    // Preload all videos to show first frame
+    videoRefs.current.forEach((video) => {
+      if (video && video.readyState < 2) {
+        video.load();
+      }
+    });
+  }, []);
+
   // Auto-play the active video when it changes
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
       if (video) {
         if (index === activeIndex) {
-          video.play().catch(() => { });
+          // Ensure video is ready and play
+          video.muted = true; // Required for autoplay
+          const playPromise = video.play();
+          if (playPromise !== undefined) {
+            playPromise.catch(() => {
+              // Retry with user interaction simulation
+              video.muted = true;
+              video.play().catch(() => { });
+            });
+          }
         } else {
           video.pause();
           video.currentTime = 0;
@@ -112,7 +131,7 @@ const UGCSection = () => {
             fontWeight: 900,
             color: '#0f172a',
             letterSpacing: '-0.02em',
-            margin: '0 auto 24px'
+            margin: '0 auto 0'
           }}>
             Real Stories, <span style={{
               background: 'linear-gradient(135deg, #ec4899, #f472b6)',
@@ -122,9 +141,19 @@ const UGCSection = () => {
               color: 'transparent'
             }}>Real Truth</span>.
           </h2>
+        </div>
 
-          {/* Navigation Buttons */}
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center' }}>
+        {/* Video Carousel Container */}
+        <div style={{ position: 'relative' }}>
+          {/* Navigation Buttons - Above carousel */}
+          <div style={{
+            display: 'flex',
+            gap: '12px',
+            justifyContent: 'center',
+            marginBottom: '24px',
+            position: 'relative',
+            zIndex: 20
+          }}>
             <button
               onClick={goToPrev}
               style={{
@@ -138,7 +167,8 @@ const UGCSection = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 transition: 'all 0.2s',
-                color: colors.primary
+                color: colors.primary,
+                boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
               }}
             >
               <ChevronLeft size={20} />
@@ -163,71 +193,71 @@ const UGCSection = () => {
               <ChevronRight size={20} />
             </button>
           </div>
-        </div>
 
-        {/* Video Carousel */}
-        <div style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '24px',
-          position: 'relative',
-          minHeight: '520px'
-        }}>
-          {TESTIMONIALS.map((item, index) => {
-            const isActive = index === activeIndex;
-            const isPrev = index === (activeIndex - 1 + TESTIMONIALS.length) % TESTIMONIALS.length;
-            const isNext = index === (activeIndex + 1) % TESTIMONIALS.length;
-            const isVisible = isActive || isPrev || isNext;
+          {/* Video Carousel */}
+          <div style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            gap: '24px',
+            position: 'relative',
+            minHeight: '520px'
+          }}>
+            {TESTIMONIALS.map((item, index) => {
+              const isActive = index === activeIndex;
+              const isPrev = index === (activeIndex - 1 + TESTIMONIALS.length) % TESTIMONIALS.length;
+              const isNext = index === (activeIndex + 1) % TESTIMONIALS.length;
+              const isVisible = isActive || isPrev || isNext;
 
-            // Calculate position
-            let translateX = '0';
-            let scale = 1;
-            let opacity = 1;
-            let zIndex = 1;
+              // Calculate position
+              let translateX = '0';
+              let scale = 1;
+              let opacity = 1;
+              let zIndex = 1;
 
-            if (isActive) {
-              translateX = '0';
-              scale = 1;
-              opacity = 1;
-              zIndex = 10;
-            } else if (isPrev) {
-              translateX = '-320px';
-              scale = 0.85;
-              opacity = 0.6;
-              zIndex = 5;
-            } else if (isNext) {
-              translateX = '320px';
-              scale = 0.85;
-              opacity = 0.6;
-              zIndex = 5;
-            }
+              if (isActive) {
+                translateX = '0';
+                scale = 1;
+                opacity = 1;
+                zIndex = 10;
+              } else if (isPrev) {
+                translateX = '-320px';
+                scale = 0.85;
+                opacity = 0.6;
+                zIndex = 5;
+              } else if (isNext) {
+                translateX = '320px';
+                scale = 0.85;
+                opacity = 0.6;
+                zIndex = 5;
+              }
 
-            if (!isVisible) return null;
+              if (!isVisible) return null;
 
-            return (
-              <div
-                key={item.id}
-                onClick={() => setActiveIndex(index)}
-                style={{
-                  position: 'absolute',
-                  transform: `translateX(${translateX}) scale(${scale})`,
-                  opacity,
-                  zIndex,
-                  transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                  cursor: isActive ? 'default' : 'pointer',
-                  filter: isActive ? 'none' : 'brightness(0.8)'
-                }}
-              >
-                <VideoCard
-                  data={item}
-                  colors={colors}
-                  isActive={isActive}
-                  videoRef={(el) => { videoRefs.current[index] = el; }}
-                />
-              </div>
-            );
-          })}
+              return (
+                <div
+                  key={item.id}
+                  onClick={() => setActiveIndex(index)}
+                  style={{
+                    position: 'absolute',
+                    transform: `translateX(${translateX}) scale(${scale})`,
+                    opacity,
+                    zIndex,
+                    transition: 'all 0.5s cubic-bezier(0.4, 0, 0.2, 1)',
+                    cursor: isActive ? 'default' : 'pointer',
+                    filter: isActive ? 'none' : 'brightness(0.8)'
+                  }}
+                >
+                  <VideoCard
+                    data={item}
+                    colors={colors}
+                    isActive={isActive}
+                    videoRef={(el) => { videoRefs.current[index] = el; }}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         {/* Dots indicator */}
@@ -273,6 +303,39 @@ const VideoCard: React.FC<VideoCardProps> = ({ data, colors, isActive, videoRef 
   const [isMuted, setIsMuted] = useState(true);
   const internalRef = useRef<HTMLVideoElement | null>(null);
 
+  // Handle autoplay when card becomes active
+  useEffect(() => {
+    const video = internalRef.current;
+    if (!video) return;
+
+    if (isActive) {
+      video.muted = true; // Required for autoplay in browsers
+      video.currentTime = 0;
+
+      const attemptPlay = async () => {
+        try {
+          await video.play();
+        } catch (error) {
+          // Fallback: try again with slight delay
+          setTimeout(() => {
+            video.play().catch(() => { });
+          }, 100);
+        }
+      };
+
+      // If video is ready, play immediately
+      if (video.readyState >= 3) {
+        attemptPlay();
+      } else {
+        // Wait for video to be ready
+        video.addEventListener('canplay', attemptPlay, { once: true });
+        video.load();
+      }
+    } else {
+      video.pause();
+    }
+  }, [isActive]);
+
   const toggleMute = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (internalRef.current) {
@@ -303,19 +366,31 @@ const VideoCard: React.FC<VideoCardProps> = ({ data, colors, isActive, videoRef 
             videoRef(el);
           }}
           src={data.videoUrl}
-          preload="metadata"
+          preload="auto"
           loop
-          muted={isMuted}
+          muted
+          autoPlay={isActive}
           playsInline
-          poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='280' height='498' viewBox='0 0 280 498'%3E%3Crect fill='%231e293b' width='280' height='498'/%3E%3C/svg%3E"
           style={{
             width: '100%',
             height: '100%',
             objectFit: 'cover',
             backgroundColor: '#1e293b'
           }}
+          onLoadedData={(e) => {
+            // Ensure we show the first frame for non-active videos
+            const video = e.target as HTMLVideoElement;
+            if (!isActive) {
+              video.currentTime = 0.1; // Slightly offset to ensure frame is rendered
+            }
+          }}
           onError={(e) => {
             console.error('Video load error:', data.videoUrl);
+          }}
+          onCanPlay={(e) => {
+            if (isActive) {
+              (e.target as HTMLVideoElement).play().catch(() => { });
+            }
           }}
         />
 

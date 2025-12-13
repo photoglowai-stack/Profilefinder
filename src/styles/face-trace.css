@@ -1,6 +1,4 @@
-/* ===== FACE TRACE PAGE - SCOPED STYLES ===== */
-
-/* Page wrapper with gradient */
+/* Page wrapper with gradient - gradient handled by ServiceLayout parent */
 .face-trace-wrapper {
     min-height: calc(100vh - 80px);
     width: 100%;
@@ -8,7 +6,6 @@
     align-items: center;
     justify-content: center;
     padding: 2rem 1rem 4rem 1rem;
-    background: linear-gradient(to bottom right, #FF6B6B, #FFA502);
     font-family: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 

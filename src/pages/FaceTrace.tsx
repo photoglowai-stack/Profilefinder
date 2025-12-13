@@ -4,8 +4,7 @@ import {
     Lock, ArrowRight, ShieldCheck,
     UserX, Quote, CheckCircle2, Loader2, Heart, Camera, Sparkles, Mail, Globe, List, Search
 } from 'lucide-react';
-import ServiceNavbar from '../components/ServiceNavbar';
-import { Footer } from '../components/Footer';
+import { ServiceLayout } from '../components/layouts/ServiceLayout';
 import '../styles/face-trace.css';
 
 // ============================================
@@ -93,8 +92,7 @@ const getSourceStyle = (key: MockResult['sourceKey']) => {
 // MAIN COMPONENT
 // ============================================
 
-// Page gradient (orange)
-const PAGE_GRADIENT = 'linear-gradient(135deg, #FF6B6B 0%, #FFA502 100%)';
+// Page gradient is now handled by ServiceLayout
 
 export default function FaceTrace() {
     const location = useLocation();
@@ -208,11 +206,7 @@ export default function FaceTrace() {
     };
 
     return (
-        <div style={{ minHeight: '100vh', background: PAGE_GRADIENT }}>
-            {/* ServiceNavbar with page colors */}
-            <ServiceNavbar />
-
-            {/* Main Content */}
+        <ServiceLayout variant="faceTrace">
             <div className="face-trace-wrapper">
                 <div className="face-trace-card">
 
@@ -483,10 +477,7 @@ export default function FaceTrace() {
                     </div>
                 </div>
             </div>
-
-            {/* Footer */}
-            <Footer />
-        </div>
+        </ServiceLayout>
     );
 }
 

@@ -25,11 +25,8 @@ import FidelityTestAnalysis from "./pages/FidelityTestAnalysis";
 import ActivityTracker from "./pages/ActivityTracker";
 import FaceTrace from "./pages/FaceTrace";
 import DatingSearchWizard from "./pages/DatingSearchWizard";
-import ServiceNavbar from "./components/ServiceNavbar";
 import ScrollToTop from "./components/ScrollToTop";
-
-// Page gradient for Chat Analysis (orange)
-const CHAT_ANALYSIS_GRADIENT = 'linear-gradient(135deg, #FF6B6B 0%, #FFA502 100%)';
+import { ServiceLayout } from "./components/layouts/ServiceLayout";
 
 // Wrapper component to receive photos from route state
 function ChatAnalysisPage() {
@@ -37,16 +34,15 @@ function ChatAnalysisPage() {
   const photos = (location.state as any)?.photos || [];
 
   return (
-    <div style={{ minHeight: '100vh', background: CHAT_ANALYSIS_GRADIENT }}>
-      <ServiceNavbar />
+    <ServiceLayout variant="chat">
       <ChatAnalysisCard
         photos={photos}
         paymentUrl="/payment"
       />
-      <Footer />
-    </div>
+    </ServiceLayout>
   );
 }
+
 
 
 function LandingPage() {

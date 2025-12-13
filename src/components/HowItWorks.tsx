@@ -321,11 +321,42 @@ export function HowItWorks() {
           viewport={{ once: true }}
           style={{ textAlign: 'center', marginBottom: '2.5rem' }}
         >
-          <h3 style={{ fontSize: '1.875rem', fontWeight: 700, color: '#111827', marginBottom: '0.5rem' }}>
-            Our Tools
+          <div
+            style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '8px',
+              background: 'linear-gradient(135deg, #ff4e71, #ff7f66)',
+              color: 'white',
+              padding: '8px 20px',
+              borderRadius: '9999px',
+              fontSize: '12px',
+              fontWeight: 700,
+              marginBottom: '20px',
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              boxShadow: '0 4px 20px rgba(255, 78, 113, 0.3)'
+            }}
+          >
+            Our Toolkit
+          </div>
+          <h3 style={{
+            fontSize: 'clamp(1.75rem, 5vw, 2.5rem)',
+            fontWeight: 900,
+            color: '#0f172a',
+            marginBottom: '0.75rem',
+            letterSpacing: '-0.03em',
+            fontFamily: "'Inter Tight', system-ui, sans-serif"
+          }}>
+            Everything You Need to <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Uncover the Truth</span>
           </h3>
-          <p style={{ color: '#6b7280' }}>
-            A complete toolkit to investigate relationship doubts
+          <p style={{
+            color: '#64748b',
+            fontSize: '1rem',
+            fontWeight: 500,
+            fontFamily: "'Inter Tight', system-ui, sans-serif"
+          }}>
+            A complete toolkit to investigate relationship doubts with AI-powered precision
           </p>
         </motion.div>
 
@@ -602,20 +633,7 @@ export function HowItWorks() {
         </div>
       </div>
 
-      {/* Bottom CTA */}
-      <motion.div
-        className="mt-12 md:mt-16 text-center"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-      >
-        <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-white shadow-xl font-semibold" style={{
-          background: `linear-gradient(135deg, ${serviceColors.primary}, ${serviceColors.secondary})`
-        }}>
-          <Sparkles className="w-5 h-5" />
-          <span className="text-sm md:text-base">Ready to discover the truth? Start your Tinder search now</span>
-        </div>
-      </motion.div>
+
     </section>
   );
 }

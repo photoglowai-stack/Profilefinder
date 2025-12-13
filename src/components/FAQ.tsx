@@ -11,7 +11,9 @@ export function FAQ() {
     <section id="faq" className="max-w-[1760px] mx-auto px-4 md:px-8 py-12 md:py-16">
       <SectionHeader
         label="FAQ"
-        title={content.title}
+        title="Got Questions? We've Got Answers"
+        description="Everything you need to know about ProfileFinder"
+        highlightedWords={["Answers"]}
       />
 
       <div className="max-w-4xl mx-auto space-y-3 md:space-y-4">
