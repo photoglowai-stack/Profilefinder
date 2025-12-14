@@ -42,11 +42,12 @@ export default function ServiceNavbar() {
                         src={LOGO_URL}
                         alt="ProfileFinder"
                         loading="lazy"
-                        className="h-8 w-auto"
-                        width={32}
-                        height={32}
+                        style={{
+                            height: '32px',
+                            width: 'auto'
+                        }}
                     />
-                    <span className="text-lg md:text-2xl font-black tracking-tight drop-shadow-md">
+                    <span style={{ fontSize: 'clamp(18px, 4vw, 24px)', fontWeight: 900, letterSpacing: '-0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
                         ProfileFinder
                     </span>
                 </a>
