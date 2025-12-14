@@ -755,7 +755,6 @@ export function PaymentPage() {
                                 </div>
 
                                 <button
-                                    className="btn-shimmer"
                                     style={{
                                         width: '100%',
                                         backgroundColor: colors.indigo600,
