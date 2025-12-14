@@ -756,6 +756,50 @@ body {
   animation: hero-shimmer 2s infinite;
 }
 
+/* CTA Emoji Bounce Animation - Click Feedback */
+@keyframes ctaEmojiBounce {
+  0% {
+    transform: scale(1) rotate(0deg);
+  }
+
+  25% {
+    transform: scale(1.4) rotate(-15deg);
+  }
+
+  50% {
+    transform: scale(0.9) rotate(10deg);
+  }
+
+  75% {
+    transform: scale(1.2) rotate(-5deg);
+  }
+
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.hero-btn:active .cta-emoji-bounce {
+  animation: ctaEmojiBounce 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Subtle float for emoji when idle */
+@keyframes emojiFloat {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-3px) rotate(5deg);
+  }
+}
+
+.cta-emoji-bounce {
+  animation: emojiFloat 2s ease-in-out infinite;
+}
+
 /* Mobile menu overlay - Full screen scrollable */
 .mobile-menu-overlay {
   position: fixed;

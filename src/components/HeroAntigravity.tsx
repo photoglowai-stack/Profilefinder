@@ -78,12 +78,13 @@ const HeroAntigravity: React.FC = () => {
         "Pimeyes Alternative", "Reverse Image Search", "Face Search Free", "Instagram Finder", "Tinder Profile Search", "AI Face Recognition"
     ];
 
-    const contentMap: Record<ServiceType, { h1: string; desc: string; instruction: string; cta: string; buttonIcon: React.ReactNode; buttonBg: string }> = {
+    const contentMap: Record<ServiceType, { h1: string; desc: string; instruction: string; cta: string; ctaEmoji: string; buttonIcon: React.ReactNode; buttonBg: string }> = {
         dating: {
             h1: "Find any profile on Tinder with AI Face Search",
             desc: "Uncover your partner's secrets with the #1 Tinder Profile Finder. More accurate than Pimeyes for dating apps.",
             instruction: "WHO ARE YOU LOOKING FOR?",
             cta: "START SEARCH",
+            ctaEmoji: "🔍",
             buttonIcon: <Search size={22} strokeWidth={3} />,
             buttonBg: "#0a0a0a"
         },
@@ -92,6 +93,7 @@ const HeroAntigravity: React.FC = () => {
             desc: "Analyze their entire following list instantly. See who they recently followed and uncover suspicious interactions.",
             instruction: "ENTER TARGET USERNAME",
             cta: "ANALYZE FOLLOWINGS",
+            ctaEmoji: "📊",
             buttonIcon: <Instagram size={22} strokeWidth={2.5} />,
             buttonBg: "linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)"
         },
@@ -100,6 +102,7 @@ const HeroAntigravity: React.FC = () => {
             desc: "The ultimate Pimeyes alternative. Find every profile, blog post, and image trace across the entire web.",
             instruction: "UPLOAD PHOTO TO SCAN",
             cta: "START WEB SCAN",
+            ctaEmoji: "🌐",
             buttonIcon: <ScanFace size={22} strokeWidth={2.5} />,
             buttonBg: "#0a0a0a"
         },
@@ -108,6 +111,7 @@ const HeroAntigravity: React.FC = () => {
             desc: "Upload screenshots of suspicious conversations (WhatsApp, SMS, Tinder). Our AI detects hidden infidelity signals.",
             instruction: "UPLOAD CHAT SCREENSHOT",
             cta: "ANALYZE CHAT",
+            ctaEmoji: "🛡️",
             buttonIcon: <MessageCircle size={22} strokeWidth={2.5} />,
             buttonBg: "#0f172a"
         }
@@ -859,24 +863,25 @@ const HeroAntigravity: React.FC = () => {
                                         textTransform: 'uppercase',
                                         textShadow: '0 2px 4px rgba(0,0,0,0.2)'
                                     }}>
-                                        {currentContent.cta}
+                                        {currentContent.cta} {currentContent.ctaEmoji}
                                     </span>
                                     <ArrowRight size={20} strokeWidth={3} />
                                 </div>
 
                                 <span
-                                    className="animate-float"
+                                    className="cta-emoji-bounce"
                                     style={{
                                         position: 'absolute',
                                         right: '16px',
                                         bottom: '8px',
-                                        fontSize: '30px',
+                                        fontSize: '26px',
                                         filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
                                         zIndex: 30,
-                                        pointerEvents: 'none'
+                                        pointerEvents: 'none',
+                                        transition: 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)'
                                     }}
                                 >
-                                    👆
+                                    ✨
                                 </span>
                             </button>
                         )}
