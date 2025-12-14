@@ -1,6 +1,6 @@
 import React from 'react';
 import ServiceNavbar from '../ServiceNavbar';
-import { Footer } from '../Footer';
+// Footer removed for conversion focus - users should not exit funnel
 
 // ============================================
 // SERVICE THEME CONFIGURATION
@@ -75,16 +75,16 @@ export function ServiceLayout({ variant, children, className = '' }: ServiceLayo
             } as React.CSSProperties}
             className={className}
         >
-            {/* Navbar */}
-            <ServiceNavbar />
+            {/* Minimal Navbar - Logo only for funnel focus */}
+            <ServiceNavbar minimal={true} />
 
             {/* Main Content */}
             {children}
 
-            {/* Footer */}
-            <Footer variant={variant} />
+            {/* Footer intentionally removed for conversion optimization */}
         </div>
     );
 }
 
 export default ServiceLayout;
+

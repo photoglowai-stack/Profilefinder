@@ -3,7 +3,11 @@ import { Globe, User, Menu, X } from 'lucide-react';
 
 const LOGO_URL = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg";
 
-export default function ServiceNavbar() {
+interface ServiceNavbarProps {
+    minimal?: boolean; // When true, shows only logo for funnel focus
+}
+
+export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     // Close menu on ESC key
@@ -29,6 +33,33 @@ export default function ServiceNavbar() {
 
     const navLinks = ['Search Profile', 'Blog', 'Affiliate Program'];
 
+    // Minimal mode: Logo only for conversion-focused pages
+    if (minimal) {
+        return (
+            <nav className="flex items-center justify-center px-4 md:px-6 py-4 max-w-[1280px] mx-auto w-full backdrop-blur-md bg-white/5 border-b border-white/10 rounded-b-2xl mt-2 relative text-white">
+                <a
+                    href="/"
+                    className="flex items-center gap-2 cursor-pointer no-underline text-white"
+                    aria-label="ProfileFinder Home"
+                >
+                    <img
+                        src={LOGO_URL}
+                        alt="ProfileFinder"
+                        loading="lazy"
+                        style={{
+                            height: '32px',
+                            width: 'auto'
+                        }}
+                    />
+                    <span style={{ fontSize: 'clamp(18px, 4vw, 24px)', fontWeight: 900, letterSpacing: '-0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+                        ProfileFinder
+                    </span>
+                </a>
+            </nav>
+        );
+    }
+
+    // Full mode: All navigation links
     return (
         <>
             <nav className="flex items-center justify-between px-4 md:px-6 py-4 max-w-[1280px] mx-auto w-full backdrop-blur-md bg-white/5 border-b border-white/10 rounded-b-2xl mt-2 relative text-white">

@@ -101,13 +101,19 @@ const useThreeScript = (url: string) => {
 
 /**
  * COMPOSANT: BACKGROUND WEBGL (PARTICULES RÉSEAU)
+ * Respects prefers-reduced-motion for accessibility
  */
 const WebGLBackground = () => {
     const mountRef = useRef<HTMLDivElement>(null);
     const loaded = useThreeScript('https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js');
 
+    // Check for reduced motion preference
+    const prefersReducedMotion = typeof window !== 'undefined'
+        && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
     useEffect(() => {
-        if (!loaded || !mountRef.current) return;
+        // Skip WebGL rendering if user prefers reduced motion
+        if (prefersReducedMotion || !loaded || !mountRef.current) return;
 
         const THREE = (window as any).THREE;
         const scene = new THREE.Scene();
@@ -115,7 +121,7 @@ const WebGLBackground = () => {
         const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
 
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // Limit pixel ratio for performance
         mountRef.current.appendChild(renderer.domElement);
 
         // Création des particules
@@ -162,7 +168,12 @@ const WebGLBackground = () => {
             window.removeEventListener('resize', handleResize);
             if (mountRef.current) mountRef.current.innerHTML = '';
         };
-    }, [loaded]);
+    }, [loaded, prefersReducedMotion]);
+
+    // Don't render anything if user prefers reduced motion
+    if (prefersReducedMotion) {
+        return null;
+    }
 
     return (
         <div
@@ -283,24 +294,13 @@ export function PaymentPage() {
                 {/* LAYER WEBGL */}
                 <WebGLBackground />
 
-                {/* NAVIGATION - Same as Hero */}
-                <style>{`
-                    @media (max-width: 768px) {
-                        .desktop-nav-payment { display: none !important; }
-                        .mobile-menu-btn-payment { display: flex !important; }
-                    }
-                    @media (min-width: 769px) {
-                        .mobile-menu-btn-payment { display: none !important; }
-                        .mobile-menu-payment { display: none !important; }
-                    }
-                `}</style>
-
+                {/* LOCKED CHECKOUT HEADER - Logo only, no exit points */}
                 <nav
                     className="animate-fade-in-down"
                     style={{
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between',
+                        justifyContent: 'center',
                         padding: '16px 24px',
                         maxWidth: '720px',
                         margin: '0 auto',
@@ -315,7 +315,7 @@ export function PaymentPage() {
                         color: 'white'
                     }}
                 >
-                    {/* Logo */}
+                    {/* Logo only - locked checkout */}
                     <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', textDecoration: 'none', color: 'white' }}>
                         <img
                             src="https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg"
@@ -327,86 +327,6 @@ export function PaymentPage() {
                             ProfileFinder
                         </span>
                     </a>
-
-                    {/* Desktop Navigation Links */}
-                    <div className="desktop-nav-payment" style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '24px',
-                        fontWeight: 600,
-                        fontSize: '14px'
-                    }}>
-                        {['Search Profile', 'Blog', 'Affiliate'].map((item) => (
-                            <a
-                                key={item}
-                                href="#"
-                                style={{
-                                    color: 'rgba(255,255,255,0.8)',
-                                    textDecoration: 'none',
-                                    transition: 'color 0.2s',
-                                    padding: '8px 0'
-                                }}
-                                onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'}
-                                onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.8)'}
-                            >
-                                {item}
-                            </a>
-                        ))}
-                    </div>
-
-                    {/* Desktop Right Section */}
-                    <div className="desktop-nav-payment" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                        <button style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            border: '1px solid rgba(255,255,255,0.3)',
-                            backgroundColor: 'rgba(255,255,255,0.1)',
-                            padding: '8px 16px',
-                            borderRadius: '9999px',
-                            color: '#ffffff',
-                            fontSize: '13px',
-                            fontWeight: 700,
-                            cursor: 'pointer',
-                            backdropFilter: 'blur(8px)',
-                            transition: 'all 0.3s'
-                        }}
-                            onMouseEnter={(e) => {
-                                e.currentTarget.style.backgroundColor = 'white';
-                                e.currentTarget.style.color = colors.rose500;
-                            }}
-                            onMouseLeave={(e) => {
-                                e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.1)';
-                                e.currentTarget.style.color = '#ffffff';
-                            }}
-                        >
-                            Login
-                        </button>
-                    </div>
-
-                    {/* Mobile Menu Button */}
-                    <button
-                        className="mobile-menu-btn-payment"
-                        style={{
-                            display: 'none',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            width: '40px',
-                            height: '40px',
-                            border: '1px solid rgba(255,255,255,0.3)',
-                            backgroundColor: 'rgba(255,255,255,0.1)',
-                            borderRadius: '12px',
-                            color: '#ffffff',
-                            cursor: 'pointer',
-                            backdropFilter: 'blur(8px)',
-                        }}
-                    >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="3" y1="12" x2="21" y2="12"></line>
-                            <line x1="3" y1="6" x2="21" y2="6"></line>
-                            <line x1="3" y1="18" x2="21" y2="18"></line>
-                        </svg>
-                    </button>
                 </nav>
 
                 {/* CARTE PRINCIPALE - FIXE (pas de tilt) */}
@@ -754,6 +674,28 @@ export function PaymentPage() {
                                     ))}
                                 </div>
 
+                                {/* Social Proof - CRO boost */}
+                                <div style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '0.5rem',
+                                    marginBottom: '0.75rem',
+                                    padding: '0.5rem 1rem',
+                                    backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                                    borderRadius: '9999px',
+                                    border: '1px solid rgba(34, 197, 94, 0.2)',
+                                }}>
+                                    <IconShieldCheck style={{ width: '1rem', height: '1rem', color: colors.green500 }} />
+                                    <span style={{
+                                        fontSize: '0.75rem',
+                                        fontWeight: 600,
+                                        color: colors.green600,
+                                    }}>
+                                        🔒 500k+ users trust ProfileFinder
+                                    </span>
+                                </div>
+
                                 <button
                                     style={{
                                         width: '100%',
@@ -779,7 +721,7 @@ export function PaymentPage() {
                                         e.currentTarget.style.backgroundColor = colors.indigo600;
                                     }}
                                 >
-                                    Activate Now
+                                    🔒 Activate Now
                                     <IconArrowRight
                                         style={{
                                             width: '1rem',
@@ -937,62 +879,7 @@ export function PaymentPage() {
 
                 </div>
 
-                {/* FOOTER GLOBAL */}
-                <footer style={{
-                    width: '100%',
-                    maxWidth: '720px',
-                    margin: '2rem auto 0',
-                    padding: '24px',
-                    backdropFilter: 'blur(12px)',
-                    backgroundColor: 'rgba(255,255,255,0.05)',
-                    borderTop: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: '16px 16px 0 0',
-                    color: 'white',
-                    position: 'relative',
-                    zIndex: 20
-                }}>
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '16px' }}>
-                        {/* Logo */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                            <img
-                                src="https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg"
-                                alt="ProfileFinder"
-                                style={{ height: '24px', width: 'auto', opacity: 0.9 }}
-                            />
-                            <span style={{ fontWeight: 800, fontSize: '14px', opacity: 0.9 }}>ProfileFinder</span>
-                        </div>
-
-                        {/* Links */}
-                        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '16px', fontSize: '12px' }}>
-                            {['Privacy Policy', 'Terms of Service', 'Contact Us', 'Help Center'].map(link => (
-                                <a key={link} href="#" style={{ color: 'rgba(255,255,255,0.7)', textDecoration: 'none', transition: 'color 0.2s' }}
-                                    onMouseEnter={(e) => e.currentTarget.style.color = 'white'}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}
-                                >{link}</a>
-                            ))}
-                        </div>
-
-                        {/* Security badges */}
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', fontSize: '10px', opacity: 0.8 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <IconShield style={{ width: '12px', height: '12px' }} />
-                                <span>SSL Secure</span>
-                            </div>
-                            <span style={{ opacity: 0.5 }}>•</span>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                                <IconLock style={{ width: '12px', height: '12px' }} />
-                                <span>256-bit Encryption</span>
-                            </div>
-                            <span style={{ opacity: 0.5 }}>•</span>
-                            <span>Powered by Stripe</span>
-                        </div>
-
-                        {/* Copyright */}
-                        <p style={{ margin: 0, fontSize: '10px', opacity: 0.5 }}>
-                            © 2024 ProfileFinder. All rights reserved.
-                        </p>
-                    </div>
-                </footer>
+                {/* Footer intentionally removed for locked checkout - CRO optimization */}
             </div>
         </>
     );
