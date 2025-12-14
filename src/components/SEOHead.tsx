@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { useService } from "../lib/ServiceContext";
 
 const seoData = {
@@ -28,62 +28,17 @@ export function SEOHead() {
   const { selectedService } = useService();
   const seo = seoData[selectedService];
 
-  useEffect(() => {
-    // Update document title
-    document.title = seo.title;
-
-    // Update or create meta description
-    let metaDescription = document.querySelector('meta[name="description"]');
-    if (!metaDescription) {
-      metaDescription = document.createElement('meta');
-      metaDescription.setAttribute('name', 'description');
-      document.head.appendChild(metaDescription);
-    }
-    metaDescription.setAttribute('content', seo.description);
-
-    // Update or create meta keywords
-    let metaKeywords = document.querySelector('meta[name="keywords"]');
-    if (!metaKeywords) {
-      metaKeywords = document.createElement('meta');
-      metaKeywords.setAttribute('name', 'keywords');
-      document.head.appendChild(metaKeywords);
-    }
-    metaKeywords.setAttribute('content', seo.keywords);
-
-    // Open Graph tags
-    let ogTitle = document.querySelector('meta[property="og:title"]');
-    if (!ogTitle) {
-      ogTitle = document.createElement('meta');
-      ogTitle.setAttribute('property', 'og:title');
-      document.head.appendChild(ogTitle);
-    }
-    ogTitle.setAttribute('content', seo.title);
-
-    let ogDescription = document.querySelector('meta[property="og:description"]');
-    if (!ogDescription) {
-      ogDescription = document.createElement('meta');
-      ogDescription.setAttribute('property', 'og:description');
-      document.head.appendChild(ogDescription);
-    }
-    ogDescription.setAttribute('content', seo.description);
-
-    // Twitter Card tags
-    let twitterTitle = document.querySelector('meta[name="twitter:title"]');
-    if (!twitterTitle) {
-      twitterTitle = document.createElement('meta');
-      twitterTitle.setAttribute('name', 'twitter:title');
-      document.head.appendChild(twitterTitle);
-    }
-    twitterTitle.setAttribute('content', seo.title);
-
-    let twitterDescription = document.querySelector('meta[name="twitter:description"]');
-    if (!twitterDescription) {
-      twitterDescription = document.createElement('meta');
-      twitterDescription.setAttribute('name', 'twitter:description');
-      document.head.appendChild(twitterDescription);
-    }
-    twitterDescription.setAttribute('content', seo.description);
-  }, [selectedService, seo]);
-
-  return null; // This component doesn't render anything
+  return (
+    <Helmet>
+      <title>{seo.title}</title>
+      <meta name="description" content={seo.description} />
+      <meta name="keywords" content={seo.keywords} />
+      <meta property="og:title" content={seo.title} />
+      <meta property="og:description" content={seo.description} />
+      <meta property="og:type" content="website" />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={seo.title} />
+      <meta name="twitter:description" content={seo.description} />
+    </Helmet>
+  );
 }

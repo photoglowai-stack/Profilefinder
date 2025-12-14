@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Star, CheckCircle2 } from "lucide-react";
-import imgRectangle2 from "figma:asset/38184caaa6ab566a83195983852fd8b71d52beaf.png";
-import imgRectangle3 from "figma:asset/aadff942611a595d4d80d86e8dc34b1cd143c92f.png";
-import imgRectangle6 from "figma:asset/94adf2b3fb40514489d6f4135e59a7e8ce5a957e.png";
+import imgRectangle2 from "../assets/38184caaa6ab566a83195983852fd8b71d52beaf.png";
+import imgRectangle3 from "../assets/aadff942611a595d4d80d86e8dc34b1cd143c92f.png";
+import imgRectangle6 from "../assets/94adf2b3fb40514489d6f4135e59a7e8ce5a957e.png";
 import { SectionHeader } from "./ui/SectionHeader";
 import { useService } from "../lib/ServiceContext";
 import { serviceContent } from "../lib/content";

@@ -96,11 +96,10 @@ export function CTASection() {
                 variant="secondary"
                 size="lg"
                 onClick={scrollToTop}
-                icon={ArrowRight}
-                iconPosition="right"
-                className="w-full sm:w-auto"
+                className="w-full sm:w-auto gap-2"
               >
                 {ctaContent.button}
+                <ArrowRight className="w-4 h-4" />
               </Button>
             </motion.div>
 

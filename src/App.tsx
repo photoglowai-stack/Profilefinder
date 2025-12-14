@@ -1,19 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 import { motion, AnimatePresence } from "framer-motion";
 import HeroAntigravity from "./components/HeroAntigravity";
 import { StatsBar } from "./components/StatsBar";
 import { HowItWorks } from "./components/HowItWorks";
 import { UGCSection } from "./components/UGCSection";
-import { Testimonials } from "./components/Testimonials";
-import { StatsSection } from "./components/StatsSection";
 import { SEOHead } from "./components/SEOHead";
 import { StructuredData } from "./components/StructuredData";
-import { ToolComparison } from "./components/ToolComparison";
-import { SEOBlogSection } from "./components/SEOBlogSection";
-import { RelatedSearches } from "./components/RelatedSearches";
-import { CTASection } from "./components/CTASection";
-import { FAQ } from "./components/FAQ";
 import { Footer } from "./components/Footer";
 import { ServiceProvider } from "./lib/ServiceContext";
 import { ServiceColorIndicator } from "./components/ui/ServiceColorIndicator";
@@ -27,6 +21,32 @@ import FaceTrace from "./pages/FaceTrace";
 import DatingSearchWizard from "./pages/DatingSearchWizard";
 import ScrollToTop from "./components/ScrollToTop";
 import { ServiceLayout } from "./components/layouts/ServiceLayout";
+
+// Lazy load below-the-fold components for better performance
+const Testimonials = lazy(() => import("./components/Testimonials").then(m => ({ default: m.Testimonials })));
+const StatsSection = lazy(() => import("./components/StatsSection").then(m => ({ default: m.StatsSection })));
+const ToolComparison = lazy(() => import("./components/ToolComparison").then(m => ({ default: m.ToolComparison })));
+const SEOBlogSection = lazy(() => import("./components/SEOBlogSection").then(m => ({ default: m.SEOBlogSection })));
+const RelatedSearches = lazy(() => import("./components/RelatedSearches").then(m => ({ default: m.RelatedSearches })));
+const CTASection = lazy(() => import("./components/CTASection").then(m => ({ default: m.CTASection })));
+const FAQ = lazy(() => import("./components/FAQ").then(m => ({ default: m.FAQ })));
+
+// Loading skeleton for lazy components
+function SectionSkeleton() {
+  return (
+    <div className="w-full py-12 md:py-16">
+      <div className="max-w-[1760px] mx-auto px-4 md:px-8">
+        <div className="h-8 bg-slate-200 rounded-lg w-1/3 mx-auto mb-6 animate-pulse" />
+        <div className="h-4 bg-slate-100 rounded w-1/2 mx-auto mb-8 animate-pulse" />
+        <div className="grid md:grid-cols-3 gap-6">
+          {[1, 2, 3].map(i => (
+            <div key={i} className="h-48 bg-slate-100 rounded-2xl animate-pulse" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // Wrapper component to receive photos from route state
 function ChatAnalysisPage() {
@@ -93,13 +113,30 @@ function LandingPage() {
         <StatsBar />
         <HowItWorks />
         <UGCSection />
-        <Testimonials />
-        <StatsSection />
-        <ToolComparison />
-        <SEOBlogSection />
-        <RelatedSearches />
-        <CTASection />
-        <FAQ />
+
+        {/* Lazy loaded sections */}
+        <Suspense fallback={<SectionSkeleton />}>
+          <Testimonials />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <StatsSection />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <ToolComparison />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <SEOBlogSection />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <RelatedSearches />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <CTASection />
+        </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <FAQ />
+        </Suspense>
+
         <Footer />
       </main>
 
@@ -141,11 +178,13 @@ function LandingPage() {
 
 function App() {
   return (
-    <BrowserRouter>
-      <ServiceProvider>
-        <AppContent />
-      </ServiceProvider>
-    </BrowserRouter>
+    <HelmetProvider>
+      <BrowserRouter>
+        <ServiceProvider>
+          <AppContent />
+        </ServiceProvider>
+      </BrowserRouter>
+    </HelmetProvider>
   );
 }
 

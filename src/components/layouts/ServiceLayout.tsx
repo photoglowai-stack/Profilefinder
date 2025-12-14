@@ -82,7 +82,7 @@ export function ServiceLayout({ variant, children, className = '' }: ServiceLayo
             {children}
 
             {/* Footer */}
-            <Footer />
+            <Footer variant={variant} />
         </div>
     );
 }

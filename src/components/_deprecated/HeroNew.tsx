@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Users } from "lucide-react";
-import imgWebsiteLogo from "figma:asset/4b7948bf098fa302d0479c7e50133880ecda62bd.png";
+import imgWebsiteLogo from "../assets/4b7948bf098fa302d0479c7e50133880ecda62bd.png";
 import { useService } from "../lib/ServiceContext";
 import { ServiceSelector } from "./ServiceSelector";
 import { DatingForm } from "./forms/DatingForm";
