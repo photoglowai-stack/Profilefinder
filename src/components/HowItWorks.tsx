@@ -139,7 +139,12 @@ export function HowItWorks() {
         </div>
         <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-slate-900 mb-6">
           Find someone on Tinder{' '}
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-rose-500 via-orange-500 to-rose-500">
+          <span style={{
+            background: 'linear-gradient(to right, #f43f5e, #f97316, #f43f5e)',
+            WebkitBackgroundClip: 'text',
+            backgroundClip: 'text',
+            color: 'transparent'
+          }}>
             in 3 simple steps
           </span>
         </h2>
