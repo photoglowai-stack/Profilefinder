@@ -153,7 +153,8 @@ const HeroAntigravity: React.FC = () => {
                 borderBottom: '1px solid rgba(255,255,255,0.1)',
                 borderRadius: '0 0 16px 16px',
                 marginTop: '8px',
-                position: 'relative'
+                position: 'relative',
+                zIndex: 50
             }}>
                 {/* Logo */}
                 <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
@@ -291,6 +292,44 @@ const HeroAntigravity: React.FC = () => {
                                 {item}
                             </a>
                         ))}
+
+                        {/* Services Section */}
+                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', marginTop: '8px' }}>
+                            <p style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                                Our Services
+                            </p>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                                {[
+                                    { label: 'Dating Search', path: '/dating-search', icon: '❤️' },
+                                    { label: 'Following AI', path: '/activity-tracker', icon: '👥' },
+                                    { label: 'Face Trace', path: '/face-trace', icon: '🔍' },
+                                    { label: 'Fidelity Test', path: '/fidelity-test/analysis', icon: '🛡️' }
+                                ].map((service) => (
+                                    <a
+                                        key={service.label}
+                                        href={service.path}
+                                        style={{
+                                            color: 'rgba(255,255,255,0.9)',
+                                            textDecoration: 'none',
+                                            fontSize: '16px',
+                                            fontWeight: 600,
+                                            padding: '10px 16px',
+                                            borderRadius: '12px',
+                                            backgroundColor: 'rgba(239,62,92,0.15)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '12px',
+                                            transition: 'all 0.2s'
+                                        }}
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        <span>{service.icon}</span>
+                                        {service.label}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+
                         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', display: 'flex', gap: '12px' }}>
                             <button style={{
                                 flex: 1,
@@ -430,6 +469,16 @@ const HeroAntigravity: React.FC = () => {
                 </div>
 
                 {/* Service Selector */}
+                <p style={{
+                    fontSize: '14px',
+                    fontWeight: 600,
+                    color: 'rgba(255,255,255,0.9)',
+                    marginBottom: '12px',
+                    textTransform: 'uppercase',
+                    letterSpacing: '0.05em'
+                }}>
+                    Choose your service:
+                </p>
                 <div style={{
                     display: 'flex',
                     flexWrap: 'wrap',

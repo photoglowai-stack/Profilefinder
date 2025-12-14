@@ -402,9 +402,10 @@ export const ServiceFormWidget = () => {
                 </h3>
 
                 {/* Content */}
+                {/* Content */}
                 {selectedService === 'dating' && (
                     <DatingView
-                        onSearch={(g) => handleAction(`/payment?gender=${g}&service=dating`)}
+                        onSearch={(g) => handleAction(`/dating-search?gender=${g}`)}
                         isLoading={isLoading}
                     />
                 )}
@@ -430,7 +431,7 @@ export const ServiceFormWidget = () => {
                         title="Upload Chat"
                         subtitle="Analyze Logs"
                         btnLabel="TEST"
-                        onAction={() => handleAction('/payment?service=fidelity')}
+                        onAction={() => handleAction('/fidelity-test/analysis')}
                         isLoading={isLoading}
                     />
                 )}
