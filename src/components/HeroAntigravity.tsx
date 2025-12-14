@@ -926,6 +926,9 @@ const HeroAntigravity: React.FC = () => {
                 </div>
             </div>
 
+            {/* Hero Bottom Fade - Smooth transition to next section */}
+            <div className="hero-bottom-fade" />
+
         </section>
     );
 };

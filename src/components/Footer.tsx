@@ -8,66 +8,93 @@ const LOGO_URL = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20s
 export type FooterVariant = 'default' | 'dating' | 'faceTrace' | 'activity' | 'fidelity' | 'chat';
 
 interface FooterTheme {
-  bg: string;
-  accent: string;
-  hoverAccent: string;
-  borderColor: string;
+  mainBg: string;
+  bottomBarBg: string;
+  bottomBarGradient: string;
+  accentColor: string;
+  textColor: string;
+  mutedColor: string;
+  linkHover: string;
+  badgeLabel: string;
 }
 
 const FOOTER_THEMES: Record<FooterVariant, FooterTheme> = {
   default: {
-    bg: 'rgba(0,0,0,0.1)',
-    accent: '#ff4b5c',
-    hoverAccent: '#ff6b6b',
-    borderColor: 'rgba(255,255,255,0.2)'
+    mainBg: '#f8f9fa',
+    bottomBarBg: '#fce4ec',
+    bottomBarGradient: 'linear-gradient(135deg, #ff4b5c 0%, #ff9e75 100%)',
+    accentColor: '#ff4b5c',
+    textColor: '#374151',
+    mutedColor: '#6b7280',
+    linkHover: '#ff4b5c',
+    badgeLabel: 'Dating Search'
   },
   dating: {
-    bg: 'rgba(255,75,92,0.15)',
-    accent: '#ff4b5c',
-    hoverAccent: '#ff6b6b',
-    borderColor: 'rgba(255,75,92,0.3)'
+    mainBg: '#f8f9fa',
+    bottomBarBg: '#fce4ec',
+    bottomBarGradient: 'linear-gradient(135deg, #ff4b5c 0%, #ff9e75 100%)',
+    accentColor: '#ff4b5c',
+    textColor: '#374151',
+    mutedColor: '#6b7280',
+    linkHover: '#ff4b5c',
+    badgeLabel: 'Dating Search'
   },
   faceTrace: {
-    bg: 'rgba(255,107,107,0.15)',
-    accent: '#FF6B6B',
-    hoverAccent: '#FFA502',
-    borderColor: 'rgba(255,107,107,0.3)'
+    mainBg: '#f8f9fa',
+    bottomBarBg: '#fff0f0',
+    bottomBarGradient: 'linear-gradient(135deg, #FF6B6B 0%, #FFA502 100%)',
+    accentColor: '#FF6B6B',
+    textColor: '#374151',
+    mutedColor: '#6b7280',
+    linkHover: '#FF6B6B',
+    badgeLabel: 'Face Trace'
   },
   activity: {
-    bg: 'rgba(236,72,153,0.15)',
-    accent: '#ec4899',
-    hoverAccent: '#f472b6',
-    borderColor: 'rgba(236,72,153,0.3)'
+    mainBg: '#f8f9fa',
+    bottomBarBg: '#fce4f0',
+    bottomBarGradient: 'linear-gradient(135deg, #ec4899 0%, #f472b6 100%)',
+    accentColor: '#ec4899',
+    textColor: '#374151',
+    mutedColor: '#6b7280',
+    linkHover: '#ec4899',
+    badgeLabel: 'Activity Tracker'
   },
   fidelity: {
-    bg: 'rgba(249,115,22,0.15)',
-    accent: '#f97316',
-    hoverAccent: '#fb923c',
-    borderColor: 'rgba(249,115,22,0.3)'
+    mainBg: '#f8f9fa',
+    bottomBarBg: '#fff4ed',
+    bottomBarGradient: 'linear-gradient(135deg, #f97316 0%, #fb923c 100%)',
+    accentColor: '#f97316',
+    textColor: '#374151',
+    mutedColor: '#6b7280',
+    linkHover: '#f97316',
+    badgeLabel: 'Fidelity Test'
   },
   chat: {
-    bg: 'rgba(255,107,107,0.15)',
-    accent: '#FF6B6B',
-    hoverAccent: '#FFA502',
-    borderColor: 'rgba(255,107,107,0.3)'
+    mainBg: '#f8f9fa',
+    bottomBarBg: '#fff0f0',
+    bottomBarGradient: 'linear-gradient(135deg, #FF6B6B 0%, #FFA502 100%)',
+    accentColor: '#FF6B6B',
+    textColor: '#374151',
+    mutedColor: '#6b7280',
+    linkHover: '#FF6B6B',
+    badgeLabel: 'Chat Analysis'
   }
 };
 
 const footerLinks = {
-  useful: [
+  product: [
     { label: footerContent.links.howItWorks, href: "#how-it-works" },
     { label: footerContent.links.pricing, href: "#pricing" },
     { label: footerContent.links.about, href: "#about" }
   ],
-  resources: [
+  company: [
     { label: footerContent.links.blog, href: "#blog" },
     { label: "FAQ", href: "#faq" },
     { label: footerContent.links.contact, href: "#support" }
   ],
   legal: [
     { label: footerContent.links.terms, href: "#terms" },
-    { label: footerContent.links.privacy, href: "#privacy" },
-    { label: footerContent.links.cookies, href: "#legal" }
+    { label: footerContent.links.privacy, href: "#privacy" }
   ]
 };
 
@@ -79,145 +106,230 @@ export function Footer({ variant = 'default' }: FooterProps) {
   const theme = FOOTER_THEMES[variant];
 
   return (
-    <footer
-      className="text-white py-6 md:py-7"
-      style={{
-        backgroundColor: theme.bg,
-        backdropFilter: 'blur(8px)'
-      }}
-    >
-      <div className="max-w-[1760px] mx-auto px-4 md:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-4 md:mb-5">
-          {/* Brand */}
-          <div>
-            <img
-              src={LOGO_URL}
-              alt="ProfileFinder"
-              loading="lazy"
-              style={{
-                height: '24px',
-                maxHeight: '24px',
-                width: 'auto',
-                maxWidth: '80px'
-              }}
-              className="mb-1.5"
-            />
-            <p className="text-white/80 text-xs leading-relaxed mb-1.5 font-medium">
-              {footerContent.tagline}
-            </p>
-            <div className="flex gap-0.5" aria-label="Note: 5 sur 5 étoiles">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <Star key={i} className="w-3 h-3" style={{ fill: theme.accent, color: theme.accent }} />
-              ))}
+    <footer className="font-['Inter_Tight',sans-serif]">
+      {/* Main Footer Section - Light Background */}
+      <div
+        className="py-10 md:py-12"
+        style={{ backgroundColor: theme.mainBg }}
+      >
+        <div className="max-w-[1200px] mx-auto px-6 md:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 md:gap-12">
+
+            {/* Brand Column */}
+            <div className="lg:col-span-2">
+              <div className="flex items-center gap-3 mb-4">
+                {/* Animated Logo */}
+                <motion.div
+                  className="bg-white rounded-2xl p-3 shadow-md"
+                  animate={{
+                    y: [0, -6, 0],
+                    rotate: [0, -3, 3, 0]
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                >
+                  <img
+                    src={LOGO_URL}
+                    alt="ProfileFinder"
+                    loading="lazy"
+                    className="w-8 h-8 object-contain"
+                    width={32}
+                    height={32}
+                  />
+                </motion.div>
+                <span
+                  className="text-xl font-black tracking-tight"
+                  style={{ color: theme.textColor }}
+                >
+                  ProfileFinder
+                </span>
+              </div>
+
+              <p
+                className="text-sm leading-relaxed mb-4 max-w-xs"
+                style={{ color: theme.mutedColor }}
+              >
+                {footerContent.tagline}
+              </p>
+
+              {/* Star Rating */}
+              <div className="flex gap-1 mb-4" aria-label="Rating: 5 out of 5 stars">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <Star
+                    key={i}
+                    className="w-4 h-4"
+                    style={{ fill: theme.accentColor, color: theme.accentColor }}
+                  />
+                ))}
+              </div>
+
+              {/* Service Badge */}
+              <motion.div
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full border-2"
+                style={{
+                  borderColor: theme.accentColor,
+                  backgroundColor: 'white'
+                }}
+                whileHover={{ scale: 1.02 }}
+                transition={{ duration: 0.2 }}
+              >
+                <span
+                  className="w-2 h-2 rounded-full animate-pulse"
+                  style={{ backgroundColor: theme.accentColor }}
+                />
+                <span
+                  className="text-sm font-semibold"
+                  style={{ color: theme.accentColor }}
+                >
+                  {theme.badgeLabel}
+                </span>
+              </motion.div>
+            </div>
+
+            {/* Product Links */}
+            <div>
+              <h3
+                className="text-sm font-bold mb-4 italic"
+                style={{ color: theme.textColor }}
+              >
+                {footerContent.product}
+              </h3>
+              <ul className="space-y-3">
+                {footerLinks.product.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="text-sm flex items-center gap-2 transition-colors duration-200 group"
+                      style={{ color: theme.mutedColor }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = theme.linkHover}
+                      onMouseLeave={(e) => e.currentTarget.style.color = theme.mutedColor}
+                    >
+                      <ArrowRight
+                        className="w-3 h-3 group-hover:translate-x-1 transition-transform"
+                        style={{ color: theme.accentColor }}
+                      />
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Company Links */}
+            <div>
+              <h3
+                className="text-sm font-bold mb-4 italic"
+                style={{ color: theme.textColor }}
+              >
+                {footerContent.company}
+              </h3>
+              <ul className="space-y-3">
+                {footerLinks.company.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="text-sm flex items-center gap-2 transition-colors duration-200 group"
+                      style={{ color: theme.mutedColor }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = theme.linkHover}
+                      onMouseLeave={(e) => e.currentTarget.style.color = theme.mutedColor}
+                    >
+                      <ArrowRight
+                        className="w-3 h-3 group-hover:translate-x-1 transition-transform"
+                        style={{ color: theme.accentColor }}
+                      />
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Legal Links */}
+            <div>
+              <h3
+                className="text-sm font-bold mb-4 italic"
+                style={{ color: theme.textColor }}
+              >
+                {footerContent.legal}
+              </h3>
+              <ul className="space-y-3">
+                {footerLinks.legal.map((link) => (
+                  <li key={link.href}>
+                    <a
+                      href={link.href}
+                      className="text-sm flex items-center gap-2 transition-colors duration-200 group"
+                      style={{ color: theme.mutedColor }}
+                      onMouseEnter={(e) => e.currentTarget.style.color = theme.linkHover}
+                      onMouseLeave={(e) => e.currentTarget.style.color = theme.mutedColor}
+                    >
+                      <ArrowRight
+                        className="w-3 h-3 group-hover:translate-x-1 transition-transform"
+                        style={{ color: theme.accentColor }}
+                      />
+                      {link.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
-
-          {/* Liens utiles */}
-          <div>
-            <h3 className="text-sm mb-1.5 font-extrabold tracking-tight">{footerContent.product}</h3>
-            <ul className="space-y-1 text-xs text-white/80 font-medium">
-              {footerLinks.useful.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="transition flex items-center gap-1.5 group"
-                    style={{ color: 'rgba(255,255,255,0.8)' }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = theme.hoverAccent}
-                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.8)'}
-                  >
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Ressources */}
-          <div>
-            <h3 className="text-sm mb-1.5 font-extrabold tracking-tight">{footerContent.company}</h3>
-            <ul className="space-y-1 text-xs text-white/80 font-medium">
-              {footerLinks.resources.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
-                    className="transition flex items-center gap-1.5 group"
-                    style={{ color: 'rgba(255,255,255,0.8)' }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = theme.hoverAccent}
-                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.8)'}
-                  >
-                    <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact */}
-          <div>
-            <h3 className="text-sm mb-1.5 font-extrabold tracking-tight">{footerContent.legal}</h3>
-            <ul className="space-y-1 text-xs text-white/80 font-medium">
-              {footerLinks.legal.slice(0, 2).map((link) => (
-                <li key={link.href} className="flex items-center gap-1.5">
-                  <ArrowRight className="w-3 h-3 flex-shrink-0" />
-                  <a
-                    href={link.href}
-                    className="transition"
-                    style={{ color: 'rgba(255,255,255,0.8)' }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = theme.hoverAccent}
-                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.8)'}
-                  >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
         </div>
+      </div>
 
-        {/* Bottom section */}
-        <div
-          className="pt-3"
-          style={{ borderTop: `1px solid ${theme.borderColor}` }}
-        >
-          <div className="text-center text-white/70">
-            <p className="mb-2 text-xs font-medium">
+      {/* Bottom Copyright Bar - Gradient Background */}
+      <div
+        className="py-4"
+        style={{ backgroundColor: theme.bottomBarBg }}
+      >
+        <div className="max-w-[1200px] mx-auto px-6 md:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            {/* Copyright */}
+            <p
+              className="text-sm font-medium"
+              style={{ color: theme.accentColor }}
+            >
               {footerContent.copyright}
             </p>
-            <div className="flex flex-wrap justify-center gap-2 md:gap-3 text-[10px]">
-              {footerLinks.legal.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  className="transition font-medium"
-                  style={{ color: 'rgba(255,255,255,0.7)' }}
-                  onMouseEnter={(e) => e.currentTarget.style.color = theme.hoverAccent}
-                  onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.7)'}
-                >
-                  {link.label}
-                </a>
+
+            {/* Legal Links Row */}
+            <div className="flex items-center gap-4 text-sm">
+              {footerLinks.legal.map((link, index) => (
+                <span key={link.href} className="flex items-center gap-4">
+                  <a
+                    href={link.href}
+                    className="transition-colors duration-200"
+                    style={{ color: theme.mutedColor }}
+                    onMouseEnter={(e) => e.currentTarget.style.color = theme.accentColor}
+                    onMouseLeave={(e) => e.currentTarget.style.color = theme.mutedColor}
+                  >
+                    {link.label}
+                  </a>
+                  {index < footerLinks.legal.length - 1 && (
+                    <span style={{ color: theme.mutedColor }}>·</span>
+                  )}
+                </span>
               ))}
+            </div>
+
+            {/* Secure Badge */}
+            <div
+              className="flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium"
+              style={{
+                backgroundColor: 'rgba(0,0,0,0.08)',
+                color: theme.mutedColor
+              }}
+            >
+              <Shield className="w-3.5 h-3.5" style={{ color: theme.accentColor }} />
+              <span>Secure and certified site</span>
             </div>
           </div>
         </div>
-
-        {/* Trust badge */}
-        <motion.div
-          className="mt-3 text-center"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
-          <div
-            className="inline-flex items-center gap-1.5 backdrop-blur-sm px-2.5 py-1 rounded-full text-[10px] text-white/80 font-medium"
-            style={{ backgroundColor: theme.bg }}
-          >
-            <Shield className="w-3 h-3" style={{ color: theme.accent }} />
-            <span>Secure and certified site</span>
-          </div>
-        </motion.div>
       </div>
     </footer>
   );
 }
+
+export default Footer;

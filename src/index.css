@@ -2291,7 +2291,8 @@
   }
 
   .font-\[\'Cal_Sans\:SemiBold\'\,sans-serif\] {
-    font-family: Cal Sans\:SemiBold, sans-serif;
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 600;
   }
 
   .font-\[\'Inter\:Medium\'\,sans-serif\] {
