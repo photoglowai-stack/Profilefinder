@@ -68,7 +68,7 @@ export function CTASection() {
               fontFamily: "'Inter Tight', system-ui, sans-serif"
             }}
           >
-            Ready to Find <span style={{ fontStyle: 'italic' }}>the Truth?</span>
+            Ready to Find <span style={{ fontStyle: 'italic', paddingRight: '0.15em', display: 'inline-block' }}>the Truth?</span>
           </h2>
 
           <p className="text-base md:text-lg lg:text-xl text-white/90 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed font-medium">

@@ -77,8 +77,8 @@ export function RelatedSearches() {
           fontFamily: "'Inter Tight', system-ui, sans-serif"
         }}>
           {selectedService === "dating"
-            ? <>Discover What <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Others Are Searching</span></>
-            : <>Explore <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Face Recognition Tools</span></>
+            ? <>Discover What <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', paddingRight: '0.15em', display: 'inline-block' }}>Others Are Searching</span></>
+            : <>Explore <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', paddingRight: '0.15em', display: 'inline-block' }}>Face Recognition Tools</span></>
           }
         </h2>
         <p style={{

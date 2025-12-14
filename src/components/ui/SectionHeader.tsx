@@ -29,7 +29,9 @@ export function SectionHeader({
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
             fontStyle: italic ? 'italic' : 'normal',
-            fontWeight: 900
+            fontWeight: 900,
+            paddingRight: italic ? '0.15em' : 0,
+            display: 'inline-block'
           }}
         >
           {part}

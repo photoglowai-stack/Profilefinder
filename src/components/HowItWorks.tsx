@@ -348,7 +348,7 @@ export function HowItWorks() {
             letterSpacing: '-0.03em',
             fontFamily: "'Inter Tight', system-ui, sans-serif"
           }}>
-            Everything You Need to <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>Uncover the Truth</span>
+            Everything You Need to <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', paddingRight: '0.15em', display: 'inline-block' }}>Uncover the Truth</span>
           </h3>
           <p style={{
             color: '#64748b',
