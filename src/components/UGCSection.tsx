@@ -10,7 +10,7 @@ const UGCSection = () => {
   const TESTIMONIALS = [
     {
       id: 1,
-      videoUrl: "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/relationship-proof.mp4",
+      videoUrl: "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Testimonial%20video%20profilefinder%201.mp4",
       author: "@julie_investigate",
       role: "Verified User",
       quote: "I had a doubt, now I have proof. Thanks ProfileFinder.",
@@ -18,7 +18,7 @@ const UGCSection = () => {
     },
     {
       id: 2,
-      videoUrl: "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/SnapInsta.to_AQOnlVE_ulm8mX1L8JD1Y8HPc-GSm9yGlOnuxtuQf4ni4Lll7ts8izk_XrjEqVt7BSs0ogrT4XMj_xIg2GVSZWh20UQhSMEX1GJDBwI.mp4",
+      videoUrl: "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Testimonial%20video%20profilefinder%202.mp4",
       author: "@alex_hunter",
       role: "Investigator",
       quote: "The face recognition tool is just mind-blowing accuracy.",
@@ -26,7 +26,7 @@ const UGCSection = () => {
     },
     {
       id: 3,
-      videoUrl: "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/real-story-profilefinder.mp4",
+      videoUrl: "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Testimonial%20video%20profilefinder%203.mp4",
       author: "@sarah_truth",
       role: "Daily User",
       quote: "Found him in 2 minutes flat. It's almost scary how effective it is.",
