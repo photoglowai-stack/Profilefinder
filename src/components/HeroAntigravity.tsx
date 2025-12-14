@@ -137,56 +137,7 @@ const HeroAntigravity: React.FC = () => {
             transition: 'background 0.5s ease'
         }}>
 
-            <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&display=swap');
-        
-        @keyframes scan {
-          0% { top: 0%; opacity: 0; }
-          15% { opacity: 1; }
-          85% { opacity: 1; }
-          100% { top: 100%; opacity: 0; }
-        }
-        .animate-scan { animation: scan 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite; }
-        
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
-        .animate-marquee { animation: marquee 40s linear infinite; }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(-10deg); }
-          50% { transform: translateY(-5px) rotate(0deg); }
-        }
-        .animate-float { animation: float 2.5s ease-in-out infinite; }
-        
-        @keyframes shimmer {
-          0% { transform: translateX(-150%) skewX(-15deg); }
-          100% { transform: translateX(150%) skewX(-15deg); }
-        }
-        .shimmer-effect:hover .shimmer-bar { animation: shimmer 2s infinite; }
-        
-        .hero-btn:hover { transform: scale(1.02); }
-        .hero-btn:active { transform: scale(0.98); }
-        .gender-card:hover { transform: scale(1.02); }
-        .tab-btn:hover { transform: translateY(-2px); }
-        
-        /* Responsive Navigation */
-        @media (max-width: 768px) {
-          .desktop-nav { display: none !important; }
-          .mobile-menu-btn { display: flex !important; }
-        }
-        @media (min-width: 769px) {
-          .mobile-menu-btn { display: none !important; }
-          .mobile-menu { display: none !important; }
-        }
-        
-        /* Focus styles for accessibility */
-        button:focus-visible, a:focus-visible {
-          outline: 2px solid #ffffff;
-          outline-offset: 2px;
-        }
-      `}</style>
+            {/* CSS is now in globals.css - no inline style tag needed */}
 
             {/* Navigation */}
             <nav style={{

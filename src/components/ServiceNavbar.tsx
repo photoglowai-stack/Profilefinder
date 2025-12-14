@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Globe, User, Menu, X } from 'lucide-react';
 
 const LOGO_URL = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg";
@@ -6,69 +6,58 @@ const LOGO_URL = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20s
 export default function ServiceNavbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+    // Close menu on ESC key
+    const handleKeyDown = useCallback((e: KeyboardEvent) => {
+        if (e.key === 'Escape' && isMenuOpen) {
+            setIsMenuOpen(false);
+        }
+    }, [isMenuOpen]);
+
+    // Toggle body scroll when menu is open
+    useEffect(() => {
+        if (isMenuOpen) {
+            document.body.classList.add('menu-open');
+            document.addEventListener('keydown', handleKeyDown);
+        } else {
+            document.body.classList.remove('menu-open');
+        }
+        return () => {
+            document.body.classList.remove('menu-open');
+            document.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [isMenuOpen, handleKeyDown]);
+
+    const navLinks = ['Search Profile', 'Blog', 'Affiliate Program'];
+
     return (
         <>
-            {/* CSS for responsive nav */}
-            <style>{`
-                @media (max-width: 768px) {
-                    .desktop-nav-service { display: none !important; }
-                    .mobile-menu-btn-service { display: flex !important; }
-                }
-                @media (min-width: 769px) {
-                    .mobile-menu-btn-service { display: none !important; }
-                    .mobile-menu-service { display: none !important; }
-                }
-            `}</style>
-
-            <nav style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '16px 24px',
-                maxWidth: '1280px',
-                margin: '0 auto',
-                width: '100%',
-                backdropFilter: 'blur(12px)',
-                backgroundColor: 'rgba(255,255,255,0.05)',
-                borderBottom: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '0 0 16px 16px',
-                marginTop: '8px',
-                position: 'relative',
-                color: 'white'
-            }}>
+            <nav className="flex items-center justify-between px-4 md:px-6 py-4 max-w-[1280px] mx-auto w-full backdrop-blur-md bg-white/5 border-b border-white/10 rounded-b-2xl mt-2 relative text-white">
                 {/* Logo */}
-                <a href="/" style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', textDecoration: 'none', color: 'white' }}>
+                <a
+                    href="/"
+                    className="flex items-center gap-2 cursor-pointer no-underline text-white"
+                    aria-label="ProfileFinder Home"
+                >
                     <img
                         src={LOGO_URL}
                         alt="ProfileFinder"
                         loading="lazy"
-                        style={{ height: '32px', width: 'auto' }}
+                        className="h-8 w-auto"
+                        width={32}
+                        height={32}
                     />
-                    <span style={{ fontSize: 'clamp(18px, 4vw, 24px)', fontWeight: 900, letterSpacing: '-0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+                    <span className="text-lg md:text-2xl font-black tracking-tight drop-shadow-md">
                         ProfileFinder
                     </span>
                 </a>
 
                 {/* Desktop Navigation Links */}
-                <div className="desktop-nav-service" style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '32px',
-                    fontWeight: 600,
-                    fontSize: '15px'
-                }}>
-                    {['Search Profile', 'Blog', 'Affiliate Program'].map((item) => (
+                <div className="desktop-nav-service hidden md:flex items-center gap-8 font-semibold text-sm">
+                    {navLinks.map((item) => (
                         <a
                             key={item}
                             href="#"
-                            style={{
-                                color: 'rgba(255,255,255,0.8)',
-                                textDecoration: 'none',
-                                transition: 'color 0.2s',
-                                padding: '8px 0'
-                            }}
-                            onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'}
-                            onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.8)'}
+                            className="text-white/80 no-underline transition-colors duration-200 py-2 hover:text-white focus:text-white"
                         >
                             {item}
                         </a>
@@ -76,134 +65,87 @@ export default function ServiceNavbar() {
                 </div>
 
                 {/* Desktop Right Section */}
-                <div className="desktop-nav-service" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '8px 12px', borderRadius: '12px', fontWeight: 600, fontSize: '14px' }}>
-                        <Globe size={16} />
+                <div className="desktop-nav-service hidden md:flex items-center gap-4">
+                    <div className="flex items-center gap-1.5 cursor-pointer px-3 py-2 rounded-xl font-semibold text-sm">
+                        <Globe size={16} aria-hidden="true" />
                         <span>EN</span>
                     </div>
-                    <button style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '8px',
-                        border: '1px solid rgba(255,255,255,0.3)',
-                        backgroundColor: 'rgba(255,255,255,0.1)',
-                        padding: '10px 20px',
-                        borderRadius: '9999px',
-                        color: '#ffffff',
-                        fontSize: '14px',
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                        backdropFilter: 'blur(8px)',
-                        transition: 'all 0.3s'
-                    }}>
-                        <User size={18} />
+                    <button
+                        className="flex items-center gap-2 border border-white/30 bg-white/10 px-5 py-2.5 rounded-full text-white text-sm font-bold cursor-pointer backdrop-blur-sm transition-all duration-300 hover:bg-white/20 focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-transparent"
+                        aria-label="User Profile"
+                    >
+                        <User size={18} aria-hidden="true" />
                         <span>Profile</span>
                     </button>
                 </div>
 
                 {/* Mobile Hamburger Button */}
                 <button
-                    className="mobile-menu-btn-service"
+                    className="mobile-menu-btn-service flex md:hidden items-center justify-center w-11 h-11 border border-white/30 bg-white/10 rounded-xl text-white cursor-pointer backdrop-blur-sm"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-                    style={{
-                        display: 'none',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '44px',
-                        height: '44px',
-                        border: '1px solid rgba(255,255,255,0.3)',
-                        backgroundColor: 'rgba(255,255,255,0.1)',
-                        borderRadius: '12px',
-                        color: '#ffffff',
-                        cursor: 'pointer',
-                        backdropFilter: 'blur(8px)'
-                    }}
+                    aria-expanded={isMenuOpen}
+                    aria-controls="mobile-menu"
                 >
-                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    {isMenuOpen ? <X size={24} aria-hidden="true" /> : <Menu size={24} aria-hidden="true" />}
                 </button>
+            </nav>
 
-                {/* Mobile Menu Dropdown */}
-                {isMenuOpen && (
-                    <div
-                        className="mobile-menu-service"
-                        style={{
-                            position: 'absolute',
-                            top: '100%',
-                            left: 0,
-                            right: 0,
-                            backgroundColor: 'rgba(0,0,0,0.95)',
-                            backdropFilter: 'blur(20px)',
-                            borderRadius: '0 0 24px 24px',
-                            padding: '24px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '16px',
-                            zIndex: 100,
-                            marginTop: '8px',
-                            border: '1px solid rgba(255,255,255,0.1)'
-                        }}
-                    >
-                        {['Search Profile', 'Blog', 'Affiliate Program'].map((item) => (
-                            <a
-                                key={item}
-                                href="#"
+            {/* Mobile Menu Overlay - Full Screen Scrollable */}
+            {isMenuOpen && (
+                <div
+                    id="mobile-menu"
+                    className="mobile-menu-overlay"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Mobile navigation menu"
+                >
+                    <div className="min-h-screen flex flex-col p-6">
+                        {/* Close button */}
+                        <div className="flex justify-end mb-8">
+                            <button
                                 onClick={() => setIsMenuOpen(false)}
-                                style={{
-                                    color: 'rgba(255,255,255,0.9)',
-                                    textDecoration: 'none',
-                                    fontSize: '18px',
-                                    fontWeight: 600,
-                                    padding: '12px 16px',
-                                    borderRadius: '12px',
-                                    backgroundColor: 'rgba(255,255,255,0.05)',
-                                    transition: 'all 0.2s'
-                                }}
+                                className="flex items-center justify-center w-11 h-11 border border-white/20 bg-white/10 rounded-xl text-white cursor-pointer"
+                                aria-label="Close menu"
                             >
-                                {item}
-                            </a>
-                        ))}
-                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', display: 'flex', gap: '12px' }}>
-                            <button style={{
-                                flex: 1,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                padding: '14px',
-                                borderRadius: '12px',
-                                border: '1px solid rgba(255,255,255,0.2)',
-                                backgroundColor: 'transparent',
-                                color: '#ffffff',
-                                fontSize: '14px',
-                                fontWeight: 600,
-                                cursor: 'pointer'
-                            }}>
-                                <Globe size={18} />
+                                <X size={24} aria-hidden="true" />
+                            </button>
+                        </div>
+
+                        {/* Navigation Links */}
+                        <div className="flex flex-col gap-4 flex-1">
+                            {navLinks.map((item) => (
+                                <a
+                                    key={item}
+                                    href="#"
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className="text-white/90 no-underline text-lg font-semibold px-4 py-3 rounded-xl bg-white/5 transition-all duration-200 hover:bg-white/10"
+                                >
+                                    {item}
+                                </a>
+                            ))}
+                        </div>
+
+                        {/* Bottom Actions */}
+                        <div className="border-t border-white/10 pt-6 mt-6 flex gap-3">
+                            <button
+                                className="flex-1 flex items-center justify-center gap-2 py-3.5 rounded-xl border border-white/20 bg-transparent text-white text-sm font-semibold cursor-pointer"
+                                aria-label="Change language"
+                            >
+                                <Globe size={18} aria-hidden="true" />
                                 EN
                             </button>
-                            <button style={{
-                                flex: 2,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                padding: '14px',
-                                borderRadius: '12px',
-                                border: 'none',
-                                backgroundColor: '#ffffff',
-                                color: '#0a0a0a',
-                                fontSize: '14px',
-                                fontWeight: 700,
-                                cursor: 'pointer'
-                            }}>
-                                <User size={18} />
+                            <button
+                                className="flex-[2] flex items-center justify-center gap-2 py-3.5 rounded-xl border-none bg-white text-gray-900 text-sm font-bold cursor-pointer"
+                                aria-label="User Profile"
+                            >
+                                <User size={18} aria-hidden="true" />
                                 Profile
                             </button>
                         </div>
                     </div>
-                )}
-            </nav>
+                </div>
+            )}
         </>
     );
 }

@@ -5,7 +5,10 @@ import { useService } from '../lib/ServiceContext';
 const UGCSection = () => {
   const { colors } = useService();
   const [activeIndex, setActiveIndex] = useState(1); // Start with center video
+  const [isInView, setIsInView] = useState(false);
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   const TESTIMONIALS = [
     {
@@ -34,27 +37,68 @@ const UGCSection = () => {
     }
   ];
 
-  // Preload all videos on mount and handle autoplay
+  // Check prefers-reduced-motion
   useEffect(() => {
-    // Preload all videos to show first frame
+    const mediaQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    setPrefersReducedMotion(mediaQuery.matches);
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setPrefersReducedMotion(e.matches);
+    };
+
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  // IntersectionObserver to detect when section is in view
+  useEffect(() => {
+    const section = sectionRef.current;
+    if (!section) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setIsInView(entry.isIntersecting);
+        });
+      },
+      {
+        threshold: 0.2,
+        rootMargin: '50px'
+      }
+    );
+
+    observer.observe(section);
+    return () => observer.disconnect();
+  }, []);
+
+  // Load videos only when section is in view
+  useEffect(() => {
+    if (!isInView) return;
+
     videoRefs.current.forEach((video) => {
       if (video && video.readyState < 2) {
         video.load();
       }
     });
-  }, []);
+  }, [isInView]);
 
-  // Auto-play the active video when it changes
+  // Auto-play the active video when it changes (only if in view and no reduced motion)
   useEffect(() => {
+    if (!isInView || prefersReducedMotion) {
+      // Pause all videos when not in view or reduced motion
+      videoRefs.current.forEach((video) => {
+        if (video) video.pause();
+      });
+      return;
+    }
+
     videoRefs.current.forEach((video, index) => {
       if (video) {
         if (index === activeIndex) {
-          // Ensure video is ready and play
-          video.muted = true; // Required for autoplay
+          video.muted = true;
           const playPromise = video.play();
           if (playPromise !== undefined) {
             playPromise.catch(() => {
-              // Retry with user interaction simulation
               video.muted = true;
               video.play().catch(() => { });
             });
@@ -65,7 +109,7 @@ const UGCSection = () => {
         }
       }
     });
-  }, [activeIndex]);
+  }, [activeIndex, isInView, prefersReducedMotion]);
 
   const goToNext = () => {
     setActiveIndex((prev) => (prev + 1) % TESTIMONIALS.length);
@@ -76,13 +120,15 @@ const UGCSection = () => {
   };
 
   return (
-    <section style={{
-      background: `linear-gradient(135deg, ${colors.primary}15, ${colors.secondary}10, white)`,
-      padding: '64px 0',
-      position: 'relative',
-      overflow: 'hidden',
-      fontFamily: "'Inter Tight', system-ui, sans-serif"
-    }}>
+    <section
+      ref={sectionRef}
+      style={{
+        background: `linear-gradient(135deg, ${colors.primary}15, ${colors.secondary}10, white)`,
+        padding: '64px 0',
+        position: 'relative',
+        overflow: 'hidden',
+        fontFamily: "'Inter Tight', system-ui, sans-serif"
+      }}>
       {/* Decorators */}
       <div style={{
         position: 'absolute',
@@ -156,6 +202,7 @@ const UGCSection = () => {
           }}>
             <button
               onClick={goToPrev}
+              aria-label="Previous testimonial"
               style={{
                 width: '44px',
                 height: '44px',
@@ -171,10 +218,11 @@ const UGCSection = () => {
                 boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
               }}
             >
-              <ChevronLeft size={20} />
+              <ChevronLeft size={20} aria-hidden="true" />
             </button>
             <button
               onClick={goToNext}
+              aria-label="Next testimonial"
               style={{
                 width: '44px',
                 height: '44px',
@@ -190,7 +238,7 @@ const UGCSection = () => {
                 boxShadow: `0 4px 15px ${colors.primary}30`
               }}
             >
-              <ChevronRight size={20} />
+              <ChevronRight size={20} aria-hidden="true" />
             </button>
           </div>
 
@@ -384,7 +432,7 @@ const VideoCard: React.FC<VideoCardProps> = ({ data, colors, isActive, videoRef 
               video.currentTime = 0.1; // Slightly offset to ensure frame is rendered
             }
           }}
-          onError={(e) => {
+          onError={() => {
             console.error('Video load error:', data.videoUrl);
           }}
           onCanPlay={(e) => {

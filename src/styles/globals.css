@@ -655,3 +655,119 @@ body {
 .flex-none {
   flex: none !important;
 }
+
+/* ===== HERO & NAVBAR RESPONSIVE ===== */
+/* Responsive Navigation - Desktop */
+@media (min-width: 769px) {
+
+  .mobile-menu-btn,
+  .mobile-menu-btn-service {
+    display: none !important;
+  }
+
+  .mobile-menu,
+  .mobile-menu-service {
+    display: none !important;
+  }
+}
+
+/* Responsive Navigation - Mobile */
+@media (max-width: 768px) {
+
+  .desktop-nav,
+  .desktop-nav-service {
+    display: none !important;
+  }
+
+  .mobile-menu-btn,
+  .mobile-menu-btn-service {
+    display: flex !important;
+  }
+}
+
+/* Hero Animations */
+@keyframes scan {
+  0% {
+    top: 0%;
+    opacity: 0;
+  }
+
+  15% {
+    opacity: 1;
+  }
+
+  85% {
+    opacity: 1;
+  }
+
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+.animate-scan {
+  animation: scan 2.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 40s linear infinite;
+}
+
+/* Hero button effects */
+.hero-btn:hover {
+  transform: scale(1.02);
+}
+
+.hero-btn:active {
+  transform: scale(0.98);
+}
+
+.gender-card:hover {
+  transform: scale(1.02);
+}
+
+.tab-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Shimmer effect for Hero */
+@keyframes hero-shimmer {
+  0% {
+    transform: translateX(-150%) skewX(-15deg);
+  }
+
+  100% {
+    transform: translateX(150%) skewX(-15deg);
+  }
+}
+
+.shimmer-effect:hover .shimmer-bar {
+  animation: hero-shimmer 2s infinite;
+}
+
+/* Mobile menu overlay - Full screen scrollable */
+.mobile-menu-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  overflow-y: auto;
+  animation: slideDown 0.3s ease-out;
+}
+
+/* Body no scroll when menu open */
+body.menu-open {
+  overflow: hidden;
+}

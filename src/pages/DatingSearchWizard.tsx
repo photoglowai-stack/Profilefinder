@@ -105,14 +105,17 @@ export default function DatingSearchWizard() {
     const goToStep = (step: number) => {
         setCurrentStep(step);
 
-        if (step === 3) {
-            setTimeout(() => initMap(), 200);
-        }
-
         if (step === 4) {
             startLoading();
         }
     };
+
+    // Initialize map when step 3 is reached
+    useEffect(() => {
+        if (currentStep === 3) {
+            initMap();
+        }
+    }, [currentStep]);
 
     // ============================================
     // MAP INITIALIZATION (Leaflet)
@@ -137,9 +140,12 @@ export default function DatingSearchWizard() {
             maxZoom: 19
         }).addTo(mapRef.current);
 
-        setTimeout(() => {
-            mapRef.current?.invalidateSize();
-        }, 100);
+        // Use requestAnimationFrame for safe invalidateSize call
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                mapRef.current?.invalidateSize();
+            });
+        });
     };
 
     // ============================================
