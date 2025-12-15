@@ -1,4 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
+import { useService } from '../lib/ServiceContext';
+import { TinderResultsPreview } from '../components/ui/TinderResultsPreview';
+import { FidelityCheckPreview, FaceTracePreview, InstagramRadarPreview } from '../components/ui/ServicePreviews';
 
 // Couleurs du thème
 const colors = {
@@ -252,6 +255,7 @@ const AnimationStyles = () => (
 export function PaymentPage() {
     const [timeLeft, setTimeLeft] = useState(91);
     const [isHoveringMain, setIsHoveringMain] = useState(false);
+    const { selectedService, colors: serviceColors } = useService();
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -264,6 +268,22 @@ export function PaymentPage() {
         const m = Math.floor(seconds / 60);
         const s = seconds % 60;
         return `0${m}:${s < 10 ? '0' : ''}${s}`;
+    };
+
+    // Dynamic preview based on selected service
+    const renderPreview = () => {
+        switch (selectedService) {
+            case 'dating':
+                return <TinderResultsPreview />;
+            case 'fidelity':
+                return <FidelityCheckPreview />;
+            case 'facetrace':
+                return <FaceTracePreview />;
+            case 'following':
+                return <InstagramRadarPreview />;
+            default:
+                return <TinderResultsPreview />;
+        }
     };
 
     const features = [
@@ -279,7 +299,7 @@ export function PaymentPage() {
             <div style={{
                 minHeight: '100vh',
                 width: '100%',
-                background: 'linear-gradient(to bottom right, #ff5f6d, #ffc371)',
+                background: `linear-gradient(to bottom right, ${serviceColors.primary}, ${serviceColors.secondary})`,
                 fontFamily: 'ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji"',
                 display: 'flex',
                 flexDirection: 'column',
