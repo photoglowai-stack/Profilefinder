@@ -365,201 +365,206 @@ export function PaymentPage() {
                     }}
                 >
 
-                    {/* DYNAMIC SERVICE PREVIEW */}
-                    <div style={{ padding: '1rem', borderBottom: `1px solid ${colors.gray200}` }}>
-                        {renderPreview()}
-                    </div>
+                    {/* CONDITIONAL PREVIEW SECTION */}
+                    {selectedService === 'dating' ? (
+                        /* DATING: Original Search Results Layout */
+                        <div style={{ padding: '1.75rem', paddingBottom: '0.5rem', position: 'relative' }}>
+                            {/* Grid Pattern Background */}
+                            <div style={{
+                                position: 'absolute',
+                                inset: 0,
+                                backgroundImage: 'linear-gradient(to right, rgba(128,128,128,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(128,128,128,0.04) 1px, transparent 1px)',
+                                backgroundSize: '20px 20px',
+                                pointerEvents: 'none',
+                            }}></div>
 
-                    {/* SECTION HAUTE : RÉSULTATS (legacy - kept for layout consistency) */}
-                    <div style={{ padding: '1.75rem', paddingBottom: '0.5rem', position: 'relative', display: 'none' }}>
-                        {/* Grid Pattern Background */}
-                        <div style={{
-                            position: 'absolute',
-                            inset: 0,
-                            backgroundImage: 'linear-gradient(to right, rgba(128,128,128,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(128,128,128,0.04) 1px, transparent 1px)',
-                            backgroundSize: '20px 20px',
-                            pointerEvents: 'none',
-                        }}></div>
-
-                        <div style={{
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'flex-start',
-                            marginBottom: '1.5rem',
-                            position: 'relative',
-                        }}>
-                            <div>
-                                <h1 style={{
-                                    fontSize: '1.875rem',
-                                    fontWeight: 800,
-                                    color: colors.gray800,
-                                    lineHeight: 1.1,
-                                    letterSpacing: '-0.025em',
-                                    margin: 0,
-                                }}>
-                                    Search <br />
-                                    <span
-                                        className="animate-gradient-x"
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'flex-start',
+                                marginBottom: '1.5rem',
+                                position: 'relative',
+                            }}>
+                                <div>
+                                    <h1 style={{
+                                        fontSize: '1.875rem',
+                                        fontWeight: 800,
+                                        color: colors.gray800,
+                                        lineHeight: 1.1,
+                                        letterSpacing: '-0.025em',
+                                        margin: 0,
+                                    }}>
+                                        Search <br />
+                                        <span
+                                            className="animate-gradient-x"
+                                            style={{
+                                                backgroundClip: 'text',
+                                                WebkitBackgroundClip: 'text',
+                                                color: 'transparent',
+                                                backgroundImage: `linear-gradient(to right, ${colors.rose500}, ${colors.orange500})`,
+                                            }}
+                                        >
+                                            Results
+                                        </span>
+                                    </h1>
+                                    <div
+                                        className="animate-pulse-slow"
                                         style={{
-                                            backgroundClip: 'text',
-                                            WebkitBackgroundClip: 'text',
-                                            color: 'transparent',
-                                            backgroundImage: `linear-gradient(to right, ${colors.rose500}, ${colors.orange500})`,
+                                            marginTop: '0.75rem',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '0.5rem',
+                                            backgroundColor: colors.rose50,
+                                            color: colors.rose600,
+                                            padding: '0.375rem 0.75rem',
+                                            borderRadius: '9999px',
+                                            fontSize: '0.75rem',
+                                            fontWeight: 700,
+                                            border: `1px solid ${colors.rose100}`,
+                                            boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
                                         }}
                                     >
-                                        Results
-                                    </span>
-                                </h1>
+                                        <span style={{ position: 'relative', display: 'flex', width: '0.5rem', height: '0.5rem' }}>
+                                            <span
+                                                className="animate-ping"
+                                                style={{
+                                                    position: 'absolute',
+                                                    display: 'inline-flex',
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    borderRadius: '9999px',
+                                                    backgroundColor: colors.rose400,
+                                                    opacity: 0.75,
+                                                }}
+                                            ></span>
+                                            <span style={{
+                                                position: 'relative',
+                                                display: 'inline-flex',
+                                                borderRadius: '9999px',
+                                                width: '0.5rem',
+                                                height: '0.5rem',
+                                                backgroundColor: colors.rose500,
+                                            }}></span>
+                                        </span>
+                                        20+ Matches Found
+                                    </div>
+                                </div>
+                                {/* Score Match */}
                                 <div
-                                    className="animate-pulse-slow"
+                                    className="hover-scale"
                                     style={{
-                                        marginTop: '0.75rem',
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        gap: '0.5rem',
-                                        backgroundColor: colors.rose50,
-                                        color: colors.rose600,
-                                        padding: '0.375rem 0.75rem',
-                                        borderRadius: '9999px',
-                                        fontSize: '0.75rem',
-                                        fontWeight: 700,
-                                        border: `1px solid ${colors.rose100}`,
-                                        boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                                        background: `linear-gradient(to bottom right, ${colors.rose500}, ${colors.pink600})`,
+                                        color: colors.white,
+                                        padding: '0.75rem 1rem',
+                                        borderRadius: '1rem',
+                                        textAlign: 'center',
+                                        boxShadow: '0 10px 20px -5px rgba(244,63,94,0.4)',
+                                        cursor: 'help',
                                     }}
                                 >
-                                    <span style={{ position: 'relative', display: 'flex', width: '0.5rem', height: '0.5rem' }}>
-                                        <span
-                                            className="animate-ping"
-                                            style={{
-                                                position: 'absolute',
-                                                display: 'inline-flex',
-                                                width: '100%',
-                                                height: '100%',
-                                                borderRadius: '9999px',
-                                                backgroundColor: colors.rose400,
-                                                opacity: 0.75,
-                                            }}
-                                        ></span>
-                                        <span style={{
-                                            position: 'relative',
-                                            display: 'inline-flex',
-                                            borderRadius: '9999px',
-                                            width: '0.5rem',
-                                            height: '0.5rem',
-                                            backgroundColor: colors.rose500,
-                                        }}></span>
-                                    </span>
-                                    20+ Matches Found
+                                    <div style={{ fontSize: '10px', textTransform: 'uppercase', opacity: 0.9, fontWeight: 700, letterSpacing: '0.05em', marginBottom: '0.125rem' }}>Match</div>
+                                    <div style={{ fontWeight: 900, fontSize: '1.5rem', lineHeight: 1, letterSpacing: '-0.05em' }}>88%</div>
                                 </div>
                             </div>
-                            {/* Score Match */}
-                            <div
-                                className="hover-scale"
-                                style={{
-                                    background: `linear-gradient(to bottom right, ${colors.rose500}, ${colors.pink600})`,
-                                    color: colors.white,
-                                    padding: '0.75rem 1rem',
-                                    borderRadius: '1rem',
-                                    textAlign: 'center',
-                                    boxShadow: '0 10px 20px -5px rgba(244,63,94,0.4)',
-                                    cursor: 'help',
-                                }}
-                            >
-                                <div style={{ fontSize: '10px', textTransform: 'uppercase', opacity: 0.9, fontWeight: 700, letterSpacing: '0.05em', marginBottom: '0.125rem' }}>Match</div>
-                                <div style={{ fontWeight: 900, fontSize: '1.5rem', lineHeight: 1, letterSpacing: '-0.05em' }}>88%</div>
-                            </div>
-                        </div>
 
-                        {/* GRID - ABSTRACT SILHOUETTES (no real faces) */}
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(4, 1fr)',
-                            gap: '0.75rem',
-                            marginBottom: '1.25rem',
-                        }}>
-                            {[1, 2, 3, 4].map((_, i) => (
-                                <div
-                                    key={i}
-                                    style={{
-                                        position: 'relative',
-                                        aspectRatio: '1 / 1',
-                                        borderRadius: '1rem',
-                                        overflow: 'hidden',
-                                        backgroundColor: colors.gray100,
-                                        border: `1px solid ${colors.gray200}`,
-                                        cursor: 'pointer',
-                                        boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.06)',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}
-                                >
-                                    {/* Abstract silhouette - NO real face */}
-                                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                            {/* GRID - ABSTRACT SILHOUETTES (no real faces) */}
+                            <div style={{
+                                display: 'grid',
+                                gridTemplateColumns: 'repeat(4, 1fr)',
+                                gap: '0.75rem',
+                                marginBottom: '1.25rem',
+                            }}>
+                                {[1, 2, 3, 4].map((_, i) => (
+                                    <div
+                                        key={i}
+                                        style={{
+                                            position: 'relative',
+                                            aspectRatio: '1 / 1',
+                                            borderRadius: '1rem',
+                                            overflow: 'hidden',
+                                            backgroundColor: colors.gray100,
+                                            border: `1px solid ${colors.gray200}`,
+                                            cursor: 'pointer',
+                                            boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.06)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                        }}
+                                    >
+                                        {/* Abstract silhouette - NO real face */}
+                                        <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                            <div style={{
+                                                width: '24px',
+                                                height: '24px',
+                                                backgroundColor: colors.gray300,
+                                                borderRadius: '9999px',
+                                                opacity: 0.6,
+                                            }} />
+                                            <div style={{
+                                                width: '32px',
+                                                height: '20px',
+                                                backgroundColor: colors.gray300,
+                                                borderRadius: '16px 16px 0 0',
+                                                marginTop: '-4px',
+                                                opacity: 0.4,
+                                            }} />
+                                        </div>
+                                        {/* Lock overlay */}
                                         <div style={{
-                                            width: '24px',
-                                            height: '24px',
-                                            backgroundColor: colors.gray300,
-                                            borderRadius: '9999px',
-                                            opacity: 0.6,
-                                        }} />
+                                            position: 'absolute',
+                                            inset: 0,
+                                            backgroundColor: 'rgba(0,0,0,0.05)',
+                                            transition: 'background-color 0.3s ease',
+                                        }}></div>
                                         <div style={{
-                                            width: '32px',
-                                            height: '20px',
-                                            backgroundColor: colors.gray300,
-                                            borderRadius: '16px 16px 0 0',
-                                            marginTop: '-4px',
-                                            opacity: 0.4,
-                                        }} />
-                                    </div>
-                                    {/* Lock overlay */}
-                                    <div style={{
-                                        position: 'absolute',
-                                        inset: 0,
-                                        backgroundColor: 'rgba(0,0,0,0.05)',
-                                        transition: 'background-color 0.3s ease',
-                                    }}></div>
-                                    <div style={{
-                                        position: 'absolute',
-                                        inset: 0,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                    }}>
-                                        <div style={{
-                                            backgroundColor: 'rgba(255,255,255,0.3)',
-                                            backdropFilter: 'blur(8px)',
-                                            padding: '0.375rem',
-                                            borderRadius: '9999px',
-                                            boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                                            position: 'absolute',
+                                            inset: 0,
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
                                         }}>
-                                            <IconLock style={{ width: '0.875rem', height: '0.875rem', color: colors.gray700 }} />
+                                            <div style={{
+                                                backgroundColor: 'rgba(255,255,255,0.3)',
+                                                backdropFilter: 'blur(8px)',
+                                                padding: '0.375rem',
+                                                borderRadius: '9999px',
+                                                boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
+                                            }}>
+                                                <IconLock style={{ width: '0.875rem', height: '0.875rem', color: colors.gray700 }} />
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
 
-                        <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '0.5rem',
-                            fontSize: '0.75rem',
-                            fontWeight: 700,
-                            color: colors.gray500,
-                            borderBottom: `1px solid ${colors.gray100}`,
-                            paddingBottom: '1.25rem',
-                        }}>
-                            <IconEye className="animate-bounce-slow" style={{ width: '1rem', height: '1rem', color: colors.rose500 }} />
-                            <span style={{
-                                backgroundClip: 'text',
-                                WebkitBackgroundClip: 'text',
-                                color: 'transparent',
-                                backgroundImage: `linear-gradient(to right, ${colors.gray600}, ${colors.gray400})`,
-                            }}>Unlock to see photos and full report</span>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '0.5rem',
+                                fontSize: '0.75rem',
+                                fontWeight: 700,
+                                color: colors.gray500,
+                                borderBottom: `1px solid ${colors.gray100}`,
+                                paddingBottom: '1.25rem',
+                            }}>
+                                <IconEye className="animate-bounce-slow" style={{ width: '1rem', height: '1rem', color: colors.rose500 }} />
+                                <span style={{
+                                    backgroundClip: 'text',
+                                    WebkitBackgroundClip: 'text',
+                                    color: 'transparent',
+                                    backgroundImage: `linear-gradient(to right, ${colors.gray600}, ${colors.gray400})`,
+                                }}>Unlock to see photos and full report</span>
+                            </div>
                         </div>
-                    </div>
+                    ) : (
+                        /* OTHER SERVICES: Show service-specific preview */
+                        <div style={{ padding: '1rem' }}>
+                            {selectedService === 'fidelity' && <FidelityCheckPreview />}
+                            {selectedService === 'facetrace' && <FaceTracePreview />}
+                            {selectedService === 'following' && <InstagramRadarPreview />}
+                        </div>
+                    )}
 
                     {/* SECTION PRIX */}
                     <div style={{ padding: '0 1.5rem 2rem 1.5rem' }}>
@@ -910,7 +915,7 @@ export function PaymentPage() {
                 </div>
 
                 {/* Footer intentionally removed for locked checkout - CRO optimization */}
-            </div >
+            </div>
         </>
     );
 }
