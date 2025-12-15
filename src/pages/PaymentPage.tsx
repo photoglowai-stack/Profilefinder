@@ -445,19 +445,14 @@ export function PaymentPage() {
                             </div>
                         </div>
 
-                        {/* GRID PHOTOS FLOUTÉES */}
+                        {/* GRID - ABSTRACT SILHOUETTES (no real faces) */}
                         <div style={{
                             display: 'grid',
                             gridTemplateColumns: 'repeat(4, 1fr)',
                             gap: '0.75rem',
                             marginBottom: '1.25rem',
                         }}>
-                            {[
-                                "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop",
-                                "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
-                                "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop",
-                                "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop"
-                            ].map((src, i) => (
+                            {[1, 2, 3, 4].map((_, i) => (
                                 <div
                                     key={i}
                                     style={{
@@ -469,20 +464,30 @@ export function PaymentPage() {
                                         border: `1px solid ${colors.gray200}`,
                                         cursor: 'pointer',
                                         boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.06)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
                                     }}
                                 >
-                                    <img
-                                        src={src}
-                                        style={{
-                                            width: '100%',
-                                            height: '100%',
-                                            objectFit: 'cover',
-                                            filter: 'blur(8px)',
-                                            opacity: 0.8,
-                                            transition: 'transform 0.7s ease-in-out',
-                                        }}
-                                        alt="hidden"
-                                    />
+                                    {/* Abstract silhouette - NO real face */}
+                                    <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                                        <div style={{
+                                            width: '24px',
+                                            height: '24px',
+                                            backgroundColor: colors.gray300,
+                                            borderRadius: '9999px',
+                                            opacity: 0.6,
+                                        }} />
+                                        <div style={{
+                                            width: '32px',
+                                            height: '20px',
+                                            backgroundColor: colors.gray300,
+                                            borderRadius: '16px 16px 0 0',
+                                            marginTop: '-4px',
+                                            opacity: 0.4,
+                                        }} />
+                                    </div>
+                                    {/* Lock overlay */}
                                     <div style={{
                                         position: 'absolute',
                                         inset: 0,
