@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, Eye, Sparkles } from "lucide-react";
 import { useService } from "../lib/ServiceContext";
+import { RevealOnScroll } from "./ui/RevealOnScroll";
 
 // --- ICÔNES SVG INTÉGRÉES ---
 const IconZap = ({ style, className }: { style?: React.CSSProperties; className?: string }) => (
@@ -96,6 +97,7 @@ export function HowItWorks() {
   const steps = [
     {
       number: 1,
+      emoji: "📝",
       title: "Fill in their details",
       description: "Enter the first name, approximate age and city. This gives our AI a precise starting point to search Tinder profiles.",
       features: [
@@ -105,6 +107,7 @@ export function HowItWorks() {
     },
     {
       number: 2,
+      emoji: "🔍",
       title: "Launch the Tinder lookup",
       description: "Click Search to start the Tinder profile lookup. Our AI scans for matching profiles and checks recent activity.",
       features: [
@@ -114,6 +117,7 @@ export function HowItWorks() {
     },
     {
       number: 3,
+      emoji: "📡",
       title: "Activate Radar if needed",
       description: "Turn on the Radar for ongoing monitoring. Get alerts as soon as a matching profile becomes visible.",
       features: [
@@ -289,9 +293,9 @@ export function HowItWorks() {
                   </div>
 
                   <div className="flex-1">
-                    {/* Title */}
+                    {/* Title with Emoji */}
                     <h3 className="text-xl md:text-2xl font-extrabold tracking-tight text-slate-900 mb-3">
-                      {step.title}
+                      <span className="mr-2">{step.emoji}</span>{step.title}
                     </h3>
 
                     {/* Description */}
