@@ -365,8 +365,13 @@ export function PaymentPage() {
                     }}
                 >
 
-                    {/* SECTION HAUTE : RÉSULTATS */}
-                    <div style={{ padding: '1.75rem', paddingBottom: '0.5rem', position: 'relative' }}>
+                    {/* DYNAMIC SERVICE PREVIEW */}
+                    <div style={{ padding: '1rem', borderBottom: `1px solid ${colors.gray200}` }}>
+                        {renderPreview()}
+                    </div>
+
+                    {/* SECTION HAUTE : RÉSULTATS (legacy - kept for layout consistency) */}
+                    <div style={{ padding: '1.75rem', paddingBottom: '0.5rem', position: 'relative', display: 'none' }}>
                         {/* Grid Pattern Background */}
                         <div style={{
                             position: 'absolute',
@@ -905,7 +910,7 @@ export function PaymentPage() {
                 </div>
 
                 {/* Footer intentionally removed for locked checkout - CRO optimization */}
-            </div>
+            </div >
         </>
     );
 }
