@@ -201,7 +201,7 @@ export default function FaceTrace() {
         e.preventDefault();
         setIsSubmitting(true);
         setTimeout(() => {
-            window.location.href = '/payment';
+            window.location.href = '/payment?service=faceTrace';
         }, 1000);
     };
 
