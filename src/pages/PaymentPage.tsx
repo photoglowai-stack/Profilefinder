@@ -1,18 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { useService } from '../lib/ServiceContext';
-import { ServiceType } from '../lib/serviceColors';
-import { DatingResultsPreview } from '../components/ui/DatingResultsPreview';
-import { FaceTraceResultsPreview } from '../components/ui/FaceTraceResultsPreview';
-import { FidelityResultsPreview } from '../components/ui/FidelityResultsPreview';
-import { FollowingResultsPreview } from '../components/ui/FollowingResultsPreview';
-
-// PREVIEW_MAP - Deterministic mapping of service to preview component
-const PREVIEW_MAP: Record<ServiceType, React.FC> = {
-    dating: DatingResultsPreview,
-    facetrace: FaceTraceResultsPreview,
-    fidelity: FidelityResultsPreview,
-    following: FollowingResultsPreview,
-};
+import { getPaymentConfig } from '../components/payment/paymentConfig';
+import { FaceTraceResultsPreview } from '../components/payment/FaceTraceResultsPreview';
 
 // Couleurs du thème
 const colors = {
@@ -264,12 +254,17 @@ const AnimationStyles = () => (
 );
 
 export function PaymentPage() {
-    const { selectedService } = useService();
+    // URL params support pour service spécifique
+    const [searchParams] = useSearchParams();
+    const urlService = searchParams.get('service');
+    const { searchTarget, selectedService } = useService();
+
+    // Déterminer le service actif (URL param prioritaire, puis context, puis dating par défaut)
+    const activeService = urlService || selectedService || 'dating';
+    const config = getPaymentConfig(activeService);
+
     const [timeLeft, setTimeLeft] = useState(91);
     const [isHoveringMain, setIsHoveringMain] = useState(false);
-
-    // Get the preview component for the current service
-    const PreviewComponent = PREVIEW_MAP[selectedService] || DatingResultsPreview;
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -285,11 +280,17 @@ export function PaymentPage() {
     };
 
     const features = [
-        { name: 'Dating App Search', description: 'Unlimited searches across all dating apps', Icon: IconZap },
-        { name: 'Following AI', description: 'Daily analysis of Instagram followers', Icon: IconEye },
-        { name: 'Face Trace', description: 'Reverse face search across all platforms', Icon: IconShieldCheck },
-        { name: 'Cheating Analytics', description: 'Complete reports and real-time alerts', Icon: IconStar },
+        { name: '💕 Dating App Search', description: 'Unlimited searches across all dating apps', Icon: IconZap },
+        { name: '👀 Following AI', description: 'Daily analysis of Instagram followers', Icon: IconEye },
+        { name: '🔍 Face Trace', description: 'Reverse face search across all platforms', Icon: IconShieldCheck },
+        { name: '💔 Cheating Analytics', description: 'Complete reports and real-time alerts', Icon: IconStar },
     ];
+
+    // Noms et pourcentages pour les profils
+    const displayName = searchTarget || 'Target';
+    const matchPercentages = [98, 95, 92, 89, 87, 84, 81, 78];
+
+    const [showExamplePopup, setShowExamplePopup] = useState(false);
 
     return (
         <>
@@ -363,10 +364,386 @@ export function PaymentPage() {
                     }}
                 >
 
-                    {/* DYNAMIC SERVICE PREVIEW */}
-                    <div style={{ borderRadius: '1rem', overflow: 'hidden', margin: '0.5rem' }}>
-                        <PreviewComponent />
-                    </div>
+                    {/* SECTION HAUTE : RÉSULTATS - Conditionnel selon le service */}
+                    {activeService === 'faceTrace' ? (
+                        <div style={{ padding: '1.75rem', paddingBottom: '0.5rem', position: 'relative' }}>
+                            {/* Grid Pattern Background */}
+                            <div style={{
+                                position: 'absolute',
+                                inset: 0,
+                                backgroundImage: 'linear-gradient(to right, rgba(128,128,128,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(128,128,128,0.04) 1px, transparent 1px)',
+                                backgroundSize: '20px 20px',
+                                pointerEvents: 'none',
+                            }}></div>
+
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'flex-start',
+                                marginBottom: '1.5rem',
+                                position: 'relative',
+                            }}>
+                                <div>
+                                    <h1 style={{
+                                        fontSize: '1.875rem',
+                                        fontWeight: 800,
+                                        color: colors.gray800,
+                                        lineHeight: 1.1,
+                                        letterSpacing: '-0.025em',
+                                        margin: 0,
+                                    }}>
+                                        {config.title} <br />
+                                        <span
+                                            className="animate-gradient-x"
+                                            style={{
+                                                backgroundClip: 'text',
+                                                WebkitBackgroundClip: 'text',
+                                                color: 'transparent',
+                                                backgroundImage: config.accentColors.gradient,
+                                            }}
+                                        >
+                                            {config.subtitle}
+                                        </span>
+                                    </h1>
+                                    <div
+                                        className="animate-pulse-slow"
+                                        style={{
+                                            marginTop: '0.75rem',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '0.5rem',
+                                            backgroundColor: colors.rose50,
+                                            color: config.accentColors.primary,
+                                            padding: '0.375rem 0.75rem',
+                                            borderRadius: '9999px',
+                                            fontSize: '0.75rem',
+                                            fontWeight: 700,
+                                            border: `1px solid ${colors.rose100}`,
+                                            boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                                        }}
+                                    >
+                                        <span style={{ position: 'relative', display: 'flex', width: '0.5rem', height: '0.5rem' }}>
+                                            <span
+                                                className="animate-ping"
+                                                style={{
+                                                    position: 'absolute',
+                                                    display: 'inline-flex',
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    borderRadius: '9999px',
+                                                    backgroundColor: config.accentColors.primary,
+                                                    opacity: 0.75,
+                                                }}
+                                            ></span>
+                                            <span style={{
+                                                position: 'relative',
+                                                display: 'inline-flex',
+                                                borderRadius: '9999px',
+                                                width: '0.5rem',
+                                                height: '0.5rem',
+                                                backgroundColor: config.accentColors.primary,
+                                            }}></span>
+                                        </span>
+                                        {config.badgeText}
+                                    </div>
+                                </div>
+                                {/* Score Match */}
+                                <div
+                                    className="hover-scale"
+                                    style={{
+                                        background: config.accentColors.gradient,
+                                        color: colors.white,
+                                        padding: '0.75rem 1rem',
+                                        borderRadius: '1rem',
+                                        textAlign: 'center',
+                                        boxShadow: `0 10px 20px -5px ${config.accentColors.primary}66`,
+                                        cursor: 'help',
+                                    }}
+                                >
+                                    <div style={{ fontSize: '0.625rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em', opacity: 0.9 }}>Match</div>
+                                    <div style={{ fontWeight: 900, fontSize: '1.5rem', lineHeight: 1, letterSpacing: '-0.05em' }}>88%</div>
+                                </div>
+                            </div>
+
+                            {/* FaceTrace Preview Component */}
+                            <FaceTraceResultsPreview />
+
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '0.5rem',
+                                fontSize: '0.75rem',
+                                fontWeight: 700,
+                                color: colors.gray500,
+                                borderBottom: `1px solid ${colors.gray100}`,
+                                paddingBottom: '1.25rem',
+                            }}>
+                                <IconEye className="animate-bounce-slow" style={{ width: '1rem', height: '1rem', color: config.accentColors.primary }} />
+                                <span style={{
+                                    backgroundClip: 'text',
+                                    WebkitBackgroundClip: 'text',
+                                    color: 'transparent',
+                                    backgroundImage: `linear-gradient(to right, ${colors.gray600}, ${colors.gray400})`,
+                                }}>Unlock to see photos and full report</span>
+                            </div>
+                        </div>
+                    ) : (
+                        /* Dating Preview (original - pixel-identical) */
+                        <div style={{ padding: '1.75rem', paddingBottom: '0.5rem', position: 'relative' }}>
+                            {/* Grid Pattern Background */}
+                            <div style={{
+                                position: 'absolute',
+                                inset: 0,
+                                backgroundImage: 'linear-gradient(to right, rgba(128,128,128,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(128,128,128,0.04) 1px, transparent 1px)',
+                                backgroundSize: '20px 20px',
+                                pointerEvents: 'none',
+                            }}></div>
+
+                            <div style={{
+                                display: 'flex',
+                                justifyContent: 'space-between',
+                                alignItems: 'flex-start',
+                                marginBottom: '1.5rem',
+                                position: 'relative',
+                            }}>
+                                <div>
+                                    <h1 style={{
+                                        fontSize: '1.875rem',
+                                        fontWeight: 800,
+                                        color: colors.gray800,
+                                        lineHeight: 1.1,
+                                        letterSpacing: '-0.025em',
+                                        margin: 0,
+                                    }}>
+                                        Search <br />
+                                        <span
+                                            className="animate-gradient-x"
+                                            style={{
+                                                backgroundClip: 'text',
+                                                WebkitBackgroundClip: 'text',
+                                                color: 'transparent',
+                                                backgroundImage: `linear-gradient(to right, ${colors.rose500}, ${colors.orange500})`,
+                                            }}
+                                        >
+                                            Results
+                                        </span>
+                                    </h1>
+                                    <div
+                                        className="animate-pulse-slow"
+                                        style={{
+                                            marginTop: '0.75rem',
+                                            display: 'inline-flex',
+                                            alignItems: 'center',
+                                            gap: '0.5rem',
+                                            backgroundColor: colors.rose50,
+                                            color: colors.rose600,
+                                            padding: '0.375rem 0.75rem',
+                                            borderRadius: '9999px',
+                                            fontSize: '0.75rem',
+                                            fontWeight: 700,
+                                            border: `1px solid ${colors.rose100}`,
+                                            boxShadow: '0 1px 2px rgba(0,0,0,0.05)',
+                                        }}
+                                    >
+                                        <span style={{ position: 'relative', display: 'flex', width: '0.5rem', height: '0.5rem' }}>
+                                            <span
+                                                className="animate-ping"
+                                                style={{
+                                                    position: 'absolute',
+                                                    display: 'inline-flex',
+                                                    width: '100%',
+                                                    height: '100%',
+                                                    borderRadius: '9999px',
+                                                    backgroundColor: colors.rose400,
+                                                    opacity: 0.75,
+                                                }}
+                                            ></span>
+                                            <span style={{
+                                                position: 'relative',
+                                                display: 'inline-flex',
+                                                borderRadius: '9999px',
+                                                width: '0.5rem',
+                                                height: '0.5rem',
+                                                backgroundColor: colors.rose500,
+                                            }}></span>
+                                        </span>
+                                        20+ Matches Found
+                                    </div>
+                                </div>
+                                {/* Score Match */}
+                                <div
+                                    className="hover-scale"
+                                    style={{
+                                        background: `linear-gradient(to bottom right, ${colors.rose500}, ${colors.pink600})`,
+                                        color: colors.white,
+                                        padding: '0.75rem 1rem',
+                                        borderRadius: '1rem',
+                                        textAlign: 'center',
+                                        boxShadow: '0 10px 20px -5px rgba(244,63,94,0.4)',
+                                        cursor: 'help',
+                                    }}
+                                >
+                                    <div style={{ fontSize: '10px', textTransform: 'uppercase', opacity: 0.9, fontWeight: 700, letterSpacing: '0.05em', marginBottom: '0.125rem' }}>Match</div>
+                                    <div style={{ fontWeight: 900, fontSize: '1.5rem', lineHeight: 1, letterSpacing: '-0.05em' }}>88%</div>
+                                </div>
+                            </div>
+
+                            {/* CAROUSEL PHOTOS FLOUTÉES (SCROLL MANUEL) */}
+                            <div style={{
+                                overflowX: 'auto',
+                                overflowY: 'hidden',
+                                marginBottom: '1.25rem',
+                                paddingBottom: '0.5rem',
+                                WebkitOverflowScrolling: 'touch',
+                            }}>
+                                <div style={{
+                                    display: 'flex',
+                                    gap: '0.5rem',
+                                    width: 'max-content',
+                                }}>
+                                    {[
+                                        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop",
+                                        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
+                                        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop",
+                                        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop",
+                                        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
+                                        "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=150&h=150&fit=crop",
+                                        "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop",
+                                        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?w=150&h=150&fit=crop",
+                                    ].map((src, i) => {
+                                        const isFirst = i === 0;
+                                        const isLast = i === 7;
+
+                                        return (
+                                            <div
+                                                key={i}
+                                                onClick={() => isFirst && setShowExamplePopup(true)}
+                                                style={{
+                                                    position: 'relative',
+                                                    width: '4.5rem',
+                                                    height: '4.5rem',
+                                                    borderRadius: '0.875rem',
+                                                    overflow: 'hidden',
+                                                    flexShrink: 0,
+                                                    backgroundColor: colors.gray100,
+                                                    border: isFirst ? `2px solid ${colors.green500}` : `1px solid ${colors.gray200}`,
+                                                    cursor: isFirst ? 'pointer' : 'default',
+                                                    boxShadow: isFirst ? `0 0 0 3px rgba(34,197,94,0.2)` : 'none',
+                                                }}
+                                            >
+                                                <img
+                                                    src={src}
+                                                    style={{
+                                                        width: '100%',
+                                                        height: '100%',
+                                                        objectFit: 'cover',
+                                                        filter: isFirst ? 'none' : 'blur(4px)',
+                                                        opacity: isFirst ? 1 : 0.85,
+                                                    }}
+                                                    alt="profile"
+                                                />
+
+                                                {/* Badge "Exemple" sur la première */}
+                                                {isFirst && (
+                                                    <div style={{
+                                                        position: 'absolute',
+                                                        bottom: '0.25rem',
+                                                        left: '50%',
+                                                        transform: 'translateX(-50%)',
+                                                        backgroundColor: colors.green500,
+                                                        color: 'white',
+                                                        padding: '0.125rem 0.375rem',
+                                                        borderRadius: '0.25rem',
+                                                        fontSize: '0.5rem',
+                                                        fontWeight: 700,
+                                                        textTransform: 'uppercase',
+                                                        boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
+                                                    }}>
+                                                        Exemple
+                                                    </div>
+                                                )}
+
+                                                {/* Badge "+16" sur la dernière */}
+                                                {isLast && (
+                                                    <div style={{
+                                                        position: 'absolute',
+                                                        inset: 0,
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        backgroundColor: 'rgba(0,0,0,0.5)',
+                                                        backdropFilter: 'blur(2px)',
+                                                    }}>
+                                                        <span style={{
+                                                            color: 'white',
+                                                            fontSize: '1rem',
+                                                            fontWeight: 800,
+                                                        }}>+16</span>
+                                                    </div>
+                                                )}
+
+                                                {/* Nom + Pourcentage sur photos floutées (sauf première et dernière) */}
+                                                {!isFirst && !isLast && (
+                                                    <div style={{
+                                                        position: 'absolute',
+                                                        inset: 0,
+                                                        display: 'flex',
+                                                        flexDirection: 'column',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        background: 'linear-gradient(transparent 30%, rgba(0,0,0,0.6) 100%)',
+                                                    }}>
+                                                        <div style={{
+                                                            backgroundColor: 'rgba(255,255,255,0.3)',
+                                                            backdropFilter: 'blur(4px)',
+                                                            padding: '0.2rem',
+                                                            borderRadius: '9999px',
+                                                            marginBottom: '0.25rem',
+                                                        }}>
+                                                            <IconLock style={{ width: '0.6rem', height: '0.6rem', color: colors.gray700 }} />
+                                                        </div>
+                                                        <span style={{
+                                                            color: 'white',
+                                                            fontSize: '0.5rem',
+                                                            fontWeight: 700,
+                                                            textShadow: '0 1px 2px rgba(0,0,0,0.5)',
+                                                        }}>{displayName}</span>
+                                                        <span style={{
+                                                            color: colors.green500,
+                                                            fontSize: '0.5rem',
+                                                            fontWeight: 800,
+                                                        }}>{matchPercentages[i]}%</span>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        );
+                                    })}
+                                </div>
+                            </div>
+
+
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '0.5rem',
+                                fontSize: '0.75rem',
+                                fontWeight: 700,
+                                color: colors.gray500,
+                                borderBottom: `1px solid ${colors.gray100}`,
+                                paddingBottom: '1.25rem',
+                            }}>
+                                <IconEye className="animate-bounce-slow" style={{ width: '1rem', height: '1rem', color: colors.rose500 }} />
+                                <span style={{
+                                    backgroundClip: 'text',
+                                    WebkitBackgroundClip: 'text',
+                                    color: 'transparent',
+                                    backgroundImage: `linear-gradient(to right, ${colors.gray600}, ${colors.gray400})`,
+                                }}>Unlock to see photos and full report</span>
+                            </div>
+                        </div>
+                    )}
 
                     {/* SECTION PRIX */}
                     <div style={{ padding: '0 1.5rem 2rem 1.5rem' }}>
@@ -465,6 +842,22 @@ export function PaymentPage() {
                                             color: colors.indigo600,
                                             letterSpacing: '-0.05em',
                                         }}>19.99€</span>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginTop: '0.125rem' }}>
+                                            <span style={{
+                                                fontSize: '0.75rem',
+                                                color: colors.gray400,
+                                                fontWeight: 600,
+                                                textDecoration: 'line-through',
+                                            }}>39.99€</span>
+                                            <span style={{
+                                                fontSize: '0.625rem',
+                                                fontWeight: 700,
+                                                color: colors.green600,
+                                                backgroundColor: 'rgba(34,197,94,0.1)',
+                                                padding: '0.125rem 0.375rem',
+                                                borderRadius: '0.25rem',
+                                            }}>-50%</span>
+                                        </div>
                                         <span style={{
                                             fontSize: '10px',
                                             color: colors.gray400,
@@ -610,7 +1003,7 @@ export function PaymentPage() {
                                         color: colors.gray700,
                                         fontSize: '0.875rem',
                                         transition: 'color 0.3s ease',
-                                    }}>Single Report</span>
+                                    }}>📋 Single Dating Report</span>
                                     <span style={{
                                         fontSize: '10px',
                                         color: colors.gray400,
@@ -718,6 +1111,207 @@ export function PaymentPage() {
 
                 {/* Footer intentionally removed for locked checkout - CRO optimization */}
             </div>
+
+            {/* POPUP EXEMPLE PROFIL TINDER */}
+            {showExamplePopup && (
+                <div
+                    onClick={() => setShowExamplePopup(false)}
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        backgroundColor: 'rgba(0,0,0,0.6)',
+                        backdropFilter: 'blur(4px)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 1000,
+                        padding: '1rem',
+                    }}
+                >
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            backgroundColor: colors.white,
+                            borderRadius: '1.25rem',
+                            maxWidth: '280px',
+                            width: 'calc(100% - 3rem)',
+                            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+                            overflow: 'hidden',
+                            animation: 'scale-in 0.3s ease-out',
+                            position: 'relative',
+                        }}
+                    >
+                        {/* Bouton X pour fermer */}
+                        <button
+                            onClick={() => setShowExamplePopup(false)}
+                            style={{
+                                position: 'absolute',
+                                top: '0.75rem',
+                                right: '0.75rem',
+                                width: '2rem',
+                                height: '2rem',
+                                borderRadius: '50%',
+                                backgroundColor: colors.gray100,
+                                border: 'none',
+                                cursor: 'pointer',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                zIndex: 10,
+                                transition: 'all 0.2s ease',
+                            }}
+                            onMouseEnter={(e) => {
+                                e.currentTarget.style.backgroundColor = colors.gray200;
+                                e.currentTarget.style.transform = 'scale(1.1)';
+                            }}
+                            onMouseLeave={(e) => {
+                                e.currentTarget.style.backgroundColor = colors.gray100;
+                                e.currentTarget.style.transform = 'scale(1)';
+                            }}
+                        >
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={colors.gray600} strokeWidth="2.5" strokeLinecap="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                        {/* Header avec nom et badge LIVE */}
+                        <div style={{
+                            padding: '1rem 1.25rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                            borderBottom: `1px solid ${colors.gray100}`,
+                        }}>
+                            <div>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                                    <span style={{ fontSize: '1.25rem', fontWeight: 800, color: colors.gray800 }}>
+                                        Victor, 26
+                                    </span>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="#3b82f6">
+                                        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z" />
+                                    </svg>
+                                </div>
+                                <div style={{ fontSize: '0.75rem', color: colors.gray500, marginTop: '0.125rem' }}>
+                                    NEW YORK • DETECTED 2M AGO
+                                </div>
+                            </div>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.375rem',
+                                backgroundColor: '#fff0f3',
+                                padding: '0.375rem 0.625rem',
+                                borderRadius: '9999px',
+                            }}>
+                                <span style={{ width: '0.5rem', height: '0.5rem', borderRadius: '50%', backgroundColor: colors.rose500 }}></span>
+                                <span style={{ fontSize: '0.625rem', fontWeight: 700, color: colors.rose500 }}>LIVE</span>
+                            </div>
+                        </div>
+
+                        {/* Photo principale */}
+                        <div style={{ position: 'relative' }}>
+                            <img
+                                src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=500&fit=crop"
+                                alt="Profile example"
+                                style={{
+                                    width: '100%',
+                                    aspectRatio: '1/1',
+                                    objectFit: 'cover',
+                                }}
+                            />
+                            {/* Barre de match probability en bas de la photo */}
+                            <div style={{
+                                position: 'absolute',
+                                bottom: 0,
+                                left: 0,
+                                right: 0,
+                                padding: '1rem',
+                                background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+                            }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+                                    <span style={{ fontSize: '0.75rem', color: 'white', fontWeight: 600 }}>Match probability</span>
+                                    <span style={{ fontSize: '1.125rem', color: '#22c55e', fontWeight: 800 }}>98%</span>
+                                </div>
+                                <div style={{
+                                    height: '4px',
+                                    backgroundColor: 'rgba(255,255,255,0.3)',
+                                    borderRadius: '2px',
+                                    overflow: 'hidden',
+                                }}>
+                                    <div style={{
+                                        width: '98%',
+                                        height: '100%',
+                                        backgroundColor: '#22c55e',
+                                        borderRadius: '2px',
+                                    }}></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* Infos du profil */}
+                        <div style={{ padding: '1rem 1.25rem' }}>
+                            {/* Bio */}
+                            <p style={{
+                                fontSize: '0.875rem',
+                                color: colors.gray600,
+                                margin: '0 0 1rem 0',
+                                lineHeight: 1.5,
+                            }}>
+                                "Living my best life in NYC 🌃 | Coffee addict ☕ | Love hiking and adventures 🏔️"
+                            </p>
+
+                            {/* Last Activity */}
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.625rem',
+                                marginBottom: '0.75rem',
+                            }}>
+                                <IconEye style={{ width: '1rem', height: '1rem', color: colors.rose500 }} />
+                                <div>
+                                    <span style={{ fontSize: '0.875rem', color: colors.gray700, fontWeight: 600 }}>Last activity</span>
+                                    <span style={{ fontSize: '0.75rem', color: colors.gray400, marginLeft: '0.5rem' }}>Online now</span>
+                                </div>
+                            </div>
+
+                            {/* Verified Account */}
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '0.625rem',
+                                marginBottom: '1rem',
+                            }}>
+                                <IconShieldCheck style={{ width: '1rem', height: '1rem', color: colors.green500 }} />
+                                <span style={{ fontSize: '0.875rem', color: colors.gray700, fontWeight: 600 }}>Verified account</span>
+                            </div>
+
+                            {/* Bouton View full report */}
+                            <button
+                                onClick={() => setShowExamplePopup(false)}
+                                style={{
+                                    width: '100%',
+                                    padding: '0.875rem',
+                                    background: `linear-gradient(to right, ${colors.rose500}, ${colors.orange500})`,
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '0.75rem',
+                                    fontSize: '0.875rem',
+                                    fontWeight: 700,
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '0.5rem',
+                                    boxShadow: '0 4px 12px rgba(244,63,94,0.3)',
+                                }}
+                            >
+                                <IconStar style={{ width: '1rem', height: '1rem' }} />
+                                View full report
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

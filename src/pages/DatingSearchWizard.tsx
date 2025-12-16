@@ -5,6 +5,7 @@ import {
     Cloud, Building, Users, Loader2, ArrowRight
 } from 'lucide-react';
 import { ServiceLayout } from '../components/layouts/ServiceLayout';
+import { useService } from '../lib/ServiceContext';
 import 'leaflet/dist/leaflet.css';
 import '../styles/dating-search.css';
 
@@ -37,6 +38,7 @@ const LOGO_URL = 'https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/LOGO%20PRO
 // ============================================
 export default function DatingSearchWizard() {
     const navigate = useNavigate();
+    const { setSearchTarget } = useService();
 
     // Steps: 1=Name, 2=Age, 3=Location, 4=Loading, 5=Result
     const [currentStep, setCurrentStep] = useState(1);
@@ -103,6 +105,10 @@ export default function DatingSearchWizard() {
     // STEP NAVIGATION
     // ============================================
     const goToStep = (step: number) => {
+        // Sauvegarder le nom dans le contexte quand on passe à l'étape 2
+        if (step === 2 && targetName) {
+            setSearchTarget(targetName);
+        }
         setCurrentStep(step);
 
         if (step === 4) {
