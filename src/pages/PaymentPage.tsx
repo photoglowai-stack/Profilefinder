@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { useService } from '../lib/ServiceContext';
 import { getPaymentConfig } from '../components/payment/paymentConfig';
 import { FaceTraceResultsPreview } from '../components/payment/FaceTraceResultsPreview';
+import { ChatAnalysisResultsPreview } from '../components/payment/ChatAnalysisResultsPreview';
 
 // Couleurs du thème
 const colors = {
@@ -365,7 +366,7 @@ export function PaymentPage() {
                 >
 
                     {/* SECTION HAUTE : RÉSULTATS - Conditionnel selon le service */}
-                    {activeService === 'faceTrace' ? (
+                    {(activeService === 'faceTrace' || activeService === 'fidelity') ? (
                         <div style={{ padding: '1.75rem', paddingBottom: '0.5rem', position: 'relative' }}>
                             {/* Grid Pattern Background */}
                             <div style={{
@@ -460,13 +461,17 @@ export function PaymentPage() {
                                         cursor: 'help',
                                     }}
                                 >
-                                    <div style={{ fontSize: '0.625rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em', opacity: 0.9 }}>Match</div>
-                                    <div style={{ fontWeight: 900, fontSize: '1.5rem', lineHeight: 1, letterSpacing: '-0.05em' }}>88%</div>
+                                    <div style={{ fontSize: '0.625rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em', opacity: 0.9 }}>
+                                        {activeService === 'fidelity' ? 'Risk' : 'Match'}
+                                    </div>
+                                    <div style={{ fontWeight: 900, fontSize: '1.5rem', lineHeight: 1, letterSpacing: '-0.05em' }}>
+                                        {activeService === 'fidelity' ? 'High' : '88%'}
+                                    </div>
                                 </div>
                             </div>
 
-                            {/* FaceTrace Preview Component */}
-                            <FaceTraceResultsPreview />
+                            {/* Service-specific Preview Component */}
+                            {activeService === 'fidelity' ? <ChatAnalysisResultsPreview /> : <FaceTraceResultsPreview />}
 
                             <div style={{
                                 display: 'flex',
@@ -485,7 +490,9 @@ export function PaymentPage() {
                                     WebkitBackgroundClip: 'text',
                                     color: 'transparent',
                                     backgroundImage: `linear-gradient(to right, ${colors.gray600}, ${colors.gray400})`,
-                                }}>Unlock to see photos and full report</span>
+                                }}>
+                                    {activeService === 'fidelity' ? 'Unlock full conversation analysis' : 'Unlock to see photos and full report'}
+                                </span>
                             </div>
                         </div>
                     ) : (
