@@ -1,4 +1,5 @@
 // Chat Analysis / Fidelity Results Preview Component
+import { useState } from 'react';
 
 // Icône MessageCircle
 const IconMessageCircle = ({ className }: { className?: string }) => (
@@ -31,6 +32,30 @@ const IconChevronRight = ({ className }: { className?: string }) => (
     </svg>
 );
 
+// Icône X
+const IconX = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+    </svg>
+);
+
+// Icône AlertOctagon
+const IconAlertOctagon = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2" />
+        <line x1="12" y1="8" x2="12" y2="12" />
+        <line x1="12" y1="16" x2="12.01" y2="16" />
+    </svg>
+);
+
+// Icône Activity
+const IconActivity = ({ className }: { className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+    </svg>
+);
+
 // Images simulant des screenshots de conversations (Vertical ratio)
 const CHAT_SCREENSHOTS = [
     "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=300&h=500&fit=crop", // SCREENSHOT UPLOADÉ
@@ -41,6 +66,7 @@ const CHAT_SCREENSHOTS = [
 ];
 
 export function ChatAnalysisResultsPreview() {
+    const [showReport, setShowReport] = useState(false);
     const uploadedScreenshot = CHAT_SCREENSHOTS[0];
     const evidenceScreenshots = CHAT_SCREENSHOTS.slice(1);
 
@@ -106,19 +132,24 @@ export function ChatAnalysisResultsPreview() {
                 alignItems: 'stretch',
             }}>
 
-                {/* 1. UPLOADED SCREENSHOT (Clear / Analyzed) */}
-                <div style={{
-                    position: 'relative',
-                    flexShrink: 0,
-                    width: '7rem',
-                    height: '12rem',
-                    borderRadius: '0.75rem',
-                    overflow: 'hidden',
-                    backgroundColor: 'white',
-                    border: '2px solid #fecaca',
-                    boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
-                    scrollSnapAlign: 'start',
-                }}>
+                {/* 1. UPLOADED SCREENSHOT (Clickable for Report) */}
+                <div
+                    onClick={() => setShowReport(true)}
+                    style={{
+                        position: 'relative',
+                        flexShrink: 0,
+                        width: '7rem',
+                        height: '14rem',
+                        borderRadius: '0.75rem',
+                        overflow: 'hidden',
+                        backgroundColor: 'white',
+                        border: '2px solid #fecaca',
+                        boxShadow: '0 4px 6px -1px rgba(0,0,0,0.1)',
+                        scrollSnapAlign: 'start',
+                        cursor: 'pointer',
+                        transition: 'transform 0.2s',
+                    }}
+                >
                     <img
                         src={uploadedScreenshot}
                         alt="Your Upload"
@@ -134,7 +165,7 @@ export function ChatAnalysisResultsPreview() {
                     <div style={{
                         position: 'absolute',
                         inset: 0,
-                        background: 'linear-gradient(to bottom, transparent, transparent 60%, rgba(127, 29, 29, 0.5))',
+                        background: 'linear-gradient(to bottom, transparent, transparent 40%, rgba(127, 29, 29, 0.6))',
                     }}>
                         <div style={{
                             position: 'absolute',
@@ -149,7 +180,7 @@ export function ChatAnalysisResultsPreview() {
                             animation: 'pulse 2s infinite',
                             boxShadow: '0 1px 2px rgba(0,0,0,0.1)',
                         }}>
-                            FLAGGED
+                            TAP TO VIEW
                         </div>
                         <div style={{
                             position: 'absolute',
@@ -193,7 +224,7 @@ export function ChatAnalysisResultsPreview() {
                             position: 'relative',
                             flexShrink: 0,
                             width: '7rem',
-                            height: '12rem',
+                            height: '14rem',
                             borderRadius: '0.75rem',
                             overflow: 'hidden',
                             backgroundColor: '#e5e7eb',
@@ -247,8 +278,9 @@ export function ChatAnalysisResultsPreview() {
                                 borderRadius: '0.375rem',
                                 backdropFilter: 'blur(4px)',
                                 border: '1px solid rgba(255,255,255,0.5)',
+                                whiteSpace: 'nowrap',
                             }}>
-                                Hidden Evidence
+                                Unlock Report
                             </span>
                         </div>
                     </div>
@@ -266,8 +298,123 @@ export function ChatAnalysisResultsPreview() {
                 justifyContent: 'center',
                 gap: '0.25rem',
             }}>
-                <IconChevronRight className="w-3 h-3" /> Scroll to view related screenshots
+                <IconChevronRight className="w-3 h-3" /> Tap the first image to see analysis
             </p>
+
+            {/* --- ANALYSIS REPORT MODAL (POPUP) --- */}
+            {showReport && (
+                <div
+                    onClick={() => setShowReport(false)}
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        zIndex: 1000,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '1rem',
+                        backgroundColor: 'rgba(0,0,0,0.6)',
+                        backdropFilter: 'blur(4px)',
+                    }}
+                >
+                    <div
+                        onClick={e => e.stopPropagation()}
+                        style={{
+                            backgroundColor: 'white',
+                            borderRadius: '1.25rem',
+                            width: '100%',
+                            maxWidth: '24rem',
+                            overflow: 'hidden',
+                            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+                        }}
+                    >
+                        {/* Modal Header */}
+                        <div style={{
+                            background: 'linear-gradient(to right, #111827, #1f2937)',
+                            padding: '1rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'space-between',
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: 'white' }}>
+                                <IconActivity className="w-4 h-4 text-rose-400" />
+                                <span style={{ fontWeight: 700, fontSize: '0.875rem', letterSpacing: '0.025em' }}>Analysis Report</span>
+                            </div>
+                            <button
+                                onClick={() => setShowReport(false)}
+                                style={{ color: '#9ca3af', border: 'none', background: 'none', cursor: 'pointer' }}
+                            >
+                                <IconX className="w-5 h-5 hover:text-white transition-colors" />
+                            </button>
+                        </div>
+
+                        {/* Modal Body */}
+                        <div style={{ padding: '1.25rem' }}>
+
+                            {/* Alert Box */}
+                            <div style={{
+                                backgroundColor: '#fef2f2',
+                                border: '1px solid #fee2e2',
+                                borderRadius: '0.75rem',
+                                padding: '0.75rem',
+                                marginBottom: '1rem',
+                                display: 'flex',
+                                alignItems: 'start',
+                                gap: '0.75rem',
+                            }}>
+                                <div style={{ backgroundColor: '#fee2e2', padding: '0.375rem', borderRadius: '9999px' }}>
+                                    <IconAlertOctagon className="w-4 h-4 text-red-600" />
+                                </div>
+                                <div>
+                                    <h4 style={{ fontSize: '0.75rem', fontWeight: 700, color: '#b91c1c', textTransform: 'uppercase', marginBottom: '0.125rem' }}>High Probability of Cheating</h4>
+                                    <p style={{ fontSize: '0.625rem', color: 'rgba(185, 28, 28, 0.8)', lineHeight: 1.25 }}>
+                                        Our AI detected strong indicators of secretive behavior and romantic intent.
+                                    </p>
+                                </div>
+                            </div>
+
+                            {/* Key Findings List */}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginBottom: '1.25rem' }}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', paddingBottom: '0.25rem', borderBottom: '1px solid #f3f4f6' }}>
+                                    <span style={{ color: '#6b7280', fontWeight: 500 }}>Risk Score</span>
+                                    <span style={{ fontWeight: 900, color: '#dc2626' }}>85/100</span>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', paddingBottom: '0.25rem', borderBottom: '1px solid #f3f4f6' }}>
+                                    <span style={{ color: '#6b7280', fontWeight: 500 }}>Keywords Detected</span>
+                                    <span style={{ fontWeight: 700, color: '#1f2937' }}>"Secret", "Tonight", "Delete"</span>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', paddingBottom: '0.25rem', borderBottom: '1px solid #f3f4f6' }}>
+                                    <span style={{ color: '#6b7280', fontWeight: 500 }}>Sentiment</span>
+                                    <span style={{ fontWeight: 700, color: '#f43f5e' }}>Romantic / Flirty</span>
+                                </div>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '0.75rem', paddingBottom: '0.25rem', borderBottom: '1px solid #f3f4f6' }}>
+                                    <span style={{ color: '#6b7280', fontWeight: 500 }}>Time Anomaly</span>
+                                    <span style={{ fontWeight: 700, color: '#f97316' }}>Late Night (23:42)</span>
+                                </div>
+                            </div>
+
+                            {/* CTA */}
+                            <button
+                                onClick={() => setShowReport(false)}
+                                style={{
+                                    width: '100%',
+                                    backgroundColor: '#111827',
+                                    color: 'white',
+                                    fontWeight: 700,
+                                    padding: '0.75rem',
+                                    borderRadius: '0.75rem',
+                                    fontSize: '0.75rem',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    transition: 'background-color 0.2s',
+                                }}
+                            >
+                                Close Preview
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

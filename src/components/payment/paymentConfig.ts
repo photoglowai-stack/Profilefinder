@@ -12,12 +12,19 @@ export interface PaymentServiceConfig {
         secondary: string;
         gradient: string;
     };
+    features?: { name: string; description: string; Icon?: any }[];
 }
 
 // Couleurs par défaut (Dating)
 const DATING_COLORS = {
     primary: '#f43f5e',
     secondary: '#db2777',
+    gradient: 'linear-gradient(to right, #f43f5e, #f97316)',
+};
+
+const FIDELITY_COLORS = {
+    primary: '#f43f5e', // rose-500
+    secondary: '#f97316', // orange-500
     gradient: 'linear-gradient(to right, #f43f5e, #f97316)',
 };
 
@@ -34,7 +41,7 @@ export const SERVICE_ACCENT_COLORS: Record<string, typeof DATING_COLORS> = {
     dating: DATING_COLORS,
     faceTrace: FACETRACE_COLORS,
     following: { primary: '#8b5cf6', secondary: '#6366f1', gradient: 'linear-gradient(to right, #8b5cf6, #6366f1)' },
-    fidelity: { primary: '#ef4444', secondary: '#dc2626', gradient: 'linear-gradient(to right, #ef4444, #dc2626)' },
+    fidelity: FIDELITY_COLORS,
 };
 
 export const PAYMENT_CONFIG: Record<string, Omit<PaymentServiceConfig, 'previewComponent'>> = {
@@ -44,6 +51,12 @@ export const PAYMENT_CONFIG: Record<string, Omit<PaymentServiceConfig, 'previewC
         badgeText: '20+ Matches Found',
         singleReportName: '📋 Single Dating Report',
         accentColors: DATING_COLORS,
+        features: [
+            { name: '💕 Dating App Search', description: 'Unlimited searches across all dating apps' },
+            { name: '👀 Following AI', description: 'Daily analysis of Instagram followers' },
+            { name: '🔍 Face Trace', description: 'Reverse face search across all platforms' },
+            { name: '💔 Cheating Analytics', description: 'Complete reports and real-time alerts' },
+        ],
     },
     faceTrace: {
         title: 'Face Trace',
@@ -51,6 +64,12 @@ export const PAYMENT_CONFIG: Record<string, Omit<PaymentServiceConfig, 'previewC
         badgeText: '20+ Photos Found',
         singleReportName: '📋 Single Face Trace Report',
         accentColors: FACETRACE_COLORS,
+        features: [
+            { name: '🔍 Reverse Face Search', description: 'Find profiles by uploading a photo' },
+            { name: '📸 Photo Discovery', description: 'Access hidden photos from all socials' },
+            { name: '🌐 Global Coverage', description: 'Searches across 500+ social platforms' },
+            { name: '📊 Integrity Report', description: 'Full report on findings and locations' },
+        ],
     },
     following: {
         title: 'Following',
@@ -58,13 +77,25 @@ export const PAYMENT_CONFIG: Record<string, Omit<PaymentServiceConfig, 'previewC
         badgeText: 'Activity Detected',
         singleReportName: '📋 Single Following Report',
         accentColors: SERVICE_ACCENT_COLORS.following,
+        features: [
+            { name: '📊 Activity Analysis', description: 'Spots unusual timing & secret contacts' },
+            { name: '🕵️ Following Tracker', description: 'Real-time alerts on new interactions' },
+            { name: '⚠️ Risk Detection', description: 'Calculates probability of secrecy' },
+            { name: '📋 Behavior Report', description: 'Download detailed activity evidence' },
+        ],
     },
     fidelity: {
         title: 'Fidelity',
-        subtitle: 'Report',
+        subtitle: 'Check Results',
         badgeText: 'Analysis Complete',
         singleReportName: '📋 Single Fidelity Report',
-        accentColors: SERVICE_ACCENT_COLORS.fidelity,
+        accentColors: FIDELITY_COLORS,
+        features: [
+            { name: 'Conversation Analysis', description: 'AI detects flirting & hidden meanings.' },
+            { name: 'Behavior Patterns', description: 'Spots unusual timing & secret contacts.' },
+            { name: 'Risk Assessment', description: 'Calculates probability of unfaithfulness.' },
+            { name: 'Full Proof PDF', description: 'Download detailed evidence report.' },
+        ],
     },
 };
 

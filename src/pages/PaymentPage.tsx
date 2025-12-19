@@ -83,6 +83,27 @@ const IconShield = ({ style }: { style?: React.CSSProperties }) => (
     </svg>
 );
 
+const IconMessageCircle = ({ style, className }: { style?: React.CSSProperties; className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style} className={className}>
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+    </svg>
+);
+const IconActivity = ({ style, className }: { style?: React.CSSProperties; className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style} className={className}>
+        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+    </svg>
+);
+const IconAlertTriangle = ({ style, className }: { style?: React.CSSProperties; className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style} className={className}>
+        <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>
+    </svg>
+);
+const IconFileText = ({ style, className }: { style?: React.CSSProperties; className?: string }) => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style} className={className}>
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline>
+    </svg>
+);
+
 /**
  * HOOK: CHARGEMENT DYNAMIQUE DE THREE.JS
  */
@@ -131,7 +152,7 @@ const WebGLBackground = () => {
 
         // Création des particules
         const particlesGeometry = new THREE.BufferGeometry();
-        const particlesCount = 150;
+        const particlesCount = 120;
         const posArray = new Float32Array(particlesCount * 3);
 
         for (let i = 0; i < particlesCount * 3; i++) {
@@ -144,7 +165,7 @@ const WebGLBackground = () => {
             size: 0.04,
             color: 0xffffff,
             transparent: true,
-            opacity: 0.6,
+            opacity: 0.5,
         });
 
         const particlesMesh = new THREE.Points(particlesGeometry, material);
@@ -248,24 +269,23 @@ const AnimationStyles = () => (
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            transform: translateX(-100%);
+            animation: shimmer 1.5s infinite;
         }
-        .btn-shimmer:hover::after { animation: shimmer 1.5s infinite; }
     `}</style>
 );
 
 export function PaymentPage() {
     // URL params support pour service spécifique
     const [searchParams] = useSearchParams();
-    const urlService = searchParams.get('service');
-    const { searchTarget, selectedService } = useService();
+    const serviceParam = searchParams.get('service');
+    const { searchTarget } = useService();
 
     // Déterminer le service actif (URL param prioritaire, puis context, puis dating par défaut)
-    const activeService = urlService || selectedService || 'dating';
-    const config = getPaymentConfig(activeService);
+    const activeService = serviceParam || 'dating';
+    const config = getPaymentConfig(serviceParam || 'dating');
 
-    const [timeLeft, setTimeLeft] = useState(91);
-    const [isHoveringMain, setIsHoveringMain] = useState(false);
+    const [timeLeft, setTimeLeft] = useState(600); // 10 minutes urgency
+    const [selectedPlan, setSelectedPlan] = useState<'subscription' | 'single'>('subscription');
 
     useEffect(() => {
         const timer = setInterval(() => {
@@ -280,12 +300,30 @@ export function PaymentPage() {
         return `0${m}:${s < 10 ? '0' : ''}${s}`;
     };
 
-    const features = [
-        { name: '💕 Dating App Search', description: 'Unlimited searches across all dating apps', Icon: IconZap },
-        { name: '👀 Following AI', description: 'Daily analysis of Instagram followers', Icon: IconEye },
-        { name: '🔍 Face Trace', description: 'Reverse face search across all platforms', Icon: IconShieldCheck },
-        { name: '💔 Cheating Analytics', description: 'Complete reports and real-time alerts', Icon: IconStar },
-    ];
+    // Features mapping function
+    const getFeatures = () => {
+        if (config.features && config.features.length > 0) {
+            return config.features.map(f => {
+                let Icon = IconZap;
+                if (f.name.includes('Conversation') || f.name.includes('Chat')) Icon = IconMessageCircle;
+                if (f.name.includes('Behavior') || f.name.includes('Activity')) Icon = IconActivity;
+                if (f.name.includes('Risk') || f.name.includes('Cheating')) Icon = IconAlertTriangle;
+                if (f.name.includes('File') || f.name.includes('Proof') || f.name.includes('PDF')) Icon = IconFileText;
+                if (f.name.includes('Face')) Icon = IconShieldCheck;
+                if (f.name.includes('Dating')) Icon = IconZap;
+                if (f.name.includes('Following') || f.name.includes('AI')) Icon = IconEye;
+                return { ...f, Icon };
+            });
+        }
+        return [
+            { name: '💕 Dating App Search', description: 'Unlimited searches across all dating apps', Icon: IconZap },
+            { name: '👀 Following AI', description: 'Daily analysis of Instagram followers', Icon: IconEye },
+            { name: '🔍 Face Trace', description: 'Reverse face search across all platforms', Icon: IconShieldCheck },
+            { name: '💔 Cheating Analytics', description: 'Complete reports and real-time alerts', Icon: IconStar },
+        ];
+    };
+
+    const displayFeatures = getFeatures();
 
     // Noms et pourcentages pour les profils
     const displayName = searchTarget || 'Target';
@@ -886,7 +924,7 @@ export function PaymentPage() {
                                     gap: '0.875rem',
                                     border: `1px solid rgba(224,231,255,0.5)`,
                                 }}>
-                                    {features.map((feat, idx) => (
+                                    {displayFeatures.map((feat, idx) => (
                                         <div key={idx} style={{
                                             display: 'flex',
                                             alignItems: 'flex-start',
