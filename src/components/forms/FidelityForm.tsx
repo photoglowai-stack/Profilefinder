@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Upload, MessageSquare, AlertTriangle } from "lucide-react";
 import { serviceContent } from "../../lib/content";
@@ -11,25 +11,69 @@ export function FidelityForm() {
   const [screenshots, setScreenshots] = useState<File[]>([]);
   const [previews, setPreviews] = useState<string[]>([]);
   const [isSearching, setIsSearching] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const formatFileSize = (size: number) => {
+    if (size < 1024) return `${size} B`;
+    if (size < 1024 * 1024) return `${(size / 1024).toFixed(1)} KB`;
+    return `${(size / (1024 * 1024)).toFixed(2)} MB`;
+  };
+
+  const processFiles = (files: File[]) => {
+    if (files.length === 0) return;
+
+    setScreenshots(prev => [...prev, ...files]);
+
+    files.forEach(file => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPreviews(prev => [...prev, reader.result as string]);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files || []);
-    if (files.length > 0) {
-      setScreenshots([...screenshots, ...files]);
+    processFiles(files);
 
-      files.forEach(file => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setPreviews(prev => [...prev, reader.result as string]);
-        };
-        reader.readAsDataURL(file);
-      });
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
     }
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const files = Array.from(e.dataTransfer.files || []);
+    processFiles(files);
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
   };
 
   const removeImage = (index: number) => {
     setScreenshots(screenshots.filter((_, i) => i !== index));
     setPreviews(previews.filter((_, i) => i !== index));
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  const handleBrowseClick = () => {
+    fileInputRef.current?.click();
   };
 
   const handleSearch = () => {
@@ -68,24 +112,48 @@ export function FidelityForm() {
           {content.label || 'Upload conversation screenshots'}
         </label>
 
+        <input
+          ref={fileInputRef}
+          id="screenshots-upload"
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={handleFileChange}
+          className="hidden"
+        />
+
         {previews.length === 0 ? (
           <label
             htmlFor="screenshots-upload"
-            className="group border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:border-[#ff4e71] hover:bg-gradient-to-br hover:from-red-50 hover:to-orange-50 transition-all"
+            onClick={handleBrowseClick}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            className={`group border-2 border-dashed rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer transition-all ${isDragging
+                ? "border-[#ff4e71] bg-gradient-to-br from-red-50 to-orange-50"
+                : "border-gray-300 hover:border-[#ff4e71] hover:bg-gradient-to-br hover:from-red-50 hover:to-orange-50"
+              }`}
+            role="button"
+            tabIndex={0}
+            onKeyDown={event => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                handleBrowseClick();
+              }
+            }}
           >
             <div className="p-3 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] rounded-xl mb-3 group-hover:scale-110 transition-transform">
               <Upload className="w-6 h-6 text-white" />
             </div>
-            <p className="text-gray-700 mb-1 font-medium text-sm">{content.uploadText || 'Click to upload screenshots'}</p>
+            <p className="text-gray-700 mb-1 font-medium text-sm">{content.uploadText || 'Drag & drop screenshots or click browse'}</p>
             <p className="text-xs text-gray-500">{content.uploadHint || 'JPG, PNG (multiple files accepted)'}</p>
-            <input
-              id="screenshots-upload"
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleFileChange}
-              className="hidden"
-            />
+            <button
+              type="button"
+              onClick={handleBrowseClick}
+              className="mt-3 inline-flex items-center gap-2 px-3 py-2 bg-white border border-gray-200 rounded-full text-xs font-semibold text-gray-700 shadow-sm hover:border-[#ff4e71] hover:text-[#ff4e71]"
+            >
+              Browse files
+            </button>
           </label>
         ) : (
           <div>
@@ -120,16 +188,52 @@ export function FidelityForm() {
             >
               + Add more screenshots
             </label>
-            <input
-              id="screenshots-upload"
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={handleFileChange}
-              className="hidden"
-            />
           </div>
         )}
+      </div>
+
+      {/* Uploaded Files Overview */}
+      <div className="mb-5">
+        <div className="bg-white border border-gray-100 rounded-xl p-4 shadow-sm">
+          <div className="flex items-start justify-between gap-3">
+            <div>
+              <p className="text-sm font-semibold text-gray-800">Uploaded files</p>
+              <p className="text-xs text-gray-500">Review the captures before launching the analysis.</p>
+            </div>
+            <button
+              type="button"
+              onClick={handleBrowseClick}
+              className="text-xs font-semibold text-white bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] px-3 py-1.5 rounded-full hover:shadow-md transition-shadow"
+            >
+              Add screenshots
+            </button>
+          </div>
+
+          <div className="mt-3 space-y-2">
+            {screenshots.length > 0 ? (
+              screenshots.map((file, index) => (
+                <div
+                  key={`${file.name}-${index}`}
+                  className="flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2 border border-gray-100"
+                >
+                  <div className="truncate max-w-[180px]">
+                    <p className="text-sm font-medium text-gray-800 truncate">{file.name}</p>
+                    <p className="text-xs text-gray-500">{formatFileSize(file.size)}</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => removeImage(index)}
+                    className="text-xs font-semibold text-gray-500 hover:text-gray-700"
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))
+            ) : (
+              <p className="text-xs text-gray-500">No files uploaded yet.</p>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Warning Alert - Compact */}
