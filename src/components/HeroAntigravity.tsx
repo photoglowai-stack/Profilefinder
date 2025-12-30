@@ -395,10 +395,10 @@ const HeroAntigravity: React.FC = () => {
                 <div style={{
                     display: 'flex',
                     alignItems: 'center',
-                    gap: '12px',
+                    gap: '10px',
                     backgroundColor: 'rgba(255,255,255,0.1)',
                     backdropFilter: 'blur(12px)',
-                    padding: '8px 20px',
+                    padding: '6px 16px',
                     borderRadius: '9999px',
                     marginBottom: '40px',
                     border: '1px solid rgba(255,255,255,0.2)',
@@ -411,8 +411,8 @@ const HeroAntigravity: React.FC = () => {
                                 src={url}
                                 alt="user"
                                 style={{
-                                    width: '32px',
-                                    height: '32px',
+                                    width: '28px',
+                                    height: '28px',
                                     borderRadius: '50%',
                                     border: '2px solid #ff6b6b',
                                     marginLeft: i > 0 ? '-12px' : '0'
@@ -420,8 +420,8 @@ const HeroAntigravity: React.FC = () => {
                             />
                         ))}
                         <div style={{
-                            width: '32px',
-                            height: '32px',
+                            width: '28px',
+                            height: '28px',
                             borderRadius: '50%',
                             backgroundColor: '#ffffff',
                             color: '#ff4b5c',
@@ -430,7 +430,7 @@ const HeroAntigravity: React.FC = () => {
                             alignItems: 'center',
                             justifyContent: 'center',
                             fontWeight: 700,
-                            fontSize: '10px',
+                            fontSize: '9px',
                             marginLeft: '-12px',
                             position: 'relative',
                             zIndex: 10
@@ -438,10 +438,10 @@ const HeroAntigravity: React.FC = () => {
                             +99
                         </div>
                     </div>
-                    <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.95)', fontWeight: 700, lineHeight: 1.3, textAlign: 'left', paddingLeft: '8px', letterSpacing: '0.02em' }}>
+                    <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.95)', fontWeight: 700, lineHeight: 1.3, textAlign: 'left', paddingLeft: '8px', letterSpacing: '0.02em' }}>
                         TRUSTED BY <br />
                         <span style={{ color: '#ffffff', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 800 }}>
-                            500k+ users <Check size={12} style={{ backgroundColor: '#22c55e', borderRadius: '50%', padding: '2px', color: '#fff' }} strokeWidth={4} />
+                            500k+ users <Check size={11} style={{ backgroundColor: '#22c55e', borderRadius: '50%', padding: '2px', color: '#fff' }} strokeWidth={4} />
                         </span>
                     </div>
                 </div>
