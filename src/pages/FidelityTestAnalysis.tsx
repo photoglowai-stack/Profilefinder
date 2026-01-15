@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     ShieldCheck, Sparkles, Check, Ghost, Lock, Mail,
     ArrowRight, Loader2, FileText, EyeOff, AlertTriangle,
@@ -34,6 +35,7 @@ Saying "Don't worry about it" is a common way to avoid the truth.
 // Page gradient is now handled by ServiceLayout
 
 export default function FidelityTestAnalysis() {
+    const navigate = useNavigate();
     // State (removed useService - using fixed page colors)
 
     // State
@@ -156,7 +158,7 @@ export default function FidelityTestAnalysis() {
         e.preventDefault();
         setIsSubmitting(true);
         setTimeout(() => {
-            window.location.href = 'https://profilefinder-wheat.vercel.app/';
+            navigate('/payment?service=fidelity');
         }, 1000);
     };
 

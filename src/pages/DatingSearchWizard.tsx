@@ -245,7 +245,7 @@ export default function DatingSearchWizard() {
         setIsSubmitting(true);
 
         setTimeout(() => {
-            navigate('/payment');
+            navigate('/payment?service=dating');
         }, 1000);
     };
 

@@ -1,0 +1,169 @@
+/* ===== ACTIVITY TRACKER PAGE - SCOPED STYLES ===== */
+
+/* Page wrapper - centered content (gradient is on parent div) */
+.activity-tracker-wrapper {
+    min-height: calc(100vh - 80px);
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 1rem 4rem 1rem;
+    font-family: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Typing cursor - green */
+.typing-cursor-green::after {
+    content: '|';
+    animation: blink-green 0.5s step-start infinite;
+    color: #22c55e;
+    font-weight: bold;
+}
+
+@keyframes blink-green {
+    50% {
+        opacity: 0;
+    }
+}
+
+/* Blur content for gate */
+.blur-content-activity {
+    filter: blur(6px);
+    user-select: none;
+    transition: filter 0.8s ease;
+    opacity: 0.8;
+}
+
+/* Instagram Story Ring */
+.story-ring {
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    padding: 2px;
+    border-radius: 50%;
+}
+
+/* Scan overlay animation for list */
+.scan-list-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, rgba(236, 72, 153, 0.8), transparent);
+    z-index: 10;
+    animation: scanVertical 2s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes scanVertical {
+    0% {
+        top: 0;
+    }
+
+    100% {
+        top: 100%;
+    }
+}
+
+/* Shimmer effect on list items */
+.scan-item {
+    position: relative;
+    overflow: hidden;
+}
+
+.scan-item::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    animation: shimmer 2.5s infinite;
+    pointer-events: none;
+}
+
+@keyframes shimmer {
+    100% {
+        left: 100%;
+    }
+}
+
+/* Badge pop animation */
+.pop-badge {
+    animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    opacity: 0;
+    transform: scale(0);
+}
+
+@keyframes popIn {
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Fade in up */
+.fade-in-up-activity {
+    animation: fadeInUpActivity 0.4s ease-out forwards;
+}
+
+@keyframes fadeInUpActivity {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Float toast animation */
+.float-toast {
+    animation: floatToast 0.5s ease-out forwards;
+}
+
+@keyframes floatToast {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Custom scrollbar for activity tracker */
+.custom-scroll-activity::-webkit-scrollbar {
+    width: 4px;
+}
+
+.custom-scroll-activity::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.custom-scroll-activity::-webkit-scrollbar-thumb {
+    background: #fed7aa;
+    border-radius: 10px;
+}
+
+/* Main card */
+.activity-card {
+    position: relative;
+    width: 100%;
+    max-width: 28rem;
+    background-color: white;
+    border-radius: 1.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Progress bar gradient */
+.progress-bar-instagram {
+    background: linear-gradient(to right, #fb923c, #ec4899, #a855f7);
+}

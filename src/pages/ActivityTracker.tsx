@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
     ShieldCheck, Check, CheckCircle2, Lock, Mail,
     ArrowRight, Loader2, FileText, EyeOff, AlertTriangle,
@@ -61,6 +62,7 @@ const PROFILES = [
 // Page gradient is now handled by ServiceLayout
 
 export default function ActivityTracker() {
+    const navigate = useNavigate();
     // State (removed useService - using fixed page colors)
 
     // State
@@ -192,7 +194,7 @@ export default function ActivityTracker() {
         e.preventDefault();
         setIsSubmitting(true);
         setTimeout(() => {
-            window.location.href = '/payment';
+            navigate('/payment/instagram');
         }, 1000);
     };
 

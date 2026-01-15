@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import {
     Lock, ArrowRight, ShieldCheck,
     UserX, Quote, CheckCircle2, Loader2, Heart, Camera, Sparkles, Mail, Globe, List, Search
@@ -96,6 +96,7 @@ const getSourceStyle = (key: MockResult['sourceKey']) => {
 
 export default function FaceTrace() {
     const location = useLocation();
+    const navigate = useNavigate();
     const uploadedImage = (location.state as { image?: string })?.image || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80";
 
     // State (removed useService - using fixed page colors)
@@ -201,7 +202,7 @@ export default function FaceTrace() {
         e.preventDefault();
         setIsSubmitting(true);
         setTimeout(() => {
-            window.location.href = '/payment?service=faceTrace';
+            navigate('/payment/facetrace');
         }, 1000);
     };
 

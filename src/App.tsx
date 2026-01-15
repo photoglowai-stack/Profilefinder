@@ -19,6 +19,8 @@ import FidelityTestAnalysis from "./pages/FidelityTestAnalysis";
 import ActivityTracker from "./pages/ActivityTracker";
 import FaceTrace from "./pages/FaceTrace";
 import DatingSearchWizard from "./pages/DatingSearchWizard";
+import InstagramPaymentPage from "./pages/InstagramPaymentPage";
+import FaceTracePaymentPage from "./pages/FaceTracePaymentPage";
 import ScrollToTop from "./components/ScrollToTop";
 import { ServiceLayout } from "./components/layouts/ServiceLayout";
 
@@ -200,6 +202,8 @@ function AppContent() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/payment" element={<PaymentPage />} />
+        <Route path="/payment/instagram" element={<InstagramPaymentPage />} />
+        <Route path="/payment/facetrace" element={<FaceTracePaymentPage />} />
         <Route path="/analysis" element={<ScreenshotAnalysis />} />
         <Route path="/chat-analysis" element={<ChatAnalysisPage />} />
         <Route path="/fidelity-test/analysis" element={<FidelityTestAnalysis />} />

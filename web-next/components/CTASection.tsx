@@ -1,0 +1,86 @@
+import { TrendingUp, ArrowRight } from "lucide-react";
+import { Button } from "./ui/button";
+import { ctaContent } from "../lib/content";
+import { useService } from "../lib/ServiceContext";
+import { RevealOnScroll } from "./ui/RevealOnScroll";
+
+export function CTASection() {
+  const { colors } = useService();
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  return (
+    <section
+      className="relative py-12 md:py-16 overflow-hidden"
+      style={{
+        background: `linear-gradient(to right, ${colors.primary}, ${colors.secondary}, ${colors.primary}dd)`
+      }}
+    >
+      {/* Animated background elements - CSS only for performance */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div
+          className="absolute w-64 h-64 md:w-96 md:h-96 bg-white/10 rounded-full blur-3xl top-0 left-1/4 animate-pulse-slow"
+        />
+        <div
+          className="absolute w-64 h-64 md:w-96 md:h-96 bg-white/10 rounded-full blur-3xl bottom-0 right-1/4 animate-pulse-slow"
+          style={{ animationDelay: '1s' }}
+        />
+      </div>
+
+      <div className="relative max-w-[1760px] mx-auto px-4 md:px-8 text-center">
+        <RevealOnScroll>
+          <div className="inline-flex items-center gap-2 bg-white/20 px-4 py-1.5 rounded-full mb-5 md:mb-6">
+            <TrendingUp className="w-4 h-4 text-white" />
+            <span className="text-white text-xs md:text-sm font-bold uppercase tracking-wide">🔥 20,000+ profiles detected</span>
+          </div>
+
+          <h2
+            style={{
+              fontSize: 'clamp(1.75rem, 5vw, 3rem)',
+              fontWeight: 900,
+              color: 'white',
+              marginBottom: '16px',
+              letterSpacing: '-0.03em',
+              lineHeight: 1.1,
+              fontFamily: "'Inter Tight', system-ui, sans-serif"
+            }}
+          >
+            Ready to Find <span style={{ fontStyle: 'italic', paddingRight: '0.15em', display: 'inline-block' }}>the Truth? 🚀</span>
+          </h2>
+
+          <p className="text-base md:text-lg lg:text-xl text-white/90 mb-6 md:mb-8 max-w-3xl mx-auto leading-relaxed font-medium">
+            {ctaContent.subtitle}
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4">
+            <div className="rounded-full pulse-glow">
+              <Button
+                variant="secondary"
+                size="lg"
+                onClick={scrollToTop}
+                className="w-full sm:w-auto gap-2 shimmer-effect"
+              >
+                <span className="shimmer-bar" />
+                {ctaContent.button} ✨
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </div>
+
+            <Button
+              variant="outline"
+              size="lg"
+              className="w-full sm:w-auto"
+            >
+              Learn more
+            </Button>
+          </div>
+
+          <p className="text-white/80 text-xs md:text-sm mt-4 md:mt-5">
+            ✓ No commitment · ✓ First search free · ✓ Instant results
+          </p>
+        </RevealOnScroll>
+      </div>
+    </section>
+  );
+}
