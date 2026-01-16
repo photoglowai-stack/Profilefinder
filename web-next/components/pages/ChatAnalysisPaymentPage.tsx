@@ -1,14 +1,15 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { FaceTraceResultsPreview, FaceTraceLoadingScreen } from '@/components/ui/FaceTraceResultsPreview';
+import { ChatAnalysisResultsPreview, ChatAnalysisLoadingScreen } from '@/components/ui/ChatAnalysisResultsPreview';
 
-// Theme colors - Cyan/Blue for Face Trace
+// Theme colors - Purple/Pink for Chat Analysis
 const colors = {
-    primary: '#06b6d4',
-    secondary: '#3b82f6',
-    primaryLight: '#ecfeff',
-    primaryDark: '#0891b2',
+    primary: '#a855f7',
+    secondary: '#ec4899',
+    primaryLight: '#fdf4ff',
+    primaryDark: '#7c3aed',
+    accentPink: '#db2777',
     gray50: '#f9fafb',
     gray100: '#f3f4f6',
     gray200: '#e5e7eb',
@@ -24,11 +25,6 @@ const colors = {
 };
 
 // Icons
-const IconLock = ({ style }: { style?: React.CSSProperties }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
-        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-    </svg>
-);
 const IconClock = ({ style, className }: { style?: React.CSSProperties; className?: string }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style} className={className}>
         <circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>
@@ -44,19 +40,20 @@ const IconArrowRight = ({ style, className }: { style?: React.CSSProperties; cla
         <line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline>
     </svg>
 );
-const IconScan = ({ style }: { style?: React.CSSProperties }) => (
+const IconBrain = ({ style }: { style?: React.CSSProperties }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
-        <path d="M3 7V5a2 2 0 0 1 2-2h2"></path><path d="M17 3h2a2 2 0 0 1 2 2v2"></path><path d="M21 17v2a2 2 0 0 1-2 2h-2"></path><path d="M7 21H5a2 2 0 0 1-2-2v-2"></path><circle cx="12" cy="12" r="3"></circle>
+        <path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 1.98-3A2.5 2.5 0 0 1 9.5 2Z"></path>
+        <path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-1.98-3A2.5 2.5 0 0 0 14.5 2Z"></path>
     </svg>
 );
-const IconDatabase = ({ style }: { style?: React.CSSProperties }) => (
+const IconMessageSquare = ({ style }: { style?: React.CSSProperties }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
-        <ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
     </svg>
 );
-const IconGlobe = ({ style }: { style?: React.CSSProperties }) => (
+const IconTrendingUp = ({ style }: { style?: React.CSSProperties }) => (
     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={style}>
-        <circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+        <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline>
     </svg>
 );
 const IconAlert = ({ style }: { style?: React.CSSProperties }) => (
@@ -108,7 +105,7 @@ const WebGLBackground = () => {
         const posArray = new Float32Array(particlesCount * 3);
         for (let i = 0; i < particlesCount * 3; i++) { posArray[i] = (Math.random() - 0.5) * 15; }
         particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-        const material = new THREE.PointsMaterial({ size: 0.04, color: 0xffffff, transparent: true, opacity: 0.6 });
+        const material = new THREE.PointsMaterial({ size: 0.04, color: 0xffffff, transparent: true, opacity: 0.5 });
         const particlesMesh = new THREE.Points(particlesGeometry, material);
         scene.add(particlesMesh);
         camera.position.z = 3;
@@ -130,14 +127,12 @@ const AnimationStyles = () => (
         @keyframes fade-in-down { 0% { opacity: 0; transform: translateY(-20px); } 100% { opacity: 1; transform: translateY(0); } }
         @keyframes scale-in { 0% { opacity: 0; transform: scale(0.95) translateY(10px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
         @keyframes gradient-xy { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
-        @keyframes gradient-x { 0%, 100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         @keyframes ping { 75%, 100% { transform: scale(2); opacity: 0; } }
         @keyframes bounce { 0%, 100% { transform: translateY(-10%); } 50% { transform: translateY(0); } }
         .animate-fade-in-down { animation: fade-in-down 0.8s ease-out; }
         .animate-scale-in { animation: scale-in 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
         .animate-gradient-xy { background-size: 200% 200%; animation: gradient-xy 6s ease infinite; }
-        .animate-gradient-x { background-size: 200% 200%; animation: gradient-x 3s ease infinite; }
         .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         .animate-pulse-slow { animation: pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
         .animate-ping { animation: ping 1s cubic-bezier(0, 0, 0.2, 1) infinite; }
@@ -147,8 +142,8 @@ const AnimationStyles = () => (
     `}</style>
 );
 
-export function FaceTracePaymentPage() {
-    const [timeLeft, setTimeLeft] = useState(600);
+export function ChatAnalysisPaymentPage() {
+    const [timeLeft, setTimeLeft] = useState(720);
     const [isHoveringMain, setIsHoveringMain] = useState(false);
 
     useEffect(() => {
@@ -163,10 +158,10 @@ export function FaceTracePaymentPage() {
     };
 
     const features = [
-        { name: '🔍 Multi-Platform Scan', description: 'Search across 12+ social networks instantly', Icon: IconScan },
-        { name: '💕 Dating App Detection', description: 'Find hidden dating profiles by face', Icon: IconGlobe },
-        { name: '🛡️ Identity Verification', description: 'Confirm who someone really is online', Icon: IconShieldCheck },
-        { name: '🔔 New Profile Alerts', description: 'Get notified when new matches appear', Icon: IconAlert },
+        { name: '🧠 AI Sentiment Analysis', description: 'Decode hidden emotions & intentions', Icon: IconBrain },
+        { name: '💬 Pattern Recognition', description: 'Detect manipulation & gaslighting', Icon: IconMessageSquare },
+        { name: '📈 Interest Score', description: 'Measure true engagement level', Icon: IconTrendingUp },
+        { name: '🚩 Red Flag Detection', description: 'Identify toxic behaviors instantly', Icon: IconAlert },
     ];
 
     return (
@@ -175,7 +170,7 @@ export function FaceTracePaymentPage() {
             <div style={{
                 minHeight: '100vh',
                 width: '100%',
-                background: 'linear-gradient(to bottom right, #0891b2, #6366f1)',
+                background: 'linear-gradient(to bottom right, #a855f7, #ec4899, #f472b6)',
                 fontFamily: 'ui-sans-serif, system-ui, sans-serif',
                 display: 'flex',
                 flexDirection: 'column',
@@ -213,15 +208,15 @@ export function FaceTracePaymentPage() {
                     <div style={{ padding: '1.75rem', paddingBottom: '0.5rem', position: 'relative' }}>
                         <div style={{
                             position: 'absolute', inset: 0,
-                            backgroundImage: 'linear-gradient(to right, rgba(128,128,128,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(128,128,128,0.04) 1px, transparent 1px)',
+                            backgroundImage: 'linear-gradient(to right, rgba(168,85,247,0.03) 1px, transparent 1px), linear-gradient(to bottom, rgba(168,85,247,0.03) 1px, transparent 1px)',
                             backgroundSize: '20px 20px', pointerEvents: 'none',
                         }}></div>
 
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1.5rem', position: 'relative' }}>
                             <div>
                                 <h1 style={{ fontSize: '1.875rem', fontWeight: 800, color: colors.gray800, lineHeight: 1.1, letterSpacing: '-0.025em', margin: 0 }}>
-                                    Face Trace <br />
-                                    <span className="animate-gradient-x" style={{ backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent', backgroundImage: 'linear-gradient(to right, #06b6d4, #6366f1)' }}>
+                                    Chat Analysis <br />
+                                    <span className="animate-gradient-xy" style={{ backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent', backgroundImage: 'linear-gradient(to right, #a855f7, #ec4899)' }}>
                                         Results
                                     </span>
                                 </h1>
@@ -235,7 +230,7 @@ export function FaceTracePaymentPage() {
                                         <span className="animate-ping" style={{ position: 'absolute', display: 'inline-flex', width: '100%', height: '100%', borderRadius: '9999px', backgroundColor: colors.primary, opacity: 0.75 }}></span>
                                         <span style={{ position: 'relative', display: 'inline-flex', borderRadius: '9999px', width: '0.5rem', height: '0.5rem', backgroundColor: colors.primary }}></span>
                                     </span>
-                                    15+ Faces Detected
+                                    🧠 Analysis Complete
                                 </div>
                             </div>
                             <div className="hover-scale" style={{
@@ -243,12 +238,12 @@ export function FaceTracePaymentPage() {
                                 padding: '0.75rem 1rem', borderRadius: '1rem', textAlign: 'center',
                                 boxShadow: `0 10px 20px -5px ${colors.primary}60`, cursor: 'help',
                             }}>
-                                <div style={{ fontSize: '0.625rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em', opacity: 0.9 }}>Match</div>
-                                <div style={{ fontWeight: 900, fontSize: '1.5rem', lineHeight: 1, letterSpacing: '-0.05em' }}>97%</div>
+                                <div style={{ fontSize: '0.625rem', textTransform: 'uppercase', fontWeight: 700, letterSpacing: '0.05em', opacity: 0.9 }}>Trust</div>
+                                <div style={{ fontWeight: 900, fontSize: '1.25rem', lineHeight: 1, letterSpacing: '-0.05em' }}>LOW</div>
                             </div>
                         </div>
 
-                        <FaceTraceResultsPreview />
+                        <ChatAnalysisResultsPreview />
 
                         <div style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
@@ -257,7 +252,7 @@ export function FaceTracePaymentPage() {
                         }}>
                             <IconEye className="animate-bounce-slow" style={{ width: '1rem', height: '1rem', color: colors.primary }} />
                             <span style={{ backgroundClip: 'text', WebkitBackgroundClip: 'text', color: 'transparent', backgroundImage: `linear-gradient(to right, ${colors.gray600}, ${colors.gray400})` }}>
-                                Unlock to see photos and full report
+                                Unlock detailed breakdown & advice
                             </span>
                         </div>
                     </div>
@@ -280,14 +275,14 @@ export function FaceTracePaymentPage() {
                                         backgroundColor: colors.primaryDark, color: colors.white, fontSize: '10px', fontWeight: 700,
                                         padding: '0.375rem 0.75rem', borderBottomLeftRadius: '0.75rem', textTransform: 'uppercase',
                                         letterSpacing: '0.05em', boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
-                                    }}>Best Value</div>
+                                    }}>AI Powered</div>
                                 </div>
 
                                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', marginTop: '0.25rem' }}>
                                     <div>
-                                        <h3 style={{ fontSize: '1.25rem', fontWeight: 900, color: colors.gray900, lineHeight: 1.2, margin: 0 }}>Unlimited<br />Face Scans</h3>
+                                        <h3 style={{ fontSize: '1.25rem', fontWeight: 900, color: colors.gray900, lineHeight: 1.2, margin: 0 }}>Unlimited<br />Chat Analysis</h3>
                                         <p style={{ fontSize: '11px', color: colors.primaryDark, fontWeight: 700, backgroundColor: colors.primaryLight, display: 'inline-block', padding: '0.125rem 0.5rem', borderRadius: '0.25rem', marginTop: '0.25rem', margin: 0 }}>
-                                            Search all platforms forever
+                                            Analyze any conversation instantly
                                         </p>
                                     </div>
                                     <div style={{ textAlign: 'right' }}>
@@ -314,7 +309,7 @@ export function FaceTracePaymentPage() {
 
                                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', marginBottom: '0.75rem', padding: '0.5rem 1rem', backgroundColor: 'rgba(34, 197, 94, 0.1)', borderRadius: '9999px', border: '1px solid rgba(34, 197, 94, 0.2)' }}>
                                     <IconShieldCheck style={{ width: '1rem', height: '1rem', color: colors.green500 }} />
-                                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: colors.green600 }}>🔒 500k+ users trust ProfileFinder</span>
+                                    <span style={{ fontSize: '0.75rem', fontWeight: 600, color: colors.green600 }}>🔒 Your chats are never stored</span>
                                 </div>
 
                                 <button style={{
@@ -323,9 +318,9 @@ export function FaceTracePaymentPage() {
                                     boxShadow: isHoveringMain ? `0 15px 25px -5px ${colors.primary}70` : `0 10px 15px -3px ${colors.primary}50`,
                                     transition: 'all 0.3s ease', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem', border: 'none', cursor: 'pointer',
                                 }}
-                                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = colors.secondary; }}
+                                    onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = colors.accentPink; }}
                                     onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = colors.primaryDark; }}>
-                                    🔒 Activate Now
+                                    🧠 Analyze Now
                                     <IconArrowRight style={{ width: '1rem', height: '1rem', transition: 'transform 0.3s ease', transform: isHoveringMain ? 'translateX(4px)' : 'translateX(0)' }} />
                                 </button>
                                 <p style={{ fontSize: '10px', textAlign: 'center', color: colors.gray400, marginTop: '0.625rem', marginBottom: 0, fontWeight: 500 }}>No commitment • Cancel anytime</p>
@@ -341,12 +336,12 @@ export function FaceTracePaymentPage() {
                             onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = colors.white; e.currentTarget.style.borderColor = colors.gray200; }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <span style={{ fontWeight: 700, color: colors.gray700, fontSize: '0.875rem' }}>🔍 Single Face Search</span>
+                                    <span style={{ fontWeight: 700, color: colors.gray700, fontSize: '0.875rem' }}>🧠 Single Chat Analysis</span>
                                     <span style={{ fontSize: '10px', color: colors.gray400 }}>One-time payment</span>
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                                    <span style={{ fontWeight: 700, color: colors.gray800, fontSize: '1.125rem' }}>14.99€</span>
-                                    <span style={{ fontSize: '10px', color: colors.primary, textDecoration: 'line-through', fontWeight: 500, opacity: 0.6 }}>29.90€</span>
+                                    <span style={{ fontWeight: 700, color: colors.gray800, fontSize: '1.125rem' }}>9.99€</span>
+                                    <span style={{ fontSize: '10px', color: colors.primary, textDecoration: 'line-through', fontWeight: 500, opacity: 0.6 }}>19.90€</span>
                                 </div>
                             </div>
                             <div style={{ marginTop: '0.875rem', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -377,9 +372,9 @@ export function FaceTracePaymentPage() {
                         borderTop: `1px solid ${colors.gray100}`, fontSize: '10px', color: colors.gray400, fontWeight: 500,
                     }}>
                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.375rem', marginBottom: '0.375rem', color: 'rgba(22,163,74,0.8)' }}>
-                            <IconShield style={{ width: '0.75rem', height: '0.75rem' }} /> Secure SSL 256-bit Payment
+                            <IconShield style={{ width: '0.75rem', height: '0.75rem' }} /> Privacy First • Screenshots never saved
                         </div>
-                        <p style={{ margin: 0 }}>Powered by <span style={{ fontWeight: 700, color: colors.gray600 }}>Stripe</span> & <span style={{ fontWeight: 700, color: colors.gray600 }}>React</span></p>
+                        <p style={{ margin: 0 }}>Powered by <span style={{ fontWeight: 700, color: colors.gray600 }}>GPT-4</span> & <span style={{ fontWeight: 700, color: colors.gray600 }}>Stripe</span></p>
                     </div>
                 </div>
             </div>
@@ -387,4 +382,4 @@ export function FaceTracePaymentPage() {
     );
 }
 
-export default FaceTracePaymentPage;
+export default ChatAnalysisPaymentPage;
