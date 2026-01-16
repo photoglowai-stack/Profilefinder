@@ -241,4 +241,227 @@ export function FollowingResultsPreview() {
     );
 }
 
+/**
+ * InstagramLoadingScreen - Social graph analysis animation
+ */
+export function InstagramLoadingScreen() {
+    const [currentStep, setCurrentStep] = React.useState(0);
+    const [progress, setProgress] = React.useState(0);
+
+    const analysisSteps = [
+        { text: "Connecting to Instagram API...", icon: "🔗" },
+        { text: "Mapping social graph...", icon: "🕸️" },
+        { text: "Analyzing follower patterns...", icon: "👥" },
+        { text: "Detecting hidden interactions...", icon: "🔍" },
+        { text: "Compiling activity report...", icon: "📊" },
+    ];
+
+    React.useEffect(() => {
+        const progressInterval = setInterval(() => {
+            setProgress(prev => prev >= 100 ? 100 : prev + 0.5);
+        }, 50);
+
+        const stepInterval = setInterval(() => {
+            setCurrentStep(prev => (prev < analysisSteps.length - 1 ? prev + 1 : prev));
+        }, 2000);
+
+        return () => {
+            clearInterval(progressInterval);
+            clearInterval(stepInterval);
+        };
+    }, []);
+
+    return (
+        <div style={{
+            width: '100%',
+            maxWidth: '24rem',
+            margin: '0 auto',
+            padding: '1.5rem',
+            background: 'white',
+            borderRadius: '1rem',
+            boxShadow: '0 25px 50px -12px rgba(0,0,0,0.25)',
+        }}>
+            {/* Social Graph Animation */}
+            <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                marginBottom: '1.5rem',
+            }}>
+                <div style={{
+                    position: 'relative',
+                    width: '6rem',
+                    height: '6rem',
+                }}>
+                    {/* Center node */}
+                    <div style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '2.5rem',
+                        height: '2.5rem',
+                        background: 'linear-gradient(135deg, #8b5cf6, #a78bfa)',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: '0 4px 15px rgba(139,92,246,0.4)',
+                        animation: 'pulse 2s infinite',
+                    }}>
+                        <svg style={{ width: '1.25rem', height: '1.25rem', color: 'white' }} viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                        </svg>
+                    </div>
+
+                    {/* Orbiting nodes */}
+                    {[0, 1, 2, 3, 4, 5].map((i) => (
+                        <div
+                            key={i}
+                            style={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: '50%',
+                                width: '1rem',
+                                height: '1rem',
+                                background: i % 2 === 0 ? '#ddd6fe' : '#c4b5fd',
+                                borderRadius: '50%',
+                                transform: `rotate(${i * 60}deg) translateX(2.5rem) translateY(-50%)`,
+                                animation: `orbit 4s linear infinite`,
+                                animationDelay: `${i * 0.3}s`,
+                            }}
+                        />
+                    ))}
+
+                    {/* Connecting lines */}
+                    <svg style={{
+                        position: 'absolute',
+                        inset: 0,
+                        width: '100%',
+                        height: '100%',
+                        opacity: 0.3,
+                    }}>
+                        {[0, 1, 2, 3, 4, 5].map((i) => {
+                            const angle = (i * 60 * Math.PI) / 180;
+                            const x = 48 + Math.cos(angle) * 40;
+                            const y = 48 + Math.sin(angle) * 40;
+                            return (
+                                <line
+                                    key={i}
+                                    x1="48"
+                                    y1="48"
+                                    x2={x}
+                                    y2={y}
+                                    stroke="#8b5cf6"
+                                    strokeWidth="1"
+                                    strokeDasharray="4 2"
+                                />
+                            );
+                        })}
+                    </svg>
+                </div>
+            </div>
+
+            {/* Analysis Steps */}
+            <div style={{ marginBottom: '1rem' }}>
+                {analysisSteps.map((step, index) => {
+                    const isActive = index <= currentStep;
+                    const isCurrent = index === currentStep;
+
+                    return (
+                        <div
+                            key={index}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                padding: '0.75rem',
+                                marginBottom: '0.5rem',
+                                borderRadius: '0.75rem',
+                                background: isCurrent
+                                    ? 'linear-gradient(to right, #f3e8ff, #faf5ff)'
+                                    : isActive
+                                        ? '#f9fafb'
+                                        : '#f9fafb80',
+                                border: isCurrent ? '1px solid #c4b5fd' : '1px solid transparent',
+                                opacity: isActive ? 1 : 0.4,
+                                transition: 'all 0.3s ease',
+                            }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                                <span style={{ fontSize: '1rem' }}>{step.icon}</span>
+                                <span style={{
+                                    fontSize: '0.875rem',
+                                    fontWeight: isActive ? 600 : 400,
+                                    color: isActive ? '#1f2937' : '#9ca3af',
+                                }}>
+                                    {step.text}
+                                </span>
+                            </div>
+                            {isActive && index < currentStep && (
+                                <svg style={{ width: '1.25rem', height: '1.25rem', color: '#22c55e' }} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <polyline points="20 6 9 17 4 12" />
+                                </svg>
+                            )}
+                            {isCurrent && (
+                                <div style={{
+                                    width: '1.25rem',
+                                    height: '1.25rem',
+                                    border: '2px solid #8b5cf6',
+                                    borderTopColor: 'transparent',
+                                    borderRadius: '50%',
+                                    animation: 'spin 1s linear infinite',
+                                }} />
+                            )}
+                        </div>
+                    );
+                })}
+            </div>
+
+            {/* Progress Bar */}
+            <div style={{
+                background: '#f3f4f6',
+                borderRadius: '9999px',
+                height: '0.75rem',
+                overflow: 'hidden',
+                marginBottom: '0.75rem',
+            }}>
+                <div style={{
+                    height: '100%',
+                    background: 'linear-gradient(to right, #8b5cf6, #a78bfa)',
+                    width: `${progress}%`,
+                    transition: 'width 0.1s ease',
+                }} />
+            </div>
+
+            {/* Status */}
+            <div style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.5rem',
+                fontSize: '0.875rem',
+                color: '#6b7280',
+            }}>
+                <span style={{ animation: 'pulse 2s infinite' }}>👀</span>
+                <span style={{ fontWeight: 500 }}>Analyzing social connections...</span>
+            </div>
+
+            <style>{`
+                @keyframes orbit {
+                    from { transform: rotate(0deg) translateX(2.5rem) rotate(0deg); }
+                    to { transform: rotate(360deg) translateX(2.5rem) rotate(-360deg); }
+                }
+                @keyframes spin {
+                    from { transform: rotate(0deg); }
+                    to { transform: rotate(360deg); }
+                }
+                @keyframes pulse {
+                    0%, 100% { opacity: 1; }
+                    50% { opacity: 0.5; }
+                }
+            `}</style>
+        </div>
+    );
+}
+
 export default FollowingResultsPreview;
