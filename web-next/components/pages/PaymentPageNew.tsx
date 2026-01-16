@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { useService } from '@/lib/ServiceContext';
 import {
@@ -108,14 +108,36 @@ const getServiceGradient = (service: string): string => {
     return gradients[service] || gradients.dating;
 };
 
+// Map URL path segments to service IDs
+const pathToServiceId: Record<string, string> = {
+    'facetrace': 'faceTrace',
+    'fidelity': 'fidelity',
+    'chat-analysis': 'chatAnalysis',
+    'instagram': 'following',
+    'dating': 'dating',
+};
+
 export function PaymentPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
+    const pathname = usePathname();
     const { searchTarget, selectedService } = useService();
 
-    // Get service from URL or context
+    // Get service from URL path, query params, or context
+    const getServiceFromPath = (): string => {
+        if (pathname) {
+            const segments = pathname.split('/');
+            const lastSegment = segments[segments.length - 1];
+            if (pathToServiceId[lastSegment]) {
+                return pathToServiceId[lastSegment];
+            }
+        }
+        return '';
+    };
+
     const urlService = searchParams?.get('service') ?? null;
-    const activeService = urlService || selectedService || 'dating';
+    const pathService = getServiceFromPath();
+    const activeService = pathService || urlService || selectedService || 'dating';
     const config = getPaymentConfig(activeService);
 
     // Plan selection state - default to subscription (HERO CHOICE)

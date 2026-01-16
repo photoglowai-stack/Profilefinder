@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from 'react';
-import { FaceTracePaymentPage } from '@/components/pages/FaceTracePaymentPage';
+import { PaymentPage } from '@/components/pages/PaymentPageNew';
 
 function LoadingSpinner() {
     return (
@@ -14,7 +14,7 @@ function LoadingSpinner() {
 export default function Page() {
     return (
         <Suspense fallback={<LoadingSpinner />}>
-            <FaceTracePaymentPage />
+            <PaymentPage />
         </Suspense>
     );
 }

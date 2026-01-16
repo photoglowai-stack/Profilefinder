@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from 'react';
-import { ChatAnalysisPaymentPage } from '@/components/pages/ChatAnalysisPaymentPage';
+import { PaymentPage } from '@/components/pages/PaymentPageNew';
 
 function LoadingSpinner() {
     return (
@@ -14,7 +14,7 @@ function LoadingSpinner() {
 export default function Page() {
     return (
         <Suspense fallback={<LoadingSpinner />}>
-            <ChatAnalysisPaymentPage />
+            <PaymentPage />
         </Suspense>
     );
 }
