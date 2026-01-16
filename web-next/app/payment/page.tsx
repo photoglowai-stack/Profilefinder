@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from 'react';
-import { PaymentPage } from '@/components/pages/PaymentPage';
+import { PaymentPage } from '@/components/pages/PaymentPageNew';
 
 function PaymentPageLoading() {
     return (
