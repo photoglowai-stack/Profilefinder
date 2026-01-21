@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { CheckCircle2, Eye, Sparkles } from "lucide-react";
 import { useService } from "../lib/ServiceContext";
+import { serviceContent } from "../lib/content";
 import { RevealOnScroll } from "./ui/RevealOnScroll";
 
 // --- ICÔNES SVG INTÉGRÉES ---
@@ -83,7 +84,50 @@ const colors = {
 };
 
 export function HowItWorks() {
-  const { colors: serviceColors } = useService();
+  const { colors: serviceColors, selectedService } = useService();
+
+  // Get service-specific content
+  const content = serviceContent[selectedService];
+  const howItWorksContent = content.howItWorks;
+
+  // Service-specific header text
+  const headerConfig = {
+    dating: {
+      badge: "How our Tinder profile finder works",
+      title: "Find someone on Tinder",
+      highlight: "in 3 simple steps",
+      subtitle: "ProfileFinder turns hours of manual swiping into one fast Tinder profile search. Get a clear answer about hidden dating profiles in under 2 minutes."
+    },
+    following: {
+      badge: "How Following AI works",
+      title: "Monitor Instagram activity",
+      highlight: "in 3 simple steps",
+      subtitle: "Track who they follow, detect suspicious patterns, and get real-time alerts when their social behavior changes."
+    },
+    facetrace: {
+      badge: "How Face Trace works",
+      title: "Find someone by photo",
+      highlight: "in 3 simple steps",
+      subtitle: "Upload a photo and our AI performs a reverse face search across dating apps and social networks to find matching profiles."
+    },
+    fidelity: {
+      badge: "How Fidelity Test works",
+      title: "Verify trust patterns",
+      highlight: "in 3 simple steps",
+      subtitle: "Analyze behavior patterns and detect potential red flags with our AI-powered relationship risk assessment."
+    }
+  };
+
+  const header = headerConfig[selectedService];
+
+  // Map content steps to component format
+  const steps = howItWorksContent.steps.map((step, index) => ({
+    number: index + 1,
+    emoji: index === 0 ? "📝" : index === 1 ? "🔍" : "📡",
+    title: step.title,
+    description: step.description,
+    features: step.features
+  }));
 
   const barHeights = [35, 60, 45, 90, 65, 85, 40];
   const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -93,40 +137,6 @@ export function HowItWorks() {
     { text: 'Location Change', color: colors.orange500 },
   ];
 
-  // Steps pour la colonne de droite
-  const steps = [
-    {
-      number: 1,
-      emoji: "📝",
-      title: "Fill in their details",
-      description: "Enter the first name, approximate age and city. This gives our AI a precise starting point to search Tinder profiles.",
-      features: [
-        "First name, age, and approximate location",
-        "100% anonymous - no account required"
-      ]
-    },
-    {
-      number: 2,
-      emoji: "🔍",
-      title: "Launch the Tinder lookup",
-      description: "Click Search to start the Tinder profile lookup. Our AI scans for matching profiles and checks recent activity.",
-      features: [
-        "AI scans 50+ dating apps simultaneously",
-        "Real-time database updates"
-      ]
-    },
-    {
-      number: 3,
-      emoji: "📡",
-      title: "Activate Radar if needed",
-      description: "Turn on the Radar for ongoing monitoring. Get alerts as soon as a matching profile becomes visible.",
-      features: [
-        "Full profile with photos and bio",
-        "Set up alerts for profile changes"
-      ]
-    }
-  ];
-
   return (
     <section id="how-it-works" className="max-w-[1760px] mx-auto px-4 md:px-8 py-12 md:py-16 bg-gradient-to-b from-white via-gray-50/50 to-white">
 
@@ -134,27 +144,26 @@ export function HowItWorks() {
       <div className="text-center mb-12 md:mb-16">
         <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6"
           style={{
-            background: 'linear-gradient(to right, #ff4e71, #ff7f66)',
+            background: `linear-gradient(135deg, ${serviceColors.primary}, ${serviceColors.secondary})`,
             color: 'white',
-            boxShadow: '0 4px 15px rgba(255,78,113,0.3)'
+            boxShadow: `0 4px 15px ${serviceColors.primary}30`
           }}>
           <IconSearch style={{ width: '0.875rem', height: '0.875rem' }} />
-          <span className="text-xs font-semibold">How our Tinder profile finder works</span>
+          <span className="text-xs font-semibold">{header.badge}</span>
         </div>
         <h2 className="text-3xl md:text-5xl font-black tracking-tighter text-slate-900 mb-6">
-          Find someone on Tinder{' '}
+          {header.title}{' '}
           <span style={{
-            background: 'linear-gradient(to right, #f43f5e, #f97316, #f43f5e)',
+            background: `linear-gradient(to right, ${serviceColors.primary}, ${serviceColors.secondary}, ${serviceColors.primary})`,
             WebkitBackgroundClip: 'text',
             backgroundClip: 'text',
             color: 'transparent'
           }}>
-            in 3 simple steps
+            {header.highlight}
           </span>
         </h2>
         <p className="text-base md:text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed font-medium">
-          ProfileFinder turns hours of manual swiping into one fast Tinder profile search.
-          Get a clear answer about hidden dating profiles in under 2 minutes.
+          {header.subtitle}
         </p>
       </div>
 
@@ -335,7 +344,7 @@ export function HowItWorks() {
               display: 'inline-flex',
               alignItems: 'center',
               gap: '8px',
-              background: 'linear-gradient(135deg, #ff4e71, #ff7f66)',
+              background: `linear-gradient(135deg, ${serviceColors.primary}, ${serviceColors.secondary})`,
               color: 'white',
               padding: '8px 20px',
               borderRadius: '9999px',
@@ -344,7 +353,7 @@ export function HowItWorks() {
               marginBottom: '20px',
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
-              boxShadow: '0 4px 20px rgba(255, 78, 113, 0.3)'
+              boxShadow: `0 4px 20px ${serviceColors.primary}30`
             }}
           >
             Our Toolkit
@@ -357,7 +366,7 @@ export function HowItWorks() {
             letterSpacing: '-0.03em',
             fontFamily: "'Inter Tight', system-ui, sans-serif"
           }}>
-            Everything You Need to <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', paddingRight: '0.15em', display: 'inline-block' }}>Uncover the Truth</span>
+            Everything You Need to <span style={{ fontStyle: 'italic', background: `linear-gradient(135deg, ${serviceColors.primary}, ${serviceColors.secondary})`, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', paddingRight: '0.15em', display: 'inline-block' }}>Uncover the Truth</span>
           </h3>
           <p style={{
             color: '#64748b',

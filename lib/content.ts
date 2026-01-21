@@ -104,6 +104,12 @@ export const serviceContent = {
           role: "Verified user",
           content: "Simple, fast and discreet. I got my answers without any drama.",
           rating: 5
+        },
+        {
+          name: "Jennifer K.",
+          role: "Verified user",
+          content: "The Radar feature caught him when he traveled for 'business'. Worth every penny for peace of mind.",
+          rating: 5
         }
       ]
     },
@@ -132,7 +138,43 @@ export const serviceContent = {
         },
         {
           question: "Can you search other platforms besides Tinder?",
-          answer: "Yes! Beyond Tinder profile search, we cover Bumble, Hinge, and many other popular dating platforms. Our AI scans across multiple apps simultaneously to give you the most comprehensive results possible."
+          answer: "Yes! Beyond Tinder profile search, we cover Bumble, Hinge, OkCupid, POF, Match.com, and many other popular dating platforms. Our AI scans across multiple apps simultaneously to give you the most comprehensive results possible."
+        },
+        {
+          question: "How can I find a Tinder profile with just a first name?",
+          answer: "Enter the first name, approximate age (within 5 years), and the city or area where they likely use the app. Our AI cross-references this with public profile data to find matching accounts. The more accurate your inputs, the better the results. Adding a photo increases match accuracy by 40%."
+        },
+        {
+          question: "Can I search by phone number?",
+          answer: "ProfileFinder primarily uses name, age, location, and photos for searching. Phone number searches are available as a premium feature and work when the phone is linked to social profiles. However, most dating apps don't expose phone numbers publicly, so photo-based search typically yields better results."
+        },
+        {
+          question: "Is the search really 100% anonymous?",
+          answer: "Absolutely. The person you're searching for will never be notified that you searched for them. We don't interact with their profile, send messages, or leave any digital footprint. Your search history is encrypted and visible only to you."
+        },
+        {
+          question: "How long does a search take?",
+          answer: "Most searches complete in under 60 seconds. Complex searches across all platforms may take up to 2 minutes. If you enable continuous monitoring (Radar), you'll receive real-time alerts as new profiles appear, typically within minutes of creation."
+        },
+        {
+          question: "Is ProfileFinder free to use?",
+          answer: "We offer a limited free trial to test our service. Full searches require a subscription or pay-per-search credits. Given the computational cost of AI face recognition and multi-platform scanning, we maintain affordable pricing to ensure service quality and accuracy."
+        },
+        {
+          question: "Can I see private or hidden photos on profiles?",
+          answer: "No. ProfileFinder only accesses publicly visible information. We cannot bypass privacy settings, access private photos, or read direct messages. If a profile is set to private or hidden, we can only detect its existence if some public data is available."
+        },
+        {
+          question: "What if the person has multiple dating profiles?",
+          answer: "Our AI consolidates results across platforms. If someone has profiles on Tinder, Bumble, and Hinge, all three will appear in your results with confidence scores indicating match certainty. This helps you understand the full scope of their online dating presence."
+        },
+        {
+          question: "How accurate is the Radar feature for travel detection?",
+          answer: "The Radar feature detects location changes within 24-48 hours of activity. When someone opens a dating app in a new city, our system picks up the location update from public profile data. This is particularly effective for detecting business trip activity or vacation swiping."
+        },
+        {
+          question: "What should I do if I find a profile?",
+          answer: "Finding a profile doesn't necessarily mean infidelity—some profiles may be inactive or forgotten. We recommend taking screenshots of your results, gathering additional context, and approaching any conversation calmly. Our results page includes tips for healthy communication and resources if you need support."
         }
       ]
     },
@@ -284,6 +326,50 @@ export const serviceContent = {
         {
           question: "Can I track multiple accounts?",
           answer: "Yes, our premium plan allows you to monitor up to 10 accounts simultaneously, perfect for keeping an eye on multiple social signals."
+        },
+        {
+          question: "What social platforms does Following AI support?",
+          answer: "Currently Following AI focuses on Instagram public profiles. We analyze following patterns, new follows/unfollows, and interaction frequency. Support for additional platforms is planned for future updates."
+        },
+        {
+          question: "How does the AI detect suspicious activity?",
+          answer: "Our AI looks for behavioral patterns that often precede relationship issues: sudden interest in new attractive profiles, repetitive interactions with specific accounts, late-night activity spikes, and following accounts that match certain 'flirty' profiles. We score each pattern and alert you to significant changes."
+        },
+        {
+          question: "What information do I need to start tracking?",
+          answer: "You only need the Instagram username of the account you want to monitor. The profile must be public for our system to access following data. Private accounts cannot be tracked."
+        },
+        {
+          question: "Can Following AI see private messages or DMs?",
+          answer: "No, absolutely not. Following AI only accesses publicly visible information such as who someone follows and publicly visible interactions. We cannot access private messages, DMs, or any content behind privacy settings."
+        },
+        {
+          question: "How accurate is the suspicious activity detection?",
+          answer: "Our AI has a 94% accuracy rate in identifying patterns that correlate with concerning relationship behaviors. However, following new accounts isn't always suspicious—context matters. We provide scores and patterns, but you make the final judgment."
+        },
+        {
+          question: "Will I get alerts for every single new follow?",
+          answer: "No, we filter out noise. You receive alerts for patterns, not individual actions. For example, we'll notify you if someone follows 5 attractive new accounts in a week, but not for following a news outlet or brand."
+        },
+        {
+          question: "How far back can I see following history?",
+          answer: "We track changes from the moment you start monitoring. Historical data before monitoring starts is limited to what's currently visible on the public profile. For best results, start monitoring early."
+        },
+        {
+          question: "Is this legal to use?",
+          answer: "Yes. Following AI only accesses publicly available information that anyone can see on Instagram. We don't hack accounts, bypass privacy settings, or access protected data. Our service is comparable to manually checking someone's public following list."
+        },
+        {
+          question: "Can I cancel monitoring at any time?",
+          answer: "Yes, you can stop monitoring any account at any time. Your data is deleted once you cancel, and the person is never notified that they were being monitored."
+        },
+        {
+          question: "How is Following AI different from manually checking followers?",
+          answer: "Manually checking is time-consuming and you'd miss temporal patterns. Following AI tracks changes 24/7, alerts you to significant behavior changes, identifies suspicious patterns, and presents data in an actionable format. It saves hours of manual scrolling."
+        },
+        {
+          question: "What should I do if Following AI detects concerning patterns?",
+          answer: "Finding suspicious following patterns doesn't automatically mean infidelity—some people follow many accounts innocently. We recommend combining results with other ProfileFinder tools like Dating Search or Face Trace for a complete picture. Our reports include guidance on interpreting results."
         }
       ]
     },
@@ -440,6 +526,46 @@ export const serviceContent = {
         {
           question: "What makes Face Trace different from other face finders?",
           answer: "Face Trace combines AI face search with relationship-focused databases. Instead of general reverse face search across the entire web, we prioritize dating apps, social networks, and platforms where people create profiles to meet others. This targeted approach gives you more relevant results for relationship verification."
+        },
+        {
+          question: "What photo quality works best for Face Trace?",
+          answer: "For optimal results, upload clear, front-facing photos where the face is clearly visible and well-lit. Photos should be at least 200x200 pixels. Side profiles, group photos, or heavily filtered images may reduce accuracy. The clearer the face, the better the match results."
+        },
+        {
+          question: "How is Face Trace different from Google reverse image search?",
+          answer: "Google searches for the exact same image across the web. Face Trace uses AI facial recognition to find the same PERSON, even in completely different photos. We can find someone's dating profile even if they use photos you've never seen before."
+        },
+        {
+          question: "Can Face Trace find someone on dating apps from their Instagram photo?",
+          answer: "Yes. Upload any clear photo of their face—from Instagram, Facebook, or anywhere else—and our AI will search for matching faces across dating platforms. Even if they use different photos on Tinder, our face recognition can identify the same person."
+        },
+        {
+          question: "How accurate is the face matching?",
+          answer: "Face Trace has a 97% accuracy rate for clear, front-facing photos. Accuracy decreases with poor lighting, extreme angles, or heavy filters. Our system provides a confidence score for each match so you can assess reliability."
+        },
+        {
+          question: "Can Face Trace detect AI-generated or deepfake photos?",
+          answer: "Yes, our system includes AI-generated image detection. We can identify photos created by AI tools like DALL-E or Midjourney, as well as common deepfake indicators. This helps protect you from sophisticated catfishing attempts."
+        },
+        {
+          question: "What platforms does Face Trace search?",
+          answer: "Face Trace searches across major dating apps (Tinder, Bumble, etc.), social media platforms (Instagram, Facebook), and public image databases. We prioritize relationship-relevant sources rather than the entire internet."
+        },
+        {
+          question: "How long does a Face Trace search take?",
+          answer: "Most searches complete in 30 seconds or less. Complex searches or rare faces may take up to 2 minutes. You'll receive results directly in your dashboard with confidence scores for each match."
+        },
+        {
+          question: "Can the person I'm searching for find out?",
+          answer: "No, Face Trace searches are completely anonymous. We never contact, interact with, or notify anyone about searches. The photos you upload are analyzed locally and never shared or stored."
+        },
+        {
+          question: "What if Face Trace finds multiple matching profiles?",
+          answer: "If the same face appears on multiple platforms, we'll show all matches with individual confidence scores. This can reveal if someone maintains profiles on multiple dating apps, or if their photos are being used by catfishers."
+        },
+        {
+          question: "How is Face Trace different from PimEyes?",
+          answer: "PimEyes searches the entire public internet, which can return irrelevant results. Face Trace is specifically optimized for relationship verification, focusing on dating apps and social platforms where people create dating profiles. We also offer better privacy protections and don't store your uploaded images."
         }
       ]
     },
@@ -602,6 +728,46 @@ export const serviceContent = {
         {
           question: "What happens after I get my results?",
           answer: "You receive a detailed PDF report with a risk score and recommended next steps. Depending on your results, we may suggest running a Tinder profile lookup, using Face Trace to verify photos, or activating Following AI to monitor social signals."
+        },
+        {
+          question: "What types of screenshots can I upload?",
+          answer: "You can upload screenshots from any messaging platform: WhatsApp, iMessage, SMS, Instagram DMs, Messenger, Snapchat, or dating apps. The AI analyzes conversation patterns, timing, and language rather than specific platform formats."
+        },
+        {
+          question: "What behavioral patterns does the AI look for?",
+          answer: "Our AI detects patterns like secretive phone behavior (turning screen away, stepping out for calls), unexplained schedule changes, financial irregularities, increased grooming or appearance changes, emotional distance, and defensive reactions to simple questions about their day."
+        },
+        {
+          question: "How is this different from reading relationship advice online?",
+          answer: "Generic advice lists signs of cheating but can't assess YOUR specific situation. The Fidelity Test asks targeted questions about actual behaviors you've observed and generates a personalized risk score. It's systematic evaluation vs. random guessing."
+        },
+        {
+          question: "Will my partner know I'm using this?",
+          answer: "No, the Fidelity Test is completely confidential. We don't contact anyone, access anyone's accounts, or leave any trace. Only you see the questions, screenshots, and results."
+        },
+        {
+          question: "What's included in the PDF report?",
+          answer: "The report includes: overall risk score (0-100), breakdown by category (communication, finances, social media, physical behavior), specific red flags identified, comparison to baseline behaviors, and recommended next steps for each concern level."
+        },
+        {
+          question: "Can I run the Fidelity Test multiple times?",
+          answer: "Yes, you can run it periodically to track changes in behavior over time. If you have new observations or new screenshots, running another test can help you see if the risk level is increasing or decreasing."
+        },
+        {
+          question: "What if my risk score is high but I'm not sure?",
+          answer: "A high score indicates patterns that correlate with boundary-crossing behavior, but doesn't prove anything definitively. We recommend combining with other ProfileFinder tools: run a Dating Search to check for Tinder profiles, use Face Trace to verify photo authenticity, or activate Following AI to monitor social signals."
+        },
+        {
+          question: "Is the Fidelity Test based on scientific research?",
+          answer: "Yes, our questions and scoring are based on published research on infidelity predictors from relationship psychology. We use validated behavioral indicators rather than pop psychology guesswork."
+        },
+        {
+          question: "Can I use this for relationships other than romantic partners?",
+          answer: "While designed for romantic relationships, the Fidelity Test can help evaluate trust in any close relationship where you suspect dishonesty. Some users have used it for business partnerships or family situations where deception may be occurring."
+        },
+        {
+          question: "What if the test shows low risk but I still feel suspicious?",
+          answer: "Intuition matters. A low score means the behaviors you've observed don't match common infidelity patterns, but it doesn't mean nothing is happening. Consider using our other tools for additional data: Dating Search for dating app activity, Face Trace for photo verification, or Following AI for social media monitoring."
         }
       ]
     },

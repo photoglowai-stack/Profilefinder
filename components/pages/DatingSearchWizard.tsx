@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import {
     Search, ChevronDown, Check, Lock, UserCircle, MapPin,
-    Cloud, Building, Users, Loader2, ArrowRight
+    Cloud, Building, Users, Loader2, ArrowRight, ChevronLeft
 } from 'lucide-react';
 import { ServiceLayout } from '@/components/layouts/ServiceLayout';
 import { useService } from '@/lib/ServiceContext';
@@ -247,7 +247,7 @@ export default function DatingSearchWizard() {
         setIsSubmitting(true);
 
         setTimeout(() => {
-            router.push('/payment?service=dating');
+            router.push('/dating-search/payment');
         }, 1000);
     };
 
@@ -366,8 +366,8 @@ export default function DatingSearchWizard() {
                                 onChange={(e) => setTargetAge(e.target.value)}
                                 style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0, cursor: 'pointer' }}
                             >
-                                {Array.from({ length: 13 }, (_, i) => 18 + i).map((age) => (
-                                    <option key={age} value={age}>{age}{age === 30 ? '+' : ''}</option>
+                                {Array.from({ length: 63 }, (_, i) => 18 + i).map((age) => (
+                                    <option key={age} value={age}>{age}</option>
                                 ))}
                             </select>
                         </div>
@@ -383,11 +383,26 @@ export default function DatingSearchWizard() {
                             <p style={{ lineHeight: 1.5, opacity: 0.9 }}>No account needed. 100% discreet.</p>
                         </div>
 
-                        <button onClick={() => goToStep(3)} className="dating-btn-primary">
-                            <Search size={20} />
-                            <span>Check if he is on a dating app</span>
-                            <ArrowRight size={18} />
-                        </button>
+                        <div style={{ display: 'flex', gap: '12px' }}>
+                            <button
+                                onClick={() => goToStep(1)}
+                                className="dating-btn-secondary"
+                                style={{
+                                    flex: '0 0 auto',
+                                    padding: '14px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button onClick={() => goToStep(3)} className="dating-btn-primary" style={{ flex: 1 }}>
+                                <Search size={20} />
+                                <span>Check if he is on a dating app</span>
+                                <ArrowRight size={18} />
+                            </button>
+                        </div>
                     </div>
 
                     {/* ==================== STEP 3: LOCATION ==================== */}
@@ -452,11 +467,26 @@ export default function DatingSearchWizard() {
                             <p style={{ lineHeight: 1.5, opacity: 0.9 }}>Find out where he might be using real-time profile data.</p>
                         </div>
 
-                        <button onClick={() => goToStep(4)} className="dating-btn-primary">
-                            <Search size={20} />
-                            <span>Start Full Scan</span>
-                            <ArrowRight size={18} />
-                        </button>
+                        <div style={{ display: 'flex', gap: '12px' }}>
+                            <button
+                                onClick={() => goToStep(2)}
+                                className="dating-btn-secondary"
+                                style={{
+                                    flex: '0 0 auto',
+                                    padding: '14px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button onClick={() => goToStep(4)} className="dating-btn-primary" style={{ flex: 1 }}>
+                                <Search size={20} />
+                                <span>Start Full Scan</span>
+                                <ArrowRight size={18} />
+                            </button>
+                        </div>
                     </div>
 
                     {/* ==================== STEP 4: LOADING ==================== */}

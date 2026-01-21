@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Heart, Eye, Lock } from "lucide-react";
 import { SectionHeader } from "./ui/SectionHeader";
 import { statsContent } from "../lib/content";
+import { useService } from "../lib/ServiceContext";
 
 const statistics = [
   {
@@ -22,6 +23,8 @@ const statistics = [
 ];
 
 export function StatsSection() {
+  const { colors: serviceColors } = useService();
+
   return (
     <section className="max-w-[1760px] mx-auto px-4 md:px-8 py-12 md:py-16">
       <SectionHeader
@@ -52,16 +55,36 @@ export function StatsSection() {
             viewport={{ once: true }}
             transition={{ delay: index * 0.1 }}
             whileHover={{ scale: 1.05 }}
-            className="relative bg-gradient-to-br from-pink-50 to-orange-50 rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-xl text-center border-2 border-[#ff0051] overflow-hidden group"
+            className="relative rounded-2xl md:rounded-3xl p-6 md:p-8 shadow-xl text-center overflow-hidden group"
+            style={{
+              background: `linear-gradient(to bottom right, ${serviceColors.primary}10, ${serviceColors.secondary}15)`,
+              border: `2px solid ${serviceColors.primary}`
+            }}
           >
             {/* Animated background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-[#ff4e71]/10 to-[#ff7f66]/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            <div
+              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{
+                background: `linear-gradient(to bottom right, ${serviceColors.primary}20, ${serviceColors.secondary}20)`
+              }}
+            />
 
             <div className="relative">
               <div className="mb-4 md:mb-5">
-                <item.icon className="w-10 h-10 md:w-12 md:h-12 mx-auto text-[#ff4e71]" />
+                <item.icon
+                  className="w-10 h-10 md:w-12 md:h-12 mx-auto"
+                  style={{ color: serviceColors.primary }}
+                />
               </div>
-              <p className="text-4xl md:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] mb-3 md:mb-4 font-black tracking-tighter">
+              <p
+                className="text-4xl md:text-5xl mb-3 md:mb-4 font-black tracking-tighter"
+                style={{
+                  background: `linear-gradient(to right, ${serviceColors.primary}, ${serviceColors.secondary})`,
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  backgroundClip: 'text'
+                }}
+              >
                 {item.stat}
               </p>
               <p className="text-sm md:text-base text-slate-600 leading-relaxed font-medium">

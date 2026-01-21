@@ -1,3 +1,7 @@
 "use client";
 
-export { default } from '@/components/pages/FaceTrace';
+import ServiceLandingPage from '@/components/pages/ServiceLandingPage';
+
+export default function FaceTracePage() {
+    return <ServiceLandingPage service="facetrace" />;
+}

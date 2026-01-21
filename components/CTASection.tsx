@@ -2,14 +2,22 @@ import { TrendingUp, ArrowRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { ctaContent } from "../lib/content";
 import { RevealOnScroll } from "./ui/RevealOnScroll";
+import { useService } from "../lib/ServiceContext";
 
 export function CTASection() {
+  const { colors: serviceColors } = useService();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
-    <section className="relative py-12 md:py-16 overflow-hidden bg-brand-gradient">
+    <section
+      className="relative py-12 md:py-16 overflow-hidden"
+      style={{
+        background: `linear-gradient(135deg, ${serviceColors.primary}, ${serviceColors.secondary})`
+      }}
+    >
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute w-64 h-64 md:w-96 md:h-96 bg-white/10 rounded-full blur-3xl top-0 left-1/4 animate-pulse-slow" />
@@ -41,7 +49,8 @@ export function CTASection() {
                 variant="secondary"
                 size="lg"
                 onClick={scrollToTop}
-                className="relative w-full sm:w-auto gap-2 bg-white text-primary hover:bg-white/90 font-bold border-none shadow-xl"
+                className="relative w-full sm:w-auto gap-2 bg-white hover:bg-white/90 font-bold border-none shadow-xl"
+                style={{ color: serviceColors.primary }}
               >
                 {ctaContent.button} ✨
                 <ArrowRight className="w-4 h-4" />

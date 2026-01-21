@@ -8,6 +8,7 @@ import { HowItWorks } from "@/components/HowItWorks";
 import { UGCSection } from "@/components/UGCSection";
 import { Footer } from "@/components/Footer";
 import { ServiceFormWidget } from "@/components/ServiceFormWidget";
+import { ServiceProvider } from "@/lib/ServiceContext";
 
 // Lazy load below-the-fold components for better performance
 const Testimonials = lazy(() => import("@/components/Testimonials").then(m => ({ default: m.Testimonials })));
@@ -76,72 +77,74 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-slate-50">
-      {/* 1. Main Content */}
-      <main className="w-full mx-auto pb-40">
-        <HeroAntigravity />
-        <StatsBar />
-        <HowItWorks />
-        <UGCSection />
+    <ServiceProvider initialService="dating">
+      <div className="relative min-h-screen bg-slate-50">
+        {/* 1. Main Content */}
+        <main className="w-full mx-auto pb-40">
+          <HeroAntigravity />
+          <StatsBar />
+          <HowItWorks />
+          <UGCSection />
 
-        {/* Lazy loaded sections */}
-        <Suspense fallback={<SectionSkeleton />}>
-          <Testimonials />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <StatsSection />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <ToolComparison />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <SEOBlogSection />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <RelatedSearches />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <CTASection />
-        </Suspense>
-        <Suspense fallback={<SectionSkeleton />}>
-          <FAQ />
-        </Suspense>
+          {/* Lazy loaded sections */}
+          <Suspense fallback={<SectionSkeleton />}>
+            <Testimonials />
+          </Suspense>
+          <Suspense fallback={<SectionSkeleton />}>
+            <StatsSection />
+          </Suspense>
+          <Suspense fallback={<SectionSkeleton />}>
+            <ToolComparison />
+          </Suspense>
+          <Suspense fallback={<SectionSkeleton />}>
+            <SEOBlogSection />
+          </Suspense>
+          <Suspense fallback={<SectionSkeleton />}>
+            <RelatedSearches />
+          </Suspense>
+          <Suspense fallback={<SectionSkeleton />}>
+            <CTASection />
+          </Suspense>
+          <Suspense fallback={<SectionSkeleton />}>
+            <FAQ />
+          </Suspense>
 
-        <Footer />
-      </main>
+          <Footer />
+        </main>
 
-      {/* 2. Sticky Widget - appears after scrolling past Hero */}
-      <AnimatePresence>
-        {showWidget && (
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 100 }}
-            transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.6 }}
-            style={{
-              position: 'fixed',
-              bottom: `calc(env(safe-area-inset-bottom, 0px) + ${bottomInset}px)`,
-              left: 0,
-              right: 0,
-              zIndex: 9999,
-              display: 'flex',
-              justifyContent: 'center',
-              pointerEvents: 'none',
-              transform: 'translateZ(0)'
-            }}
-          >
-            <div style={{
-              width: '100%',
-              maxWidth: '448px',
-              padding: '0 16px',
-              boxSizing: 'border-box',
-              pointerEvents: 'auto'
-            }}>
-              <ServiceFormWidget />
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </div>
+        {/* 2. Sticky Widget - appears after scrolling past Hero */}
+        <AnimatePresence>
+          {showWidget && (
+            <motion.div
+              initial={{ opacity: 0, y: 100 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 100 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.6 }}
+              style={{
+                position: 'fixed',
+                bottom: `calc(env(safe-area-inset-bottom, 0px) + ${bottomInset}px)`,
+                left: 0,
+                right: 0,
+                zIndex: 9999,
+                display: 'flex',
+                justifyContent: 'center',
+                pointerEvents: 'none',
+                transform: 'translateZ(0)'
+              }}
+            >
+              <div style={{
+                width: '100%',
+                maxWidth: '448px',
+                padding: '0 16px',
+                boxSizing: 'border-box',
+                pointerEvents: 'auto'
+              }}>
+                <ServiceFormWidget />
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+    </ServiceProvider>
   );
 }

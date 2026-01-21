@@ -14,8 +14,8 @@ interface ServiceContextType {
 
 const ServiceContext = createContext<ServiceContextType | undefined>(undefined);
 
-export function ServiceProvider({ children }: { children: ReactNode }) {
-  const [selectedService, setSelectedService] = useState<ServiceType>('dating');
+export function ServiceProvider({ children, initialService = 'dating' }: { children: ReactNode, initialService?: ServiceType }) {
+  const [selectedService, setSelectedService] = useState<ServiceType>(initialService);
   const [searchTarget, setSearchTarget] = useState<string>('');
   const colors = getServiceColors(selectedService);
 

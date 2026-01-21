@@ -1,5 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
+import { useService } from "../../lib/ServiceContext";
 
 interface SectionHeaderProps {
   label?: string;
@@ -16,6 +17,8 @@ export function SectionHeader({
   highlightedWords = [],
   italic = true
 }: SectionHeaderProps) {
+  const { colors: serviceColors } = useService();
+
   const highlightText = (text: string) => {
     if (highlightedWords.length === 0) return text;
 
@@ -25,7 +28,7 @@ export function SectionHeader({
         <span
           key={index}
           style={{
-            background: 'linear-gradient(135deg, #ff4e71, #ff7f66)',
+            background: `linear-gradient(135deg, ${serviceColors.primary}, ${serviceColors.secondary})`,
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent',
             backgroundClip: 'text',
@@ -60,7 +63,7 @@ export function SectionHeader({
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            background: 'linear-gradient(135deg, #ff4e71, #ff7f66)',
+            background: `linear-gradient(135deg, ${serviceColors.primary}, ${serviceColors.secondary})`,
             color: 'white',
             padding: '8px 20px',
             borderRadius: '9999px',
@@ -69,7 +72,7 @@ export function SectionHeader({
             marginBottom: '20px',
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
-            boxShadow: '0 4px 20px rgba(255, 78, 113, 0.3)'
+            boxShadow: `0 4px 20px ${serviceColors.primary}30`
           }}
         >
           {label}

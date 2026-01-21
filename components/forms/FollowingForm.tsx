@@ -21,7 +21,7 @@ export function FollowingForm() {
         sessionStorage.setItem('pf_following_query', username);
       }
       setTimeout(() => {
-        router.push("/activity-tracker");
+        router.push("/following-ai/analysis");
         setIsSearching(false);
       }, 800);
     }

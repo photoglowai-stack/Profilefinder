@@ -16,6 +16,7 @@ import { FaceTraceResultsPreview } from '@/components/ui/FaceTraceResultsPreview
 import { FidelityCheckResultsPreview } from '@/components/ui/FidelityCheckResultsPreview';
 import { ChatAnalysisResultsPreview } from '@/components/ui/ChatAnalysisResultsPreview';
 import { FollowingResultsPreview } from '@/components/ui/FollowingResultsPreview';
+import { CountdownTimer } from '@/components/ui/CountdownTimer';
 
 // Icons
 const IconShield = ({ style }: { style?: React.CSSProperties }) => (
@@ -96,10 +97,10 @@ const PreviewComponents: Record<string, React.ComponentType> = {
     following: FollowingResultsPreview,
 };
 
-// Get gradient based on service
+// Get gradient based on service - matches ServiceLayout
 const getServiceGradient = (service: string): string => {
     const gradients: Record<string, string> = {
-        dating: 'linear-gradient(135deg, #f43f5e, #f97316)',
+        dating: 'linear-gradient(135deg, #ff4b5c 0%, #ff6b6b 50%, #ff9e75 100%)',
         faceTrace: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
         following: 'linear-gradient(135deg, #8b5cf6, #a855f7)',
         fidelity: 'linear-gradient(135deg, #dc2626, #f97316)',
@@ -162,8 +163,19 @@ export function PaymentPage() {
         // Determine success URL based on plan type
         let successUrl: string;
         if (selectedPlan === 'subscription') {
-            // Subscription → Dashboard Hub
-            successUrl = `/payment/success?plan=subscription`;
+            // Subscription → Dashboard Hub (direct redirect for demo)
+            successUrl = '/dashboard';
+
+            // Initialize credits for all services (5 each)
+            if (typeof window !== 'undefined') {
+                localStorage.setItem('profilefinder_credits', JSON.stringify({
+                    dating: 5,
+                    faceTrace: 5,
+                    following: 5,
+                    fidelity: 5,
+                    chatAnalysis: 5,
+                }));
+            }
         } else {
             // Single Report → Specific Results Page
             successUrl = `/payment/success?plan=single&service=${activeService}`;
@@ -203,7 +215,7 @@ export function PaymentPage() {
                 minHeight: '100vh',
                 width: '100%',
                 background: getServiceGradient(activeService),
-                fontFamily: 'ui-sans-serif, system-ui, -apple-system, sans-serif',
+                fontFamily: 'var(--font-display), ui-sans-serif, system-ui, -apple-system, sans-serif',
                 position: 'relative',
                 overflow: 'hidden',
             }}>
@@ -364,7 +376,7 @@ export function PaymentPage() {
                                     color: '#6b7280',
                                 }}>
                                     <IconShield style={{ width: '1rem', height: '1rem', color: '#22c55e' }} />
-                                    <span>Chiffrement SSL 256-bit • Paiement 100% sécurisé</span>
+                                    <span>256-bit SSL Encryption • 100% Secure Payment</span>
                                 </div>
                             </motion.div>
 
@@ -382,6 +394,11 @@ export function PaymentPage() {
                                     padding: '1.5rem',
                                 }}
                             >
+                                {/* Countdown Timer - Only for subscription */}
+                                {selectedPlan === 'subscription' && (
+                                    <CountdownTimer durationMinutes={10} storageKey="all-access-timer" />
+                                )}
+
                                 <PricingSelector
                                     serviceId={activeService}
                                     selectedPlan={selectedPlan}
@@ -431,12 +448,12 @@ export function PaymentPage() {
                                                     borderRadius: '50%',
                                                 }}
                                             />
-                                            Traitement...
+                                            Processing...
                                         </>
                                     ) : (
                                         <>
-                                            🔒 Payer {selectedPlan === 'subscription'
-                                                ? `${SUBSCRIPTION_CONFIG.price}€/mois`
+                                            🔒 Unlock All Now {selectedPlan === 'subscription'
+                                                ? `${SUBSCRIPTION_CONFIG.price}€/mo`
                                                 : `${config.singleReportPrice}€`
                                             }
                                             <IconArrowRight style={{ width: '1rem', height: '1rem' }} />
@@ -452,8 +469,8 @@ export function PaymentPage() {
                                     marginTop: '0.625rem',
                                 }}>
                                     {selectedPlan === 'subscription'
-                                        ? 'Sans engagement • Annulation en 1 clic • Accès immédiat'
-                                        : 'Paiement unique • Accès immédiat aux résultats'
+                                        ? 'No commitment • Cancel in 1-click • Instant access'
+                                        : 'One-time payment • Instant access to results'
                                     }
                                 </p>
 
@@ -489,6 +506,11 @@ export function PaymentPage() {
                                     padding: '1.25rem',
                                 }}
                             >
+                                {/* Countdown Timer - Only for subscription */}
+                                {selectedPlan === 'subscription' && (
+                                    <CountdownTimer durationMinutes={10} storageKey="all-access-timer" />
+                                )}
+
                                 <PricingSelector
                                     serviceId={activeService}
                                     selectedPlan={selectedPlan}
@@ -523,10 +545,10 @@ export function PaymentPage() {
                                         opacity: isProcessing ? 0.7 : 1,
                                     }}
                                 >
-                                    {isProcessing ? 'Traitement...' : (
+                                    {isProcessing ? 'Processing...' : (
                                         <>
-                                            🔒 Payer {selectedPlan === 'subscription'
-                                                ? `${SUBSCRIPTION_CONFIG.price}€/mois`
+                                            🔒 Unlock All Now {selectedPlan === 'subscription'
+                                                ? `${SUBSCRIPTION_CONFIG.price}€/mo`
                                                 : `${config.singleReportPrice}€`
                                             }
                                         </>

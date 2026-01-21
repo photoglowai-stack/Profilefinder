@@ -8,7 +8,7 @@
     align-items: center;
     justify-content: center;
     padding: 2rem 1rem 4rem 1rem;
-    font-family: 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-display), 'Inter Tight', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
 /* Main card */
@@ -90,6 +90,33 @@
 .dating-btn-primary:active {
     transform: scale(0.98);
     box-shadow: none;
+}
+
+/* Secondary button (for back navigation) */
+.dating-btn-secondary {
+    background: white;
+    border: 2px solid #e5e7eb;
+    color: #374151;
+    font-weight: 600;
+    padding: 16px 24px;
+    border-radius: 9999px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dating-btn-secondary:hover {
+    background: #f9fafb;
+    border-color: #d1d5db;
+    transform: translateX(-2px);
+}
+
+.dating-btn-secondary:active {
+    transform: scale(0.98) translateX(-2px);
 }
 
 /* Input styling */

@@ -70,10 +70,10 @@ const HeroAntigravity: React.FC = () => {
     ];
 
     const services = [
-        { id: 'dating' as ServiceType, label: 'Dating Search', icon: <Heart size={20} strokeWidth={2.5} /> },
-        { id: 'following' as ServiceType, label: 'Following AI', icon: <Users size={20} strokeWidth={2.5} /> },
-        { id: 'facetrace' as ServiceType, label: 'Face Trace', icon: <ScanFace size={20} strokeWidth={2.5} /> },
-        { id: 'fidelity' as ServiceType, label: 'Fidelity Test', icon: <MessageSquare size={20} strokeWidth={2.5} /> },
+        { id: 'dating' as ServiceType, label: 'Dating Search', icon: <Heart size={20} strokeWidth={2.5} />, path: '/' },
+        { id: 'following' as ServiceType, label: 'Following AI', icon: <Users size={20} strokeWidth={2.5} />, path: '/following-ai' },
+        { id: 'facetrace' as ServiceType, label: 'Face Trace', icon: <ScanFace size={20} strokeWidth={2.5} />, path: '/face-trace' },
+        { id: 'fidelity' as ServiceType, label: 'Fidelity Test', icon: <MessageSquare size={20} strokeWidth={2.5} />, path: '/fidelity-test' },
     ];
 
     const trendingKeywords = [
@@ -88,7 +88,7 @@ const HeroAntigravity: React.FC = () => {
             cta: "START SEARCH",
             ctaEmoji: "🔍",
             buttonIcon: <Search size={22} strokeWidth={3} />,
-            buttonBg: "#0a0a0a"
+            buttonBg: "linear-gradient(135deg, #991b1b 0%, #dc2626 50%, #ef4444 100%)"
         },
         following: {
             h1: "Reveal Hidden Instagram Connections",
@@ -97,7 +97,7 @@ const HeroAntigravity: React.FC = () => {
             cta: "ANALYZE FOLLOWINGS",
             ctaEmoji: "📊",
             buttonIcon: <Instagram size={22} strokeWidth={2.5} />,
-            buttonBg: "linear-gradient(to right, #833ab4, #fd1d1d, #fcb045)"
+            buttonBg: "linear-gradient(135deg, #5b21b6 0%, #7c3aed 50%, #8b5cf6 100%)"
         },
         facetrace: {
             h1: "Track Digital Footprint & Web Activity",
@@ -106,7 +106,7 @@ const HeroAntigravity: React.FC = () => {
             cta: "START WEB SCAN",
             ctaEmoji: "🌐",
             buttonIcon: <ScanFace size={22} strokeWidth={2.5} />,
-            buttonBg: "#0a0a0a"
+            buttonBg: "linear-gradient(135deg, #075985 0%, #0284c7 50%, #0ea5e9 100%)"
         },
         fidelity: {
             h1: "Scan Chat Screenshots for Red Flags",
@@ -115,33 +115,53 @@ const HeroAntigravity: React.FC = () => {
             cta: "ANALYZE CHAT",
             ctaEmoji: "🛡️",
             buttonIcon: <MessageCircle size={22} strokeWidth={2.5} />,
-            buttonBg: "#0f172a"
+            buttonBg: "linear-gradient(135deg, #9d174d 0%, #be185d 50%, #db2777 100%)"
         }
     };
 
     const currentContent = contentMap[selectedService];
 
-    // Dynamic gradient backgrounds per service
+    // Premium mesh-style radial gradient backgrounds per service (CheatEye inspired)
     const gradientMap: Record<ServiceType, string> = {
-        dating: 'linear-gradient(135deg, #ff4b5c 0%, #ff6b6b 50%, #ff9e75 100%)',
-        following: 'linear-gradient(135deg, #8b5cf6 0%, #a78bfa 50%, #c4b5fd 100%)',
-        facetrace: 'linear-gradient(135deg, #3b82f6 0%, #60a5fa 50%, #93c5fd 100%)',
-        fidelity: 'linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #f9a8d4 100%)'
+        dating: 'radial-gradient(ellipse 150% 80% at 50% 20%, #FF5E00 0%, #FF085E 35%, #FF004F 60%, #E8003D 100%)',
+        following: 'radial-gradient(ellipse 150% 80% at 50% 20%, #9333EA 0%, #7C3AED 35%, #6D28D9 60%, #5B21B6 100%)',
+        facetrace: 'radial-gradient(ellipse 150% 80% at 50% 20%, #06B6D4 0%, #0EA5E9 35%, #0284C7 60%, #0369A1 100%)',
+        fidelity: 'radial-gradient(ellipse 150% 80% at 50% 20%, #F472B6 0%, #EC4899 35%, #DB2777 60%, #BE185D 100%)'
     };
 
+    // Accent colors per service for consistent theming
+    const accentColors: Record<ServiceType, { primary: string; secondary: string; light: string }> = {
+        dating: { primary: '#dc2626', secondary: '#ef4444', light: '#fef2f2' },
+        following: { primary: '#7c3aed', secondary: '#8b5cf6', light: '#f5f3ff' },
+        facetrace: { primary: '#0284c7', secondary: '#0ea5e9', light: '#f0f9ff' },
+        fidelity: { primary: '#be185d', secondary: '#db2777', light: '#fdf2f8' }
+    };
 
+    const currentAccent = accentColors[selectedService];
 
     return (
         <section style={{
             width: '100%',
             background: gradientMap[selectedService],
             color: '#ffffff',
-            fontFamily: "'Inter Tight', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
+            fontFamily: "var(--font-display), 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
             overflow: 'hidden',
             position: 'relative',
             paddingBottom: '80px',
+            borderRadius: '0 0 48px 48px',
             transition: 'background 0.5s ease'
         }}>
+            {/* Soft white gradient fade at bottom */}
+            <div style={{
+                position: 'absolute',
+                bottom: 0,
+                left: 0,
+                right: 0,
+                height: '150px',
+                background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.4) 60%, rgba(255,255,255,0.9) 85%, #ffffff 100%)',
+                pointerEvents: 'none',
+                borderRadius: '0 0 48px 48px'
+            }} />
 
             {/* CSS is now in globals.css - no inline style tag needed */}
 
@@ -306,10 +326,10 @@ const HeroAntigravity: React.FC = () => {
                             </p>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {[
-                                    { label: 'Dating Search', path: '/dating-search', icon: '❤️' },
-                                    { label: 'Following AI', path: '/activity-tracker', icon: '👥' },
+                                    { label: 'Dating Search', path: '/dating-search/form', icon: '❤️' },
+                                    { label: 'Following AI', path: '/following-ai', icon: '👥' },
                                     { label: 'Face Trace', path: '/face-trace', icon: '🔍' },
-                                    { label: 'Fidelity Test', path: '/fidelity-test/analysis', icon: '🛡️' }
+                                    { label: 'Fidelity Test', path: '/fidelity-test', icon: '🛡️' }
                                 ].map((service) => (
                                     <a
                                         key={service.label}
@@ -451,14 +471,15 @@ const HeroAntigravity: React.FC = () => {
                 {/* Headlines */}
                 <div style={{ width: '100%', marginBottom: '40px' }}>
                     <h1 style={{
-                        fontSize: 'clamp(2rem, 5vw, 4rem)',
-                        fontWeight: 900,
+                        fontSize: 'clamp(2.25rem, 6vw, 4.5rem)',
+                        fontWeight: 800,
                         marginBottom: '24px',
                         maxWidth: '900px',
                         margin: '0 auto 24px',
-                        lineHeight: 1.05,
-                        letterSpacing: '-0.02em',
-                        textShadow: '0 4px 20px rgba(0,0,0,0.2)'
+                        lineHeight: 1.0,
+                        letterSpacing: '-0.03em',
+                        textShadow: '0 4px 20px rgba(0,0,0,0.25)',
+                        fontFamily: "var(--font-display), 'Plus Jakarta Sans', sans-serif"
                     }}>
                         {currentContent.h1}
                     </h1>
@@ -498,7 +519,10 @@ const HeroAntigravity: React.FC = () => {
                     {services.map((service) => (
                         <button
                             key={service.id}
-                            onClick={() => setSelectedService(service.id)}
+                            onClick={() => {
+                                setSelectedService(service.id);
+                                router.push(service.path);
+                            }}
                             className="tab-btn"
                             style={{
                                 display: 'flex',
@@ -509,10 +533,10 @@ const HeroAntigravity: React.FC = () => {
                                 fontSize: '13px',
                                 fontWeight: 700,
                                 cursor: 'pointer',
-                                border: selectedService === service.id ? '2px solid #10b981' : '2px solid transparent',
-                                backgroundColor: selectedService === service.id ? '#10b981' : '#ffffff',
+                                border: selectedService === service.id ? '2px solid #0a0a0a' : '2px solid transparent',
+                                backgroundColor: selectedService === service.id ? '#0a0a0a' : '#ffffff',
                                 color: selectedService === service.id ? '#ffffff' : '#475569',
-                                boxShadow: selectedService === service.id ? '0 6px 16px rgba(16,185,129,0.3)' : '0 2px 6px rgba(0,0,0,0.06)',
+                                boxShadow: selectedService === service.id ? '0 6px 16px rgba(10,10,10,0.25)' : '0 2px 6px rgba(0,0,0,0.06)',
                                 transform: selectedService === service.id ? 'scale(1.02)' : 'scale(1)',
                                 transition: 'all 0.3s ease'
                             }}
@@ -567,7 +591,7 @@ const HeroAntigravity: React.FC = () => {
                                     selected={selectedGender === 'man'}
                                     onClick={() => setSelectedGender('man')}
                                     img={avatarMan}
-                                    color="#10b981"
+                                    color="#ff4b5c"
                                 />
                                 <GenderCard
                                     gender="WOMAN"
@@ -823,7 +847,10 @@ const HeroAntigravity: React.FC = () => {
                                     } else if (selectedService === 'following') {
                                         router.push('/activity-tracker');
                                     } else if (selectedService === 'dating') {
-                                        router.push('/dating-search');
+                                        // Scroll to form instead of redirecting (SEO: avoid duplicate content)
+                                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                                        // Navigate to form wizard
+                                        router.push('/dating-search/form');
                                     } else {
                                         router.push('/payment');
                                     }
@@ -874,19 +901,19 @@ const HeroAntigravity: React.FC = () => {
                                 </div>
 
                                 <span
-                                    className="cta-emoji-bounce"
+                                    className="finger-point-animate"
                                     style={{
                                         position: 'absolute',
-                                        right: '16px',
-                                        bottom: '8px',
-                                        fontSize: '26px',
+                                        right: '20px',
+                                        top: '50%',
+                                        transform: 'translateY(-50%)',
+                                        fontSize: '28px',
                                         filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
                                         zIndex: 30,
-                                        pointerEvents: 'none',
-                                        transition: 'transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1)'
+                                        pointerEvents: 'none'
                                     }}
                                 >
-                                    ✨
+                                    👆
                                 </span>
                             </button>
                         )}
@@ -1107,7 +1134,9 @@ const GenderCard: React.FC<GenderCardProps> = ({ gender, selected, onClick, img,
             alignItems: 'center',
             transition: 'all 0.3s',
             transform: selected ? 'scale(1.03)' : 'scale(1)',
-            opacity: selected ? 1 : 0.85
+            opacity: selected ? 1 : 0.85,
+            outline: 'none',
+            WebkitTapHighlightColor: 'transparent'
         }}
     >
         <div style={{

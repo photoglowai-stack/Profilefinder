@@ -115,7 +115,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                         letterSpacing: '0.05em',
                     }}>
                         <Crown style={{ width: '12px', height: '12px' }} />
-                        Meilleure Offre
+                        Best Offer
                     </div>
 
                     {/* Selection Radio */}
@@ -155,7 +155,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                             </h3>
                         </div>
                         <p style={{ fontSize: '0.8125rem', color: '#6b7280' }}>
-                            Déblocage total • Tous les outils • Sans limite
+                            Full unlock • All tools • Unlimited
                         </p>
                     </div>
 
@@ -175,7 +175,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                         }}>
                             19,99€
                         </span>
-                        <span style={{ fontSize: '1rem', color: '#9ca3af', fontWeight: 500 }}>/mois</span>
+                        <span style={{ fontSize: '1rem', color: '#9ca3af', fontWeight: 500 }}>/mo</span>
                         <div style={{
                             marginLeft: '0.5rem',
                             display: 'flex',
@@ -214,7 +214,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                             letterSpacing: '0.1em',
                             marginBottom: '0.75rem',
                         }}>
-                            ✨ Inclus dans votre accès
+                            ✨ Included in your access
                         </div>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.625rem' }}>
                             {serviceIcons.map((service, idx) => (
@@ -251,10 +251,10 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                     {/* Benefits List */}
                     <div style={{ marginBottom: '1rem' }}>
                         {[
-                            'Recherches ILLIMITÉES',
-                            'Résultats instantanés',
-                            'Support prioritaire 24/7',
-                            'Annulation à tout moment',
+                            'UNLIMITED searches',
+                            'Instant results',
+                            '24/7 priority support',
+                            'Cancel anytime',
                         ].map((benefit, idx) => (
                             <div key={idx} style={{
                                 display: 'flex',
@@ -307,7 +307,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                         }}
                     >
                         <Sparkles style={{ width: '1.125rem', height: '1.125rem' }} />
-                        Débloquer tout maintenant
+                        Unlock all now
                         <ArrowRight style={{ width: '1.125rem', height: '1.125rem' }} />
                     </motion.button>
 
@@ -325,7 +325,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                     }}>
                         <Shield style={{ width: '0.875rem', height: '0.875rem', color: '#16a34a' }} />
                         <span style={{ fontSize: '0.6875rem', fontWeight: 600, color: '#166534' }}>
-                            500,000+ utilisateurs • Satisfait ou remboursé
+                            500,000+ users • Satisfied or refunded
                         </span>
                     </div>
                 </div>
@@ -340,7 +340,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
             }}>
                 <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
                 <span style={{ fontSize: '0.6875rem', color: '#9ca3af', fontWeight: 500, textTransform: 'uppercase' }}>
-                    ou
+                    or
                 </span>
                 <div style={{ flex: 1, height: '1px', background: '#e5e7eb' }} />
             </div>
@@ -395,7 +395,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                                 {serviceConfig.singleReportName}
                             </h4>
                             <p style={{ fontSize: '0.6875rem', color: '#9ca3af' }}>
-                                Paiement unique • 1 seul rapport
+                                One-time payment • 1 report only
                             </p>
                         </div>
                         <div style={{ textAlign: 'right' }}>
@@ -418,9 +418,9 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                     }}>
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
                             {[
-                                `Uniquement ${serviceConfig.title}`,
-                                'Pas d\'accès aux autres outils',
-                                'Validité 24h uniquement',
+                                `Only ${serviceConfig.title}`,
+                                'No access to other tools',
+                                '24h validity only',
                             ].map((limitation, idx) => (
                                 <div key={idx} style={{
                                     display: 'flex',
@@ -454,7 +454,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                         }}>
                             <Clock style={{ width: '0.75rem', height: '0.75rem', color: '#d97706' }} />
                             <span style={{ fontSize: '0.625rem', fontWeight: 600, color: '#92400e' }}>
-                                Offre limitée
+                                Limited offer
                             </span>
                         </div>
 
@@ -472,7 +472,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                                 alignItems: 'center',
                                 gap: '0.25rem',
                             }}>
-                                Continuer <ArrowRight style={{ width: '0.75rem', height: '0.75rem' }} />
+                                Continue <ArrowRight style={{ width: '0.75rem', height: '0.75rem' }} />
                             </button>
                         )}
                     </div>
@@ -512,10 +512,10 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                             </div>
                             <div>
                                 <p style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#92400e', marginBottom: '0.25rem' }}>
-                                    💡 Économisez 40% avec All-Access !
+                                    💡 Save 40% with All-Access!
                                 </p>
                                 <p style={{ fontSize: '0.6875rem', color: '#a16207', lineHeight: 1.4 }}>
-                                    Pour seulement 5€ de plus, accédez aux 5 services en illimité au lieu d'un seul rapport.
+                                    For only €5 more, get unlimited access to all 5 services instead of a single report.
                                 </p>
                                 <button
                                     onClick={(e) => { e.stopPropagation(); onPlanSelect('subscription'); }}
@@ -531,7 +531,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                                         padding: 0,
                                     }}
                                 >
-                                    Passer à All-Access →
+                                    Switch to All-Access →
                                 </button>
                             </div>
                         </div>

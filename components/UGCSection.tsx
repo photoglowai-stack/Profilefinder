@@ -180,7 +180,7 @@ const UGCSection = () => {
             margin: '0 auto 0'
           }}>
             Real Stories, <span style={{
-              background: 'linear-gradient(135deg, #ec4899, #f472b6)',
+              background: `linear-gradient(135deg, ${colors.primary}, ${colors.secondary})`,
               WebkitBackgroundClip: 'text',
               WebkitTextFillColor: 'transparent',
               backgroundClip: 'text',

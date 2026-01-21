@@ -8,6 +8,7 @@ import {
     Activity, Star, ChevronRight, Sparkles
 } from 'lucide-react';
 import Link from 'next/link';
+import { useCredits } from '@/lib/useCredits';
 
 interface ServiceCardProps {
     service: {
@@ -18,11 +19,13 @@ interface ServiceCardProps {
         gradient: string;
         href: string;
         stats?: string;
+        creditKey: 'dating' | 'faceTrace' | 'following' | 'fidelity' | 'chatAnalysis';
     };
     index: number;
+    credits: number;
 }
 
-function ServiceCard({ service, index }: ServiceCardProps) {
+function ServiceCard({ service, index, credits }: ServiceCardProps) {
     const [isHovered, setIsHovered] = useState(false);
 
     return (
@@ -65,16 +68,17 @@ function ServiceCard({ service, index }: ServiceCardProps) {
                         {/* CTA */}
                         <div className={`flex items-center gap-2 text-sm font-semibold transition-transform duration-300 ${isHovered ? 'translate-x-2' : ''
                             }`}>
-                            <span>Launch Search</span>
+                            <span>Manage Searches</span>
                             <ArrowRight className="w-4 h-4" />
                         </div>
                     </div>
 
-                    {/* Premium Badge */}
+                    {/* Credits Badge */}
                     <div className="absolute top-4 right-4">
-                        <div className="bg-white/20 backdrop-blur-sm rounded-full px-2 py-1 flex items-center gap-1">
-                            <Zap className="w-3 h-3 text-yellow-300" />
-                            <span className="text-[10px] font-bold">UNLIMITED</span>
+                        <div className="bg-white/20 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1">
+                            <Zap className="w-4 h-4 text-yellow-300" />
+                            <span className="text-sm font-bold">{credits}</span>
+                            <span className="text-xs opacity-80">credits</span>
                         </div>
                     </div>
                 </div>
@@ -84,6 +88,8 @@ function ServiceCard({ service, index }: ServiceCardProps) {
 }
 
 export function DashboardPage() {
+    const { credits, getCredits, getTotalCredits } = useCredits();
+
     const services = [
         {
             id: 'dating',
@@ -91,8 +97,9 @@ export function DashboardPage() {
             description: 'Find hidden profiles on Tinder, Bumble, Badoo & more',
             icon: <Heart className="w-7 h-7 text-white" />,
             gradient: 'bg-gradient-to-br from-rose-500 to-pink-600',
-            href: '/dating-search',
+            href: '/dashboard/dating-search',
             stats: '1.2M searches today',
+            creditKey: 'dating' as const,
         },
         {
             id: 'faceTrace',
@@ -100,8 +107,9 @@ export function DashboardPage() {
             description: 'Reverse image search across 12M+ sources',
             icon: <Scan className="w-7 h-7 text-white" />,
             gradient: 'bg-gradient-to-br from-cyan-500 to-blue-600',
-            href: '/face-trace',
+            href: '/dashboard/face-trace',
             stats: '98% accuracy rate',
+            creditKey: 'faceTrace' as const,
         },
         {
             id: 'following',
@@ -109,8 +117,9 @@ export function DashboardPage() {
             description: 'Monitor Instagram activity & interactions',
             icon: <Eye className="w-7 h-7 text-white" />,
             gradient: 'bg-gradient-to-br from-violet-500 to-purple-600',
-            href: '/activity-tracker',
+            href: '/dashboard/following-ai',
             stats: 'Real-time updates',
+            creditKey: 'following' as const,
         },
         {
             id: 'fidelity',
@@ -118,8 +127,9 @@ export function DashboardPage() {
             description: 'Detect dating profiles by name & location',
             icon: <Search className="w-7 h-7 text-white" />,
             gradient: 'bg-gradient-to-br from-red-500 to-orange-500',
-            href: '/fidelity-test/analysis',
+            href: '/dashboard/fidelity-check',
             stats: '24/7 monitoring',
+            creditKey: 'fidelity' as const,
         },
         {
             id: 'chatAnalysis',
@@ -127,8 +137,9 @@ export function DashboardPage() {
             description: 'AI-powered conversation insights & red flags',
             icon: <MessageSquare className="w-7 h-7 text-white" />,
             gradient: 'bg-gradient-to-br from-purple-500 to-pink-500',
-            href: '/chat-analysis',
+            href: '/dashboard/chat-analysis',
             stats: 'GPT-4 powered',
+            creditKey: 'chatAnalysis' as const,
         },
     ];
 
@@ -200,8 +211,8 @@ export function DashboardPage() {
                             {/* Stats */}
                             <div className="hidden md:flex items-center gap-6">
                                 <div className="text-center">
-                                    <div className="text-3xl font-black text-white">∞</div>
-                                    <div className="text-xs text-white/60">Searches Left</div>
+                                    <div className="text-3xl font-black text-white">{getTotalCredits()}</div>
+                                    <div className="text-xs text-white/60">Total Credits</div>
                                 </div>
                                 <div className="w-px h-12 bg-white/20" />
                                 <div className="text-center">
@@ -252,7 +263,12 @@ export function DashboardPage() {
                     {/* Services Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {services.map((service, index) => (
-                            <ServiceCard key={service.id} service={service} index={index} />
+                            <ServiceCard
+                                key={service.id}
+                                service={service}
+                                index={index}
+                                credits={getCredits(service.creditKey)}
+                            />
                         ))}
                     </div>
                 </div>

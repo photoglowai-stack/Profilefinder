@@ -34,7 +34,7 @@ export function FaceTraceForm() {
         sessionStorage.setItem('pf_facetrace_image', imagePreview);
       }
       setTimeout(() => {
-        router.push("/face-trace");
+        router.push("/face-trace/payment");
         setIsSearching(false);
       }, 800);
     }

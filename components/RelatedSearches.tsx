@@ -1,245 +1,223 @@
 import { motion } from "framer-motion";
-import { Search, TrendingUp, Heart, Users, Shield, Eye, ScanFace, Image, UserSearch } from "lucide-react";
+import { Search, Shield, TrendingUp, Users, CheckCircle } from "lucide-react";
 import { useService } from "../lib/ServiceContext";
-
-const datingSearches = [
-  { icon: Search, text: "Tinder Profile Search", popular: true },
-  { icon: Heart, text: "Profile Safety Check", popular: true },
-  { icon: Shield, text: "Verify Dating Activity", popular: true },
-  { icon: Eye, text: "Tinder Profile Lookup", popular: false },
-  { icon: Users, text: "Dating Apps Search", popular: false },
-  { icon: TrendingUp, text: "Swindler Buster", popular: false },
-  { icon: Search, text: "AI Dating App", popular: false },
-  { icon: Heart, text: "Behavior Risk Detection", popular: false },
-  { icon: Shield, text: "Online Dating Check", popular: false },
-  { icon: Eye, text: "How Does Tinder Work", popular: false },
-  { icon: Users, text: "Hinge vs Bumble", popular: false },
-  { icon: Search, text: "Relationship Red Flags", popular: false },
-];
-
-const facetraceSearches = [
-  { icon: ScanFace, text: "FaceCheck ID", popular: true },
-  { icon: Search, text: "PimEyes Alternative", popular: true },
-  { icon: Eye, text: "Reverse Face Search", popular: true },
-  { icon: Image, text: "Facial Recognition Search", popular: true },
-  { icon: UserSearch, text: "Creator Profile Finder", popular: true },
-  { icon: Users, text: "Instagram Finder", popular: true },
-  { icon: Search, text: "Public Figure Face Match", popular: false },
-  { icon: Eye, text: "Face ID Search Free", popular: false },
-  { icon: Image, text: "Reverse Image Search People", popular: false },
-  { icon: ScanFace, text: "TinEye Alternative", popular: false },
-  { icon: UserSearch, text: "Yandex Reverse Search", popular: false },
-  { icon: Users, text: "Doppelganger Finder", popular: false },
-];
 
 export function RelatedSearches() {
   const { selectedService } = useService();
 
-  // Only show for dating and facetrace services
-  if (selectedService !== "dating" && selectedService !== "facetrace") return null;
+  // Only show for dating service
+  if (selectedService !== "dating") return null;
 
-  const searches = selectedService === "dating" ? datingSearches : facetraceSearches;
+  const features = [
+    {
+      icon: Search,
+      title: "AI-Powered Profile Detection",
+      description: "Our advanced algorithm scans Tinder and identifies matching profiles based on the information you provide.",
+      stat: "98%",
+      statLabel: "Accuracy"
+    },
+    {
+      icon: Shield,
+      title: "Private & Anonymous",
+      description: "Your searches are completely confidential. We never store personal data or share information with third parties.",
+      stat: "100%",
+      statLabel: "Private"
+    },
+    {
+      icon: TrendingUp,
+      title: "Real-Time Alerts",
+      description: "The Radar feature notifies you when a profile matching your criteria becomes active or travels to new locations.",
+      stat: "24/7",
+      statLabel: "Monitoring"
+    },
+    {
+      icon: Users,
+      title: "Trusted Community",
+      description: "Join hundreds of thousands who have gained clarity about their relationships using ProfileFinder.",
+      stat: "500K+",
+      statLabel: "Users"
+    }
+  ];
 
   return (
-    <section className="max-w-[1400px] mx-auto px-4 md:px-8 py-12 md:py-16 bg-gradient-to-br from-gray-50 to-white">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="text-center mb-10"
-      >
-        <div
-          style={{
+    <section style={{
+      background: 'linear-gradient(180deg, #ffffff 0%, #fef2f2 50%, #ffffff 100%)',
+      padding: '80px 0',
+      fontFamily: "'Inter Tight', system-ui, sans-serif"
+    }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 24px' }}>
+
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          style={{ textAlign: 'center', marginBottom: '56px' }}
+        >
+          <div style={{
             display: 'inline-flex',
             alignItems: 'center',
             gap: '8px',
-            background: 'linear-gradient(135deg, #ff4e71, #ff7f66)',
+            background: 'linear-gradient(135deg, #FF5E00, #FF085E)',
             color: 'white',
             padding: '8px 20px',
             borderRadius: '9999px',
             fontSize: '12px',
             fontWeight: 700,
-            marginBottom: '20px',
+            marginBottom: '24px',
             textTransform: 'uppercase',
             letterSpacing: '0.08em',
-            boxShadow: '0 4px 20px rgba(255, 78, 113, 0.3)'
-          }}
-        >
-          <TrendingUp className="w-4 h-4" />
-          Popular Searches
-        </div>
-        <h2 style={{
-          fontSize: 'clamp(1.75rem, 4vw, 2.25rem)',
-          fontWeight: 900,
-          color: '#0f172a',
-          marginBottom: '12px',
-          letterSpacing: '-0.03em',
-          fontFamily: "'Inter Tight', system-ui, sans-serif"
-        }}>
-          {selectedService === "dating"
-            ? <>Discover What <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', paddingRight: '0.15em', display: 'inline-block' }}>Others Are Searching</span></>
-            : <>Explore <span style={{ fontStyle: 'italic', background: 'linear-gradient(135deg, #ff4e71, #ff7f66)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text', paddingRight: '0.15em', display: 'inline-block' }}>Face Recognition Tools</span></>
-          }
-        </h2>
-        <p style={{
-          color: '#64748b',
-          fontSize: '1rem',
-          fontWeight: 500,
-          maxWidth: '640px',
-          margin: '0 auto',
-          fontFamily: "'Inter Tight', system-ui, sans-serif"
-        }}>
-          {selectedService === "dating"
-            ? "Explore popular search terms and discover how our AI helps you validate online dating activity."
-            : "Discover popular facial recognition and reverse image search tools powered by advanced AI"}
-        </p>
-      </motion.div>
+            boxShadow: '0 4px 20px rgba(255, 94, 0, 0.25)'
+          }}>
+            <CheckCircle size={14} />
+            Why ProfileFinder
+          </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
-        {searches.map((item, index) => {
-          const Icon = item.icon;
-          return (
-            <motion.button
-              key={index}
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.05 }}
-              whileHover={{ scale: 1.05, y: -2 }}
-              whileTap={{ scale: 0.98 }}
-              className={`relative group flex items-center gap-2 md:gap-3 p-3 md:p-4 rounded-xl md:rounded-2xl border-2 transition-all ${item.popular
-                ? "bg-gradient-to-br from-red-50 to-orange-50 border-[#ff4e71] shadow-md"
-                : "bg-white border-gray-200 hover:border-[#ff4e71] shadow-sm"
-                }`}
-            >
-              {item.popular && (
-                <div className="absolute -top-2 -right-2 bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] text-white text-[10px] px-2 py-0.5 rounded-full shadow-lg font-medium">
-                  HOT
+          <h2 style={{
+            fontSize: 'clamp(2rem, 5vw, 3rem)',
+            fontWeight: 900,
+            color: '#0f172a',
+            marginBottom: '16px',
+            letterSpacing: '-0.04em',
+            lineHeight: 1.1
+          }}>
+            The Smart Way to <br />
+            <span style={{
+              background: 'linear-gradient(135deg, #FF5E00, #FF085E)',
+              WebkitBackgroundClip: 'text',
+              WebkitTextFillColor: 'transparent',
+              backgroundClip: 'text'
+            }}>Verify Dating Activity</span>
+          </h2>
+
+          <p style={{
+            color: '#64748b',
+            fontSize: '1.15rem',
+            fontWeight: 500,
+            maxWidth: '560px',
+            margin: '0 auto',
+            lineHeight: 1.6
+          }}>
+            Stop wondering. Get definitive answers with AI-powered profile search technology.
+          </p>
+        </motion.div>
+
+        {/* Features Grid - 2x2 */}
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '24px'
+        }}>
+          {features.map((feature, index) => {
+            const Icon = feature.icon;
+            return (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
+                style={{
+                  background: '#ffffff',
+                  borderRadius: '24px',
+                  padding: '32px',
+                  border: '1px solid rgba(255, 94, 0, 0.15)',
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.04)',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '20px',
+                  position: 'relative',
+                  overflow: 'hidden'
+                }}
+              >
+                {/* Decorative gradient blob */}
+                <div style={{
+                  position: 'absolute',
+                  top: '-40px',
+                  right: '-40px',
+                  width: '120px',
+                  height: '120px',
+                  background: 'linear-gradient(135deg, rgba(255,94,0,0.08), rgba(255,8,94,0.08))',
+                  borderRadius: '50%',
+                  filter: 'blur(30px)'
+                }} />
+
+                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                  <div style={{
+                    width: '56px',
+                    height: '56px',
+                    borderRadius: '16px',
+                    background: 'linear-gradient(135deg, #FF5E00, #FF085E)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 8px 20px rgba(255, 94, 0, 0.25)'
+                  }}>
+                    <Icon size={28} color="#ffffff" strokeWidth={2} />
+                  </div>
+
+                  {/* Stat badge */}
+                  <div style={{
+                    textAlign: 'right'
+                  }}>
+                    <div style={{
+                      fontSize: '1.75rem',
+                      fontWeight: 900,
+                      background: 'linear-gradient(135deg, #FF5E00, #FF085E)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                      backgroundClip: 'text',
+                      letterSpacing: '-0.02em'
+                    }}>
+                      {feature.stat}
+                    </div>
+                    <div style={{
+                      fontSize: '0.75rem',
+                      color: '#94a3b8',
+                      fontWeight: 600,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em'
+                    }}>
+                      {feature.statLabel}
+                    </div>
+                  </div>
                 </div>
-              )}
 
-              <div className={`flex-shrink-0 p-2 rounded-lg ${item.popular
-                ? "bg-gradient-to-br from-[#ff4e71] to-[#ff7f66]"
-                : "bg-gray-100 group-hover:bg-gradient-to-br group-hover:from-[#ff4e71] group-hover:to-[#ff7f66]"
-                } transition-all`}>
-                <Icon className={`w-4 h-4 ${item.popular ? "text-white" : "text-gray-600 group-hover:text-white"
-                  } transition-colors`} strokeWidth={2} />
-              </div>
+                <div>
+                  <h3 style={{
+                    fontSize: '1.25rem',
+                    fontWeight: 800,
+                    color: '#0f172a',
+                    marginBottom: '10px',
+                    letterSpacing: '-0.02em'
+                  }}>
+                    {feature.title}
+                  </h3>
 
-              <span className={`text-xs md:text-sm text-left flex-1 ${item.popular ? "text-[#020817] font-medium" : "text-gray-700 group-hover:text-[#020817]"
-                } transition-colors`}>
-                {item.text}
-              </span>
-            </motion.button>
-          );
-        })}
+                  <p style={{
+                    fontSize: '0.95rem',
+                    color: '#64748b',
+                    lineHeight: 1.65,
+                    fontWeight: 500,
+                    margin: 0
+                  }}>
+                    {feature.description}
+                  </p>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Additional Keywords Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        className="mt-12 bg-white rounded-2xl p-6 md:p-8 shadow-lg border border-gray-100"
-      >
-        <h3 className="text-lg md:text-xl text-[#020817] mb-4 text-center">
-          Also Available: Extended Search Capabilities
-        </h3>
-        <div className="flex flex-wrap justify-center gap-2 text-xs">
-          {selectedService === "dating" ? (
-            <>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Tinder Sign Up Verification
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Delete Tinder Account Check
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Tinder Chat Analysis
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Secure Profile Review
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Community Safety Monitoring
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Creator Platform Lookup
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Emotional Availability Signs
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Risky App Detection
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                SocialCatfish Alternative
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Tinder Reddit Verification
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Bumble Reddit Check
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-red-50 to-orange-50 text-gray-700 rounded-full border border-red-100">
-                Hinge Profile Search
-              </span>
-            </>
-          ) : (
-            <>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                PimEyes.com Alternative
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                Social Profile Search Engine
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                Public Figure Recognition
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                Instagram Profile Photo Download
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                Facebook People Search
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                AI Content Safety Detection
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                StarByFace
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                FaceSeek
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                Google Photo Reverse Search
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                Instagram Account Lookup
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                Sensitive Image Filter
-              </span>
-              <span className="px-3 py-1.5 bg-gradient-to-r from-blue-50 to-indigo-50 text-gray-700 rounded-full border border-blue-100">
-                GeoSpy AI
-              </span>
-            </>
-          )}
-        </div>
-      </motion.div>
-
-      {/* Trust Badge */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        className="mt-8 text-center"
-      >
-        <p className="text-sm text-gray-500">
-          Trusted by over <span className="font-semibold text-[#ff4e71]">500,000+</span> users worldwide for
-          {selectedService === "dating" ? " accurate dating profile searches" : " facial recognition and reverse image searches"}
-        </p>
-      </motion.div>
+      {/* Mobile responsive styles */}
+      <style>{`
+        @media (max-width: 768px) {
+          section > div > div:last-child {
+            grid-template-columns: 1fr !important;
+          }
+        }
+      `}</style>
     </section>
   );
 }
