@@ -5,7 +5,7 @@ import ServiceNavbar from '../ServiceNavbar';
 // ============================================
 // SERVICE THEME CONFIGURATION
 // ============================================
-export type ServiceVariant = 'dating' | 'faceTrace' | 'activity' | 'chat' | 'fidelity';
+export type ServiceVariant = 'dating' | 'faceTrace' | 'activity' | 'chat' | 'fidelity' | 'following';
 
 interface ServiceTheme {
     gradient: string;
@@ -48,6 +48,13 @@ export const SERVICE_THEMES: Record<ServiceVariant, ServiceTheme> = {
         gradient: 'linear-gradient(135deg, #ff4b5c 0%, #ff6b6b 50%, #ff9e75 100%)',
         accentColor: '#f97316',
         accentColorSecondary: '#fb923c',
+        navBg: 'rgba(255,255,255,0.05)',
+        footerBg: 'rgba(0,0,0,0.1)'
+    },
+    following: {
+        gradient: 'linear-gradient(135deg, #8b5cf6, #a855f7)',
+        accentColor: '#8b5cf6',
+        accentColorSecondary: '#a855f7',
         navBg: 'rgba(255,255,255,0.05)',
         footerBg: 'rgba(0,0,0,0.1)'
     }
