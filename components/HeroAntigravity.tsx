@@ -1,1226 +1,698 @@
 "use client";
 
-import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
-import { useService } from '../lib/ServiceContext';
-import { ServiceType } from '../lib/content';
+import React, { memo, useCallback, useMemo, useState } from "react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
+import { useService } from "../lib/ServiceContext";
+import { ServiceType } from "../lib/content";
 import {
-    Search, Globe, User, Check, Shield, Clock, Menu, X,
-    Heart, Users, ScanFace, MessageSquare, Instagram,
-    MessageCircle, Fingerprint, TrendingUp, Star,
-    UploadCloud, Activity, ArrowRight
-} from 'lucide-react';
-import { FidelityForm } from './forms/FidelityForm';
+  Activity,
+  ArrowRight,
+  Check,
+  Clock,
+  Fingerprint,
+  Globe,
+  Heart,
+  Instagram,
+  Menu,
+  MessageCircle,
+  MessageSquare,
+  ScanFace,
+  Search,
+  Shield,
+  Star,
+  TrendingUp,
+  UploadCloud,
+  User,
+  Users,
+  X,
+} from "lucide-react";
+import { FidelityForm } from "./forms/FidelityForm";
 
 // --- Types ---
-type GenderType = 'man' | 'woman';
+type GenderType = "man" | "woman";
 
-interface GenderCardProps {
-    gender: string;
-    selected: boolean;
-    onClick: () => void;
-    img: string;
-    color: string;
-    isWoman?: boolean;
-}
-
-interface UploadZoneProps {
-    icon: React.ReactNode;
-    title: string;
-    subtitle: string;
-    accentColor: string;
-    badge: React.ReactNode;
-}
-
-const HeroAntigravity: React.FC = () => {
-    const router = useRouter();
-    const { selectedService, setSelectedService } = useService();
-    const [selectedGender, setSelectedGender] = useState<GenderType>('man');
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [faceTraceImage, setFaceTraceImage] = useState<string | null>(null);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [faceTraceFile, setFaceTraceFile] = useState<File | null>(null);
-
-    const handleFaceTraceUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-            setFaceTraceFile(file);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setFaceTraceImage(reader.result as string);
-            };
-            reader.readAsDataURL(file);
-        }
-    };
-
-    const clearFaceTraceImage = () => {
-        setFaceTraceImage(null);
-        setFaceTraceFile(null);
-    };
-
-    // --- Images ---
-    const avatarMan = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(6).svg";
-    const avatarWoman = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/FEMME.svg";
-
-    const trustedUsers = [
-        "https://i.pravatar.cc/100?img=1",
-        "https://i.pravatar.cc/100?img=5",
-        "https://i.pravatar.cc/100?img=9",
-        "https://i.pravatar.cc/100?img=32"
-    ];
-
-    const services = [
-        { id: 'dating' as ServiceType, label: 'Dating Search', icon: <Heart size={20} strokeWidth={2.5} />, path: '/' },
-        { id: 'following' as ServiceType, label: 'Following AI', icon: <Users size={20} strokeWidth={2.5} />, path: '/following-ai' },
-        { id: 'facetrace' as ServiceType, label: 'Face Trace', icon: <ScanFace size={20} strokeWidth={2.5} />, path: '/face-trace' },
-        { id: 'fidelity' as ServiceType, label: 'Fidelity Test', icon: <MessageSquare size={20} strokeWidth={2.5} />, path: '/fidelity-test' },
-    ];
-
-    const trendingKeywords = [
-        "Pimeyes Alternative", "Reverse Image Search", "Face Search Free", "Instagram Finder", "Tinder Profile Search", "AI Face Recognition"
-    ];
-
-    const contentMap: Record<ServiceType, { h1: string; desc: string; instruction: string; cta: string; ctaEmoji: string; buttonIcon: React.ReactNode; buttonBg: string }> = {
-        dating: {
-            h1: "Find any profile on Tinder with AI Face Search",
-            desc: "Uncover your partner's secrets with the #1 Tinder Profile Finder. More accurate than Pimeyes for dating apps.",
-            instruction: "WHO ARE YOU LOOKING FOR?",
-            cta: "START SEARCH",
-            ctaEmoji: "🔍",
-            buttonIcon: <Search size={22} strokeWidth={3} />,
-            buttonBg: "linear-gradient(135deg, #991b1b 0%, #dc2626 50%, #ef4444 100%)"
-        },
-        following: {
-            h1: "Reveal Hidden Instagram Connections",
-            desc: "Analyze their entire following list instantly. See who they recently followed and uncover suspicious interactions.",
-            instruction: "ENTER TARGET USERNAME",
-            cta: "ANALYZE FOLLOWINGS",
-            ctaEmoji: "📊",
-            buttonIcon: <Instagram size={22} strokeWidth={2.5} />,
-            buttonBg: "linear-gradient(135deg, #5b21b6 0%, #7c3aed 50%, #8b5cf6 100%)"
-        },
-        facetrace: {
-            h1: "Track Digital Footprint & Web Activity",
-            desc: "The ultimate Pimeyes alternative. Find every profile, blog post, and image trace across the entire web.",
-            instruction: "UPLOAD PHOTO TO SCAN",
-            cta: "START WEB SCAN",
-            ctaEmoji: "🌐",
-            buttonIcon: <ScanFace size={22} strokeWidth={2.5} />,
-            buttonBg: "linear-gradient(135deg, #075985 0%, #0284c7 50%, #0ea5e9 100%)"
-        },
-        fidelity: {
-            h1: "Scan Chat Screenshots for Red Flags",
-            desc: "Upload screenshots of suspicious conversations (WhatsApp, SMS, Tinder). Our AI detects hidden infidelity signals.",
-            instruction: "UPLOAD CHAT SCREENSHOT",
-            cta: "ANALYZE CHAT",
-            ctaEmoji: "🛡️",
-            buttonIcon: <MessageCircle size={22} strokeWidth={2.5} />,
-            buttonBg: "linear-gradient(135deg, #9d174d 0%, #be185d 50%, #db2777 100%)"
-        }
-    };
-
-    const currentContent = contentMap[selectedService];
-
-    // Premium mesh-style radial gradient backgrounds per service (CheatEye inspired)
-    const gradientMap: Record<ServiceType, string> = {
-        dating: 'radial-gradient(ellipse 150% 80% at 50% 20%, #FF5E00 0%, #FF085E 35%, #FF004F 60%, #E8003D 100%)',
-        following: 'radial-gradient(ellipse 150% 80% at 50% 20%, #9333EA 0%, #7C3AED 35%, #6D28D9 60%, #5B21B6 100%)',
-        facetrace: 'radial-gradient(ellipse 150% 80% at 50% 20%, #06B6D4 0%, #0EA5E9 35%, #0284C7 60%, #0369A1 100%)',
-        fidelity: 'radial-gradient(ellipse 150% 80% at 50% 20%, #F472B6 0%, #EC4899 35%, #DB2777 60%, #BE185D 100%)'
-    };
-
-    // Accent colors per service for consistent theming
-    const accentColors: Record<ServiceType, { primary: string; secondary: string; light: string }> = {
-        dating: { primary: '#dc2626', secondary: '#ef4444', light: '#fef2f2' },
-        following: { primary: '#7c3aed', secondary: '#8b5cf6', light: '#f5f3ff' },
-        facetrace: { primary: '#0284c7', secondary: '#0ea5e9', light: '#f0f9ff' },
-        fidelity: { primary: '#be185d', secondary: '#db2777', light: '#fdf2f8' }
-    };
-
-    const currentAccent = accentColors[selectedService];
-
-    return (
-        <section style={{
-            width: '100%',
-            background: gradientMap[selectedService],
-            color: '#ffffff',
-            fontFamily: "var(--font-display), 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
-            overflow: 'hidden',
-            position: 'relative',
-            paddingBottom: '80px',
-            borderRadius: '0 0 48px 48px',
-            transition: 'background 0.5s ease'
-        }}>
-            {/* Soft white gradient fade at bottom */}
-            <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: '150px',
-                background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.4) 60%, rgba(255,255,255,0.9) 85%, #ffffff 100%)',
-                pointerEvents: 'none',
-                borderRadius: '0 0 48px 48px'
-            }} />
-
-            {/* CSS is now in globals.css - no inline style tag needed */}
-
-            {/* Navigation */}
-            <nav style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                padding: '16px 24px',
-                maxWidth: '1280px',
-                margin: '0 auto',
-                width: '100%',
-                backdropFilter: 'blur(12px)',
-                backgroundColor: 'rgba(255,255,255,0.05)',
-                borderBottom: '1px solid rgba(255,255,255,0.1)',
-                borderRadius: '0 0 16px 16px',
-                marginTop: '8px',
-                position: 'relative',
-                zIndex: 50
-            }}>
-                {/* Logo */}
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer' }}>
-                    <img
-                        src="https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg"
-                        alt="ProfileFinder"
-                        loading="lazy"
-                        style={{
-                            height: '32px',
-                            width: 'auto'
-                        }}
-                    />
-                    <span style={{ fontSize: 'clamp(18px, 4vw, 24px)', fontWeight: 900, letterSpacing: '-0.02em', textShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
-                        ProfileFinder
-                    </span>
-                </div>
-
-                {/* Desktop Navigation Links */}
-                <div className="desktop-nav" style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '32px',
-                    fontWeight: 600,
-                    fontSize: '15px'
-                }}>
-                    {['Search Profile', 'Blog', 'Affiliate Program'].map((item) => (
-                        <a
-                            key={item}
-                            href="#"
-                            style={{
-                                color: 'rgba(255,255,255,0.8)',
-                                textDecoration: 'none',
-                                transition: 'color 0.2s',
-                                padding: '8px 0'
-                            }}
-                            onMouseEnter={(e) => e.currentTarget.style.color = '#ffffff'}
-                            onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(255,255,255,0.8)'}
-                        >
-                            {item}
-                        </a>
-                    ))}
-                </div>
-
-                {/* Desktop Right Section */}
-                <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '8px 12px', borderRadius: '12px', fontWeight: 600, fontSize: '14px' }}>
-                        <Globe size={16} />
-                        <span>EN</span>
-                    </div>
-                    <button
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            border: '1px solid rgba(255,255,255,0.3)',
-                            backgroundColor: 'rgba(255,255,255,0.1)',
-                            padding: '10px 20px',
-                            borderRadius: '9999px',
-                            color: '#ffffff',
-                            fontSize: '14px',
-                            fontWeight: 700,
-                            cursor: 'pointer',
-                            backdropFilter: 'blur(8px)',
-                            transition: 'all 0.3s'
-                        }}
-                        onFocus={(e) => e.currentTarget.style.outline = '2px solid #ffffff'}
-                        onBlur={(e) => e.currentTarget.style.outline = 'none'}
-                    >
-                        <User size={18} />
-                        <span>Profile</span>
-                    </button>
-                </div>
-
-                {/* Mobile Hamburger Button */}
-                <button
-                    className="mobile-menu-btn"
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-                    aria-expanded={isMenuOpen}
-                    style={{
-                        display: 'none',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: '44px',
-                        height: '44px',
-                        border: '1px solid rgba(255,255,255,0.3)',
-                        backgroundColor: 'rgba(255,255,255,0.1)',
-                        borderRadius: '12px',
-                        color: '#ffffff',
-                        cursor: 'pointer',
-                        backdropFilter: 'blur(8px)',
-                        transition: 'all 0.3s'
-                    }}
-                >
-                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
-
-                {/* Mobile Menu Dropdown */}
-                {isMenuOpen && (
-                    <div
-                        className="mobile-menu"
-                        style={{
-                            position: 'absolute',
-                            top: '100%',
-                            left: 0,
-                            right: 0,
-                            backgroundColor: 'rgba(0,0,0,0.95)',
-                            backdropFilter: 'blur(20px)',
-                            borderRadius: '0 0 24px 24px',
-                            padding: '24px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '16px',
-                            zIndex: 100,
-                            marginTop: '8px',
-                            border: '1px solid rgba(255,255,255,0.1)'
-                        }}
-                    >
-                        {['Search Profile', 'Blog', 'Affiliate Program'].map((item) => (
-                            <a
-                                key={item}
-                                href="#"
-                                style={{
-                                    color: 'rgba(255,255,255,0.9)',
-                                    textDecoration: 'none',
-                                    fontSize: '18px',
-                                    fontWeight: 600,
-                                    padding: '12px 16px',
-                                    borderRadius: '12px',
-                                    backgroundColor: 'rgba(255,255,255,0.05)',
-                                    transition: 'all 0.2s'
-                                }}
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                {item}
-                            </a>
-                        ))}
-
-                        {/* Services Section */}
-                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', marginTop: '8px' }}>
-                            <p style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                                Our Services
-                            </p>
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                {[
-                                    { label: 'Dating Search', path: '/dating-search/form', icon: '❤️' },
-                                    { label: 'Following AI', path: '/following-ai', icon: '👥' },
-                                    { label: 'Face Trace', path: '/face-trace', icon: '🔍' },
-                                    { label: 'Fidelity Test', path: '/fidelity-test', icon: '🛡️' }
-                                ].map((service) => (
-                                    <a
-                                        key={service.label}
-                                        href={service.path}
-                                        style={{
-                                            color: 'rgba(255,255,255,0.9)',
-                                            textDecoration: 'none',
-                                            fontSize: '16px',
-                                            fontWeight: 600,
-                                            padding: '10px 16px',
-                                            borderRadius: '12px',
-                                            backgroundColor: 'rgba(239,62,92,0.15)',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '12px',
-                                            transition: 'all 0.2s'
-                                        }}
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        <span>{service.icon}</span>
-                                        {service.label}
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
-
-                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', display: 'flex', gap: '12px' }}>
-                            <button style={{
-                                flex: 1,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                padding: '14px',
-                                borderRadius: '12px',
-                                border: '1px solid rgba(255,255,255,0.2)',
-                                backgroundColor: 'transparent',
-                                color: '#ffffff',
-                                fontSize: '14px',
-                                fontWeight: 600,
-                                cursor: 'pointer'
-                            }}>
-                                <Globe size={18} />
-                                EN
-                            </button>
-                            <button style={{
-                                flex: 2,
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                gap: '8px',
-                                padding: '14px',
-                                borderRadius: '12px',
-                                border: 'none',
-                                backgroundColor: '#ffffff',
-                                color: '#0a0a0a',
-                                fontSize: '14px',
-                                fontWeight: 700,
-                                cursor: 'pointer'
-                            }}>
-                                <User size={18} />
-                                Profile
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </nav>
-
-            {/* Main Content */}
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                paddingTop: '32px',
-                paddingBottom: '48px',
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                textAlign: 'center',
-                width: '100%',
-                maxWidth: '1280px',
-                margin: '0 auto'
-            }}>
-
-                {/* Trusted Badge */}
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                    backdropFilter: 'blur(12px)',
-                    padding: '8px 20px',
-                    borderRadius: '9999px',
-                    marginBottom: '40px',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-                }}>
-                    <div style={{ display: 'flex' }}>
-                        {trustedUsers.map((url, i) => (
-                            <img
-                                key={i}
-                                src={url}
-                                alt="user"
-                                style={{
-                                    width: '32px',
-                                    height: '32px',
-                                    borderRadius: '50%',
-                                    border: '2px solid #ff6b6b',
-                                    marginLeft: i > 0 ? '-12px' : '0'
-                                }}
-                            />
-                        ))}
-                        <div style={{
-                            width: '32px',
-                            height: '32px',
-                            borderRadius: '50%',
-                            backgroundColor: '#ffffff',
-                            color: '#ff4b5c',
-                            border: '2px solid #ff6b6b',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontWeight: 700,
-                            fontSize: '10px',
-                            marginLeft: '-12px',
-                            position: 'relative',
-                            zIndex: 10
-                        }}>
-                            +99
-                        </div>
-                    </div>
-                    <div style={{ fontSize: '12px', color: 'rgba(255,255,255,0.95)', fontWeight: 700, lineHeight: 1.3, textAlign: 'left', paddingLeft: '8px', letterSpacing: '0.02em' }}>
-                        TRUSTED BY <br />
-                        <span style={{ color: '#ffffff', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: 800 }}>
-                            500k+ users <Check size={12} style={{ backgroundColor: '#22c55e', borderRadius: '50%', padding: '2px', color: '#fff' }} strokeWidth={4} />
-                        </span>
-                    </div>
-                </div>
-
-                {/* Headlines */}
-                <div style={{ width: '100%', marginBottom: '40px' }}>
-                    <h1 style={{
-                        fontSize: 'clamp(2.25rem, 6vw, 4.5rem)',
-                        fontWeight: 800,
-                        marginBottom: '24px',
-                        maxWidth: '900px',
-                        margin: '0 auto 24px',
-                        lineHeight: 1.0,
-                        letterSpacing: '-0.03em',
-                        textShadow: '0 4px 20px rgba(0,0,0,0.25)',
-                        fontFamily: "var(--font-display), 'Plus Jakarta Sans', sans-serif"
-                    }}>
-                        {currentContent.h1}
-                    </h1>
-                    <p style={{
-                        fontSize: 'clamp(1rem, 2vw, 1.25rem)',
-                        color: 'rgba(255,255,255,0.9)',
-                        maxWidth: '640px',
-                        margin: '0 auto',
-                        lineHeight: 1.6,
-                        fontWeight: 500
-                    }}>
-                        {currentContent.desc}
-                    </p>
-                </div>
-
-                {/* Service Selector */}
-                <p style={{
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    color: 'rgba(255,255,255,0.9)',
-                    marginBottom: '12px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em'
-                }}>
-                    Choose your service:
-                </p>
-                <div style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    marginBottom: '32px',
-                    width: '100%',
-                    maxWidth: '700px',
-                    padding: '0 8px'
-                }}>
-                    {services.map((service) => (
-                        <button
-                            key={service.id}
-                            onClick={() => {
-                                setSelectedService(service.id);
-                                router.push(service.path);
-                            }}
-                            className="tab-btn"
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px',
-                                padding: '10px 16px',
-                                borderRadius: '9999px',
-                                fontSize: '13px',
-                                fontWeight: 700,
-                                cursor: 'pointer',
-                                border: selectedService === service.id ? '2px solid #0a0a0a' : '2px solid transparent',
-                                backgroundColor: selectedService === service.id ? '#0a0a0a' : '#ffffff',
-                                color: selectedService === service.id ? '#ffffff' : '#475569',
-                                boxShadow: selectedService === service.id ? '0 6px 16px rgba(10,10,10,0.25)' : '0 2px 6px rgba(0,0,0,0.06)',
-                                transform: selectedService === service.id ? 'scale(1.02)' : 'scale(1)',
-                                transition: 'all 0.3s ease'
-                            }}
-                        >
-                            {React.cloneElement(service.icon as React.ReactElement<{ size?: number }>, { size: 16 })}
-                            <span style={{ fontWeight: 700, letterSpacing: '0.01em' }}>{service.label}</span>
-                        </button>
-                    ))}
-                </div>
-
-                {/* The Card */}
-                <div style={{
-                    backgroundColor: '#ffffff',
-                    color: '#1e293b',
-                    borderRadius: '40px',
-                    padding: '24px',
-                    width: '100%',
-                    maxWidth: '480px',
-                    boxShadow: '0 25px 60px rgba(0,0,0,0.25)',
-                    position: 'relative',
-                    marginBottom: '64px',
-                    border: '1px solid rgba(255,255,255,0.6)'
-                }}>
-
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', position: 'relative', zIndex: 20 }}>
-
-                        {/* Instruction Header */}
-                        <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
-                            <div style={{
-                                backgroundColor: '#f1f5f9',
-                                borderRadius: '8px',
-                                padding: '8px 24px',
-                                border: '1px solid #e2e8f0'
-                            }}>
-                                <span style={{
-                                    fontSize: '12px',
-                                    fontWeight: 900,
-                                    letterSpacing: '0.15em',
-                                    color: '#ff4b5c',
-                                    textTransform: 'uppercase'
-                                }}>
-                                    {currentContent.instruction}
-                                </span>
-                            </div>
-                        </div>
-
-                        {/* Content Switching */}
-                        {selectedService === 'dating' && (
-                            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                                <GenderCard
-                                    gender="MAN"
-                                    selected={selectedGender === 'man'}
-                                    onClick={() => setSelectedGender('man')}
-                                    img={avatarMan}
-                                    color="#ff4b5c"
-                                />
-                                <GenderCard
-                                    gender="WOMAN"
-                                    selected={selectedGender === 'woman'}
-                                    onClick={() => setSelectedGender('woman')}
-                                    img={avatarWoman}
-                                    color="#ff4b5c"
-                                    isWoman={true}
-                                />
-                            </div>
-                        )}
-
-                        {selectedService === 'following' && (
-                            <div style={{ display: 'flex', flexDirection: 'column', height: '300px', justifyContent: 'center' }}>
-                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
-                                    <div style={{
-                                        width: '80px',
-                                        height: '80px',
-                                        background: 'linear-gradient(135deg, #a855f7, #ec4899)',
-                                        borderRadius: '16px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        boxShadow: '0 8px 24px rgba(168,85,247,0.3)',
-                                        marginBottom: '16px',
-                                        transform: 'rotate(3deg)'
-                                    }}>
-                                        <Instagram size={40} color="#ffffff" />
-                                    </div>
-                                    <p style={{ fontSize: '14px', color: '#64748b', fontWeight: 600, textAlign: 'center', padding: '0 16px' }}>
-                                        Analyze public profiles & hidden connections.
-                                    </p>
-                                </div>
-                                <div style={{ position: 'relative', width: '100%' }}>
-                                    <div style={{
-                                        position: 'absolute',
-                                        left: '16px',
-                                        top: '50%',
-                                        transform: 'translateY(-50%)',
-                                        color: '#94a3b8',
-                                        fontWeight: 800,
-                                        fontSize: '18px',
-                                        zIndex: 10
-                                    }}>@</div>
-                                    <input
-                                        type="text"
-                                        placeholder="instagram_handle"
-                                        style={{
-                                            width: '100%',
-                                            backgroundColor: '#f8fafc',
-                                            border: '2px solid #e2e8f0',
-                                            borderRadius: '16px',
-                                            padding: '16px 16px 16px 40px',
-                                            fontSize: '16px',
-                                            fontWeight: 800,
-                                            color: '#1e293b',
-                                            outline: 'none',
-                                            boxSizing: 'border-box'
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        )}
-
-                        {selectedService === 'facetrace' && (
-                            <div style={{ display: 'flex', flexDirection: 'column', height: '300px' }}>
-                                {!faceTraceImage ? (
-                                    <label
-                                        htmlFor="facetrace-upload"
-                                        style={{
-                                            position: 'relative',
-                                            flex: 1,
-                                            marginBottom: '16px',
-                                            cursor: 'pointer',
-                                            overflow: 'hidden',
-                                            borderRadius: '16px',
-                                            border: '4px dashed #e2e8f0',
-                                            backgroundColor: 'rgba(248,250,252,0.5)',
-                                            transition: 'all 0.3s',
-                                            color: '#ff4b5c'
-                                        }}
-                                    >
-                                        <div
-                                            className="animate-scan"
-                                            style={{
-                                                position: 'absolute',
-                                                left: 0,
-                                                right: 0,
-                                                height: '3px',
-                                                backgroundColor: '#ff4b5c',
-                                                boxShadow: '0 0 20px #ff4b5c',
-                                                zIndex: 10,
-                                                pointerEvents: 'none'
-                                            }}
-                                        />
-                                        <div style={{
-                                            position: 'absolute',
-                                            inset: 0,
-                                            display: 'flex',
-                                            flexDirection: 'column',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            gap: '16px',
-                                            padding: '24px'
-                                        }}>
-                                            <div style={{
-                                                width: '80px',
-                                                height: '80px',
-                                                backgroundColor: '#ffffff',
-                                                borderRadius: '50%',
-                                                boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                color: '#ff4b5c',
-                                                position: 'relative',
-                                                zIndex: 20,
-                                                border: '4px solid #f1f5f9'
-                                            }}>
-                                                <ScanFace size={48} strokeWidth={1.5} />
-                                                <div style={{
-                                                    position: 'absolute',
-                                                    bottom: '-4px',
-                                                    right: '-4px',
-                                                    backgroundColor: '#1e293b',
-                                                    color: '#ffffff',
-                                                    borderRadius: '50%',
-                                                    padding: '6px',
-                                                    border: '4px solid #ffffff'
-                                                }}>
-                                                    <Fingerprint size={16} />
-                                                </div>
-                                            </div>
-                                            <div style={{ textAlign: 'center', zIndex: 20 }}>
-                                                <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#1e293b', letterSpacing: '-0.02em', marginBottom: '8px' }}>
-                                                    Drag & Drop Photo
-                                                </h3>
-                                                <p style={{
-                                                    fontSize: '12px',
-                                                    color: '#64748b',
-                                                    fontWeight: 700,
-                                                    backgroundColor: 'rgba(255,255,255,0.6)',
-                                                    padding: '4px 12px',
-                                                    borderRadius: '9999px',
-                                                    border: '1px solid #e2e8f0',
-                                                    display: 'inline-block'
-                                                }}>
-                                                    JPG, PNG (Max 10MB)
-                                                </p>
-                                            </div>
-                                            <div style={{
-                                                backgroundColor: '#1e293b',
-                                                color: '#ffffff',
-                                                fontSize: '12px',
-                                                fontWeight: 800,
-                                                padding: '10px 20px',
-                                                borderRadius: '12px',
-                                                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: '8px',
-                                                marginTop: '8px',
-                                                cursor: 'pointer'
-                                            }}>
-                                                <UploadCloud size={16} strokeWidth={3} />
-                                                Browse Files
-                                            </div>
-                                        </div>
-                                        <input
-                                            id="facetrace-upload"
-                                            type="file"
-                                            accept="image/*"
-                                            onChange={handleFaceTraceUpload}
-                                            style={{ display: 'none' }}
-                                        />
-                                    </label>
-                                ) : (
-                                    <div style={{
-                                        position: 'relative',
-                                        flex: 1,
-                                        marginBottom: '16px',
-                                        borderRadius: '16px',
-                                        overflow: 'hidden',
-                                        border: '4px solid #22c55e'
-                                    }}>
-                                        <img
-                                            src={faceTraceImage}
-                                            alt="Preview"
-                                            style={{
-                                                width: '100%',
-                                                height: '100%',
-                                                objectFit: 'cover'
-                                            }}
-                                        />
-                                        <button
-                                            onClick={clearFaceTraceImage}
-                                            style={{
-                                                position: 'absolute',
-                                                top: '12px',
-                                                right: '12px',
-                                                backgroundColor: '#ff4b5c',
-                                                color: '#ffffff',
-                                                border: 'none',
-                                                borderRadius: '50%',
-                                                width: '32px',
-                                                height: '32px',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                cursor: 'pointer',
-                                                boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
-                                            }}
-                                        >
-                                            <X size={18} strokeWidth={3} />
-                                        </button>
-                                        <div style={{
-                                            position: 'absolute',
-                                            bottom: '12px',
-                                            left: '12px',
-                                            backgroundColor: '#22c55e',
-                                            color: '#ffffff',
-                                            padding: '6px 12px',
-                                            borderRadius: '8px',
-                                            fontSize: '12px',
-                                            fontWeight: 700,
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            gap: '6px'
-                                        }}>
-                                            <Check size={14} strokeWidth={3} />
-                                            Photo ready
-                                        </div>
-                                    </div>
-                                )}
-                            </div>
-                        )}
-
-                        {selectedService === 'fidelity' && (
-                            <div style={{ marginTop: '-12px' }}>
-                                <FidelityForm />
-                            </div>
-                        )}
-
-                        {/* Action Button - Only for non-fidelity services */}
-                        {selectedService !== 'fidelity' && (
-                            <button
-                                onClick={() => {
-                                    if (selectedService === 'facetrace') {
-                                        if (typeof window !== 'undefined' && faceTraceImage) {
-                                            sessionStorage.setItem('pf_facetrace_image', faceTraceImage);
-                                        }
-                                        router.push('/face-trace');
-                                    } else if (selectedService === 'following') {
-                                        router.push('/activity-tracker');
-                                    } else if (selectedService === 'dating') {
-                                        // Scroll to form instead of redirecting (SEO: avoid duplicate content)
-                                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                                        // Navigate to form wizard
-                                        router.push('/dating-search/form');
-                                    } else {
-                                        router.push('/payment');
-                                    }
-                                }}
-                                className="hero-btn shimmer-effect"
-                                style={{
-                                    position: 'relative',
-                                    width: '100%',
-                                    background: currentContent.buttonBg,
-                                    color: '#ffffff',
-                                    borderRadius: '9999px',
-                                    padding: '16px 24px',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    border: '1px solid rgba(255,255,255,0.1)',
-                                    cursor: 'pointer',
-                                    overflow: 'hidden',
-                                    marginTop: '8px',
-                                    boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
-                                    transition: 'transform 0.3s'
-                                }}
-                            >
-                                <div
-                                    className="shimmer-bar"
-                                    style={{
-                                        position: 'absolute',
-                                        inset: 0,
-                                        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
-                                        transform: 'translateX(-150%) skewX(-15deg)'
-                                    }}
-                                />
-
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', position: 'relative', zIndex: 20 }}>
-                                    <span style={{ opacity: 0.9 }}>
-                                        {currentContent.buttonIcon}
-                                    </span>
-                                    <span style={{
-                                        fontSize: '18px',
-                                        fontWeight: 900,
-                                        letterSpacing: '0.1em',
-                                        textTransform: 'uppercase',
-                                        textShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                                    }}>
-                                        {currentContent.cta} {currentContent.ctaEmoji}
-                                    </span>
-                                    <ArrowRight size={20} strokeWidth={3} />
-                                </div>
-
-                                <span
-                                    className="finger-point-animate"
-                                    style={{
-                                        position: 'absolute',
-                                        right: '20px',
-                                        top: '50%',
-                                        transform: 'translateY(-50%)',
-                                        fontSize: '28px',
-                                        filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
-                                        zIndex: 30,
-                                        pointerEvents: 'none'
-                                    }}
-                                >
-                                    👆
-                                </span>
-                            </button>
-                        )}
-
-                        {/* Social Proof */}
-                        <div style={{
-                            display: 'flex',
-                            flexDirection: 'column',
-                            alignItems: 'center',
-                            gap: '8px',
-                            marginTop: '16px',
-                            paddingTop: '16px',
-                            borderTop: '1px solid #f1f5f9'
-                        }}>
-                            <div style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px',
-                                backgroundColor: '#fefce8',
-                                padding: '4px 12px',
-                                borderRadius: '9999px',
-                                border: '1px solid #fef08a'
-                            }}>
-                                <div style={{ display: 'flex' }}>
-                                    {[1, 2, 3, 4, 5].map(i => <Star key={i} size={12} fill="#FFB800" color="#FFB800" />)}
-                                </div>
-                                <span style={{ fontSize: '10px', fontWeight: 700, color: '#475569' }}>4.9/5 Rating</span>
-                            </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#94a3b8' }}>
-                                <Activity size={12} color="#22c55e" />
-                                <span style={{ fontSize: '10px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>1,302 searches today</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Security Badges */}
-                    <div style={{
-                        position: 'absolute',
-                        bottom: '-56px',
-                        left: 0,
-                        width: '100%',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        zIndex: 10,
-                        pointerEvents: 'none'
-                    }}>
-                        <div style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '16px',
-                            backgroundColor: '#ff0033',
-                            color: '#ffffff',
-                            padding: '12px 24px',
-                            borderRadius: '9999px',
-                            fontSize: '10px',
-                            fontWeight: 700,
-                            boxShadow: '0 8px 24px rgba(255,0,51,0.3)',
-                            border: '1px solid rgba(255,255,255,0.2)'
-                        }}>
-                            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Shield size={12} strokeWidth={3} /> 100% Private</span>
-                            <span style={{ width: '1px', height: '12px', backgroundColor: 'rgba(255,255,255,0.3)' }} />
-                            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Clock size={12} strokeWidth={3} /> Instant</span>
-                            <span style={{ width: '1px', height: '12px', backgroundColor: 'rgba(255,255,255,0.3)' }} />
-                            <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}><Check size={12} strokeWidth={3} /> 99% Accuracy</span>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            {/* SEO Marquee */}
-            <div style={{
-                width: '100%',
-                backgroundColor: 'rgba(0,0,0,0.3)',
-                backdropFilter: 'blur(12px)',
-                borderTop: '1px solid rgba(255,255,255,0.1)',
-                padding: '16px 0',
-                overflow: 'hidden'
-            }}>
-                <div className="animate-marquee" style={{ display: 'flex', alignItems: 'center', gap: '48px', whiteSpace: 'nowrap' }}>
-                    {[...trendingKeywords, ...trendingKeywords].map((keyword, i) => (
-                        <div key={i} style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            color: 'rgba(255,255,255,0.5)',
-                            fontSize: '10px',
-                            fontWeight: 900,
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.2em'
-                        }}>
-                            <TrendingUp size={12} color="#ff4b5c" />
-                            {keyword}
-                        </div>
-                    ))}
-                </div>
-            </div>
-
-            {/* Hero Bottom Fade - Smooth transition to next section */}
-            <div className="hero-bottom-fade" />
-
-        </section>
-    );
+type ServiceContent = {
+  h1: string;
+  desc: string;
+  instruction: string;
+  cta: string;
+  ctaEmoji: string;
+  buttonIcon: React.ReactNode;
+  buttonClass: string;
 };
 
-// --- Sub-components with INLINE STYLES ---
+interface GenderCardProps {
+  gender: string;
+  selected: boolean;
+  onClick: () => void;
+  img: string;
+  isWoman?: boolean;
+  accent: AccentClasses;
+}
 
-const UploadZone: React.FC<UploadZoneProps> = ({ icon, title, subtitle, accentColor, badge }) => (
-    <div style={{
-        position: 'relative',
-        flex: 1,
-        marginBottom: '16px',
-        cursor: 'pointer',
-        overflow: 'hidden',
-        borderRadius: '16px',
-        border: `4px dashed #e2e8f0`,
-        backgroundColor: 'rgba(248,250,252,0.5)',
-        transition: 'all 0.3s',
-        color: accentColor
-    }}>
-        <div
-            className="animate-scan"
-            style={{
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                height: '3px',
-                backgroundColor: accentColor,
-                boxShadow: `0 0 20px ${accentColor}`,
-                zIndex: 10,
-                pointerEvents: 'none'
-            }}
-        />
-        <div style={{
-            position: 'absolute',
-            inset: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '16px',
-            padding: '24px'
-        }}>
-            <div style={{
-                width: '80px',
-                height: '80px',
-                backgroundColor: '#ffffff',
-                borderRadius: '50%',
-                boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: accentColor,
-                position: 'relative',
-                zIndex: 20,
-                border: '4px solid #f1f5f9'
-            }}>
-                {icon}
-                <div style={{
-                    position: 'absolute',
-                    bottom: '-4px',
-                    right: '-4px',
-                    backgroundColor: '#1e293b',
-                    color: '#ffffff',
-                    borderRadius: '50%',
-                    padding: '6px',
-                    border: '4px solid #ffffff'
-                }}>
-                    {badge}
-                </div>
-            </div>
-            <div style={{ textAlign: 'center', zIndex: 20 }}>
-                <h3 style={{ fontSize: '20px', fontWeight: 900, color: '#1e293b', letterSpacing: '-0.02em', marginBottom: '8px' }}>
-                    {title}
-                </h3>
-                <p style={{
-                    fontSize: '12px',
-                    color: '#64748b',
-                    fontWeight: 700,
-                    backgroundColor: 'rgba(255,255,255,0.6)',
-                    padding: '4px 12px',
-                    borderRadius: '9999px',
-                    border: '1px solid #e2e8f0',
-                    display: 'inline-block'
-                }}>
-                    {subtitle}
-                </p>
-            </div>
-            <div style={{
-                backgroundColor: '#1e293b',
-                color: '#ffffff',
-                fontSize: '12px',
-                fontWeight: 800,
-                padding: '10px 20px',
-                borderRadius: '12px',
-                boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                marginTop: '8px',
-                cursor: 'pointer'
-            }}>
-                <UploadCloud size={16} strokeWidth={3} />
-                Browse Files
-            </div>
-        </div>
-    </div>
-);
+interface UploadDropzoneProps {
+  onUpload: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  accent: AccentClasses;
+}
 
-const GenderCard: React.FC<GenderCardProps> = ({ gender, selected, onClick, img, color, isWoman }) => (
-    <div
-        onClick={onClick}
-        className="gender-card"
-        style={{
-            cursor: 'pointer',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            transition: 'all 0.3s',
-            transform: selected ? 'scale(1.03)' : 'scale(1)',
-            opacity: selected ? 1 : 0.85,
-            outline: 'none',
-            WebkitTapHighlightColor: 'transparent'
-        }}
+type AccentClasses = {
+  text: string;
+  border: string;
+  shadow: string;
+  badge: string;
+};
+
+const HERO_AVATAR_MAN =
+  "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(6).svg";
+const HERO_AVATAR_WOMAN =
+  "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/FEMME.svg";
+const HERO_LOGO =
+  "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg";
+
+const TRUSTED_USERS = [
+  "https://i.pravatar.cc/100?img=1",
+  "https://i.pravatar.cc/100?img=5",
+  "https://i.pravatar.cc/100?img=9",
+  "https://i.pravatar.cc/100?img=32",
+];
+
+const SERVICES = [
+  {
+    id: "dating" as ServiceType,
+    label: "Dating Search",
+    icon: <Heart size={20} strokeWidth={2.5} />,
+    path: "/",
+  },
+  {
+    id: "following" as ServiceType,
+    label: "Following AI",
+    icon: <Users size={20} strokeWidth={2.5} />,
+    path: "/following-ai",
+  },
+  {
+    id: "facetrace" as ServiceType,
+    label: "Face Trace",
+    icon: <ScanFace size={20} strokeWidth={2.5} />,
+    path: "/face-trace",
+  },
+  {
+    id: "fidelity" as ServiceType,
+    label: "Fidelity Test",
+    icon: <MessageSquare size={20} strokeWidth={2.5} />,
+    path: "/fidelity-test",
+  },
+];
+
+const NAV_ITEMS = ["Search Profile", "Blog", "Affiliate Program"];
+
+const SERVICE_LINKS = [
+  { label: "Dating Search", path: "/dating-search/form", icon: "❤️" },
+  { label: "Following AI", path: "/following-ai", icon: "👥" },
+  { label: "Face Trace", path: "/face-trace", icon: "🔍" },
+  { label: "Fidelity Test", path: "/fidelity-test", icon: "🛡️" },
+];
+
+const TRENDING_KEYWORDS = [
+  "Pimeyes Alternative",
+  "Reverse Image Search",
+  "Face Search Free",
+  "Instagram Finder",
+  "Tinder Profile Search",
+  "AI Face Recognition",
+];
+
+const CONTENT_MAP: Record<ServiceType, ServiceContent> = {
+  dating: {
+    h1: "Find any profile on Tinder with AI Face Search",
+    desc: "Uncover your partner's secrets with the #1 Tinder Profile Finder. More accurate than Pimeyes for dating apps.",
+    instruction: "WHO ARE YOU LOOKING FOR?",
+    cta: "START SEARCH",
+    ctaEmoji: "🔍",
+    buttonIcon: <Search size={22} strokeWidth={3} />,
+    buttonClass: "bg-hero-cta-dating",
+  },
+  following: {
+    h1: "Reveal Hidden Instagram Connections",
+    desc: "Analyze their entire following list instantly. See who they recently followed and uncover suspicious interactions.",
+    instruction: "ENTER TARGET USERNAME",
+    cta: "ANALYZE FOLLOWINGS",
+    ctaEmoji: "📊",
+    buttonIcon: <Instagram size={22} strokeWidth={2.5} />,
+    buttonClass: "bg-hero-cta-following",
+  },
+  facetrace: {
+    h1: "Track Digital Footprint & Web Activity",
+    desc: "The ultimate Pimeyes alternative. Find every profile, blog post, and image trace across the entire web.",
+    instruction: "UPLOAD PHOTO TO SCAN",
+    cta: "START WEB SCAN",
+    ctaEmoji: "🌐",
+    buttonIcon: <ScanFace size={22} strokeWidth={2.5} />,
+    buttonClass: "bg-hero-cta-facetrace",
+  },
+  fidelity: {
+    h1: "Scan Chat Screenshots for Red Flags",
+    desc: "Upload screenshots of suspicious conversations (WhatsApp, SMS, Tinder). Our AI detects hidden infidelity signals.",
+    instruction: "UPLOAD CHAT SCREENSHOT",
+    cta: "ANALYZE CHAT",
+    ctaEmoji: "🛡️",
+    buttonIcon: <MessageCircle size={22} strokeWidth={2.5} />,
+    buttonClass: "bg-hero-cta-fidelity",
+  },
+};
+
+const HERO_GRADIENT_CLASSES: Record<ServiceType, string> = {
+  dating: "bg-hero-dating",
+  following: "bg-hero-following",
+  facetrace: "bg-hero-facetrace",
+  fidelity: "bg-hero-fidelity",
+};
+
+const ACCENT_CLASSES: Record<ServiceType, AccentClasses> = {
+  dating: {
+    text: "text-rose-500",
+    border: "border-rose-500",
+    shadow: "shadow-rose-500/40",
+    badge: "bg-rose-500",
+  },
+  following: {
+    text: "text-violet-500",
+    border: "border-violet-500",
+    shadow: "shadow-violet-500/40",
+    badge: "bg-violet-500",
+  },
+  facetrace: {
+    text: "text-sky-500",
+    border: "border-sky-500",
+    shadow: "shadow-sky-500/40",
+    badge: "bg-sky-500",
+  },
+  fidelity: {
+    text: "text-pink-600",
+    border: "border-pink-600",
+    shadow: "shadow-pink-500/40",
+    badge: "bg-pink-600",
+  },
+};
+
+const HeroAntigravity: React.FC = () => {
+  const router = useRouter();
+  const { selectedService, setSelectedService } = useService();
+  const [selectedGender, setSelectedGender] = useState<GenderType>("man");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [faceTraceImage, setFaceTraceImage] = useState<string | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [faceTraceFile, setFaceTraceFile] = useState<File | null>(null);
+
+  const handleFaceTraceUpload = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      setFaceTraceFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFaceTraceImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    },
+    []
+  );
+
+  const clearFaceTraceImage = useCallback(() => {
+    setFaceTraceImage(null);
+    setFaceTraceFile(null);
+  }, []);
+
+  const currentContent = useMemo(() => CONTENT_MAP[selectedService], [selectedService]);
+  const heroGradient = HERO_GRADIENT_CLASSES[selectedService];
+  const accent = ACCENT_CLASSES[selectedService];
+
+  const handleServiceSelect = useCallback(
+    (service: (typeof SERVICES)[number]) => {
+      setSelectedService(service.id);
+      router.push(service.path);
+    },
+    [router, setSelectedService]
+  );
+
+  const handleActionClick = useCallback(() => {
+    if (selectedService === "facetrace") {
+      if (typeof window !== "undefined" && faceTraceImage) {
+        sessionStorage.setItem("pf_facetrace_image", faceTraceImage);
+      }
+      router.push("/face-trace");
+      return;
+    }
+
+    if (selectedService === "following") {
+      router.push("/activity-tracker");
+      return;
+    }
+
+    if (selectedService === "dating") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      router.push("/dating-search/form");
+      return;
+    }
+
+    router.push("/payment");
+  }, [faceTraceImage, router, selectedService]);
+
+  return (
+    <section
+      className={cn(
+        "relative w-full overflow-hidden rounded-b-[48px] pb-20 text-white transition-colors duration-500",
+        "font-[var(--font-display),_'Plus_Jakarta_Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe_UI',sans-serif]",
+        heroGradient
+      )}
     >
-        <div style={{
-            position: 'relative',
-            width: '100%',
-            aspectRatio: '1',
-            borderRadius: '24px',
-            overflow: 'hidden',
-            border: `4px solid ${selected ? color : 'transparent'}`,
-            boxShadow: selected ? `0 15px 35px -10px ${color}99` : 'none',
-            transition: 'all 0.3s',
-            display: 'flex',
-            flexDirection: 'column',
-            backgroundColor: '#ffffff'
-        }}>
-            <div style={{
-                position: 'absolute',
-                inset: 0,
-                backgroundColor: selected ? '#ffffff' : '#f1f5f9'
-            }} />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[150px] rounded-b-[48px] bg-hero-bottom-fade" />
 
-            {/* Image container */}
-            <div style={{
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                bottom: '48px',
-                top: 0,
-                display: 'flex',
-                alignItems: 'flex-end',
-                justifyContent: 'center',
-                overflow: 'hidden',
-                paddingBottom: '8px'
-            }}>
-                <img
-                    src={img}
-                    alt={gender}
-                    style={{
-                        width: isWoman ? '82%' : '85%',
-                        height: 'auto',
-                        maxHeight: '100%',
-                        objectFit: 'contain',
-                        objectPosition: 'bottom',
-                        filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.15))',
-                        transition: 'transform 0.7s'
-                    }}
-                />
+      <HeroNavbar isMenuOpen={isMenuOpen} onToggleMenu={() => setIsMenuOpen(prev => !prev)} />
+
+      <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center px-4 pb-12 pt-8 text-center">
+        <div className="mb-10 flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-5 py-2 shadow-[0_4px_20px_rgba(0,0,0,0.1)] backdrop-blur">
+          <div className="flex">
+            {TRUSTED_USERS.map((url, index) => (
+              <div
+                key={url}
+                className={cn(
+                  "relative h-8 w-8 overflow-hidden rounded-full border-2 border-rose-400",
+                  index > 0 && "-ml-3"
+                )}
+              >
+                <Image src={url} alt="User" fill sizes="32px" className="object-cover" />
+              </div>
+            ))}
+            <div className="relative -ml-3 flex h-8 w-8 items-center justify-center rounded-full border-2 border-rose-400 bg-white text-[10px] font-bold text-rose-500">
+              +99
             </div>
-
-            <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                padding: '12px 0',
-                textAlign: 'center',
-                fontWeight: 900,
-                fontSize: '14px',
-                letterSpacing: '0.25em',
-                color: '#ffffff',
-                backgroundColor: selected ? color : '#94a3b8',
-                transition: 'background-color 0.3s',
-                zIndex: 20,
-                borderRadius: '0 0 20px 20px'
-            }}>
-                {gender}
-            </div>
-
-            {selected && (
-                <div style={{
-                    position: 'absolute',
-                    top: '12px',
-                    right: '12px',
-                    backgroundColor: '#ffffff',
-                    borderRadius: '50%',
-                    padding: '6px',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-                    zIndex: 30
-                }}>
-                    <Check size={16} strokeWidth={4} color={color} />
-                </div>
-            )}
+          </div>
+          <div className="text-left text-[12px] font-bold tracking-[0.02em] text-white/95">
+            TRUSTED BY <br />
+            <span className="flex items-center gap-1 font-extrabold text-white">
+              500k+ users
+              <Check size={12} className="rounded-full bg-emerald-500 p-[2px] text-white" strokeWidth={4} />
+            </span>
+          </div>
         </div>
+
+        <div className="mb-10 w-full">
+          <h1 className="mx-auto mb-6 max-w-[900px] text-[clamp(2.25rem,6vw,4.5rem)] font-extrabold leading-none tracking-tight text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.25)]">
+            {currentContent.h1}
+          </h1>
+          <p className="mx-auto max-w-[640px] text-[clamp(1rem,2vw,1.25rem)] font-medium leading-relaxed text-white/90">
+            {currentContent.desc}
+          </p>
+        </div>
+
+        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.05em] text-white/90">
+          Choose your service:
+        </p>
+        <ServiceTabSelector
+          services={SERVICES}
+          selectedService={selectedService}
+          onSelect={handleServiceSelect}
+        />
+
+        <div className="relative mb-16 w-full max-w-[480px] rounded-[40px] border border-white/60 bg-white p-6 text-slate-800 shadow-[0_25px_60px_rgba(0,0,0,0.25)]">
+          <div className="relative z-20 flex flex-col gap-6">
+            <div className="flex justify-center">
+              <div className="rounded-lg border border-slate-200 bg-slate-100 px-6 py-2">
+                <span className="text-[12px] font-black uppercase tracking-[0.15em] text-rose-500">
+                  {currentContent.instruction}
+                </span>
+              </div>
+            </div>
+
+            {selectedService === "dating" && (
+              <div className="grid grid-cols-2 gap-4">
+                <GenderSelectionCard
+                  gender="MAN"
+                  selected={selectedGender === "man"}
+                  onClick={() => setSelectedGender("man")}
+                  img={HERO_AVATAR_MAN}
+                  accent={ACCENT_CLASSES.dating}
+                />
+                <GenderSelectionCard
+                  gender="WOMAN"
+                  selected={selectedGender === "woman"}
+                  onClick={() => setSelectedGender("woman")}
+                  img={HERO_AVATAR_WOMAN}
+                  isWoman
+                  accent={ACCENT_CLASSES.dating}
+                />
+              </div>
+            )}
+
+            {selectedService === "following" && (
+              <div className="flex h-[300px] flex-col justify-center">
+                <div className="flex flex-1 flex-col items-center justify-center pb-6">
+                  <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-fuchsia-500 to-pink-500 text-white shadow-[0_8px_24px_rgba(168,85,247,0.3)]">
+                    <Instagram size={40} />
+                  </div>
+                  <p className="px-4 text-center text-sm font-semibold text-slate-500">
+                    Analyze public profiles & hidden connections.
+                  </p>
+                </div>
+                <div className="relative w-full">
+                  <div className="absolute left-4 top-1/2 z-10 -translate-y-1/2 text-lg font-extrabold text-slate-400">
+                    @
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="instagram_handle"
+                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-4 pl-10 text-base font-extrabold text-slate-800 outline-none"
+                  />
+                </div>
+              </div>
+            )}
+
+            {selectedService === "facetrace" && (
+              <div className="flex h-[300px] flex-col">
+                {!faceTraceImage ? (
+                  <UploadDropzone onUpload={handleFaceTraceUpload} accent={accent} />
+                ) : (
+                  <div className="relative flex-1 overflow-hidden rounded-2xl border-4 border-emerald-500">
+                    <Image
+                      src={faceTraceImage}
+                      alt="Preview"
+                      fill
+                      sizes="(max-width: 768px) 100vw, 480px"
+                      className="object-cover"
+                      unoptimized
+                    />
+                    <button
+                      onClick={clearFaceTraceImage}
+                      className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-rose-500 text-white shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+                    >
+                      <X size={18} strokeWidth={3} />
+                    </button>
+                    <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-lg bg-emerald-500 px-3 py-1.5 text-[12px] font-bold text-white">
+                      <Check size={14} strokeWidth={3} />
+                      Photo ready
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {selectedService === "fidelity" && (
+              <div className="-mt-3">
+                <FidelityForm />
+              </div>
+            )}
+
+            {selectedService !== "fidelity" && (
+              <button
+                onClick={handleActionClick}
+                className={cn(
+                  "hero-btn shimmer-effect relative mt-2 flex w-full items-center justify-center overflow-hidden rounded-full border border-white/10 px-6 py-4 text-white shadow-[0_8px_24px_rgba(0,0,0,0.2)]",
+                  currentContent.buttonClass
+                )}
+              >
+                <div className="shimmer-bar absolute inset-0 bg-hero-shimmer" />
+                <div className="relative z-20 flex items-center gap-4">
+                  <span className="opacity-90">{currentContent.buttonIcon}</span>
+                  <span className="text-lg font-black uppercase tracking-[0.1em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
+                    {currentContent.cta} {currentContent.ctaEmoji}
+                  </span>
+                  <ArrowRight size={20} strokeWidth={3} />
+                </div>
+                <span className="finger-point-animate pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-[28px] drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">
+                  👆
+                </span>
+              </button>
+            )}
+
+            <div className="mt-4 flex flex-col items-center gap-2 border-t border-slate-100 pt-4">
+              <div className="flex items-center gap-2 rounded-full border border-yellow-200 bg-yellow-50 px-3 py-1">
+                <div className="flex">
+                  {[1, 2, 3, 4, 5].map(i => (
+                    <Star key={i} size={12} fill="#FFB800" color="#FFB800" />
+                  ))}
+                </div>
+                <span className="text-[10px] font-bold text-slate-600">4.9/5 Rating</span>
+              </div>
+              <div className="flex items-center gap-2 text-slate-400">
+                <Activity size={12} className="text-emerald-500" />
+                <span className="text-[10px] font-extrabold uppercase tracking-[0.05em]">
+                  1,302 searches today
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <div className="pointer-events-none absolute -bottom-14 left-0 flex w-full justify-center">
+            <div className="flex items-center gap-4 rounded-full border border-white/20 bg-red-600 px-6 py-3 text-[10px] font-bold text-white shadow-[0_8px_24px_rgba(255,0,51,0.3)]">
+              <span className="flex items-center gap-2">
+                <Shield size={12} strokeWidth={3} /> 100% Private
+              </span>
+              <span className="h-3 w-px bg-white/30" />
+              <span className="flex items-center gap-2">
+                <Clock size={12} strokeWidth={3} /> Instant
+              </span>
+              <span className="h-3 w-px bg-white/30" />
+              <span className="flex items-center gap-2">
+                <Check size={12} strokeWidth={3} /> 99% Accuracy
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-full border-t border-white/10 bg-black/30 py-4 backdrop-blur">
+        <div className="animate-marquee flex items-center gap-12 whitespace-nowrap px-4">
+          {[...TRENDING_KEYWORDS, ...TRENDING_KEYWORDS].map((keyword, index) => (
+            <div
+              key={`${keyword}-${index}`}
+              className="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-white/60"
+            >
+              <TrendingUp size={12} className="text-rose-500" />
+              {keyword}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="hero-bottom-fade" />
+    </section>
+  );
+};
+
+const HeroNavbar = memo(function HeroNavbar({
+  isMenuOpen,
+  onToggleMenu,
+}: {
+  isMenuOpen: boolean;
+  onToggleMenu: () => void;
+}) {
+  return (
+    <nav className="relative z-50 mx-auto mt-2 flex w-full max-w-[1280px] items-center justify-between rounded-b-2xl border-b border-white/10 bg-white/5 px-6 py-4 backdrop-blur">
+      <div className="flex items-center gap-2">
+        <Image src={HERO_LOGO} alt="ProfileFinder" width={32} height={32} priority />
+        <span className="text-[clamp(18px,4vw,24px)] font-black tracking-tight drop-shadow">
+          ProfileFinder
+        </span>
+      </div>
+
+      <div className="desktop-nav flex items-center gap-8 text-[15px] font-semibold">
+        {NAV_ITEMS.map(item => (
+          <a
+            key={item}
+            href="#"
+            className="text-white/80 transition-colors hover:text-white"
+          >
+            {item}
+          </a>
+        ))}
+      </div>
+
+      <div className="desktop-nav flex items-center gap-4">
+        <div className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-white">
+          <Globe size={16} />
+          <span>EN</span>
+        </div>
+        <button className="flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-5 py-2.5 text-sm font-bold text-white backdrop-blur transition-all focus:outline-none focus:ring-2 focus:ring-white">
+          <User size={18} />
+          <span>Profile</span>
+        </button>
+      </div>
+
+      <button
+        className="mobile-menu-btn flex h-11 w-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-white backdrop-blur transition"
+        onClick={onToggleMenu}
+        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isMenuOpen}
+      >
+        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      {isMenuOpen && (
+        <div className="mobile-menu absolute left-0 right-0 top-full z-[100] mt-2 flex flex-col gap-4 rounded-b-3xl border border-white/10 bg-black/95 p-6 backdrop-blur-2xl">
+          {NAV_ITEMS.map(item => (
+            <a
+              key={item}
+              href="#"
+              className="rounded-xl bg-white/5 px-4 py-3 text-lg font-semibold text-white/90"
+              onClick={onToggleMenu}
+            >
+              {item}
+            </a>
+          ))}
+
+          <div className="mt-2 border-t border-white/10 pt-4">
+            <p className="mb-3 text-[12px] font-bold uppercase tracking-[0.1em] text-white/50">
+              Our Services
+            </p>
+            <div className="flex flex-col gap-2">
+              {SERVICE_LINKS.map(service => (
+                <a
+                  key={service.label}
+                  href={service.path}
+                  className="flex items-center gap-3 rounded-xl bg-rose-500/15 px-4 py-2.5 text-base font-semibold text-white/90"
+                  onClick={onToggleMenu}
+                >
+                  <span>{service.icon}</span>
+                  {service.label}
+                </a>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex gap-3 border-t border-white/10 pt-4">
+            <button className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-white/20 bg-transparent py-3 text-sm font-semibold text-white">
+              <Globe size={18} />
+              EN
+            </button>
+            <button className="flex flex-[2] items-center justify-center gap-2 rounded-xl bg-white py-3 text-sm font-bold text-slate-900">
+              <User size={18} />
+              Profile
+            </button>
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+});
+
+const ServiceTabSelector = memo(function ServiceTabSelector({
+  services,
+  selectedService,
+  onSelect,
+}: {
+  services: typeof SERVICES;
+  selectedService: ServiceType;
+  onSelect: (service: (typeof SERVICES)[number]) => void;
+}) {
+  return (
+    <div className="mb-8 flex w-full max-w-[700px] flex-wrap justify-center gap-2 px-2">
+      {services.map(service => (
+        <button
+          key={service.id}
+          onClick={() => onSelect(service)}
+          className={cn(
+            "tab-btn flex items-center gap-2 rounded-full border-2 px-4 py-2 text-[13px] font-bold shadow-sm transition",
+            selectedService === service.id
+              ? "border-slate-900 bg-slate-900 text-white shadow-md"
+              : "border-transparent bg-white text-slate-600"
+          )}
+        >
+          {React.cloneElement(service.icon as React.ReactElement<{ size?: number }>, { size: 16 })}
+          <span className="tracking-wide">{service.label}</span>
+        </button>
+      ))}
     </div>
-);
+  );
+});
+
+const UploadDropzone = memo(function UploadDropzone({ onUpload, accent }: UploadDropzoneProps) {
+  return (
+    <div
+      className={cn(
+        "relative flex h-full cursor-pointer flex-col items-center justify-center overflow-hidden rounded-2xl border-4 border-dashed border-slate-200 bg-slate-50/60 p-6 transition",
+        accent.text
+      )}
+    >
+      <div className="animate-scan absolute left-0 right-0 h-[3px] bg-current shadow-[0_0_20px_currentColor]" />
+      <div className="relative z-10 flex flex-col items-center gap-4 text-center">
+        <div className="relative flex h-20 w-20 items-center justify-center rounded-full border-4 border-slate-100 bg-white shadow-[0_8px_24px_rgba(0,0,0,0.1)]">
+          <ScanFace size={48} strokeWidth={1.5} />
+          <div className="absolute -bottom-1 -right-1 rounded-full border-4 border-white bg-slate-900 p-1 text-white">
+            <Fingerprint size={16} />
+          </div>
+        </div>
+        <div>
+          <h3 className="mb-2 text-xl font-black text-slate-900">Drag & Drop Photo</h3>
+          <p className="inline-block rounded-full border border-slate-200 bg-white/60 px-3 py-1 text-[12px] font-bold text-slate-500">
+            JPG, PNG (Max 10MB)
+          </p>
+        </div>
+        <div className="flex items-center gap-2 rounded-xl bg-slate-900 px-5 py-2 text-[12px] font-extrabold text-white shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+          <UploadCloud size={16} strokeWidth={3} />
+          Browse Files
+        </div>
+      </div>
+      <input
+        type="file"
+        accept="image/*"
+        onChange={onUpload}
+        className="absolute inset-0 cursor-pointer opacity-0"
+      />
+    </div>
+  );
+});
+
+const GenderSelectionCard = memo(function GenderSelectionCard({
+  gender,
+  selected,
+  onClick,
+  img,
+  isWoman,
+  accent,
+}: GenderCardProps) {
+  return (
+    <div onClick={onClick} className="gender-card flex cursor-pointer flex-col items-center">
+      <div
+        className={cn(
+          "relative aspect-square w-full overflow-hidden rounded-3xl border-4 bg-white transition",
+          selected ? cn(accent.border, "shadow-lg", accent.shadow) : "border-transparent"
+        )}
+      >
+        <div className={cn("absolute inset-0", selected ? "bg-white" : "bg-slate-100")} />
+        <div className="absolute inset-x-0 bottom-12 top-0 flex items-end justify-center overflow-hidden pb-2">
+          <div className="relative h-full w-full">
+            <Image
+              src={img}
+              alt={gender}
+              fill
+              sizes="(max-width: 768px) 45vw, 200px"
+              priority
+              className={cn(
+                "object-contain object-bottom drop-shadow-[0_8px_16px_rgba(0,0,0,0.15)] transition-transform duration-700",
+                isWoman ? "scale-[0.95]" : "scale-100"
+              )}
+            />
+          </div>
+        </div>
+        <div
+          className={cn(
+            "absolute bottom-0 left-0 right-0 rounded-b-[20px] py-3 text-center text-[14px] font-black tracking-[0.25em] text-white",
+            selected ? accent.badge : "bg-slate-400"
+          )}
+        >
+          {gender}
+        </div>
+        {selected && (
+          <div className="absolute right-3 top-3 rounded-full bg-white p-1.5 shadow-[0_4px_12px_rgba(0,0,0,0.15)]">
+            <Check size={16} strokeWidth={4} className={accent.text} />
+          </div>
+        )}
+      </div>
+    </div>
+  );
+});
 
 export default HeroAntigravity;

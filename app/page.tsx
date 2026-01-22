@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, lazy, Suspense, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import HeroAntigravity from "@/components/HeroAntigravity";
 import { StatsBar } from "@/components/StatsBar";
@@ -37,24 +37,33 @@ function SectionSkeleton() {
 }
 
 export default function HomePage() {
-  const [showWidget, setShowWidget] = useState(false);
+  const heroRef = useRef<HTMLDivElement | null>(null);
+  const footerRef = useRef<HTMLDivElement | null>(null);
+  const [isHeroVisible, setIsHeroVisible] = useState(true);
+  const [isFooterVisible, setIsFooterVisible] = useState(false);
   const [bottomInset, setBottomInset] = useState(24);
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
+    if (!heroRef.current || !footerRef.current) return;
 
-      // Hide widget when near bottom (footer area) - within 400px of bottom
-      const isNearBottom = scrollY + windowHeight > documentHeight - 400;
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.target === heroRef.current) {
+            setIsHeroVisible(entry.isIntersecting);
+          }
+          if (entry.target === footerRef.current) {
+            setIsFooterVisible(entry.isIntersecting);
+          }
+        });
+      },
+      { threshold: 0 }
+    );
 
-      // Show widget after scrolling past hero (1200px) but hide near footer
-      setShowWidget(scrollY > 1200 && !isNearBottom);
-    };
+    observer.observe(heroRef.current);
+    observer.observe(footerRef.current);
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -81,7 +90,9 @@ export default function HomePage() {
       <div className="relative min-h-screen bg-slate-50">
         {/* 1. Main Content */}
         <main className="w-full mx-auto pb-40">
-          <HeroAntigravity />
+          <div ref={heroRef}>
+            <HeroAntigravity />
+          </div>
           <StatsBar />
           <HowItWorks />
           <UGCSection />
@@ -109,12 +120,14 @@ export default function HomePage() {
             <FAQ />
           </Suspense>
 
-          <Footer />
+          <div ref={footerRef}>
+            <Footer />
+          </div>
         </main>
 
         {/* 2. Sticky Widget - appears after scrolling past Hero */}
         <AnimatePresence>
-          {showWidget && (
+          {!isHeroVisible && !isFooterVisible && (
             <motion.div
               initial={{ opacity: 0, y: 100 }}
               animate={{ opacity: 1, y: 0 }}
