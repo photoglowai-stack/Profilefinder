@@ -66,9 +66,39 @@ export default function DatingSearchWizard() {
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<L.Map | null>(null);
     const markerRef = useRef<L.Marker | null>(null);
+    const leafletPromiseRef = useRef<Promise<typeof import('leaflet')> | null>(null);
 
     // Search timeout
     const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const searchAbortRef = useRef<AbortController | null>(null);
+    const searchCacheRef = useRef(new Map<string, Array<{ display_name: string; lat: string; lon: string }>>());
+
+    // Loading timers
+    const loadingIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const loadingTimeoutsRef = useRef<Array<ReturnType<typeof setTimeout>>>([]);
+
+    const getLeaflet = useCallback(async () => {
+        if (!leafletPromiseRef.current) {
+            leafletPromiseRef.current = import('leaflet');
+        }
+        return leafletPromiseRef.current;
+    }, []);
+
+    useEffect(() => {
+        return () => {
+            if (searchTimeoutRef.current) {
+                clearTimeout(searchTimeoutRef.current);
+            }
+            if (searchAbortRef.current) {
+                searchAbortRef.current.abort();
+            }
+            if (loadingIntervalRef.current) {
+                clearInterval(loadingIntervalRef.current);
+            }
+            loadingTimeoutsRef.current.forEach(timeoutId => clearTimeout(timeoutId));
+            loadingTimeoutsRef.current = [];
+        };
+    }, []);
 
     // ============================================
     // SOCIAL PROOF TOASTS
@@ -123,15 +153,15 @@ export default function DatingSearchWizard() {
         if (currentStep === 3) {
             initMap();
         }
-    }, [currentStep]);
+    }, [currentStep, initMap]);
 
     // ============================================
     // MAP INITIALIZATION (Leaflet)
     // ============================================
-    const initMap = async () => {
+    const initMap = useCallback(async () => {
         if (mapRef.current || !mapContainerRef.current) return;
 
-        const L = await import('leaflet');
+        const L = await getLeaflet();
 
         mapRef.current = L.map(mapContainerRef.current, {
             zoomControl: false,
@@ -154,7 +184,7 @@ export default function DatingSearchWizard() {
                 mapRef.current?.invalidateSize();
             });
         });
-    };
+    }, [getLeaflet]);
 
     // ============================================
     // LOCATION SEARCH
@@ -174,17 +204,33 @@ export default function DatingSearchWizard() {
 
         searchTimeoutRef.current = setTimeout(async () => {
             try {
-                const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`);
-                const data = await res.json();
-                if (data.length > 0) {
-                    setSuggestions(data.slice(0, 4));
-                    setShowSuggestions(true);
-                } else {
-                    setSuggestions([]);
-                    setShowSuggestions(false);
+                const cached = searchCacheRef.current.get(query);
+                if (cached) {
+                    setSuggestions(cached.slice(0, 4));
+                    setShowSuggestions(cached.length > 0);
+                    return;
                 }
+
+                if (searchAbortRef.current) {
+                    searchAbortRef.current.abort();
+                }
+
+                const controller = new AbortController();
+                searchAbortRef.current = controller;
+
+                const res = await fetch(
+                    `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}`,
+                    { signal: controller.signal }
+                );
+                const data = await res.json();
+                const results = Array.isArray(data) ? data : [];
+                searchCacheRef.current.set(query, results);
+                setSuggestions(results.slice(0, 4));
+                setShowSuggestions(results.length > 0);
             } catch (err) {
-                console.error('Location search error:', err);
+                if ((err as Error).name !== 'AbortError') {
+                    console.error('Location search error:', err);
+                }
             }
         }, 300);
     };
@@ -195,7 +241,7 @@ export default function DatingSearchWizard() {
         setShowSuggestions(false);
 
         if (mapRef.current) {
-            const L = await import('leaflet');
+            const L = await getLeaflet();
 
             if (markerRef.current) {
                 mapRef.current.removeLayer(markerRef.current);
@@ -224,17 +270,26 @@ export default function DatingSearchWizard() {
         setLoadingPercent(0);
         setActiveLogs([1]);
 
-        setTimeout(() => setActiveLogs(prev => [...prev, 2]), 1000);
-        setTimeout(() => setActiveLogs(prev => [...prev, 3]), 2000);
+        if (loadingIntervalRef.current) {
+            clearInterval(loadingIntervalRef.current);
+        }
+        loadingTimeoutsRef.current.forEach(timeoutId => clearTimeout(timeoutId));
+        loadingTimeoutsRef.current = [];
+
+        loadingTimeoutsRef.current.push(setTimeout(() => setActiveLogs(prev => [...prev, 2]), 1000));
+        loadingTimeoutsRef.current.push(setTimeout(() => setActiveLogs(prev => [...prev, 3]), 2000));
 
         let progress = 0;
-        const interval = setInterval(() => {
+        loadingIntervalRef.current = setInterval(() => {
             progress += 1;
             setLoadingPercent(progress);
 
             if (progress >= 100) {
-                clearInterval(interval);
-                setTimeout(() => goToStep(5), 600);
+                if (loadingIntervalRef.current) {
+                    clearInterval(loadingIntervalRef.current);
+                    loadingIntervalRef.current = null;
+                }
+                loadingTimeoutsRef.current.push(setTimeout(() => goToStep(5), 600));
             }
         }, 30);
     };
