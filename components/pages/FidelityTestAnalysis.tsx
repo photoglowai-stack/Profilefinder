@@ -233,6 +233,7 @@ export default function FidelityTestAnalysis() {
                     <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px', backgroundColor: 'white' }}>
 
                         {/* 1. Thumbnails */}
+                        {!gateTriggered && (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                                 <h3 style={{
@@ -277,8 +278,10 @@ export default function FidelityTestAnalysis() {
                                 ))}
                             </div>
                         </div>
+                        )}
 
                         {/* 2. Logs */}
+                        {!gateTriggered && (
                         <div className="fidelity-progress-container">
                             <div style={{
                                 display: 'flex',
@@ -357,6 +360,7 @@ export default function FidelityTestAnalysis() {
                                 })}
                             </div>
                         </div>
+                        )}
 
                         {/* 3. Report & Gate */}
                         <div style={{ position: 'relative' }}>

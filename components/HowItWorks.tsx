@@ -194,7 +194,7 @@ export function HowItWorks() {
       <div className="max-w-7xl mx-auto">
         <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
 
-          {/* LEFT: TINDER PROFILE CARD (STICKY) */}
+          {/* LEFT: VISUAL (STICKY) */}
           <motion.div
             className="lg:sticky lg:top-24"
             initial={{ opacity: 0, x: -50 }}
@@ -202,81 +202,136 @@ export function HowItWorks() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="relative bg-white dark:bg-[#1e293b] rounded-[2rem] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)] max-w-sm mx-auto transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700 border border-white/10">
+            {(selectedService === 'dating' || selectedService === 'facetrace') && (
+              <div className="relative bg-white dark:bg-[#1e293b] rounded-[2rem] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)] max-w-sm mx-auto transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700 border border-white/10">
+                {/* Badge LIVE */}
+                <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border z-10" style={{
+                  backgroundColor: `${serviceColors.primary}15`,
+                  color: serviceColors.primary,
+                  borderColor: `${serviceColors.primary}30`
+                }}>
+                  <div className="w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: serviceColors.primary }}></div>
+                  LIVE
+                </div>
 
-              {/* Badge LIVE */}
-              <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border z-10" style={{
-                backgroundColor: `${serviceColors.primary}15`,
-                color: serviceColors.primary,
-                borderColor: `${serviceColors.primary}30`
-              }}>
-                <div className="w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: serviceColors.primary }}></div>
-                LIVE
-              </div>
+                {/* Header: Name, Age, Location */}
+                <div className="text-center mb-6 mt-2">
+                  <h2 className="text-gray-900 dark:text-white text-2xl font-bold flex items-center justify-center gap-2">
+                    Victor, 26
+                    <CheckCircle2 className="w-5 h-5 text-blue-500 fill-blue-500/20" />
+                  </h2>
+                  <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-widest mt-1">
+                    New York • Detected 2m ago
+                  </p>
+                </div>
 
-              {/* Header: Name, Age, Location */}
-              <div className="text-center mb-6 mt-2">
-                <h2 className="text-gray-900 dark:text-white text-2xl font-bold flex items-center justify-center gap-2">
-                  Victor, 26
-                  <CheckCircle2 className="w-5 h-5 text-blue-500 fill-blue-500/20" />
-                </h2>
-                <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-widest mt-1">
-                  New York • Detected 2m ago
-                </p>
-              </div>
+                {/* Photo with Scan Effect */}
+                <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-5 group shadow-inner">
+                  <img
+                    src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
+                    alt="Victor"
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
 
-              {/* Photo with Scan Effect */}
-              <div className="relative aspect-[4/5] rounded-2xl overflow-hidden mb-5 group shadow-inner">
-                <img
-                  src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=600&q=80"
-                  alt="Victor"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
+                  {/* Dark Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
 
-                {/* Dark Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-60"></div>
-
-                {/* Progress Bars & Match Score */}
-                <div className="absolute bottom-0 left-0 right-0 p-4">
-                  <div className="flex gap-1 mb-2">
-                    <div className="h-1 flex-1 bg-white/40 rounded-full overflow-hidden">
-                      <div className="h-full w-full bg-white rounded-full"></div>
+                  {/* Progress Bars & Match Score */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4">
+                    <div className="flex gap-1 mb-2">
+                      <div className="h-1 flex-1 bg-white/40 rounded-full overflow-hidden">
+                        <div className="h-full w-full bg-white rounded-full"></div>
+                      </div>
+                      <div className="h-1 flex-1 bg-white/40 rounded-full"></div>
+                      <div className="h-1 flex-1 bg-white/40 rounded-full"></div>
                     </div>
-                    <div className="h-1 flex-1 bg-white/40 rounded-full"></div>
-                    <div className="h-1 flex-1 bg-white/40 rounded-full"></div>
-                  </div>
-                  <div className="flex justify-between items-end">
-                    <span className="text-white text-sm font-medium">Match probability</span>
-                    <span className="text-green-400 text-xl font-bold">98%</span>
+                    <div className="flex justify-between items-end">
+                      <span className="text-white text-sm font-medium">Match probability</span>
+                      <span className="text-green-400 text-xl font-bold">98%</span>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Status Info */}
-              <div className="space-y-3 bg-gray-50 dark:bg-[#0f172a] p-4 rounded-xl border border-gray-100 dark:border-gray-800">
-                <div className="flex items-center justify-between text-gray-700 dark:text-gray-300 text-sm">
-                  <span className="flex items-center gap-2">
-                    <Eye className="w-4 h-4" style={{ color: serviceColors.primary }} /> Last activity
-                  </span>
-                  <span className="text-green-500 font-medium">Online</span>
+                {/* Status Info */}
+                <div className="space-y-3 bg-gray-50 dark:bg-[#0f172a] p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+                  <div className="flex items-center justify-between text-gray-700 dark:text-gray-300 text-sm">
+                    <span className="flex items-center gap-2">
+                      <Eye className="w-4 h-4" style={{ color: serviceColors.primary }} /> Last activity
+                    </span>
+                    <span className="text-green-500 font-medium">Online</span>
+                  </div>
+                  <div className="flex items-center justify-between text-gray-700 dark:text-gray-300 text-sm">
+                    <span className="flex items-center gap-2">
+                      <CheckCircle2 className="w-4 h-4" style={{ color: serviceColors.primary }} /> Verified account
+                    </span>
+                    <CheckCircle2 className="w-4 h-4 text-blue-500" />
+                  </div>
                 </div>
-                <div className="flex items-center justify-between text-gray-700 dark:text-gray-300 text-sm">
-                  <span className="flex items-center gap-2">
-                    <CheckCircle2 className="w-4 h-4" style={{ color: serviceColors.primary }} /> Verified account
-                  </span>
-                  <CheckCircle2 className="w-4 h-4 text-blue-500" />
-                </div>
-              </div>
 
-              {/* CTA Button */}
-              <button className="mt-4 w-full py-3 text-white font-bold rounded-xl text-sm transition-all shadow-lg flex items-center justify-center gap-2 group" style={{
-                background: `linear-gradient(135deg, ${serviceColors.primary}, ${serviceColors.secondary})`,
-                boxShadow: `0 10px 30px ${serviceColors.primary}30`
-              }}>
-                <Sparkles className="w-4 h-4 group-hover:text-yellow-300 transition-colors" />
-                View full report
-              </button>
-            </div>
+                {/* CTA Button */}
+                <button className="mt-4 w-full py-3 text-white font-bold rounded-xl text-sm transition-all shadow-lg flex items-center justify-center gap-2 group" style={{
+                  background: `linear-gradient(135deg, ${serviceColors.primary}, ${serviceColors.secondary})`,
+                  boxShadow: `0 10px 30px ${serviceColors.primary}30`
+                }}>
+                  <Sparkles className="w-4 h-4 group-hover:text-yellow-300 transition-colors" />
+                  View full report
+                </button>
+              </div>
+            )}
+
+            {(selectedService === 'fidelity' || selectedService === 'following') && (
+              <div className="relative bg-white dark:bg-[#1e293b] rounded-[2rem] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)] max-w-sm mx-auto transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700 border border-white/10">
+                <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border z-10" style={{
+                  backgroundColor: `${serviceColors.primary}15`,
+                  color: serviceColors.primary,
+                  borderColor: `${serviceColors.primary}30`
+                }}>
+                  <div className="w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: serviceColors.primary }}></div>
+                  ACTIVE SCAN
+                </div>
+                
+                <div className="text-center mb-6 mt-2">
+                  <h2 className="text-gray-900 dark:text-white text-xl font-bold flex items-center justify-center gap-2">
+                    <Eye className="w-5 h-5" style={{ color: serviceColors.primary }} /> Alert Detected
+                  </h2>
+                  <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-widest mt-1">
+                    Analysis Complete
+                  </p>
+                </div>
+
+                <div className="relative bg-slate-50 dark:bg-slate-800 rounded-2xl p-4 mb-5 border border-slate-100 dark:border-slate-700 h-[260px] flex flex-col justify-end">
+                  <div className="space-y-4 w-full opacity-60">
+                    <div className="bg-slate-200 dark:bg-slate-700 h-8 w-3/4 rounded-lg rounded-bl-none self-start"></div>
+                    <div className="bg-slate-300 dark:bg-slate-600 h-12 w-2/3 rounded-lg rounded-br-none self-end ml-auto"></div>
+                    <div className="bg-slate-200 dark:bg-slate-700 h-10 w-5/6 rounded-lg rounded-bl-none self-start"></div>
+                  </div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-slate-800 via-white/80 dark:via-slate-800/80 to-transparent flex items-end justify-center pb-6">
+                    <div className="bg-white dark:bg-slate-900 shadow-xl border border-slate-100 dark:border-slate-700 rounded-xl p-4 text-center w-5/6">
+                      <span className="text-3xl font-black block mb-1" style={{ color: serviceColors.primary }}>High</span>
+                      <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Risk Level</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="space-y-3 bg-gray-50 dark:bg-[#0f172a] p-4 rounded-xl border border-gray-100 dark:border-gray-800">
+                  <div className="flex items-center justify-between text-gray-700 dark:text-gray-300 text-sm">
+                    <span className="flex items-center gap-2">
+                      <IconZap className="w-4 h-4" style={{ color: serviceColors.primary }} /> Hidden patterns
+                    </span>
+                    <span className="text-rose-500 font-medium">Found</span>
+                  </div>
+                </div>
+
+                <button className="mt-4 w-full py-3 text-white font-bold rounded-xl text-sm transition-all shadow-lg flex items-center justify-center gap-2 group" style={{
+                  background: `linear-gradient(135deg, ${serviceColors.primary}, ${serviceColors.secondary})`,
+                  boxShadow: `0 10px 30px ${serviceColors.primary}30`
+                }}>
+                  <Sparkles className="w-4 h-4 group-hover:text-yellow-300 transition-colors" />
+                  View detailed evidence
+                </button>
+
+              </div>
+            )}
           </motion.div>
 
           {/* RIGHT: STEPS */}

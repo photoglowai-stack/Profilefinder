@@ -38,8 +38,9 @@ const HeroAntigravity: React.FC = () => {
     const [selectedGender, setSelectedGender] = useState<GenderType>('man');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [faceTraceImage, setFaceTraceImage] = useState<string | null>(null);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [faceTraceFile, setFaceTraceFile] = useState<File | null>(null);
+    const [isPrivate, setIsPrivate] = useState(false);
+    const [showError, setShowError] = useState(false);
 
     const handleFaceTraceUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -199,13 +200,7 @@ const HeroAntigravity: React.FC = () => {
                 </div>
 
                 {/* Desktop Navigation Links */}
-                <div className="desktop-nav" style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '32px',
-                    fontWeight: 600,
-                    fontSize: '15px'
-                }}>
+                <div className="hidden lg:flex items-center gap-8 font-semibold text-[15px]">
                     {['Search Profile', 'Blog', 'Affiliate Program'].map((item) => (
                         <a
                             key={item}
@@ -225,8 +220,8 @@ const HeroAntigravity: React.FC = () => {
                 </div>
 
                 {/* Desktop Right Section */}
-                <div className="desktop-nav" style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', padding: '8px 12px', borderRadius: '12px', fontWeight: 600, fontSize: '14px' }}>
+                <div className="hidden lg:flex items-center gap-4">
+                    <div className="flex items-center gap-1.5 cursor-pointer px-3 py-2 rounded-xl font-semibold text-sm">
                         <Globe size={16} />
                         <span>EN</span>
                     </div>
@@ -256,14 +251,11 @@ const HeroAntigravity: React.FC = () => {
 
                 {/* Mobile Hamburger Button */}
                 <button
-                    className="mobile-menu-btn"
+                    className="flex lg:hidden items-center justify-center"
                     onClick={() => setIsMenuOpen(!isMenuOpen)}
                     aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
                     aria-expanded={isMenuOpen}
                     style={{
-                        display: 'none',
-                        alignItems: 'center',
-                        justifyContent: 'center',
                         width: '44px',
                         height: '44px',
                         border: '1px solid rgba(255,255,255,0.3)',
@@ -399,34 +391,14 @@ const HeroAntigravity: React.FC = () => {
             </nav>
 
             {/* Main Content */}
-            <div style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                paddingTop: '32px',
-                paddingBottom: '48px',
-                paddingLeft: '16px',
-                paddingRight: '16px',
-                textAlign: 'center',
-                width: '100%',
-                maxWidth: '1280px',
-                margin: '0 auto'
-            }}>
+            <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1280px] mx-auto px-4 pt-1 pb-6 lg:pt-2 lg:pb-12 gap-6 lg:gap-8 relative z-10">
+                
+                {/* Left Column */}
+                <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-[55%]">
 
                 {/* Trusted Badge */}
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '12px',
-                    backgroundColor: 'rgba(255,255,255,0.1)',
-                    backdropFilter: 'blur(12px)',
-                    padding: '8px 20px',
-                    borderRadius: '9999px',
-                    marginBottom: '40px',
-                    border: '1px solid rgba(255,255,255,0.2)',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-                }}>
-                    <div style={{ display: 'flex' }}>
+                <div className="mb-4 lg:mb-10 flex items-center gap-[12px] bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 shadow-lg scale-[0.85] origin-top lg:scale-100 lg:origin-left transition-transform">
+                    <div className="flex">
                         {trustedUsers.map((url, i) => (
                             <img
                                 key={i}
@@ -469,83 +441,80 @@ const HeroAntigravity: React.FC = () => {
                 </div>
 
                 {/* Headlines */}
-                <div style={{ width: '100%', marginBottom: '40px' }}>
-                    <h1 style={{
-                        fontSize: 'clamp(2.25rem, 6vw, 4.5rem)',
-                        fontWeight: 800,
-                        marginBottom: '24px',
-                        maxWidth: '900px',
-                        margin: '0 auto 24px',
-                        lineHeight: 1.0,
-                        letterSpacing: '-0.03em',
-                        textShadow: '0 4px 20px rgba(0,0,0,0.25)',
-                        fontFamily: "var(--font-display), 'Plus Jakarta Sans', sans-serif"
-                    }}>
+                <div className="w-full mb-6 lg:mb-10">
+                    <h1 className="font-extrabold mb-4 leading-[1.05] tracking-tight text-white drop-shadow-lg"
+                        style={{
+                            fontSize: 'clamp(1.75rem, 4.5vw, 4rem)',
+                            fontFamily: "var(--font-display), 'Plus Jakarta Sans', sans-serif"
+                        }}>
                         {currentContent.h1}
                     </h1>
-                    <p style={{
-                        fontSize: 'clamp(1rem, 2vw, 1.25rem)',
-                        color: 'rgba(255,255,255,0.9)',
-                        maxWidth: '640px',
-                        margin: '0 auto',
-                        lineHeight: 1.6,
-                        fontWeight: 500
-                    }}>
+                    <p className="text-white/90 leading-relaxed font-medium md:max-w-[80%]"
+                       style={{ fontSize: 'clamp(0.9rem, 1.8vw, 1.15rem)' }}>
                         {currentContent.desc}
                     </p>
                 </div>
 
                 {/* Service Selector */}
-                <p style={{
-                    fontSize: '14px',
-                    fontWeight: 600,
-                    color: 'rgba(255,255,255,0.9)',
-                    marginBottom: '12px',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.05em'
-                }}>
-                    Choose your service:
-                </p>
-                <div style={{
-                    display: 'flex',
-                    flexWrap: 'wrap',
-                    justifyContent: 'center',
-                    gap: '8px',
-                    marginBottom: '32px',
-                    width: '100%',
-                    maxWidth: '700px',
-                    padding: '0 8px'
-                }}>
-                    {services.map((service) => (
-                        <button
-                            key={service.id}
-                            onClick={() => {
-                                setSelectedService(service.id);
-                                router.push(service.path);
-                            }}
-                            className="tab-btn"
-                            style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '6px',
-                                padding: '10px 16px',
-                                borderRadius: '9999px',
-                                fontSize: '13px',
-                                fontWeight: 700,
-                                cursor: 'pointer',
-                                border: selectedService === service.id ? '2px solid #0a0a0a' : '2px solid transparent',
-                                backgroundColor: selectedService === service.id ? '#0a0a0a' : '#ffffff',
-                                color: selectedService === service.id ? '#ffffff' : '#475569',
-                                boxShadow: selectedService === service.id ? '0 6px 16px rgba(10,10,10,0.25)' : '0 2px 6px rgba(0,0,0,0.06)',
-                                transform: selectedService === service.id ? 'scale(1.02)' : 'scale(1)',
-                                transition: 'all 0.3s ease'
-                            }}
-                        >
-                            {React.cloneElement(service.icon as React.ReactElement<{ size?: number }>, { size: 16 })}
-                            <span style={{ fontWeight: 700, letterSpacing: '0.01em' }}>{service.label}</span>
-                        </button>
-                    ))}
+                <div className="w-full mb-4 flex flex-col items-center lg:items-start scale-[0.85] origin-top lg:scale-100 lg:origin-left transition-transform">
+                    <p style={{
+                        fontSize: '14px',
+                        fontWeight: 600,
+                        color: 'rgba(255,255,255,0.9)',
+                        marginBottom: '12px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em'
+                    }}>
+                        Choose your service:
+                    </p>
+                    <div className="flex flex-wrap justify-center lg:justify-start gap-2 w-full max-w-[700px]">
+                        {services.map((service) => (
+                            <button
+                                key={service.id}
+                                onClick={() => {
+                                    setSelectedService(service.id);
+                                    router.push(service.path);
+                                }}
+                                className="tab-btn"
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    padding: '10px 16px',
+                                    borderRadius: '9999px',
+                                    fontSize: '13px',
+                                    fontWeight: 700,
+                                    cursor: 'pointer',
+                                    border: selectedService === service.id ? '2px solid #0a0a0a' : '2px solid transparent',
+                                    backgroundColor: selectedService === service.id ? '#0a0a0a' : '#ffffff',
+                                    color: selectedService === service.id ? '#ffffff' : '#475569',
+                                    boxShadow: selectedService === service.id ? '0 6px 16px rgba(10,10,10,0.25)' : '0 2px 6px rgba(0,0,0,0.06)',
+                                    transform: selectedService === service.id ? 'scale(1.02)' : 'scale(1)',
+                                    transition: 'all 0.3s ease'
+                                }}
+                            >
+                                {React.cloneElement(service.icon as React.ReactElement<{ size?: number }>, { size: 16 })}
+                                <span style={{ fontWeight: 700, letterSpacing: '0.01em' }}>{service.label}</span>
+                            </button>
+                        ))}
+                    </div>
                 </div>
+
+                {/* Ils parlent de nous */}
+                <div className="mt-4 lg:mt-8 hidden lg:flex flex-col items-center lg:items-start w-full">
+                    <p className="font-bold text-[22px] text-white mb-6">Ils parlent de nous</p>
+                    <div className="flex items-center gap-8 opacity-60 grayscale brightness-[2] flex-wrap justify-center lg:justify-start">
+                        <span style={{ fontSize: '28px', fontWeight: 900, fontFamily: 'serif', letterSpacing: '-1px' }}>Forbes</span>
+                        <span style={{ fontSize: '28px', fontWeight: 900, fontFamily: 'serif', fontStyle: 'italic', letterSpacing: '-1px' }}>DailyMail</span>
+                        <span style={{ fontSize: '28px', fontWeight: 900, letterSpacing: '-1px' }}>The Sun</span>
+                        <span style={{ fontSize: '28px', fontWeight: 900, fontFamily: 'sans-serif', letterSpacing: '-2px' }}>VICE</span>
+                    </div>
+                </div>
+
+                </div>
+
+                {/* Right Column */}
+                <div className="w-full lg:w-[45%] flex justify-center lg:justify-end shrink-0">
 
                 {/* The Card */}
                 <div style={{
@@ -606,54 +575,103 @@ const HeroAntigravity: React.FC = () => {
 
                         {selectedService === 'following' && (
                             <div style={{ display: 'flex', flexDirection: 'column', height: '300px', justifyContent: 'center' }}>
-                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
-                                    <div style={{
-                                        width: '80px',
-                                        height: '80px',
-                                        background: 'linear-gradient(135deg, #a855f7, #ec4899)',
-                                        borderRadius: '16px',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        boxShadow: '0 8px 24px rgba(168,85,247,0.3)',
-                                        marginBottom: '16px',
-                                        transform: 'rotate(3deg)'
-                                    }}>
-                                        <Instagram size={40} color="#ffffff" />
-                                    </div>
-                                    <p style={{ fontSize: '14px', color: '#64748b', fontWeight: 600, textAlign: 'center', padding: '0 16px' }}>
-                                        Analyze public profiles & hidden connections.
-                                    </p>
-                                </div>
-                                <div style={{ position: 'relative', width: '100%' }}>
-                                    <div style={{
-                                        position: 'absolute',
-                                        left: '16px',
-                                        top: '50%',
-                                        transform: 'translateY(-50%)',
-                                        color: '#94a3b8',
-                                        fontWeight: 800,
-                                        fontSize: '18px',
-                                        zIndex: 10
-                                    }}>@</div>
-                                    <input
-                                        type="text"
-                                        placeholder="instagram_handle"
-                                        style={{
-                                            width: '100%',
-                                            backgroundColor: '#f8fafc',
-                                            border: '2px solid #e2e8f0',
+                                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', marginBottom: '16px' }}>
+                                        <div style={{
+                                            width: '80px',
+                                            height: '80px',
+                                            background: 'linear-gradient(135deg, #a855f7, #ec4899)',
                                             borderRadius: '16px',
-                                            padding: '16px 16px 16px 40px',
-                                            fontSize: '16px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            boxShadow: '0 8px 24px rgba(168,85,247,0.3)',
+                                            marginBottom: '16px',
+                                            transform: 'rotate(3deg)'
+                                        }}>
+                                            <Instagram size={40} color="#ffffff" />
+                                        </div>
+                                        <p style={{ fontSize: '14px', color: '#64748b', fontWeight: 600, textAlign: 'center', padding: '0 16px' }}>
+                                            Analyze public profiles & hidden connections.
+                                        </p>
+                                    </div>
+
+                                    {/* Private / Public Toggle */}
+                                    <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginBottom: '12px' }}>
+                                        <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', fontWeight: 600, color: '#475569', cursor: 'pointer' }}>
+                                            <input 
+                                                type="radio" 
+                                                name="profile_visibility" 
+                                                checked={!isPrivate} 
+                                                onChange={() => {
+                                                    setIsPrivate(false);
+                                                    setShowError(false);
+                                                }}
+                                                style={{ accentColor: '#8b5cf6' }}
+                                            />
+                                            Public Profile
+                                        </label>
+                                        <label style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '14px', fontWeight: 600, color: '#475569', cursor: 'pointer' }}>
+                                            <input 
+                                                type="radio" 
+                                                name="profile_visibility" 
+                                                checked={isPrivate} 
+                                                onChange={() => {
+                                                    setIsPrivate(true);
+                                                    setShowError(true);
+                                                }}
+                                                style={{ accentColor: '#8b5cf6' }}
+                                            />
+                                            Private Profile
+                                        </label>
+                                    </div>
+
+                                    {showError && (
+                                        <div style={{
+                                            backgroundColor: '#fef2f2',
+                                            color: '#b91c1c',
+                                            padding: '8px 12px',
+                                            borderRadius: '8px',
+                                            fontSize: '12px',
+                                            fontWeight: 700,
+                                            textAlign: 'center',
+                                            marginBottom: '12px',
+                                            border: '1px solid #fca5a5'
+                                        }}>
+                                            Search is not possible if the profile is private.
+                                        </div>
+                                    )}
+
+                                    <div style={{ position: 'relative', width: '100%', opacity: isPrivate ? 0.6 : 1, pointerEvents: isPrivate ? 'none' : 'auto' }}>
+                                        <div style={{
+                                            position: 'absolute',
+                                            left: '16px',
+                                            top: '50%',
+                                            transform: 'translateY(-50%)',
+                                            color: '#94a3b8',
                                             fontWeight: 800,
-                                            color: '#1e293b',
-                                            outline: 'none',
-                                            boxSizing: 'border-box'
-                                        }}
-                                    />
+                                            fontSize: '18px',
+                                            zIndex: 10
+                                        }}>@</div>
+                                        <input
+                                            type="text"
+                                            placeholder="instagram_handle"
+                                            style={{
+                                                width: '100%',
+                                                backgroundColor: '#f8fafc',
+                                                border: '2px solid #e2e8f0',
+                                                borderRadius: '16px',
+                                                padding: '16px 16px 16px 40px',
+                                                fontSize: '16px',
+                                                fontWeight: 800,
+                                                color: '#1e293b',
+                                                outline: 'none',
+                                                boxSizing: 'border-box'
+                                            }}
+                                        />
+                                    </div>
+                                    
+                                    <div id="following_is_private" data-value={isPrivate.toString()} style={{display: 'none'}}></div>
                                 </div>
-                            </div>
                         )}
 
                         {selectedService === 'facetrace' && (
@@ -843,10 +861,18 @@ const HeroAntigravity: React.FC = () => {
                                         if (typeof window !== 'undefined' && faceTraceImage) {
                                             sessionStorage.setItem('pf_facetrace_image', faceTraceImage);
                                         }
-                                        router.push('/face-trace');
+                                        router.push('/face-trace/form');
                                     } else if (selectedService === 'following') {
+                                        const isPrivateNode = document.getElementById('following_is_private');
+                                        if (isPrivateNode && isPrivateNode.getAttribute('data-value') === 'true') {
+                                            return; // block navigation if private
+                                        }
                                         router.push('/activity-tracker');
                                     } else if (selectedService === 'dating') {
+                                        // Save gender for payment preview
+                                        if (typeof window !== 'undefined') {
+                                            sessionStorage.setItem('pf_dating_gender', selectedGender);
+                                        }
                                         // Scroll to form instead of redirecting (SEO: avoid duplicate content)
                                         window.scrollTo({ top: 0, behavior: 'smooth' });
                                         // Navigate to form wizard
@@ -982,6 +1008,20 @@ const HeroAntigravity: React.FC = () => {
                     </div>
 
                 </div>
+                {/* End Right Column */}
+                </div>
+
+                {/* Mobile Ils parlent de nous */}
+                <div className="flex lg:hidden flex-col items-center w-full mt-4 mb-4">
+                    <p className="font-bold text-[18px] text-white mb-4">Ils parlent de nous</p>
+                    <div className="flex items-center gap-6 opacity-60 grayscale brightness-[2] flex-wrap justify-center">
+                        <span style={{ fontSize: '20px', fontWeight: 900, fontFamily: 'serif', letterSpacing: '-1px' }}>Forbes</span>
+                        <span style={{ fontSize: '20px', fontWeight: 900, fontFamily: 'serif', fontStyle: 'italic', letterSpacing: '-1px' }}>DailyMail</span>
+                        <span style={{ fontSize: '20px', fontWeight: 900, letterSpacing: '-1px' }}>The Sun</span>
+                        <span style={{ fontSize: '20px', fontWeight: 900, fontFamily: 'sans-serif', letterSpacing: '-2px' }}>VICE</span>
+                    </div>
+                </div>
+
             </div>
 
             {/* SEO Marquee */}

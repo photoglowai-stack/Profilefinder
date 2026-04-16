@@ -49,39 +49,39 @@ export function FidelityForm() {
   };
 
   return (
-    <div className="bg-white relative rounded-3xl shadow-lg border border-gray-100 w-full max-w-md mx-auto p-6 md:p-8">
+    <div className="bg-white relative rounded-3xl shadow-lg border border-gray-100 w-full max-w-md mx-auto p-4 md:p-6">
       {/* Icon */}
-      <div className="flex justify-center mb-5">
-        <div className="bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] p-4 rounded-xl shadow-md">
-          <MessageSquare className="w-8 h-8 text-white" strokeWidth={2.5} />
+      <div className="flex justify-center mb-3">
+        <div className="bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] p-3 rounded-xl shadow-md">
+          <MessageSquare className="w-6 h-6 text-white" strokeWidth={2.5} />
         </div>
       </div>
 
       {/* Title */}
-      <h3 className="text-xl md:text-2xl text-center text-gray-900 mb-2 font-bold">
+      <h3 className="text-lg md:text-xl text-center text-gray-900 mb-1 font-bold">
         {content.title}
       </h3>
 
-      <p className="text-center text-gray-500 mb-6 text-sm">
+      <p className="text-center text-gray-500 mb-4 text-xs md:text-sm">
         {content.subtitle}
       </p>
 
       {/* Upload Area - Compact */}
-      <div className="mb-5">
-        <label htmlFor="screenshots-upload" className="block text-sm font-medium text-gray-700 mb-2">
+      <div className="mb-4">
+        <label htmlFor="screenshots-upload" className="block text-xs font-semibold text-gray-700 mb-2">
           {content.label || 'Upload conversation screenshots'}
         </label>
 
         {previews.length === 0 ? (
           <label
             htmlFor="screenshots-upload"
-            className="group border-2 border-dashed border-gray-300 rounded-xl p-6 flex flex-col items-center justify-center cursor-pointer hover:border-[#ff4e71] hover:bg-gradient-to-br hover:from-red-50 hover:to-orange-50 transition-all"
+            className="group border-2 border-dashed border-gray-300 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer hover:border-[#ff4e71] hover:bg-gradient-to-br hover:from-red-50 hover:to-orange-50 transition-all"
           >
-            <div className="p-3 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] rounded-xl mb-3 group-hover:scale-110 transition-transform">
-              <Upload className="w-6 h-6 text-white" />
+            <div className="p-2 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] rounded-xl mb-2 group-hover:scale-110 transition-transform">
+              <Upload className="w-5 h-5 text-white" />
             </div>
-            <p className="text-gray-700 mb-1 font-medium text-sm">{content.uploadText || 'Click to upload screenshots'}</p>
-            <p className="text-xs text-gray-500">{content.uploadHint || 'JPG, PNG (multiple files accepted)'}</p>
+            <p className="text-gray-700 mb-0.5 font-medium text-xs">{content.uploadText || 'Click to upload screenshots'}</p>
+            <p className="text-[10px] text-gray-500">{content.uploadHint || 'JPG, PNG (multiple files accepted)'}</p>
             <input
               id="screenshots-upload"
               type="file"
@@ -138,7 +138,7 @@ export function FidelityForm() {
 
       {/* Warning Alert - Compact */}
       <motion.div
-        className="bg-amber-50 border border-amber-200 rounded-xl p-3 mb-5"
+        className="bg-amber-50 border border-amber-200 rounded-xl p-2 mb-4"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
@@ -153,12 +153,12 @@ export function FidelityForm() {
       </motion.div>
 
       {/* Features List - Compact */}
-      <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4 mb-5 border border-red-100">
-        <h4 className="text-xs font-semibold text-[#ff4e71] mb-3 flex items-center gap-2">
-          <span className="w-1.5 h-1.5 bg-[#ff4e71] rounded-full"></span>
+      <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-3 mb-4 border border-red-100">
+        <h4 className="text-xs font-semibold text-[#ff4e71] mb-2 flex items-center gap-2">
+          <span className="w-1 h-1 bg-[#ff4e71] rounded-full"></span>
           Our AI will detect:
         </h4>
-        <ul className="space-y-2">
+        <ul className="space-y-1">
           {(content.features || []).map((item, index) => (
             <motion.li
               key={index}
@@ -180,37 +180,53 @@ export function FidelityForm() {
 
       {/* Search Button - FIXED: Compact size */}
       <motion.button
-        onClick={handleSearch}
-        disabled={screenshots.length === 0 || isSearching}
-        className={`w-full relative flex items-center justify-center gap-2 px-6 py-3 rounded-full transition-all ${screenshots.length > 0 && !isSearching
-          ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-lg cursor-pointer"
-          : "bg-gray-300 cursor-not-allowed"
-          }`}
-        whileHover={screenshots.length > 0 && !isSearching ? { scale: 1.02 } : {}}
-        whileTap={screenshots.length > 0 && !isSearching ? { scale: 0.98 } : {}}
+        onClick={(e) => {
+          if (screenshots.length === 0) {
+            e.preventDefault();
+            document.getElementById('screenshots-upload')?.click();
+          } else {
+            handleSearch();
+          }
+        }}
+        disabled={isSearching}
+        className={`w-full relative flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl transition-all shadow-lg ${
+          !isSearching
+            ? "bg-gradient-to-r from-[#ff4b5c] to-[#ff2a40] hover:shadow-xl cursor-pointer"
+            : "bg-gray-400 cursor-not-allowed"
+        }`}
+        whileHover={!isSearching ? { scale: 1.02 } : {}}
+        whileTap={!isSearching ? { scale: 0.98 } : {}}
       >
-        <div className="flex items-center gap-2">
-          {isSearching ? (
-            <>
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-              >
+        <div className="flex items-center justify-between w-full">
+          <div className="flex items-center gap-3">
+            {isSearching ? (
+              <>
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                >
+                  <MessageSquare className="w-5 h-5 text-white" />
+                </motion.div>
+                <span className="text-white text-lg font-bold">{content.searching}</span>
+              </>
+            ) : (
+              <>
                 <MessageSquare className="w-5 h-5 text-white" />
-              </motion.div>
-              <span className="text-white text-base font-semibold">{content.searching}</span>
-            </>
-          ) : (
-            <>
-              <MessageSquare className="w-5 h-5 text-white" />
-              <span className="text-white text-base font-semibold">{content.search}</span>
-            </>
+                <span className="text-white text-lg font-bold">{content.search}</span>
+              </>
+            )}
+          </div>
+          {!isSearching && (
+            <div className="flex items-center gap-2">
+              <span className="text-xl">🛡️</span>
+              <span className="text-[28px] animate-bounce" style={{ display: 'inline-block', lineHeight: 1 }}>👈</span>
+            </div>
           )}
         </div>
       </motion.button>
 
       {/* Bottom Badge - Compact */}
-      <div className="mt-4 bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] rounded-full py-2 px-3 flex flex-wrap items-center justify-center gap-2 text-white text-[10px] shadow-md">
+      <div className="mt-3 bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] rounded-full py-1.5 px-3 flex flex-wrap items-center justify-center gap-2 text-white text-[9px] shadow-md">
         {content.badges && content.badges.map((badge, index) => (
           <span key={index} className="flex items-center gap-1">
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">

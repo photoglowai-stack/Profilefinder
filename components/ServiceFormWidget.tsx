@@ -98,6 +98,8 @@ const CTAButton = ({ label, onClick, disabled }: {
 // ============================================
 const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') => void; isLoading: boolean }) => {
     const [selected, setSelected] = useState<'man' | 'woman'>('man');
+    const { colors } = useService();
+    const primaryColor = colors.primary;
 
     const cardStyle = (isSelected: boolean): React.CSSProperties => ({
         width: '90px',
@@ -105,8 +107,8 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
         borderRadius: '16px',
         overflow: 'hidden',
         cursor: 'pointer',
-        border: isSelected ? '2px solid #10B981' : '2px solid #cbd5e1',
-        boxShadow: isSelected ? '0 8px 20px rgba(16, 185, 129, 0.25)' : '0 2px 8px rgba(0,0,0,0.06)',
+        border: isSelected ? `2px solid ${primaryColor}` : '2px solid #cbd5e1',
+        boxShadow: isSelected ? `0 8px 20px ${primaryColor}40` : '0 2px 8px rgba(0,0,0,0.06)',
         transform: isSelected ? 'scale(1.02)' : 'scale(1)',
         transition: 'all 0.3s ease',
         opacity: isSelected ? 1 : 0.85,
@@ -156,7 +158,7 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
                             boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                         }}>
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M13.5 4L6 11.5L2.5 8" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M13.5 4L6 11.5L2.5 8" stroke={primaryColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </div>
                     )}
@@ -174,7 +176,7 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: selected === 'man' ? '#10B981' : '#94a3b8',
+                        backgroundColor: selected === 'man' ? primaryColor : '#94a3b8',
                         color: 'white',
                         fontSize: '13px',
                         fontWeight: 900,
@@ -204,7 +206,7 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
                             boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
                         }}>
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M13.5 4L6 11.5L2.5 8" stroke="#10B981" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M13.5 4L6 11.5L2.5 8" stroke={primaryColor} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                             </svg>
                         </div>
                     )}
@@ -222,7 +224,7 @@ const DatingView = ({ onSearch, isLoading }: { onSearch: (g: 'man' | 'woman') =>
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        backgroundColor: selected === 'woman' ? '#10B981' : '#94a3b8',
+                        backgroundColor: selected === 'woman' ? primaryColor : '#94a3b8',
                         color: 'white',
                         fontSize: '13px',
                         fontWeight: 900,
@@ -308,54 +310,60 @@ const UploadView = ({ icon: Icon, title, subtitle, btnLabel, onAction, isLoading
     btnLabel: string;
     onAction: () => void;
     isLoading: boolean;
-}) => (
-    <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
-        <div
-            onClick={onAction}
-            style={{
-                flex: 1,
-                height: '64px',
-                border: '2px dashed rgba(239, 62, 92, 0.4)',
-                backgroundColor: 'rgba(239, 62, 92, 0.05)',
-                borderRadius: '16px',
-                display: 'flex',
-                alignItems: 'center',
-                padding: '0 16px',
-                gap: '16px',
-                cursor: 'pointer',
-            }}
-        >
-            <div style={{
-                width: '40px',
-                height: '40px',
-                backgroundColor: 'white',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-                flexShrink: 0,
-            }}>
-                <Icon size={20} color="#EF3E5C" />
+}) => {
+    const { colors } = useService();
+    const primaryColor = colors.primary;
+
+    return (
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px', width: '100%' }}>
+            <div
+                onClick={onAction}
+                style={{
+                    flex: 1,
+                    height: '64px',
+                    border: `2px dashed ${primaryColor}66`,
+                    backgroundColor: `${primaryColor}0D`,
+                    borderRadius: '16px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    padding: '0 16px',
+                    gap: '16px',
+                    cursor: 'pointer',
+                }}
+            >
+                <div style={{
+                    width: '40px',
+                    height: '40px',
+                    backgroundColor: 'white',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+                    flexShrink: 0,
+                }}>
+                    <Icon size={20} color={primaryColor} />
+                </div>
+                <div>
+                    <p style={{ fontWeight: 700, color: '#1f2937', margin: 0, fontSize: '14px' }}>{title}</p>
+                    <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>{subtitle}</p>
+                </div>
             </div>
-            <div>
-                <p style={{ fontWeight: 700, color: '#1f2937', margin: 0, fontSize: '14px' }}>{title}</p>
-                <p style={{ fontSize: '12px', color: '#6b7280', margin: 0 }}>{subtitle}</p>
-            </div>
+            <CTAButton
+                label={isLoading ? "..." : btnLabel}
+                onClick={onAction}
+                disabled={isLoading}
+            />
         </div>
-        <CTAButton
-            label={isLoading ? "..." : btnLabel}
-            onClick={onAction}
-            disabled={isLoading}
-        />
-    </div>
-);
+    );
+};
 
 // ============================================
 // MAIN WIDGET
 // ============================================
 export const ServiceFormWidget = () => {
-    const { selectedService, setSelectedService } = useService();
+    const { selectedService, setSelectedService, colors } = useService();
+    const primaryColor = colors.primary;
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
 
@@ -382,18 +390,18 @@ export const ServiceFormWidget = () => {
                 style={{
                     backgroundColor: 'white',
                     borderRadius: '16px',
-                    border: '2px solid #EF3E5C',
-                    boxShadow: '0 16px 40px rgba(239, 62, 92, 0.2)',
+                    border: `2px solid ${primaryColor}`,
+                    boxShadow: `0 16px 40px ${primaryColor}33`,
                     padding: '12px',
                 }}
                 initial={false}
                 animate={{ scale: 1 }}
-                whileHover={{ boxShadow: '0 20px 50px rgba(239, 62, 92, 0.25)' }}
+                whileHover={{ boxShadow: `0 20px 50px ${primaryColor}40` }}
                 transition={{ duration: 0.2 }}
             >
                 {/* Title */}
                 <h3 style={{
-                    color: '#EF3E5C',
+                    color: primaryColor,
                     fontSize: '11px',
                     fontWeight: 800,
                     textAlign: 'center',

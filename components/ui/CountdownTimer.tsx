@@ -8,7 +8,7 @@ interface CountdownTimerProps {
     storageKey?: string;
 }
 
-export function CountdownTimer({ durationMinutes = 10, storageKey = 'payment-timer-end' }: CountdownTimerProps) {
+export function CountdownTimer({ durationMinutes = 15, storageKey = 'payment-timer-end' }: CountdownTimerProps) {
     const [timeLeft, setTimeLeft] = useState<number>(durationMinutes * 60);
     const [isUrgent, setIsUrgent] = useState(false);
 
@@ -26,9 +26,15 @@ export function CountdownTimer({ durationMinutes = 10, storageKey = 'payment-tim
         // Calculate initial time left
         const calculateTimeLeft = () => {
             const now = Date.now();
-            const end = parseInt(endTime!);
-            const remaining = Math.max(0, Math.floor((end - now) / 1000));
-            return remaining;
+            let end = parseInt(endTime!);
+            let remaining = Math.floor((end - now) / 1000);
+            if (remaining <= 0) {
+                end = now + (durationMinutes * 60 * 1000);
+                localStorage.setItem(storageKey, end.toString());
+                endTime = end.toString();
+                remaining = Math.floor((end - now) / 1000);
+            }
+            return Math.max(0, remaining);
         };
 
         setTimeLeft(calculateTimeLeft());

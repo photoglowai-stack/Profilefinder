@@ -284,6 +284,21 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                     <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (window.location.pathname.includes('/payment')) {
+                                const desktopBtn = document.getElementById('outer-checkout-button');
+                                const mobileBtn = document.getElementById('outer-checkout-button-mobile');
+                                if (mobileBtn && window.getComputedStyle(mobileBtn.parentElement!).display !== 'none') {
+                                    mobileBtn.click();
+                                } else if (desktopBtn) {
+                                    desktopBtn.click();
+                                }
+                            } else {
+                                onPlanSelect('subscription');
+                            }
+                        }}
                         style={{
                             width: '100%',
                             padding: '1rem',

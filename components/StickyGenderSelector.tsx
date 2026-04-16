@@ -46,16 +46,17 @@ interface ServiceTabProps {
     label: string;
 }
 
-const ServiceTab: React.FC<ServiceTabProps> = ({ active, onClick, icon: Icon, label }) => (
+const ServiceTab: React.FC<ServiceTabProps & { primaryColor: string }> = ({ active, onClick, icon: Icon, label, primaryColor }) => (
     <button
         onClick={onClick}
         className={`
       flex-none px-3 py-2 rounded-xl font-bold text-[11px] flex items-center gap-1.5 transition-all duration-200 snap-center shadow-sm border
       ${active
-                ? 'bg-[#EF3E5C] text-white border-[#EF3E5C] shadow-md scale-[1.02]'
+                ? 'text-white shadow-md scale-[1.02]'
                 : 'bg-white text-gray-500 border-gray-100 hover:bg-gray-50 hover:border-gray-200'
             }
     `}
+        style={active ? { backgroundColor: primaryColor, borderColor: primaryColor } : {}}
     >
         <Icon size={14} className={active ? "text-white" : "text-gray-400"} />
         <span className="whitespace-nowrap">{label}</span>
@@ -93,26 +94,28 @@ interface GenderCardProps {
     img: string;
     selected: boolean;
     onClick: () => void;
+    primaryColor: string;
 }
 
-const GenderCard: React.FC<GenderCardProps> = ({ label, img, selected, onClick }) => (
+const GenderCard: React.FC<GenderCardProps> = ({ label, img, selected, onClick, primaryColor }) => (
     <div
         onClick={onClick}
         className={`
       group relative w-[70px] min-w-[70px] aspect-3/4 rounded-xl overflow-hidden cursor-pointer transition-all duration-200 border-2 bg-white flex-none
       ${selected
-                ? 'border-[#10B981] shadow-[0_4px_12px_rgba(16,185,129,0.3)] scale-[1.03] z-10'
+                ? 'shadow-[0_4px_12px_rgba(0,0,0,0.1)] scale-[1.03] z-10'
                 : 'border-transparent hover:border-gray-100 shadow-sm opacity-80 hover:opacity-100'
             }
     `}
+        style={selected ? { borderColor: primaryColor } : {}}
     >
         <div className="h-full w-full pb-5 bg-gray-50">
             <img src={img} className="w-full h-full object-cover object-top" alt={label} />
         </div>
         <div className={`
       absolute bottom-0 inset-x-0 py-1 text-center text-[9px] font-black uppercase tracking-wider text-white transition-colors duration-200
-      ${selected ? 'bg-[#10B981]' : 'bg-[#EF3E5C]'}
-    `}>
+    `}
+            style={{ backgroundColor: selected ? primaryColor : '#94a3b8' }}>
             {label}
         </div>
     </div>
@@ -122,16 +125,17 @@ const GenderCard: React.FC<GenderCardProps> = ({ label, img, selected, onClick }
 interface DatingViewProps {
     onSearch: (gender: 'man' | 'woman') => void;
     isSearching?: boolean;
+    primaryColor: string;
 }
 
-const DatingView: React.FC<DatingViewProps> = ({ onSearch, isSearching }) => {
+const DatingView: React.FC<DatingViewProps> = ({ onSearch, isSearching, primaryColor }) => {
     const [selected, setSelected] = useState<'man' | 'woman'>('man');
 
     return (
         <div className="flex flex-row items-center justify-center gap-4 px-1 py-1">
             <div className="flex gap-2">
-                <GenderCard label="MAN" img={ASSETS.man} selected={selected === 'man'} onClick={() => setSelected('man')} />
-                <GenderCard label="WOMAN" img={ASSETS.woman} selected={selected === 'woman'} onClick={() => setSelected('woman')} />
+                <GenderCard label="MAN" img={ASSETS.man} selected={selected === 'man'} onClick={() => setSelected('man')} primaryColor={primaryColor} />
+                <GenderCard label="WOMAN" img={ASSETS.woman} selected={selected === 'woman'} onClick={() => setSelected('woman')} primaryColor={primaryColor} />
             </div>
             <MagicButton label={isSearching ? "..." : "SEARCH"} onClick={() => onSearch(selected)} disabled={isSearching} />
         </div>
@@ -142,10 +146,12 @@ const DatingView: React.FC<DatingViewProps> = ({ onSearch, isSearching }) => {
 interface SocialViewProps {
     onAnalyze: (username: string) => void;
     isSearching?: boolean;
+    primaryColor: string;
 }
 
-const SocialView: React.FC<SocialViewProps> = ({ onAnalyze, isSearching }) => {
+const SocialView: React.FC<SocialViewProps> = ({ onAnalyze, isSearching, primaryColor }) => {
     const [username, setUsername] = useState('');
+    const [isFocused, setIsFocused] = useState(false);
 
     return (
         <div className="flex flex-row items-center justify-between gap-3 w-full px-1 py-1">
@@ -160,7 +166,10 @@ const SocialView: React.FC<SocialViewProps> = ({ onAnalyze, isSearching }) => {
                     placeholder="@username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
-                    className="w-full pl-12 pr-3 h-[50px] min-h-[50px] bg-gray-50 border-2 border-gray-100 rounded-xl focus:bg-white focus:border-[#EF3E5C] focus:outline-none font-bold text-gray-800 transition-colors text-sm placeholder:text-gray-400"
+                    onFocus={() => setIsFocused(true)}
+                    onBlur={() => setIsFocused(false)}
+                    style={{ borderColor: isFocused ? primaryColor : undefined }}
+                    className="w-full pl-12 pr-3 h-[50px] min-h-[50px] bg-gray-50 border-2 border-gray-100 rounded-xl focus:bg-white focus:outline-none font-bold text-gray-800 transition-colors text-sm placeholder:text-gray-400"
                 />
             </div>
             <MagicButton label={isSearching ? "..." : "ANALYZE"} onClick={() => onAnalyze(username)} disabled={isSearching} />
@@ -176,16 +185,18 @@ interface UploadViewProps {
     btnText: string;
     onAction: () => void;
     isSearching?: boolean;
+    primaryColor: string;
 }
 
-const UploadView: React.FC<UploadViewProps> = ({ icon: Icon, title, desc, btnText, onAction, isSearching }) => (
+const UploadView: React.FC<UploadViewProps> = ({ icon: Icon, title, desc, btnText, onAction, isSearching, primaryColor }) => (
     <div className="flex flex-row items-center justify-between gap-3 w-full px-1 py-1">
         <div
             onClick={onAction}
-            className="flex-1 h-[50px] min-h-[50px] border-2 border-dashed border-[#EF3E5C]/30 bg-[#EF3E5C]/5 rounded-xl flex items-center justify-start cursor-pointer hover:bg-[#EF3E5C]/10 transition-colors px-3 gap-3 min-w-0"
+            className="flex-1 h-[50px] min-h-[50px] border-2 border-dashed rounded-xl flex items-center justify-start cursor-pointer transition-colors px-3 gap-3 min-w-0"
+            style={{ borderColor: `${primaryColor}4D`, backgroundColor: `${primaryColor}0D` }}
         >
             <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-sm shrink-0">
-                <Icon size={16} className="text-[#EF3E5C]" />
+                <Icon size={16} color={primaryColor} />
             </div>
             <div className="flex flex-col justify-center overflow-hidden">
                 <span className="font-bold text-gray-800 text-xs whitespace-nowrap">{title}</span>
@@ -203,7 +214,8 @@ const UploadView: React.FC<UploadViewProps> = ({ icon: Icon, title, desc, btnTex
  */
 
 export const StickyGenderSelector = () => {
-    const { selectedService, setSelectedService } = useService();
+    const { selectedService, setSelectedService, colors } = useService();
+    const primaryColor = colors.primary;
     const [isVisible, setIsVisible] = useState(false);
     const [isSearching, setIsSearching] = useState(false);
     const router = useRouter();
@@ -276,24 +288,27 @@ export const StickyGenderSelector = () => {
                                     onClick={() => setSelectedService(service.id)}
                                     icon={service.icon}
                                     label={service.label}
+                                    primaryColor={primaryColor}
                                 />
                             ))}
                         </div>
 
                         {/* Main Card */}
-                        <div className="bg-white rounded-4xl border-[3px] border-[#EF3E5C] shadow-[0_20px_60px_-10px_rgba(239,62,92,0.3)] p-4 relative overflow-hidden">
-                            <h2 className="text-[#EF3E5C] text-xs font-extrabold text-center mb-3 tracking-wide uppercase opacity-90">
+                        <div className="bg-white rounded-4xl border-[3px] p-4 relative overflow-hidden transition-colors"
+                             style={{ borderColor: primaryColor, boxShadow: `0 20px 60px -10px ${primaryColor}4D` }}>
+                            <h2 className="text-xs font-extrabold text-center mb-3 tracking-wide uppercase opacity-90 transition-colors"
+                                style={{ color: primaryColor }}>
                                 {activeServiceConfig.headerTitle}
                             </h2>
 
                             <div className="w-full flex justify-center">
-                                {activeTab === 'dating' && <DatingView onSearch={handleSearch} isSearching={isSearching} />}
-                                {activeTab === 'following' && <SocialView onAnalyze={handleAnalyze} isSearching={isSearching} />}
+                                {activeTab === 'dating' && <DatingView onSearch={handleSearch} isSearching={isSearching} primaryColor={primaryColor} />}
+                                {activeTab === 'following' && <SocialView onAnalyze={handleAnalyze} isSearching={isSearching} primaryColor={primaryColor} />}
                                 {activeTab === 'facetrace' && (
-                                    <UploadView icon={Camera} title="Upload Photo" desc="JPG/PNG Match" btnText="SCAN" onAction={handleScan} isSearching={isSearching} />
+                                    <UploadView icon={Camera} title="Upload Photo" desc="JPG/PNG Match" btnText="SCAN" onAction={handleScan} isSearching={isSearching} primaryColor={primaryColor} />
                                 )}
                                 {activeTab === 'fidelity' && (
-                                    <UploadView icon={MessageCircle} title="Upload Chat" desc="Analyze Logs" btnText="TEST" onAction={handleFidelityTest} isSearching={isSearching} />
+                                    <UploadView icon={MessageCircle} title="Upload Chat" desc="Analyze Logs" btnText="TEST" onAction={handleFidelityTest} isSearching={isSearching} primaryColor={primaryColor} />
                                 )}
                             </div>
                         </div>

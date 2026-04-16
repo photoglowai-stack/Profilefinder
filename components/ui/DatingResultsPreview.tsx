@@ -1,20 +1,51 @@
 "use client";
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Heart, MapPin, Lock, Sparkles } from 'lucide-react';
 
 /**
  * DatingResultsPreview - Blurred dating profiles for payment teaser
- * Shows Tinder/Bumble style profile cards with blur overlay
+ * Shows Tinder/Bumble style profile cards with real blurred photos
  */
 export function DatingResultsPreview() {
-    // Abstract silhouette profiles (no real faces)
+    const [gender, setGender] = useState<string>('woman'); // default
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            const savedGender = sessionStorage.getItem('pf_dating_gender');
+            if (savedGender) {
+                setGender(savedGender);
+            }
+        }
+    }, []);
+
+    // Reliable high-quality portrait photos from Unsplash
+    const womenPhotos = [
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=500&q=80"
+    ];
+
+    const menPhotos = [
+        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=500&q=80",
+        "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=500&q=80"
+    ];
+
+    const selectedPhotos = gender === 'man' ? menPhotos : womenPhotos;
+
     const profiles = [
-        { age: 24, distance: '2km', verified: true },
-        { age: 27, distance: '5km', verified: true },
-        { age: 23, distance: '3km', verified: false },
-        { age: 26, distance: '8km', verified: true },
-        { age: 25, distance: '1km', verified: true },
-        { age: 29, distance: '4km', verified: false },
+        { age: 24, distance: '2km', verified: true, img: selectedPhotos[0] },
+        { age: 27, distance: '5km', verified: true, img: selectedPhotos[1] },
+        { age: 23, distance: '3km', verified: false, img: selectedPhotos[2] },
+        { age: 26, distance: '8km', verified: true, img: selectedPhotos[3] },
+        { age: 25, distance: '1km', verified: true, img: selectedPhotos[4] },
+        { age: 29, distance: '4km', verified: false, img: selectedPhotos[5] },
     ];
 
     return (
@@ -22,7 +53,8 @@ export function DatingResultsPreview() {
             padding: '1rem',
             background: 'linear-gradient(135deg, #fff5f5 0%, #fff0f5 100%)',
             position: 'relative',
-            overflow: 'hidden'
+            overflow: 'hidden',
+            borderRadius: '1rem'
         }}>
             {/* Header */}
             <div style={{
@@ -73,7 +105,7 @@ export function DatingResultsPreview() {
                 display: 'grid',
                 gridTemplateColumns: 'repeat(3, 1fr)',
                 gap: '0.5rem',
-                filter: 'blur(8px)',
+                filter: 'blur(10px)',
                 pointerEvents: 'none'
             }}>
                 {profiles.map((profile, idx) => (
@@ -82,36 +114,14 @@ export function DatingResultsPreview() {
                         style={{
                             aspectRatio: '3/4',
                             borderRadius: '0.75rem',
-                            background: `linear-gradient(180deg, 
-                ${idx % 2 === 0 ? '#e0e0e0' : '#d0d0d0'} 0%, 
-                ${idx % 2 === 0 ? '#b0b0b0' : '#a0a0a0'} 100%)`,
+                            backgroundImage: `url(${profile.img})`,
+                            backgroundSize: 'cover',
+                            backgroundPosition: 'center',
                             position: 'relative',
                             overflow: 'hidden',
                             boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
                         }}
                     >
-                        {/* Abstract silhouette */}
-                        <div style={{
-                            position: 'absolute',
-                            top: '20%',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            width: '40%',
-                            height: '35%',
-                            background: '#9ca3af',
-                            borderRadius: '50%'
-                        }}></div>
-                        <div style={{
-                            position: 'absolute',
-                            top: '52%',
-                            left: '50%',
-                            transform: 'translateX(-50%)',
-                            width: '60%',
-                            height: '40%',
-                            background: '#9ca3af',
-                            borderRadius: '50% 50% 0 0'
-                        }}></div>
-
                         {/* Info overlay */}
                         <div style={{
                             position: 'absolute',
@@ -119,7 +129,7 @@ export function DatingResultsPreview() {
                             left: 0,
                             right: 0,
                             padding: '0.5rem',
-                            background: 'linear-gradient(transparent, rgba(0,0,0,0.7))',
+                            background: 'linear-gradient(transparent, rgba(0,0,0,0.8))',
                             color: 'white'
                         }}>
                             <div style={{ fontSize: '0.625rem', fontWeight: 700 }}>
@@ -163,8 +173,8 @@ export function DatingResultsPreview() {
                 flexDirection: 'column',
                 alignItems: 'center',
                 justifyContent: 'center',
-                background: 'rgba(255,255,255,0.1)',
-                backdropFilter: 'blur(1px)'
+                background: 'rgba(255,255,255,0.15)',
+                backdropFilter: 'blur(2px)'
             }}>
                 <div style={{
                     background: 'white',
@@ -178,9 +188,9 @@ export function DatingResultsPreview() {
                 <p style={{
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    color: '#374151',
+                    color: '#1f2937',
                     textAlign: 'center',
-                    textShadow: '0 1px 2px rgba(255,255,255,0.8)'
+                    textShadow: '0 2px 4px rgba(255,255,255,0.9)'
                 }}>
                     Unlock to reveal profiles
                 </p>
@@ -197,3 +207,4 @@ export function DatingResultsPreview() {
 }
 
 export default DatingResultsPreview;
+
