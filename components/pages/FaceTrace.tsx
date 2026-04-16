@@ -285,6 +285,7 @@ export default function FaceTrace() {
                     <div ref={scrollContainerRef} className="custom-scroll-ft" style={{ flex: 1, overflowY: 'auto', backgroundColor: '#f9fafb', position: 'relative' }}>
 
                         {/* 1. Active Scan Section */}
+                        {!showGate && (
                         <div style={{ padding: '20px', backgroundColor: 'white', marginBottom: '8px', boxShadow: '0 1px 2px rgba(0,0,0,0.05)' }}>
                             <div style={{
                                 position: 'relative', borderRadius: '16px', overflow: 'hidden',
@@ -328,10 +329,13 @@ export default function FaceTrace() {
                                 </div>
                             </div>
                         </div>
+                        )}
 
                         {/* 2. Results Feed */}
                         <div style={{ padding: '20px' }}>
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
+                            {!showGate && (
+                            <>
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
                                 <h3 style={{ fontSize: '14px', fontWeight: 800, color: '#111827', display: 'flex', alignItems: 'center', gap: '8px', margin: 0 }}>
                                     <List style={{ width: '16px', height: '16px', color: '#f97316' }} /> Results
                                 </h3>
@@ -359,6 +363,8 @@ export default function FaceTrace() {
                                     <ResultItem key={item.id} item={item} index={index} />
                                 ))}
                             </div>
+                            </>
+                            )}
 
                             {/* 3. Gate Section */}
                             <div style={{

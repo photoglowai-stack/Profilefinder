@@ -266,6 +266,7 @@ export default function ActivityTracker() {
                     <div style={{ padding: '24px', display: 'flex', flexDirection: 'column', gap: '24px', backgroundColor: 'white' }}>
 
                         {/* 1. Profile Monitor List */}
+                        {!gateTriggered && (
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
                                 <h3 style={{ fontSize: '12px', fontWeight: 800, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.1em', margin: 0 }}>
@@ -347,8 +348,10 @@ export default function ActivityTracker() {
                                 </div>
                             </div>
                         </div>
+                        )}
 
                         {/* 2. Progress & Logs */}
+                        {!gateTriggered && (
                         <div style={{ backgroundColor: '#f9fafb', borderRadius: '16px', padding: '16px', border: '1px solid #f3f4f6', boxShadow: 'inset 0 2px 4px rgba(0,0,0,0.05)' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '12px', fontWeight: 700, marginBottom: '12px' }}>
                                 <span style={{ color: scanComplete ? '#db2777' : '#374151' }}>{progressText}</span>
@@ -374,6 +377,7 @@ export default function ActivityTracker() {
                                 })}
                             </div>
                         </div>
+                        )}
 
                         {/* 3. Report & Gate */}
                         <div style={{ position: 'relative' }}>

@@ -137,7 +137,7 @@ export function DatingResultsPage() {
                                 <Sparkles className="w-5 h-5" />
                                 Upgrade to Premium
                             </Link>
-                            <p className="text-center text-gray-500 text-xs mt-2">Only 19.99€/month</p>
+                            <p className="text-center text-gray-500 text-xs mt-2">Only 19.90€/month</p>
                         </div>
 
                         {/* Locked Services */}

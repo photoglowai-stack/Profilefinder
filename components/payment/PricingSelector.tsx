@@ -173,7 +173,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                             color: '#8b5cf6',
                             lineHeight: 1,
                         }}>
-                            19,99€
+                            19,90€
                         </span>
                         <span style={{ fontSize: '1rem', color: '#9ca3af', fontWeight: 500 }}>/mo</span>
                         <div style={{
@@ -186,7 +186,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                                 fontSize: '0.875rem',
                                 color: '#9ca3af',
                                 textDecoration: 'line-through'
-                            }}>39,99€</span>
+                            }}>39,90€</span>
                             <span style={{
                                 fontSize: '0.75rem',
                                 fontWeight: 700,
