@@ -87,7 +87,7 @@ const HeroAntigravity: React.FC = () => {
             desc: "Uncover your partner's secrets with the #1 Tinder Profile Finder. More accurate than Pimeyes for dating apps.",
             instruction: "WHO ARE YOU LOOKING FOR?",
             cta: "START SEARCH",
-            ctaEmoji: "🔍",
+            ctaEmoji: "",
             buttonIcon: <Search size={22} strokeWidth={3} />,
             buttonBg: "linear-gradient(135deg, #991b1b 0%, #dc2626 50%, #ef4444 100%)"
         },
@@ -391,13 +391,13 @@ const HeroAntigravity: React.FC = () => {
             </nav>
 
             {/* Main Content */}
-            <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1280px] mx-auto px-4 pt-1 pb-6 lg:pt-2 lg:pb-12 gap-6 lg:gap-8 relative z-10">
+            <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1280px] mx-auto px-4 pt-1 pb-6 lg:pt-2 lg:pb-12 gap-2 lg:gap-8 relative z-10">
                 
                 {/* Left Column */}
                 <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-[55%]">
 
                 {/* Trusted Badge */}
-                <div className="mb-4 lg:mb-10 flex items-center gap-[12px] bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 shadow-lg scale-[0.85] origin-top lg:scale-100 lg:origin-left transition-transform">
+                <div className="mb-2 lg:mb-10 flex items-center gap-[12px] bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 shadow-lg scale-[0.85] origin-top lg:scale-100 lg:origin-left transition-transform">
                     <div className="flex">
                         {trustedUsers.map((url, i) => (
                             <img
@@ -441,22 +441,22 @@ const HeroAntigravity: React.FC = () => {
                 </div>
 
                 {/* Headlines */}
-                <div className="w-full mb-6 lg:mb-10">
-                    <h1 className="font-extrabold mb-4 leading-[1.05] tracking-tight text-white drop-shadow-lg"
+                <div className="w-full mb-3 lg:mb-10">
+                    <h1 className="font-extrabold mb-2 leading-[1.05] tracking-tight text-white drop-shadow-lg"
                         style={{
-                            fontSize: 'clamp(1.75rem, 4.5vw, 4rem)',
+                            fontSize: 'clamp(1.5rem, 4.5vw, 4rem)',
                             fontFamily: "var(--font-display), 'Plus Jakarta Sans', sans-serif"
                         }}>
                         {currentContent.h1}
                     </h1>
                     <p className="text-white/90 leading-relaxed font-medium md:max-w-[80%]"
-                       style={{ fontSize: 'clamp(0.9rem, 1.8vw, 1.15rem)' }}>
+                       style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1.15rem)' }}>
                         {currentContent.desc}
                     </p>
                 </div>
 
                 {/* Service Selector */}
-                <div className="w-full mb-4 flex flex-col items-center lg:items-start scale-[0.85] origin-top lg:scale-100 lg:origin-left transition-transform">
+                <div className="w-full mb-2 flex flex-col items-center lg:items-start scale-[0.85] lg:scale-[0.95] xl:scale-100 origin-top lg:origin-left transition-transform">
                     <p style={{
                         fontSize: '14px',
                         fontWeight: 600,

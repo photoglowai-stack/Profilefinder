@@ -13,6 +13,7 @@ interface PricingSelectorProps {
     serviceId: string;
     onPlanSelect: (planType: 'subscription' | 'single') => void;
     selectedPlan: 'subscription' | 'single';
+    isProcessing?: boolean;
 }
 
 /**
@@ -20,7 +21,7 @@ interface PricingSelectorProps {
  * Subscription is the HERO (70% visual attention)
  * Single Report is the DECOY (dimmed, less attractive)
  */
-export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: PricingSelectorProps) {
+export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProcessing = false }: PricingSelectorProps) {
     const serviceConfig = getPaymentConfig(serviceId);
     const isSubscriptionSelected = selectedPlan === 'subscription';
 
@@ -310,7 +311,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                             fontSize: '1rem',
                             borderRadius: '0.75rem',
                             border: 'none',
-                            cursor: 'pointer',
+                            cursor: isProcessing ? 'wait' : 'pointer',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
@@ -319,11 +320,32 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                                 ? '0 10px 25px rgba(139,92,246,0.4)'
                                 : '0 4px 10px rgba(0,0,0,0.1)',
                             transition: 'all 0.3s ease',
+                            opacity: isProcessing ? 0.7 : 1,
                         }}
+                        disabled={isProcessing}
                     >
-                        <Sparkles style={{ width: '1.125rem', height: '1.125rem' }} />
-                        Unlock all now
-                        <ArrowRight style={{ width: '1.125rem', height: '1.125rem' }} />
+                        {isProcessing ? (
+                            <>
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                                    style={{
+                                        width: '1.25rem',
+                                        height: '1.25rem',
+                                        border: '2px solid white',
+                                        borderTopColor: 'transparent',
+                                        borderRadius: '50%',
+                                    }}
+                                />
+                                Processing...
+                            </>
+                        ) : (
+                            <>
+                                <Sparkles style={{ width: '1.125rem', height: '1.125rem' }} />
+                                Unlock all now
+                                <ArrowRight style={{ width: '1.125rem', height: '1.125rem' }} />
+                            </>
+                        )}
                     </motion.button>
 
                     {/* Trust Badge */}
@@ -474,7 +496,21 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                         </div>
 
                         {!isSubscriptionSelected && (
-                            <button style={{
+                            <button 
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    if (window.location.pathname.includes('/payment')) {
+                                        const desktopBtn = document.getElementById('outer-checkout-button');
+                                        const mobileBtn = document.getElementById('outer-checkout-button-mobile');
+                                        if (mobileBtn && window.getComputedStyle(mobileBtn.parentElement!).display !== 'none') {
+                                            mobileBtn.click();
+                                        } else if (desktopBtn) {
+                                            desktopBtn.click();
+                                        }
+                                    }
+                                }}
+                                disabled={isProcessing}
+                                style={{
                                 padding: '0.5rem 1rem',
                                 background: '#4b5563',
                                 color: 'white',
@@ -482,12 +518,15 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                                 fontWeight: 600,
                                 borderRadius: '0.5rem',
                                 border: 'none',
-                                cursor: 'pointer',
+                                cursor: isProcessing ? 'wait' : 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '0.25rem',
+                                opacity: isProcessing ? 0.7 : 1,
                             }}>
-                                Continue <ArrowRight style={{ width: '0.75rem', height: '0.75rem' }} />
+                                {isProcessing ? 'Processing...' : (
+                                    <>Continue <ArrowRight style={{ width: '0.75rem', height: '0.75rem' }} /></>
+                                )}
                             </button>
                         )}
                     </div>

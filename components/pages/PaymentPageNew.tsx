@@ -242,10 +242,10 @@ export function PaymentPage() {
                     zIndex: 20,
                 }}>
                     <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'minmax(0, 1fr)',
+                        display: 'flex',
+                        flexDirection: 'column-reverse',
                         gap: '1.5rem',
-                    }}>
+                    }} className="lg:grid lg:grid-cols-[minmax(0,1fr)]">
                         {/* Mobile: Pricing on top */}
                         <div className="block lg:hidden">
                             <motion.div
