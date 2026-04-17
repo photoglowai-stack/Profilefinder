@@ -455,8 +455,8 @@ const HeroAntigravity: React.FC = () => {
                     </p>
                 </div>
 
-                {/* Service Selector */}
-                <div className="w-full mb-2 lg:mb-6 flex flex-col items-center lg:items-start scale-[0.85] lg:scale-[0.95] xl:scale-100 origin-top lg:origin-left transition-transform">
+                {/* Service Selector - desktop only */}
+                <div className="hidden lg:flex w-full mb-2 lg:mb-6 flex-col items-center lg:items-start lg:scale-[0.95] xl:scale-100 origin-top lg:origin-left transition-transform">
                     <p className="hidden lg:block" style={{
                         fontSize: '14px',
                         fontWeight: 600,
