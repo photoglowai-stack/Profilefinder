@@ -101,8 +101,8 @@ const HeroAntigravity: React.FC = () => {
             buttonBg: "linear-gradient(135deg, #5b21b6 0%, #7c3aed 50%, #8b5cf6 100%)"
         },
         facetrace: {
-            h1: "Track Digital Footprint & Web Activity",
-            desc: "The ultimate Pimeyes alternative. Find every profile, blog post, and image trace across the entire web.",
+            h1: "AI Face Search Engine",
+            desc: "Reverse Image Search — Upload any photo and instantly find someone's presence across the web, social networks and dating apps.",
             instruction: "UPLOAD PHOTO TO SCAN",
             cta: "START WEB SCAN",
             ctaEmoji: "",
