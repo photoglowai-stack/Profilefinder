@@ -441,15 +441,15 @@ const HeroAntigravity: React.FC = () => {
                 </div>
 
                 {/* Headlines */}
-                <div className="w-full mb-2 lg:mb-8">
-                    <h1 className="font-extrabold mb-1 lg:mb-2 leading-[1.05] tracking-tight text-white drop-shadow-lg"
+                <div className="w-full mb-3 lg:mb-8">
+                    <h1 className="font-extrabold mb-2 leading-[1.05] tracking-tight text-white drop-shadow-lg"
                         style={{
-                            fontSize: 'clamp(1.4rem, 4.5vw, 4rem)',
+                            fontSize: 'clamp(1.7rem, 5vw, 4rem)',
                             fontFamily: "var(--font-display), 'Plus Jakarta Sans', sans-serif"
                         }}>
                         {currentContent.h1}
                     </h1>
-                    <p className="text-white/90 leading-snug lg:leading-relaxed font-medium md:max-w-[80%] hidden lg:block"
+                    <p className="text-white/90 leading-relaxed font-medium max-w-[90%] lg:max-w-[80%]"
                        style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1.15rem)' }}>
                         {currentContent.desc}
                     </p>
