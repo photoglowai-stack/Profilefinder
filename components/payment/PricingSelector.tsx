@@ -30,8 +30,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
         { icon: Scan, name: 'Face Trace', desc: 'Reverse image search' },
         { icon: Heart, name: 'Dating Search', desc: 'Find hidden profiles' },
         { icon: Eye, name: 'Instagram AI', desc: 'Activity monitoring' },
-        { icon: Search, name: 'Fidelity Check', desc: 'Partner detection' },
-        { icon: MessageSquare, name: 'Chat Analysis', desc: 'AI conversation insights' },
+        { icon: Search, name: 'Fidelity Check', desc: 'Partner detection' }
     ];
 
     return (
@@ -141,7 +140,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
 
                     {/* Header */}
                     <div style={{ marginTop: '0.5rem', marginLeft: '2.5rem', marginBottom: '1rem' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <InfinityIcon style={{ width: '1.25rem', height: '1.25rem', color: '#8b5cf6' }} />
                             <h3 style={{
                                 fontSize: '1.25rem',
@@ -155,9 +154,6 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                                 All-Access Pass
                             </h3>
                         </div>
-                        <p style={{ fontSize: '0.8125rem', color: '#6b7280' }}>
-                            Full unlock • All tools • Unlimited
-                        </p>
                     </div>
 
                     {/* Price */}
@@ -533,65 +529,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                 </div>
             </motion.div>
 
-            {/* Upsell message when Single is selected */}
-            <AnimatePresence>
-                {!isSubscriptionSelected && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        style={{
-                            overflow: 'hidden',
-                        }}
-                    >
-                        <div style={{
-                            background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
-                            border: '1px solid #fcd34d',
-                            borderRadius: '0.75rem',
-                            padding: '1rem',
-                            display: 'flex',
-                            gap: '0.75rem',
-                        }}>
-                            <div style={{
-                                width: '2.5rem',
-                                height: '2.5rem',
-                                borderRadius: '50%',
-                                background: '#fde68a',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexShrink: 0,
-                            }}>
-                                <Star style={{ width: '1.25rem', height: '1.25rem', color: '#d97706' }} />
-                            </div>
-                            <div>
-                                <p style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#92400e', marginBottom: '0.25rem' }}>
-                                    💡 Save 40% with All-Access!
-                                </p>
-                                <p style={{ fontSize: '0.6875rem', color: '#a16207', lineHeight: 1.4 }}>
-                                    For only €5 more, get unlimited access to all 5 services instead of a single report.
-                                </p>
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); onPlanSelect('subscription'); }}
-                                    style={{
-                                        marginTop: '0.5rem',
-                                        fontSize: '0.75rem',
-                                        fontWeight: 700,
-                                        color: '#8b5cf6',
-                                        background: 'none',
-                                        border: 'none',
-                                        cursor: 'pointer',
-                                        textDecoration: 'underline',
-                                        padding: 0,
-                                    }}
-                                >
-                                    Switch to All-Access →
-                                </button>
-                            </div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+
         </div>
     );
 }

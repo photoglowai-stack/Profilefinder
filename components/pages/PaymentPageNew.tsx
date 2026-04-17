@@ -506,7 +506,7 @@ export function PaymentPage() {
                                     </>
                                 ) : (
                                     <>
-                                        🔒 Unlock All Now {selectedPlan === 'subscription'
+                                        🔒 {selectedPlan === 'subscription' ? 'Unlock All Now' : `Unlock ${config.title}`} {selectedPlan === 'subscription'
                                             ? `${SUBSCRIPTION_CONFIG.price}€/mo`
                                             : `${config.singleReportPrice}€`
                                         }
@@ -537,7 +537,7 @@ export function PaymentPage() {
                                 borderTop: '1px solid #f3f4f6',
                             }}>
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" style={{ height: '18px', opacity: 0.4 }} />
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" style={{ height: '14px', opacity: 0.4 }} />
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" style={{ height: '14px', opacity: 0.4 }} />
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" style={{ height: '18px', opacity: 0.4 }} />
                             </div>
                         </motion.div>

@@ -82,19 +82,21 @@ const FOOTER_THEMES: Record<FooterVariant, FooterTheme> = {
 };
 
 const footerLinks = {
-  product: [
-    { label: footerContent.links.howItWorks, href: "#how-it-works" },
-    { label: footerContent.links.pricing, href: "#pricing" },
-    { label: footerContent.links.about, href: "#about" }
+  tools: [
+    { label: "Dating Search", href: "/dating-search" },
+    { label: "Face Trace", href: "/face-trace" },
+    { label: "Social AI Tracker", href: "/following-ai" },
+    { label: "Fidelity Test", href: "/fidelity-test" }
   ],
-  company: [
-    { label: footerContent.links.blog, href: "#blog" },
+  resources: [
+    { label: footerContent.links.blog || "Blog", href: "/blog" },
     { label: "FAQ", href: "#faq" },
-    { label: footerContent.links.contact, href: "#support" }
+    { label: footerContent.links.contact || "Support", href: "#support" },
+    { label: footerContent.links.about || "About us", href: "#about" }
   ],
   legal: [
-    { label: footerContent.links.terms, href: "#terms" },
-    { label: footerContent.links.privacy, href: "#privacy" }
+    { label: footerContent.links.terms || "Terms", href: "#terms" },
+    { label: footerContent.links.privacy || "Privacy", href: "#privacy" }
   ]
 };
 
@@ -189,16 +191,16 @@ export function Footer({ variant = 'default' }: FooterProps) {
               </motion.div>
             </div>
 
-            {/* Product Links */}
+            {/* Tools Links */}
             <div>
               <h3
                 className="text-sm font-bold mb-4 italic"
                 style={{ color: theme.textColor }}
               >
-                {footerContent.product}
+                Tools
               </h3>
               <ul className="space-y-3">
-                {footerLinks.product.map((link) => (
+                {footerLinks.tools.map((link) => (
                   <li key={link.href}>
                     <a
                       href={link.href}
@@ -218,16 +220,16 @@ export function Footer({ variant = 'default' }: FooterProps) {
               </ul>
             </div>
 
-            {/* Company Links */}
+            {/* Resources Links */}
             <div>
               <h3
                 className="text-sm font-bold mb-4 italic"
                 style={{ color: theme.textColor }}
               >
-                {footerContent.company}
+                Resources
               </h3>
               <ul className="space-y-3">
-                {footerLinks.company.map((link) => (
+                {footerLinks.resources.map((link) => (
                   <li key={link.href}>
                     <a
                       href={link.href}
