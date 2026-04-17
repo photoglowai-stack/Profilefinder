@@ -80,15 +80,17 @@ const CTAButton = ({ label, onClick, disabled }: {
         <motion.span
             style={{
                 position: 'absolute',
-                bottom: '-8px',
-                right: '-8px',
-                fontSize: '28px',
+                bottom: '-10px',
+                right: '-12px',
+                fontSize: '36px',
                 pointerEvents: 'none',
+                filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+                lineHeight: 1,
             }}
             animate={{ y: [0, -8, 0] }}
             transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
         >
-            👆
+            👈
         </motion.span>
     </div>
 );

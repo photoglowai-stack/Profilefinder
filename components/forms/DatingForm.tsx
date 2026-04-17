@@ -127,12 +127,6 @@ export function DatingForm() {
               </span>
             </div>
 
-            {!isSearching && (
-              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            )}
-
             {isSearching && (
               <motion.div
                 className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
@@ -141,15 +135,20 @@ export function DatingForm() {
               />
             )}
 
-            {/* Bouncing hand */}
-            {!isSearching && selected && (
-              <motion.span
-                className="absolute -right-2 -bottom-2 text-2xl"
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+            {/* Waving finger */}
+            {!isSearching && (
+              <span
+                className="finger-point-animate"
+                style={{
+                  fontSize: '36px',
+                  display: 'inline-block',
+                  lineHeight: 1,
+                  filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+                  marginLeft: '4px',
+                }}
               >
-                👆
-              </motion.span>
+                👈
+              </span>
             )}
           </motion.button>
         </div>

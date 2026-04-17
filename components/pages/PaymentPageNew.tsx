@@ -233,7 +233,7 @@ export function PaymentPage() {
                     </a>
                 </nav>
 
-                {/* Main Content - Two Columns on Desktop */}
+                {/* Main Content */}
                 <div style={{
                     maxWidth: '960px',
                     margin: '0.5rem auto',
@@ -241,321 +241,306 @@ export function PaymentPage() {
                     position: 'relative',
                     zIndex: 20,
                 }}>
-                    <div style={{
-                        display: 'flex',
-                        flexDirection: 'column-reverse',
-                        gap: '1.5rem',
-                    }} className="lg:grid lg:grid-cols-[minmax(0,1fr)]">
-                        {/* Mobile: Pricing on top */}
-                        <div className="block lg:hidden">
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.4, delay: 0.1 }}
-                                style={{
-                                    backgroundColor: 'rgba(255,255,255,0.97)',
-                                    backdropFilter: 'blur(20px)',
-                                    borderRadius: '1.5rem',
-                                    boxShadow: '0 25px 60px -15px rgba(0,0,0,0.3)',
-                                    overflow: 'hidden',
-                                    padding: '1.25rem',
-                                }}
-                            >
-                                {/* Countdown Timer - Only for subscription */}
-                                {selectedPlan === 'subscription' && (
-                                    <CountdownTimer durationMinutes={15} storageKey="all-access-timer" />
-                                )}
-
-                                <PricingSelector
-                                    serviceId={activeService}
-                                    selectedPlan={selectedPlan}
-                                    onPlanSelect={setSelectedPlan}
-                                />
-
-                                {/* Pay Button - Mobile */}
-                                <motion.button
-                                    id="outer-checkout-button-mobile"
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={handleCheckout}
-                                    disabled={isProcessing}
-                                    style={{
-                                        width: '100%',
-                                        marginTop: '1rem',
-                                        padding: '1rem',
-                                        background: selectedPlan === 'subscription'
-                                            ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
-                                            : 'linear-gradient(135deg, #4b5563, #374151)',
-                                        color: 'white',
-                                        borderRadius: '0.75rem',
-                                        fontSize: '1rem',
-                                        fontWeight: 700,
-                                        border: 'none',
-                                        cursor: isProcessing ? 'wait' : 'pointer',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '0.5rem',
-                                        boxShadow: selectedPlan === 'subscription'
-                                            ? '0 10px 25px rgba(139,92,246,0.35)'
-                                            : '0 4px 12px rgba(0,0,0,0.1)',
-                                        opacity: isProcessing ? 0.7 : 1,
-                                    }}
-                                >
-                                    {isProcessing ? 'Processing...' : (
-                                        <>
-                                            🔒 Unlock All Now {selectedPlan === 'subscription'
-                                                ? `${SUBSCRIPTION_CONFIG.price}€/mo`
-                                                : `${config.singleReportPrice}€`
-                                            }
-                                        </>
-                                    )}
-                                </motion.button>
-                            </motion.div>
-                        </div>
-
-                        {/* Desktop Layout */}
-                        <div className="hidden lg:grid" style={{ gridTemplateColumns: '1fr 400px', gap: '1.5rem', alignItems: 'start' }}>
-                            {/* Left: Preview */}
-                            <motion.div
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.5 }}
-                                style={{
-                                    backgroundColor: 'rgba(255,255,255,0.97)',
-                                    backdropFilter: 'blur(20px)',
-                                    borderRadius: '1.75rem',
-                                    boxShadow: '0 25px 60px -15px rgba(0,0,0,0.3)',
-                                    overflow: 'hidden',
-                                    padding: '1.5rem',
-                                }}
-                            >
-                                <div style={{ marginBottom: '1rem' }}>
-                                    <h1 style={{
-                                        fontSize: '1.625rem',
-                                        fontWeight: 800,
-                                        color: '#1f2937',
-                                        lineHeight: 1.2,
-                                        marginBottom: '0.5rem',
+                    {/* Mobile layout: Preview FIRST (top), then Pricing */}
+                    <div className="flex flex-col gap-4 lg:hidden">
+                        {/* 1. Preview card - always on top on mobile */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4 }}
+                            style={{
+                                backgroundColor: 'rgba(255,255,255,0.97)',
+                                backdropFilter: 'blur(20px)',
+                                borderRadius: '1.5rem',
+                                boxShadow: '0 25px 60px -15px rgba(0,0,0,0.3)',
+                                overflow: 'hidden',
+                                padding: '1.25rem',
+                            }}
+                        >
+                            <div style={{ marginBottom: '0.75rem' }}>
+                                <h1 style={{
+                                    fontSize: '1.375rem',
+                                    fontWeight: 800,
+                                    color: '#1f2937',
+                                    lineHeight: 1.2,
+                                    marginBottom: '0.375rem',
+                                }}>
+                                    {config.title}{' '}
+                                    <span style={{
+                                        backgroundClip: 'text',
+                                        WebkitBackgroundClip: 'text',
+                                        color: 'transparent',
+                                        backgroundImage: config.accentColors.gradient,
                                     }}>
-                                        {config.title}{' '}
-                                        <span style={{
-                                            backgroundClip: 'text',
-                                            WebkitBackgroundClip: 'text',
-                                            color: 'transparent',
-                                            backgroundImage: config.accentColors.gradient,
-                                        }}>
-                                            {config.subtitle}
-                                        </span>
-                                    </h1>
-                                    <div style={{
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        gap: '0.5rem',
-                                        backgroundColor: `${config.accentColors.primary}15`,
-                                        color: config.accentColors.primary,
-                                        padding: '0.375rem 0.75rem',
-                                        borderRadius: '9999px',
-                                        fontSize: '0.75rem',
-                                        fontWeight: 700,
-                                    }}>
-                                        <span style={{
-                                            width: '8px', height: '8px',
-                                            borderRadius: '50%',
-                                            backgroundColor: config.accentColors.primary,
-                                            animation: 'pulse 2s infinite',
-                                        }} />
-                                        {config.badgeText}
-                                    </div>
-                                </div>
-                                <PreviewComponent />
-
-                                {/* Trust Footer */}
+                                        {config.subtitle}
+                                    </span>
+                                </h1>
                                 <div style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '0.375rem',
+                                    backgroundColor: `${config.accentColors.primary}15`,
+                                    color: config.accentColors.primary,
+                                    padding: '0.25rem 0.625rem',
+                                    borderRadius: '9999px',
+                                    fontSize: '0.6875rem',
+                                    fontWeight: 700,
+                                }}>
+                                    <span style={{
+                                        width: '6px', height: '6px',
+                                        borderRadius: '50%',
+                                        backgroundColor: config.accentColors.primary,
+                                        animation: 'pulse 2s infinite',
+                                    }} />
+                                    {config.badgeText}
+                                </div>
+                            </div>
+                            <PreviewComponent />
+                        </motion.div>
+
+                        {/* 2. Pricing card - below preview on mobile */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, delay: 0.1 }}
+                            style={{
+                                backgroundColor: 'rgba(255,255,255,0.97)',
+                                backdropFilter: 'blur(20px)',
+                                borderRadius: '1.5rem',
+                                boxShadow: '0 25px 60px -15px rgba(0,0,0,0.3)',
+                                overflow: 'hidden',
+                                padding: '1.25rem',
+                            }}
+                        >
+                            {selectedPlan === 'subscription' && (
+                                <CountdownTimer durationMinutes={15} storageKey="all-access-timer" />
+                            )}
+
+                            <PricingSelector
+                                serviceId={activeService}
+                                selectedPlan={selectedPlan}
+                                onPlanSelect={setSelectedPlan}
+                            />
+
+                            <motion.button
+                                id="outer-checkout-button-mobile"
+                                whileTap={{ scale: 0.98 }}
+                                onClick={handleCheckout}
+                                disabled={isProcessing}
+                                style={{
+                                    width: '100%',
+                                    marginTop: '1rem',
+                                    padding: '1rem',
+                                    background: selectedPlan === 'subscription'
+                                        ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
+                                        : 'linear-gradient(135deg, #4b5563, #374151)',
+                                    color: 'white',
+                                    borderRadius: '0.75rem',
+                                    fontSize: '1rem',
+                                    fontWeight: 700,
+                                    border: 'none',
+                                    cursor: isProcessing ? 'wait' : 'pointer',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     gap: '0.5rem',
-                                    marginTop: '1rem',
-                                    padding: '0.75rem',
-                                    backgroundColor: '#f9fafb',
-                                    borderRadius: '0.75rem',
-                                    fontSize: '0.6875rem',
-                                    color: '#6b7280',
-                                }}>
-                                    <IconShield style={{ width: '1rem', height: '1rem', color: '#22c55e' }} />
-                                    <span>256-bit SSL Encryption • 100% Secure Payment</span>
-                                </div>
-                            </motion.div>
-
-                            {/* Right: Pricing */}
-                            <motion.div
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ duration: 0.5, delay: 0.1 }}
-                                style={{
-                                    backgroundColor: 'rgba(255,255,255,0.97)',
-                                    backdropFilter: 'blur(20px)',
-                                    borderRadius: '1.75rem',
-                                    boxShadow: '0 25px 60px -15px rgba(0,0,0,0.3)',
-                                    overflow: 'hidden',
-                                    padding: '1.5rem',
+                                    boxShadow: selectedPlan === 'subscription'
+                                        ? '0 10px 25px rgba(139,92,246,0.35)'
+                                        : '0 4px 12px rgba(0,0,0,0.1)',
+                                    opacity: isProcessing ? 0.7 : 1,
                                 }}
                             >
-                                {/* Countdown Timer - Only for subscription */}
-                                {selectedPlan === 'subscription' && (
-                                    <CountdownTimer durationMinutes={10} storageKey="all-access-timer" />
+                                {isProcessing ? 'Processing...' : (
+                                    <>
+                                        🔒 Unlock All Now {selectedPlan === 'subscription'
+                                            ? `${SUBSCRIPTION_CONFIG.price}€/mo`
+                                            : `${config.singleReportPrice}€`
+                                        }
+                                    </>
                                 )}
+                            </motion.button>
+                        </motion.div>
+                    </div>
 
-                                <PricingSelector
-                                    serviceId={activeService}
-                                    selectedPlan={selectedPlan}
-                                    onPlanSelect={setSelectedPlan}
-                                />
-
-                                {/* Pay Button */}
-                                <motion.button
-                                    id="outer-checkout-button"
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={handleCheckout}
-                                    disabled={isProcessing}
-                                    style={{
-                                        width: '100%',
-                                        marginTop: '1.25rem',
-                                        padding: '1rem',
-                                        background: selectedPlan === 'subscription'
-                                            ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
-                                            : 'linear-gradient(135deg, #4b5563, #374151)',
-                                        color: 'white',
-                                        borderRadius: '0.875rem',
-                                        fontSize: '1rem',
-                                        fontWeight: 700,
-                                        border: 'none',
-                                        cursor: isProcessing ? 'wait' : 'pointer',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        gap: '0.5rem',
-                                        boxShadow: selectedPlan === 'subscription'
-                                            ? '0 12px 30px rgba(139,92,246,0.4)'
-                                            : '0 6px 15px rgba(0,0,0,0.15)',
-                                        opacity: isProcessing ? 0.7 : 1,
-                                        transition: 'all 0.3s ease',
-                                    }}
-                                >
-                                    {isProcessing ? (
-                                        <>
-                                            <motion.div
-                                                animate={{ rotate: 360 }}
-                                                transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
-                                                style={{
-                                                    width: '1.25rem',
-                                                    height: '1.25rem',
-                                                    border: '2px solid white',
-                                                    borderTopColor: 'transparent',
-                                                    borderRadius: '50%',
-                                                }}
-                                            />
-                                            Processing...
-                                        </>
-                                    ) : (
-                                        <>
-                                            🔒 Unlock All Now {selectedPlan === 'subscription'
-                                                ? `${SUBSCRIPTION_CONFIG.price}€/mo`
-                                                : `${config.singleReportPrice}€`
-                                            }
-                                            <IconArrowRight style={{ width: '1rem', height: '1rem' }} />
-                                        </>
-                                    )}
-                                </motion.button>
-
-                                {/* Payment Info */}
-                                <p style={{
-                                    textAlign: 'center',
-                                    fontSize: '0.625rem',
-                                    color: '#9ca3af',
-                                    marginTop: '0.625rem',
+                    {/* Desktop Layout: Two columns */}
+                    <div className="hidden lg:grid" style={{ gridTemplateColumns: '1fr 400px', gap: '1.5rem', alignItems: 'start' }}>
+                        {/* Left: Preview */}
+                        <motion.div
+                            initial={{ opacity: 0, x: -20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5 }}
+                            style={{
+                                backgroundColor: 'rgba(255,255,255,0.97)',
+                                backdropFilter: 'blur(20px)',
+                                borderRadius: '1.75rem',
+                                boxShadow: '0 25px 60px -15px rgba(0,0,0,0.3)',
+                                overflow: 'hidden',
+                                padding: '1.5rem',
+                            }}
+                        >
+                            <div style={{ marginBottom: '1rem' }}>
+                                <h1 style={{
+                                    fontSize: '1.625rem',
+                                    fontWeight: 800,
+                                    color: '#1f2937',
+                                    lineHeight: 1.2,
+                                    marginBottom: '0.5rem',
                                 }}>
-                                    {selectedPlan === 'subscription'
-                                        ? 'No commitment • Cancel in 1-click • Instant access'
-                                        : 'One-time payment • Instant access to results'
-                                    }
-                                </p>
-
-                                {/* Payment Logos */}
+                                    {config.title}{' '}
+                                    <span style={{
+                                        backgroundClip: 'text',
+                                        WebkitBackgroundClip: 'text',
+                                        color: 'transparent',
+                                        backgroundImage: config.accentColors.gradient,
+                                    }}>
+                                        {config.subtitle}
+                                    </span>
+                                </h1>
                                 <div style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '0.5rem',
+                                    backgroundColor: `${config.accentColors.primary}15`,
+                                    color: config.accentColors.primary,
+                                    padding: '0.375rem 0.75rem',
+                                    borderRadius: '9999px',
+                                    fontSize: '0.75rem',
+                                    fontWeight: 700,
+                                }}>
+                                    <span style={{
+                                        width: '8px', height: '8px',
+                                        borderRadius: '50%',
+                                        backgroundColor: config.accentColors.primary,
+                                        animation: 'pulse 2s infinite',
+                                    }} />
+                                    {config.badgeText}
+                                </div>
+                            </div>
+                            <PreviewComponent />
+
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '0.5rem',
+                                marginTop: '1rem',
+                                padding: '0.75rem',
+                                backgroundColor: '#f9fafb',
+                                borderRadius: '0.75rem',
+                                fontSize: '0.6875rem',
+                                color: '#6b7280',
+                            }}>
+                                <IconShield style={{ width: '1rem', height: '1rem', color: '#22c55e' }} />
+                                <span>256-bit SSL Encryption • 100% Secure Payment</span>
+                            </div>
+                        </motion.div>
+
+                        {/* Right: Pricing */}
+                        <motion.div
+                            initial={{ opacity: 0, x: 20 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                            style={{
+                                backgroundColor: 'rgba(255,255,255,0.97)',
+                                backdropFilter: 'blur(20px)',
+                                borderRadius: '1.75rem',
+                                boxShadow: '0 25px 60px -15px rgba(0,0,0,0.3)',
+                                overflow: 'hidden',
+                                padding: '1.5rem',
+                            }}
+                        >
+                            {selectedPlan === 'subscription' && (
+                                <CountdownTimer durationMinutes={10} storageKey="all-access-timer" />
+                            )}
+
+                            <PricingSelector
+                                serviceId={activeService}
+                                selectedPlan={selectedPlan}
+                                onPlanSelect={setSelectedPlan}
+                            />
+
+                            <motion.button
+                                id="outer-checkout-button"
+                                whileHover={{ scale: 1.02 }}
+                                whileTap={{ scale: 0.98 }}
+                                onClick={handleCheckout}
+                                disabled={isProcessing}
+                                style={{
+                                    width: '100%',
+                                    marginTop: '1.25rem',
+                                    padding: '1rem',
+                                    background: selectedPlan === 'subscription'
+                                        ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
+                                        : 'linear-gradient(135deg, #4b5563, #374151)',
+                                    color: 'white',
+                                    borderRadius: '0.875rem',
+                                    fontSize: '1rem',
+                                    fontWeight: 700,
+                                    border: 'none',
+                                    cursor: isProcessing ? 'wait' : 'pointer',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
-                                    gap: '1rem',
-                                    marginTop: '1rem',
-                                    paddingTop: '1rem',
-                                    borderTop: '1px solid #f3f4f6',
-                                }}>
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" style={{ height: '18px', opacity: 0.4 }} />
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" style={{ height: '14px', opacity: 0.4 }} />
-                                    <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" style={{ height: '18px', opacity: 0.4 }} />
-                                </div>
-                            </motion.div>
-                        </div>
-
-                        {/* Mobile: Preview below */}
-                        <div className="block lg:hidden">
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.4 }}
-                                style={{
-                                    backgroundColor: 'rgba(255,255,255,0.97)',
-                                    backdropFilter: 'blur(20px)',
-                                    borderRadius: '1.5rem',
-                                    boxShadow: '0 25px 60px -15px rgba(0,0,0,0.3)',
-                                    overflow: 'hidden',
-                                    padding: '1.25rem',
+                                    gap: '0.5rem',
+                                    boxShadow: selectedPlan === 'subscription'
+                                        ? '0 12px 30px rgba(139,92,246,0.4)'
+                                        : '0 6px 15px rgba(0,0,0,0.15)',
+                                    opacity: isProcessing ? 0.7 : 1,
+                                    transition: 'all 0.3s ease',
                                 }}
                             >
-                                {/* Results Header */}
-                                <div style={{ marginBottom: '0.75rem' }}>
-                                    <h1 style={{
-                                        fontSize: '1.375rem',
-                                        fontWeight: 800,
-                                        color: '#1f2937',
-                                        lineHeight: 1.2,
-                                        marginBottom: '0.375rem',
-                                    }}>
-                                        {config.title}{' '}
-                                        <span style={{
-                                            backgroundClip: 'text',
-                                            WebkitBackgroundClip: 'text',
-                                            color: 'transparent',
-                                            backgroundImage: config.accentColors.gradient,
-                                        }}>
-                                            {config.subtitle}
-                                        </span>
-                                    </h1>
-                                    <div style={{
-                                        display: 'inline-flex',
-                                        alignItems: 'center',
-                                        gap: '0.375rem',
-                                        backgroundColor: `${config.accentColors.primary}15`,
-                                        color: config.accentColors.primary,
-                                        padding: '0.25rem 0.625rem',
-                                        borderRadius: '9999px',
-                                        fontSize: '0.6875rem',
-                                        fontWeight: 700,
-                                    }}>
-                                        <span style={{
-                                            width: '6px', height: '6px',
-                                            borderRadius: '50%',
-                                            backgroundColor: config.accentColors.primary,
-                                            animation: 'pulse 2s infinite',
-                                        }} />
-                                        {config.badgeText}
-                                    </div>
-                                </div>
-                                <PreviewComponent />
-                            </motion.div>
-                        </div>
+                                {isProcessing ? (
+                                    <>
+                                        <motion.div
+                                            animate={{ rotate: 360 }}
+                                            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                                            style={{
+                                                width: '1.25rem',
+                                                height: '1.25rem',
+                                                border: '2px solid white',
+                                                borderTopColor: 'transparent',
+                                                borderRadius: '50%',
+                                            }}
+                                        />
+                                        Processing...
+                                    </>
+                                ) : (
+                                    <>
+                                        🔒 Unlock All Now {selectedPlan === 'subscription'
+                                            ? `${SUBSCRIPTION_CONFIG.price}€/mo`
+                                            : `${config.singleReportPrice}€`
+                                        }
+                                        <IconArrowRight style={{ width: '1rem', height: '1rem' }} />
+                                    </>
+                                )}
+                            </motion.button>
+
+                            <p style={{
+                                textAlign: 'center',
+                                fontSize: '0.625rem',
+                                color: '#9ca3af',
+                                marginTop: '0.625rem',
+                            }}>
+                                {selectedPlan === 'subscription'
+                                    ? 'No commitment • Cancel in 1-click • Instant access'
+                                    : 'One-time payment • Instant access to results'
+                                }
+                            </p>
+
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '1rem',
+                                marginTop: '1rem',
+                                paddingTop: '1rem',
+                                borderTop: '1px solid #f3f4f6',
+                            }}>
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/b/ba/Stripe_Logo%2C_revised_2016.svg" alt="Stripe" style={{ height: '18px', opacity: 0.4 }} />
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" style={{ height: '14px', opacity: 0.4 }} />
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" style={{ height: '18px', opacity: 0.4 }} />
+                            </div>
+                        </motion.div>
                     </div>
                 </div>
             </div>

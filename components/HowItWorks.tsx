@@ -108,7 +108,7 @@ export function HowItWorks() {
       badge: "How Face Trace works",
       title: "Find someone by photo",
       highlight: "in 3 simple steps",
-      subtitle: "Upload a photo and our AI performs a reverse face search across dating apps and social networks to find matching profiles."
+      subtitle: "Upload a photo and our AI performs a reverse face search to track their digital footprint and web activity across the internet."
     },
     fidelity: {
       badge: "How Fidelity Test works",

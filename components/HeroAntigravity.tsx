@@ -83,12 +83,12 @@ const HeroAntigravity: React.FC = () => {
 
     const contentMap: Record<ServiceType, { h1: string; desc: string; instruction: string; cta: string; ctaEmoji: string; buttonIcon: React.ReactNode; buttonBg: string }> = {
         dating: {
-            h1: "Find any profile on Tinder with AI Face Search",
+            h1: "Find any profile on Tinder with AI",
             desc: "Uncover your partner's secrets with the #1 Tinder Profile Finder. More accurate than Pimeyes for dating apps.",
             instruction: "WHO ARE YOU LOOKING FOR?",
             cta: "START SEARCH",
             ctaEmoji: "",
-            buttonIcon: <Search size={22} strokeWidth={3} />,
+            buttonIcon: null,
             buttonBg: "linear-gradient(135deg, #991b1b 0%, #dc2626 50%, #ef4444 100%)"
         },
         following: {
@@ -96,7 +96,7 @@ const HeroAntigravity: React.FC = () => {
             desc: "Analyze their entire following list instantly. See who they recently followed and uncover suspicious interactions.",
             instruction: "ENTER TARGET USERNAME",
             cta: "ANALYZE FOLLOWINGS",
-            ctaEmoji: "📊",
+            ctaEmoji: "",
             buttonIcon: <Instagram size={22} strokeWidth={2.5} />,
             buttonBg: "linear-gradient(135deg, #5b21b6 0%, #7c3aed 50%, #8b5cf6 100%)"
         },
@@ -105,7 +105,7 @@ const HeroAntigravity: React.FC = () => {
             desc: "The ultimate Pimeyes alternative. Find every profile, blog post, and image trace across the entire web.",
             instruction: "UPLOAD PHOTO TO SCAN",
             cta: "START WEB SCAN",
-            ctaEmoji: "🌐",
+            ctaEmoji: "",
             buttonIcon: <ScanFace size={22} strokeWidth={2.5} />,
             buttonBg: "linear-gradient(135deg, #075985 0%, #0284c7 50%, #0ea5e9 100%)"
         },
@@ -114,7 +114,7 @@ const HeroAntigravity: React.FC = () => {
             desc: "Upload screenshots of suspicious conversations (WhatsApp, SMS, Tinder). Our AI detects hidden infidelity signals.",
             instruction: "UPLOAD CHAT SCREENSHOT",
             cta: "ANALYZE CHAT",
-            ctaEmoji: "🛡️",
+            ctaEmoji: "",
             buttonIcon: <MessageCircle size={22} strokeWidth={2.5} />,
             buttonBg: "linear-gradient(135deg, #9d174d 0%, #be185d 50%, #db2777 100%)"
         }
@@ -171,7 +171,7 @@ const HeroAntigravity: React.FC = () => {
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'space-between',
-                padding: '16px 24px',
+                padding: '12px 24px', // Reduced top/bottom padding
                 maxWidth: '1280px',
                 margin: '0 auto',
                 width: '100%',
@@ -397,7 +397,7 @@ const HeroAntigravity: React.FC = () => {
                 <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-[55%]">
 
                 {/* Trusted Badge */}
-                <div className="mb-2 lg:mb-10 flex items-center gap-[12px] bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 shadow-lg scale-[0.85] origin-top lg:scale-100 lg:origin-left transition-transform">
+                <div className="hidden lg:flex items-center gap-[12px] bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 shadow-lg scale-[0.85] origin-top lg:scale-100 lg:origin-left transition-transform mb-6">
                     <div className="flex">
                         {trustedUsers.map((url, i) => (
                             <img
@@ -441,23 +441,23 @@ const HeroAntigravity: React.FC = () => {
                 </div>
 
                 {/* Headlines */}
-                <div className="w-full mb-3 lg:mb-10">
-                    <h1 className="font-extrabold mb-2 leading-[1.05] tracking-tight text-white drop-shadow-lg"
+                <div className="w-full mb-2 lg:mb-8">
+                    <h1 className="font-extrabold mb-1 lg:mb-2 leading-[1.05] tracking-tight text-white drop-shadow-lg"
                         style={{
-                            fontSize: 'clamp(1.5rem, 4.5vw, 4rem)',
+                            fontSize: 'clamp(1.4rem, 4.5vw, 4rem)',
                             fontFamily: "var(--font-display), 'Plus Jakarta Sans', sans-serif"
                         }}>
                         {currentContent.h1}
                     </h1>
-                    <p className="text-white/90 leading-relaxed font-medium md:max-w-[80%]"
+                    <p className="text-white/90 leading-snug lg:leading-relaxed font-medium md:max-w-[80%] hidden lg:block"
                        style={{ fontSize: 'clamp(0.85rem, 1.8vw, 1.15rem)' }}>
                         {currentContent.desc}
                     </p>
                 </div>
 
                 {/* Service Selector */}
-                <div className="w-full mb-2 flex flex-col items-center lg:items-start scale-[0.85] lg:scale-[0.95] xl:scale-100 origin-top lg:origin-left transition-transform">
-                    <p style={{
+                <div className="w-full mb-2 lg:mb-6 flex flex-col items-center lg:items-start scale-[0.85] lg:scale-[0.95] xl:scale-100 origin-top lg:origin-left transition-transform">
+                    <p className="hidden lg:block" style={{
                         fontSize: '14px',
                         fontWeight: 600,
                         color: 'rgba(255,255,255,0.9)',
@@ -467,7 +467,7 @@ const HeroAntigravity: React.FC = () => {
                     }}>
                         Choose your service:
                     </p>
-                    <div className="flex flex-wrap justify-center lg:justify-start gap-2 w-full max-w-[700px]">
+                    <div className="flex flex-wrap justify-center lg:justify-start gap-2 w-full max-w-[700px] mt-1 lg:mt-0">
                         {services.map((service) => (
                             <button
                                 key={service.id}
@@ -520,17 +520,17 @@ const HeroAntigravity: React.FC = () => {
                 <div style={{
                     backgroundColor: '#ffffff',
                     color: '#1e293b',
-                    borderRadius: '40px',
-                    padding: '24px',
+                    borderRadius: '32px',
+                    padding: '20px',
                     width: '100%',
                     maxWidth: '480px',
                     boxShadow: '0 25px 60px rgba(0,0,0,0.25)',
                     position: 'relative',
-                    marginBottom: '64px',
+                    marginBottom: '40px',
                     border: '1px solid rgba(255,255,255,0.6)'
                 }}>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px', position: 'relative', zIndex: 20 }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', position: 'relative', zIndex: 20 }}>
 
                         {/* Instruction Header */}
                         <div style={{ display: 'flex', justifyContent: 'center', width: '100%' }}>
@@ -911,9 +911,11 @@ const HeroAntigravity: React.FC = () => {
                                 />
 
                                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', position: 'relative', zIndex: 20 }}>
-                                    <span style={{ opacity: 0.9 }}>
-                                        {currentContent.buttonIcon}
-                                    </span>
+                                    {currentContent.buttonIcon && (
+                                        <span style={{ opacity: 0.9 }}>
+                                            {currentContent.buttonIcon}
+                                        </span>
+                                    )}
                                     <span style={{
                                         fontSize: '18px',
                                         fontWeight: 900,
@@ -923,24 +925,20 @@ const HeroAntigravity: React.FC = () => {
                                     }}>
                                         {currentContent.cta} {currentContent.ctaEmoji}
                                     </span>
-                                    <ArrowRight size={20} strokeWidth={3} />
+                                    {/* Waving Finger directly inside flow */}
+                                    <span
+                                        className="finger-point-animate"
+                                        style={{
+                                            fontSize: 'clamp(32px, 6vw, 42px)',
+                                            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+                                            display: 'inline-block',
+                                            lineHeight: 1,
+                                            marginLeft: '8px'
+                                        }}
+                                    >
+                                        👈
+                                    </span>
                                 </div>
-
-                                <span
-                                    className="finger-point-animate"
-                                    style={{
-                                        position: 'absolute',
-                                        right: '20px',
-                                        top: '50%',
-                                        transform: 'translateY(-50%)',
-                                        fontSize: '28px',
-                                        filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
-                                        zIndex: 30,
-                                        pointerEvents: 'none'
-                                    }}
-                                >
-                                    👆
-                                </span>
                             </button>
                         )}
 

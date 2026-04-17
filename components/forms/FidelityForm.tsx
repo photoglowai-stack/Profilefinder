@@ -218,8 +218,7 @@ export function FidelityForm() {
           </div>
           {!isSearching && (
             <div className="flex items-center gap-2">
-              <span className="text-xl">🛡️</span>
-              <span className="text-[28px] animate-bounce" style={{ display: 'inline-block', lineHeight: 1 }}>👈</span>
+              <span className="finger-point-animate" style={{ fontSize: 'clamp(32px, 6vw, 42px)', display: 'inline-block', lineHeight: 1, filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))' }}>👈</span>
             </div>
           )}
         </div>
