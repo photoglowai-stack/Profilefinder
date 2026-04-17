@@ -397,7 +397,7 @@ const HeroAntigravity: React.FC = () => {
                 <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-[55%]">
 
                 {/* Trusted Badge */}
-                <div className="hidden lg:flex items-center gap-[12px] bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 shadow-lg scale-[0.85] origin-top lg:scale-100 lg:origin-left transition-transform mb-6">
+                <div className="flex items-center gap-[12px] bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 shadow-lg scale-[0.85] origin-top lg:scale-100 lg:origin-left transition-transform mb-6">
                     <div className="flex">
                         {trustedUsers.map((url, i) => (
                             <img
