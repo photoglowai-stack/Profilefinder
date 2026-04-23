@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import {
     Search, ChevronDown, Check, Lock, UserCircle, MapPin,
@@ -11,24 +11,10 @@ import { useService } from '@/lib/ServiceContext';
 import 'leaflet/dist/leaflet.css';
 import '@/styles/dating-search.css';
 
-// ============================================
-// TYPES
-// ============================================
-interface ToastMessage {
-    id: number;
-    name: string;
-    action: string;
-    exiting?: boolean;
-}
 
 // ============================================
 // CONSTANTS
 // ============================================
-const TOAST_MESSAGES = [
-    { name: "Sarah L.", action: "found 2 hidden accounts" },
-    { name: "Alex M.", action: "unlocked full history" },
-    { name: "Emma K.", action: "discovered a secret profile" }
-];
 
 // Page gradient is now handled by ServiceLayout
 
@@ -58,9 +44,6 @@ export default function DatingSearchWizard() {
     const [email, setEmail] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Social proof toasts
-    const [toasts, setToasts] = useState<ToastMessage[]>([]);
-    const toastIdRef = useRef(0);
 
     // Map refs
     const mapContainerRef = useRef<HTMLDivElement>(null);
@@ -70,38 +53,6 @@ export default function DatingSearchWizard() {
     // Search timeout
     const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    // ============================================
-    // SOCIAL PROOF TOASTS
-    // ============================================
-    const addToast = useCallback((name: string, action: string) => {
-        const id = ++toastIdRef.current;
-        setToasts(prev => [...prev, { id, name, action }]);
-
-        setTimeout(() => {
-            setToasts(prev => prev.map(t => t.id === id ? { ...t, exiting: true } : t));
-            setTimeout(() => {
-                setToasts(prev => prev.filter(t => t.id !== id));
-            }, 300);
-        }, 4000);
-    }, []);
-
-    useEffect(() => {
-        let index = 0;
-        const interval = setInterval(() => {
-            const msg = TOAST_MESSAGES[index % TOAST_MESSAGES.length];
-            addToast(msg.name, msg.action);
-            index++;
-        }, 6000);
-
-        const firstTimeout = setTimeout(() => {
-            addToast(TOAST_MESSAGES[0].name, TOAST_MESSAGES[0].action);
-        }, 2000);
-
-        return () => {
-            clearInterval(interval);
-            clearTimeout(firstTimeout);
-        };
-    }, [addToast]);
 
     // ============================================
     // STEP NAVIGATION
@@ -345,11 +296,26 @@ export default function DatingSearchWizard() {
                             <p style={{ lineHeight: 1.5, opacity: 0.9 }}>Our system detects similar names automatically (like "Alex", "Alek", "Lex")</p>
                         </div>
 
-                        <button onClick={() => goToStep(2)} className="dating-btn-primary">
-                            <Search size={20} />
-                            <span>Check if he is on a dating app</span>
-                            <ArrowRight size={18} />
-                        </button>
+                        <div style={{ display: 'flex', gap: '12px' }}>
+                            <button
+                                onClick={() => router.push('/')}
+                                className="dating-btn-secondary"
+                                style={{
+                                    flex: '0 0 auto',
+                                    padding: '14px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button onClick={() => goToStep(2)} className="dating-btn-primary" style={{ flex: 1 }}>
+                                <Search size={20} />
+                                <span>Check if he is on a dating app</span>
+                                <ArrowRight size={18} />
+                            </button>
+                        </div>
                     </div>
 
                     {/* ==================== STEP 2: AGE ==================== */}
@@ -599,33 +565,6 @@ export default function DatingSearchWizard() {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            {/* Social Proof Toasts */}
-            <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 50, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {toasts.map((toast) => (
-                    <div
-                        key={toast.id}
-                        className={toast.exiting ? 'dating-toast-exit' : 'dating-toast-enter'}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '12px',
-                            backgroundColor: 'rgba(17, 24, 39, 0.95)',
-                            color: 'white',
-                            padding: '12px 16px',
-                            borderRadius: '12px',
-                            boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.25)',
-                            backdropFilter: 'blur(12px)',
-                            minWidth: '250px'
-                        }}
-                    >
-                        <div style={{ width: '8px', height: '8px', backgroundColor: '#ec4899', borderRadius: '50%', animation: 'pulse 2s infinite' }} />
-                        <div style={{ fontSize: '14px' }}>
-                            <span style={{ fontWeight: 700 }}>{toast.name}</span> {toast.action}
-                        </div>
-                    </div>
-                ))}
             </div>
         </ServiceLayout>
     );

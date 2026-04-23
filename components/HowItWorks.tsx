@@ -279,7 +279,22 @@ export function HowItWorks() {
               </div>
             )}
 
-            {(selectedService === 'fidelity' || selectedService === 'following') && (
+            {selectedService === 'fidelity' && (
+              <div className="relative bg-white dark:bg-[#1e293b] rounded-[2rem] p-3 shadow-[0_20px_50px_rgba(0,0,0,0.4)] max-w-sm mx-auto transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700 border border-white/10 overflow-hidden">
+                <img
+                  src="/assets/fidelity-step-guide.png"
+                  alt="Fidelity Test step-by-step guide"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: '1.25rem',
+                    display: 'block'
+                  }}
+                />
+              </div>
+            )}
+
+            {selectedService === 'following' && (
               <div className="relative bg-white dark:bg-[#1e293b] rounded-[2rem] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)] max-w-sm mx-auto transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700 border border-white/10">
                 <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border z-10" style={{
                   backgroundColor: `${serviceColors.primary}15`,

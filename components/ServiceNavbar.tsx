@@ -144,9 +144,35 @@ export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
                             </button>
                         </div>
 
-                        {/* Navigation Links */}
-                        <div className="flex flex-col gap-4 flex-1">
-                            {navLinks.map((item) => (
+                        {/* Services Section - AT TOP */}
+                        <div className="mb-6">
+                            <p className="text-xs font-bold text-white/50 mb-3 uppercase tracking-widest px-4">
+                                Choose your service
+                            </p>
+                            <div className="flex flex-col gap-2">
+                                {[
+                                    { label: 'Tinder Search', path: '/', icon: '❤️' },
+                                    { label: 'Following AI', path: '/following-ai', icon: '👥' },
+                                    { label: 'Face Trace', path: '/face-trace', icon: '🔍' },
+                                    { label: 'Fidelity Test', path: '/fidelity-test', icon: '🛡️' }
+                                ].map((service) => (
+                                    <a
+                                        key={service.label}
+                                        href={service.path}
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="text-white/90 no-underline text-base font-semibold px-4 py-3 rounded-xl transition-all duration-200 flex items-center gap-3"
+                                        style={{ backgroundColor: 'rgba(239,62,92,0.15)' }}
+                                    >
+                                        <span>{service.icon}</span>
+                                        {service.label}
+                                    </a>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Other Navigation Links */}
+                        <div className="flex flex-col gap-4 flex-1 border-t border-white/10 pt-6">
+                            {['Blog', 'Affiliate Program'].map((item) => (
                                 <a
                                     key={item}
                                     href="#"

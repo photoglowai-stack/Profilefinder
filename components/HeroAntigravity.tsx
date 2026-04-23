@@ -291,34 +291,14 @@ const HeroAntigravity: React.FC = () => {
                             border: '1px solid rgba(255,255,255,0.1)'
                         }}
                     >
-                        {['Search Profile', 'Blog', 'Affiliate Program'].map((item) => (
-                            <a
-                                key={item}
-                                href="#"
-                                style={{
-                                    color: 'rgba(255,255,255,0.9)',
-                                    textDecoration: 'none',
-                                    fontSize: '18px',
-                                    fontWeight: 600,
-                                    padding: '12px 16px',
-                                    borderRadius: '12px',
-                                    backgroundColor: 'rgba(255,255,255,0.05)',
-                                    transition: 'all 0.2s'
-                                }}
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                {item}
-                            </a>
-                        ))}
-
-                        {/* Services Section */}
-                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', marginTop: '8px' }}>
+                        {/* Services Section - AT TOP */}
+                        <div>
                             <p style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                                Our Services
+                                Choose your service
                             </p>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {[
-                                    { label: 'Dating Search', path: '/dating-search/form', icon: '❤️' },
+                                    { label: 'Tinder Search', path: '/', icon: '❤️' },
                                     { label: 'Following AI', path: '/following-ai', icon: '👥' },
                                     { label: 'Face Trace', path: '/face-trace', icon: '🔍' },
                                     { label: 'Fidelity Test', path: '/fidelity-test', icon: '🛡️' }
@@ -346,6 +326,31 @@ const HeroAntigravity: React.FC = () => {
                                     </a>
                                 ))}
                             </div>
+                        </div>
+
+                        {/* Other Links */}
+                        <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px' }}>
+                            {['Blog', 'Affiliate Program'].map((item) => (
+                                <a
+                                    key={item}
+                                    href="#"
+                                    style={{
+                                        color: 'rgba(255,255,255,0.9)',
+                                        textDecoration: 'none',
+                                        fontSize: '18px',
+                                        fontWeight: 600,
+                                        padding: '12px 16px',
+                                        borderRadius: '12px',
+                                        backgroundColor: 'rgba(255,255,255,0.05)',
+                                        transition: 'all 0.2s',
+                                        display: 'block',
+                                        marginBottom: '8px'
+                                    }}
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    {item}
+                                </a>
+                            ))}
                         </div>
 
                         <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '16px', display: 'flex', gap: '12px' }}>
@@ -500,9 +505,9 @@ const HeroAntigravity: React.FC = () => {
                     </div>
                 </div>
 
-                {/* Ils parlent de nous */}
+                {/* As seen in */}
                 <div className="mt-4 lg:mt-8 hidden lg:flex flex-col items-center lg:items-start w-full">
-                    <p className="font-bold text-[22px] text-white mb-6">Ils parlent de nous</p>
+                    <p className="font-bold text-[22px] text-white mb-6">As seen in</p>
                     <div className="flex items-center gap-8 opacity-60 grayscale brightness-[2] flex-wrap justify-center lg:justify-start">
                         <span style={{ fontSize: '28px', fontWeight: 900, fontFamily: 'serif', letterSpacing: '-1px' }}>Forbes</span>
                         <span style={{ fontSize: '28px', fontWeight: 900, fontFamily: 'serif', fontStyle: 'italic', letterSpacing: '-1px' }}>DailyMail</span>
@@ -910,7 +915,7 @@ const HeroAntigravity: React.FC = () => {
                                     }}
                                 />
 
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', position: 'relative', zIndex: 20 }}>
+                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', position: 'relative', zIndex: 20 }}>
                                     {currentContent.buttonIcon && (
                                         <span style={{ opacity: 0.9 }}>
                                             {currentContent.buttonIcon}
@@ -924,19 +929,6 @@ const HeroAntigravity: React.FC = () => {
                                         textShadow: '0 2px 4px rgba(0,0,0,0.2)'
                                     }}>
                                         {currentContent.cta} {currentContent.ctaEmoji}
-                                    </span>
-                                    {/* Waving Finger directly inside flow */}
-                                    <span
-                                        className="finger-point-animate"
-                                        style={{
-                                            fontSize: 'clamp(32px, 6vw, 42px)',
-                                            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
-                                            display: 'inline-block',
-                                            lineHeight: 1,
-                                            marginLeft: '8px'
-                                        }}
-                                    >
-                                        👈
                                     </span>
                                 </div>
                             </button>
@@ -1009,14 +1001,57 @@ const HeroAntigravity: React.FC = () => {
                 {/* End Right Column */}
                 </div>
 
-                {/* Mobile Ils parlent de nous */}
+                {/* Mobile As seen in */}
                 <div className="flex lg:hidden flex-col items-center w-full mt-4 mb-4">
-                    <p className="font-bold text-[18px] text-white mb-4">Ils parlent de nous</p>
+                    <p className="font-bold text-[18px] text-white mb-4">As seen in</p>
                     <div className="flex items-center gap-6 opacity-60 grayscale brightness-[2] flex-wrap justify-center">
                         <span style={{ fontSize: '20px', fontWeight: 900, fontFamily: 'serif', letterSpacing: '-1px' }}>Forbes</span>
                         <span style={{ fontSize: '20px', fontWeight: 900, fontFamily: 'serif', fontStyle: 'italic', letterSpacing: '-1px' }}>DailyMail</span>
                         <span style={{ fontSize: '20px', fontWeight: 900, letterSpacing: '-1px' }}>The Sun</span>
                         <span style={{ fontSize: '20px', fontWeight: 900, fontFamily: 'sans-serif', letterSpacing: '-2px' }}>VICE</span>
+                    </div>
+                </div>
+
+                {/* Mobile Service Selector - below form */}
+                <div className="flex lg:hidden flex-col items-center w-full mt-6 mb-4">
+                    <p style={{
+                        fontSize: '14px',
+                        fontWeight: 600,
+                        color: 'rgba(255,255,255,0.9)',
+                        marginBottom: '12px',
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.05em'
+                    }}>
+                        Choose your service:
+                    </p>
+                    <div className="flex flex-wrap justify-center gap-2 w-full max-w-[400px]">
+                        {services.map((service) => (
+                            <button
+                                key={service.id}
+                                onClick={() => {
+                                    setSelectedService(service.id);
+                                    router.push(service.path);
+                                }}
+                                style={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: '6px',
+                                    padding: '8px 14px',
+                                    borderRadius: '9999px',
+                                    fontSize: '12px',
+                                    fontWeight: 700,
+                                    cursor: 'pointer',
+                                    border: selectedService === service.id ? '2px solid #0a0a0a' : '2px solid transparent',
+                                    backgroundColor: selectedService === service.id ? '#0a0a0a' : '#ffffff',
+                                    color: selectedService === service.id ? '#ffffff' : '#475569',
+                                    boxShadow: selectedService === service.id ? '0 6px 16px rgba(10,10,10,0.25)' : '0 2px 6px rgba(0,0,0,0.06)',
+                                    transition: 'all 0.3s ease'
+                                }}
+                            >
+                                {React.cloneElement(service.icon as React.ReactElement<{ size?: number }>, { size: 14 })}
+                                <span>{service.label}</span>
+                            </button>
+                        ))}
                     </div>
                 </div>
 

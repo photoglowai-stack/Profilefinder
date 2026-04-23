@@ -44,7 +44,7 @@ const reviews: Review[] = [
     id: 2,
     name: "Marcus T.",
     handle: "marcus_t",
-    content: "Service incroyable pour vérifier avant un date. Le support m'a aidé à interpréter les résultats. 5/5 pour l'efficacité.",
+    content: "Amazing service to verify before a date. The support team helped me interpret the results. 5/5 for effectiveness.",
     rating: 5,
     daysAgo: 5,
     verified: true,
