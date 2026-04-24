@@ -39,6 +39,8 @@ function SectionSkeleton() {
 export default function HomePage() {
   const heroRef = useRef<HTMLDivElement | null>(null);
   const footerRef = useRef<HTMLDivElement | null>(null);
+  const insetRafRef = useRef<number | null>(null);
+  const lastInsetRef = useRef(24);
   const [isHeroVisible, setIsHeroVisible] = useState(true);
   const [isFooterVisible, setIsFooterVisible] = useState(false);
   const [bottomInset, setBottomInset] = useState(24);
@@ -72,16 +74,32 @@ export default function HomePage() {
       if (!viewport) return;
 
       const chromeHeight = window.innerHeight - viewport.height - viewport.offsetTop;
-      setBottomInset(24 + Math.max(0, chromeHeight));
+      const nextInset = 24 + Math.max(0, chromeHeight);
+      if (lastInsetRef.current !== nextInset) {
+        lastInsetRef.current = nextInset;
+        setBottomInset(nextInset);
+      }
+    };
+
+    const scheduleUpdate = () => {
+      if (insetRafRef.current !== null) return;
+      insetRafRef.current = window.requestAnimationFrame(() => {
+        insetRafRef.current = null;
+        updateInset();
+      });
     };
 
     updateInset();
-    window.visualViewport?.addEventListener('resize', updateInset);
-    window.addEventListener('scroll', updateInset, { passive: true });
+    window.visualViewport?.addEventListener('resize', scheduleUpdate);
+    window.addEventListener('scroll', scheduleUpdate, { passive: true });
 
     return () => {
-      window.visualViewport?.removeEventListener('resize', updateInset);
-      window.removeEventListener('scroll', updateInset);
+      if (insetRafRef.current !== null) {
+        window.cancelAnimationFrame(insetRafRef.current);
+        insetRafRef.current = null;
+      }
+      window.visualViewport?.removeEventListener('resize', scheduleUpdate);
+      window.removeEventListener('scroll', scheduleUpdate);
     };
   }, []);
 
