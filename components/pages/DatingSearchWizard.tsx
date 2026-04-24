@@ -24,11 +24,6 @@ interface ToastMessage {
 // ============================================
 // CONSTANTS
 // ============================================
-const TOAST_MESSAGES = [
-    { name: "Sarah L.", action: "found 2 hidden accounts" },
-    { name: "Alex M.", action: "unlocked full history" },
-    { name: "Emma K.", action: "discovered a secret profile" }
-];
 
 // Page gradient is now handled by ServiceLayout
 
@@ -58,10 +53,6 @@ export default function DatingSearchWizard() {
     const [email, setEmail] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    // Social proof toasts
-    const [toasts, setToasts] = useState<ToastMessage[]>([]);
-    const toastIdRef = useRef(0);
-
     // Map refs
     const mapContainerRef = useRef<HTMLDivElement>(null);
     const mapRef = useRef<L.Map | null>(null);
@@ -69,39 +60,6 @@ export default function DatingSearchWizard() {
 
     // Search timeout
     const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-    // ============================================
-    // SOCIAL PROOF TOASTS
-    // ============================================
-    const addToast = useCallback((name: string, action: string) => {
-        const id = ++toastIdRef.current;
-        setToasts(prev => [...prev, { id, name, action }]);
-
-        setTimeout(() => {
-            setToasts(prev => prev.map(t => t.id === id ? { ...t, exiting: true } : t));
-            setTimeout(() => {
-                setToasts(prev => prev.filter(t => t.id !== id));
-            }, 300);
-        }, 4000);
-    }, []);
-
-    useEffect(() => {
-        let index = 0;
-        const interval = setInterval(() => {
-            const msg = TOAST_MESSAGES[index % TOAST_MESSAGES.length];
-            addToast(msg.name, msg.action);
-            index++;
-        }, 6000);
-
-        const firstTimeout = setTimeout(() => {
-            addToast(TOAST_MESSAGES[0].name, TOAST_MESSAGES[0].action);
-        }, 2000);
-
-        return () => {
-            clearInterval(interval);
-            clearTimeout(firstTimeout);
-        };
-    }, [addToast]);
 
     // ============================================
     // STEP NAVIGATION
@@ -328,6 +286,25 @@ export default function DatingSearchWizard() {
 
                     {/* ==================== STEP 1: NAME ==================== */}
                     <div className={`dating-step ${currentStep === 1 ? 'active' : ''}`}>
+                        <button
+                            onClick={() => router.push('/')}
+                            style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '4px',
+                                background: 'none',
+                                border: 'none',
+                                cursor: 'pointer',
+                                color: '#9ca3af',
+                                fontSize: '14px',
+                                fontWeight: 500,
+                                padding: '0',
+                                marginBottom: '16px',
+                            }}
+                        >
+                            <ChevronLeft size={16} />
+                            Back
+                        </button>
                         <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#111', marginBottom: '24px' }}>What is his/her name?</h2>
 
                         <div className="dating-input-wrapper" style={{ marginBottom: '24px' }}>
@@ -601,32 +578,7 @@ export default function DatingSearchWizard() {
                 </div>
             </div>
 
-            {/* Social Proof Toasts */}
-            <div style={{ position: 'fixed', bottom: '24px', right: '24px', zIndex: 50, display: 'flex', flexDirection: 'column', gap: '12px' }}>
-                {toasts.map((toast) => (
-                    <div
-                        key={toast.id}
-                        className={toast.exiting ? 'dating-toast-exit' : 'dating-toast-enter'}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '12px',
-                            backgroundColor: 'rgba(17, 24, 39, 0.95)',
-                            color: 'white',
-                            padding: '12px 16px',
-                            borderRadius: '12px',
-                            boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.25)',
-                            backdropFilter: 'blur(12px)',
-                            minWidth: '250px'
-                        }}
-                    >
-                        <div style={{ width: '8px', height: '8px', backgroundColor: '#ec4899', borderRadius: '50%', animation: 'pulse 2s infinite' }} />
-                        <div style={{ fontSize: '14px' }}>
-                            <span style={{ fontWeight: 700 }}>{toast.name}</span> {toast.action}
-                        </div>
-                    </div>
-                ))}
-            </div>
+
         </ServiceLayout>
     );
 }

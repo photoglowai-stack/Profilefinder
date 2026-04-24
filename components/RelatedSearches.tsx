@@ -211,13 +211,14 @@ export function RelatedSearches() {
       </div>
 
       {/* Mobile responsive styles */}
-      <style>{`
+      <style dangerouslySetInnerHTML={{
+        __html: `
         @media (max-width: 768px) {
           section > div > div:last-child {
             grid-template-columns: 1fr !important;
           }
         }
-      `}</style>
+      ` }} />
     </section>
   );
 }

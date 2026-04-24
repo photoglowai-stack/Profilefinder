@@ -43,13 +43,15 @@ const reviews: Review[] = [
   {
     id: 2,
     name: "Marcus T.",
-    handle: "marcus_t",
-    content: "Service incroyable pour vérifier avant un date. Le support m'a aidé à interpréter les résultats. 5/5 pour l'efficacité.",
-    rating: 5,
+    handle: "marcust_real",
+    content: "I was suspicious for weeks but had no proof. ProfileFinder showed me everything in minutes. Saved me months of doubt. Highly recommend to anyone in my situation.",
     daysAgo: 5,
     verified: true,
-    platform: 'trustpilot',
+    platform: 'twitter',
     avatar: imgMarcus,
+    likes: 284,
+    retweets: 41,
+    comments: 15,
   },
   {
     id: 3,
@@ -140,76 +142,6 @@ function TwitterCard({ review }: { review: Review }) {
         <button className="hover:text-[#1d9bf0] transition-colors">
           <Share className="w-[18px] h-[18px]" />
         </button>
-      </div>
-    </motion.article>
-  );
-}
-
-// ═══════════════════════════════════════════════════════════════
-// TRUSTPILOT EMBED CARD
-// ═══════════════════════════════════════════════════════════════
-function TrustpilotCard({ review }: { review: Review }) {
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: 0.15 }}
-      whileHover={{ scale: 1.02 }}
-      className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm"
-    >
-      {/* Trustpilot Header */}
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          {/* Trustpilot Logo */}
-          <svg className="h-5" viewBox="0 0 126 31" fill="none">
-            <path d="M33.076 9.401h4.473v17.026h-4.473V9.401zm11.903 0h4.188l6.283 11.67V9.4h4.26v17.026h-4.188L49.24 14.756v11.671h-4.261V9.401zm-8.49 0h4.26v17.026h-4.26V9.401zm31.9 4.64c-.712-.656-1.67-.984-2.875-.984-1.507 0-2.616.574-3.328 1.722-.407.656-.611 1.476-.611 2.46v7.381h-4.26V9.401h4.116v2.132c.61-.82 1.181-1.394 1.71-1.722.956-.656 2.138-.984 3.542-.984 1.831 0 3.267.492 4.31 1.476 1.018.984 1.54 2.378 1.567 4.182v11.942h-4.331v-10.63c0-.902-.244-1.64-.732-2.214-.488-.574-1.161-.861-2.019-.861-.997 0-1.791.328-2.381.984-.407.41-.611.943-.611 1.599v11.122H62.4V9.401h4.116v2.214c.61-.902 1.181-1.517 1.71-1.845.997-.656 2.199-.984 3.603-.984 1.872 0 3.348.492 4.432 1.476 1.058.984 1.588 2.378 1.588 4.182v11.983h-4.33v-10.712c-.025-.82-.244-1.517-.659-2.091-.488-.574-1.161-.902-2.019-.902-1.058 0-1.872.369-2.443 1.107-.407.492-.611 1.066-.611 1.722v10.876H62.4V9.401h4.116v2.091c.61-.82 1.181-1.394 1.71-1.722.956-.656 2.138-.984 3.542-.984 1.831 0 3.267.492 4.31 1.476l.001-.001zm-56.612 0h9.412v3.116h-5.16v3.568h4.757v3.116h-4.757v4.016h5.384v3.21H11.777V9.401z" fill="#191919" />
-            <path d="M21.586 12.66l-6.524 4.74 2.493 7.672-6.524-4.74-6.524 4.74 2.493-7.672L.476 12.66h8.062l2.493-7.672 2.493 7.672h8.062z" fill="#00B67A" />
-            <path d="M15.565 19.08l-1.502-1.092-4.51 3.284 1.723-5.302-4.509-3.276 5.573-.001 1.723-5.301 1.502 4.623 4.51 3.276-4.51 3.284v.505z" fill="#005128" />
-          </svg>
-        </div>
-        <span className="text-xs text-gray-400">{review.daysAgo === 1 ? 'Yesterday' : `${review.daysAgo} days ago`}</span>
-      </div>
-
-      {/* Trustpilot Stars */}
-      <div className="flex gap-0.5 mb-3">
-        {[...Array(5)].map((_, i) => (
-          <div
-            key={i}
-            className={`w-6 h-6 flex items-center justify-center ${i < (review.rating || 5) ? 'bg-[#00b67a]' : 'bg-gray-200'}`}
-          >
-            <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-            </svg>
-          </div>
-        ))}
-      </div>
-
-      {/* Review Content */}
-      <p className="text-gray-800 font-medium leading-relaxed mb-4">
-        {review.content}
-      </p>
-
-      {/* Author */}
-      <div className="flex items-center gap-3 pt-3 border-t border-gray-100">
-        <Image
-          src={review.avatar}
-          alt={review.name}
-          width={40}
-          height={40}
-          className="rounded-full"
-        />
-        <div>
-          <p className="font-semibold text-gray-900 text-sm">{review.name}</p>
-          {review.verified && (
-            <div className="flex items-center gap-1 text-[#00b67a] text-xs">
-              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
-              </svg>
-              <span>Verified</span>
-            </div>
-          )}
-        </div>
       </div>
     </motion.article>
   );
@@ -313,7 +245,7 @@ export function Testimonials() {
         <SectionHeader
           label="Social Proof"
           title="Loved Across the Web"
-          description="Real reviews from real users on their favorite platforms."
+          description="Stories shared by our community"
           highlightedWords={["Across the Web"]}
         />
 
@@ -358,8 +290,6 @@ export function Testimonials() {
             switch (review.platform) {
               case 'twitter':
                 return <TwitterCard key={review.id} review={review} />;
-              case 'trustpilot':
-                return <TrustpilotCard key={review.id} review={review} />;
               case 'instagram':
                 return <InstagramCard key={review.id} review={review} />;
             }

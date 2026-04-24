@@ -108,7 +108,7 @@ const SERVICES = [
 const NAV_ITEMS = ["Search Profile", "Blog", "Affiliate Program"];
 
 const SERVICE_LINKS = [
-  { label: "Dating Search", path: "/dating-search/form", icon: "❤️" },
+  { label: "Dating Search", path: "/", icon: "❤️" },
   { label: "Following AI", path: "/following-ai", icon: "👥" },
   { label: "Face Trace", path: "/face-trace", icon: "🔍" },
   { label: "Fidelity Test", path: "/fidelity-test", icon: "🛡️" },
@@ -272,192 +272,198 @@ const HeroAntigravity: React.FC = () => {
 
       <HeroNavbar isMenuOpen={isMenuOpen} onToggleMenu={() => setIsMenuOpen(prev => !prev)} />
 
-      <div className="mx-auto flex w-full max-w-[1280px] flex-col items-center px-4 pb-12 pt-8 text-center">
-        <div className="mb-10 flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-5 py-2 shadow-[0_4px_20px_rgba(0,0,0,0.1)] backdrop-blur">
-          <div className="flex">
-            {TRUSTED_USERS.map((url, index) => (
-              <div
-                key={url}
-                className={cn(
-                  "relative h-8 w-8 overflow-hidden rounded-full border-2 border-rose-400",
-                  index > 0 && "-ml-3"
-                )}
-              >
-                <Image src={url} alt="User" fill sizes="32px" className="object-cover" />
-              </div>
-            ))}
-            <div className="relative -ml-3 flex h-8 w-8 items-center justify-center rounded-full border-2 border-rose-400 bg-white text-[10px] font-bold text-rose-500">
-              +99
-            </div>
-          </div>
-          <div className="text-left text-[12px] font-bold tracking-[0.02em] text-white/95">
-            TRUSTED BY <br />
-            <span className="flex items-center gap-1 font-extrabold text-white">
-              500k+ users
-              <Check size={12} className="rounded-full bg-emerald-500 p-[2px] text-white" strokeWidth={4} />
-            </span>
-          </div>
-        </div>
-
-        <div className="mb-10 w-full">
-          <h1 className="mx-auto mb-6 max-w-[900px] text-[clamp(2.25rem,6vw,4.5rem)] font-extrabold leading-none tracking-tight text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.25)]">
-            {currentContent.h1}
-          </h1>
-          <p className="mx-auto max-w-[640px] text-[clamp(1rem,2vw,1.25rem)] font-medium leading-relaxed text-white/90">
-            {currentContent.desc}
-          </p>
-        </div>
-
-        <p className="mb-3 text-sm font-semibold uppercase tracking-[0.05em] text-white/90">
-          Choose your service:
-        </p>
-        <ServiceTabSelector
-          services={SERVICES}
-          selectedService={selectedService}
-          onSelect={handleServiceSelect}
-        />
-
-        <div className="relative mb-16 w-full max-w-[480px] rounded-[40px] border border-white/60 bg-white p-6 text-slate-800 shadow-[0_25px_60px_rgba(0,0,0,0.25)]">
-          <div className="relative z-20 flex flex-col gap-6">
-            <div className="flex justify-center">
-              <div className="rounded-lg border border-slate-200 bg-slate-100 px-6 py-2">
-                <span className="text-[12px] font-black uppercase tracking-[0.15em] text-rose-500">
-                  {currentContent.instruction}
-                </span>
-              </div>
-            </div>
-
-            {selectedService === "dating" && (
-              <div className="grid grid-cols-2 gap-4">
-                <GenderSelectionCard
-                  gender="MAN"
-                  selected={selectedGender === "man"}
-                  onClick={() => setSelectedGender("man")}
-                  img={HERO_AVATAR_MAN}
-                  accent={ACCENT_CLASSES.dating}
-                />
-                <GenderSelectionCard
-                  gender="WOMAN"
-                  selected={selectedGender === "woman"}
-                  onClick={() => setSelectedGender("woman")}
-                  img={HERO_AVATAR_WOMAN}
-                  isWoman
-                  accent={ACCENT_CLASSES.dating}
-                />
-              </div>
-            )}
-
-            {selectedService === "following" && (
-              <div className="flex h-[300px] flex-col justify-center">
-                <div className="flex flex-1 flex-col items-center justify-center pb-6">
-                  <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-fuchsia-500 to-pink-500 text-white shadow-[0_8px_24px_rgba(168,85,247,0.3)]">
-                    <Instagram size={40} />
-                  </div>
-                  <p className="px-4 text-center text-sm font-semibold text-slate-500">
-                    Analyze public profiles & hidden connections.
-                  </p>
+      <div className="mx-auto flex w-full max-w-[1280px] flex-col lg:flex-row lg:items-center lg:justify-between gap-10 px-4 pb-12 pt-8">
+        {/* LEFT COLUMN: Text content */}
+        <div className="flex flex-col items-center lg:items-start text-center lg:text-left lg:max-w-[55%]">
+          <div className="mb-10 flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-5 py-2 shadow-[0_4px_20px_rgba(0,0,0,0.1)] backdrop-blur">
+            <div className="flex">
+              {TRUSTED_USERS.map((url, index) => (
+                <div
+                  key={url}
+                  className={cn(
+                    "relative h-8 w-8 overflow-hidden rounded-full border-2 border-rose-400",
+                    index > 0 && "-ml-3"
+                  )}
+                >
+                  <Image src={url} alt="User" fill sizes="32px" className="object-cover" />
                 </div>
-                <div className="relative w-full">
-                  <div className="absolute left-4 top-1/2 z-10 -translate-y-1/2 text-lg font-extrabold text-slate-400">
-                    @
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="instagram_handle"
-                    className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-4 pl-10 text-base font-extrabold text-slate-800 outline-none"
+              ))}
+              <div className="relative -ml-3 flex h-8 w-8 items-center justify-center rounded-full border-2 border-rose-400 bg-white text-[10px] font-bold text-rose-500">
+                +99
+              </div>
+            </div>
+            <div className="text-left text-[12px] font-bold tracking-[0.02em] text-white/95">
+              TRUSTED BY <br />
+              <span className="flex items-center gap-1 font-extrabold text-white">
+                500k+ users
+                <Check size={12} className="rounded-full bg-emerald-500 p-[2px] text-white" strokeWidth={4} />
+              </span>
+            </div>
+          </div>
+
+          <div className="mb-10 w-full">
+            <h1 className="mx-auto mb-6 max-w-[900px] text-[clamp(2.25rem,6vw,4.5rem)] font-extrabold leading-none tracking-tight text-white drop-shadow-[0_4px_20px_rgba(0,0,0,0.25)]">
+              {currentContent.h1}
+            </h1>
+            <p className="mx-auto max-w-[640px] text-[clamp(1rem,2vw,1.25rem)] font-medium leading-relaxed text-white/90">
+              {currentContent.desc}
+            </p>
+          </div>
+
+          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.05em] text-white/90">
+            Choose your service:
+          </p>
+          <ServiceTabSelector
+            services={SERVICES}
+            selectedService={selectedService}
+            onSelect={handleServiceSelect}
+          />
+        </div>
+
+        {/* RIGHT COLUMN: Form card */}
+        <div className="flex flex-col items-center lg:items-end w-full lg:max-w-[45%]">
+          <div className="relative mb-16 w-full max-w-[480px] rounded-[40px] border border-white/60 bg-white p-6 text-slate-800 shadow-[0_25px_60px_rgba(0,0,0,0.25)]">
+            <div className="relative z-20 flex flex-col gap-6">
+              <div className="flex justify-center">
+                <div className="rounded-lg border border-slate-200 bg-slate-100 px-6 py-2">
+                  <span className="text-[12px] font-black uppercase tracking-[0.15em] text-rose-500">
+                    {currentContent.instruction}
+                  </span>
+                </div>
+              </div>
+
+              {selectedService === "dating" && (
+                <div className="grid grid-cols-2 gap-4">
+                  <GenderSelectionCard
+                    gender="MAN"
+                    selected={selectedGender === "man"}
+                    onClick={() => setSelectedGender("man")}
+                    img={HERO_AVATAR_MAN}
+                    accent={ACCENT_CLASSES.dating}
+                  />
+                  <GenderSelectionCard
+                    gender="WOMAN"
+                    selected={selectedGender === "woman"}
+                    onClick={() => setSelectedGender("woman")}
+                    img={HERO_AVATAR_WOMAN}
+                    isWoman
+                    accent={ACCENT_CLASSES.dating}
                   />
                 </div>
-              </div>
-            )}
+              )}
 
-            {selectedService === "facetrace" && (
-              <div className="flex h-[300px] flex-col">
-                {!faceTraceImage ? (
-                  <UploadDropzone onUpload={handleFaceTraceUpload} accent={accent} />
-                ) : (
-                  <div className="relative flex-1 overflow-hidden rounded-2xl border-4 border-emerald-500">
-                    <Image
-                      src={faceTraceImage}
-                      alt="Preview"
-                      fill
-                      sizes="(max-width: 768px) 100vw, 480px"
-                      className="object-cover"
-                      unoptimized
-                    />
-                    <button
-                      onClick={clearFaceTraceImage}
-                      className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-rose-500 text-white shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
-                    >
-                      <X size={18} strokeWidth={3} />
-                    </button>
-                    <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-lg bg-emerald-500 px-3 py-1.5 text-[12px] font-bold text-white">
-                      <Check size={14} strokeWidth={3} />
-                      Photo ready
+              {selectedService === "following" && (
+                <div className="flex h-[300px] flex-col justify-center">
+                  <div className="flex flex-1 flex-col items-center justify-center pb-6">
+                    <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-fuchsia-500 to-pink-500 text-white shadow-[0_8px_24px_rgba(168,85,247,0.3)]">
+                      <Instagram size={40} />
                     </div>
+                    <p className="px-4 text-center text-sm font-semibold text-slate-500">
+                      Analyze public profiles & hidden connections.
+                    </p>
                   </div>
-                )}
-              </div>
-            )}
+                  <div className="relative w-full">
+                    <div className="absolute left-4 top-1/2 z-10 -translate-y-1/2 text-lg font-extrabold text-slate-400">
+                      @
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="instagram_handle"
+                      className="w-full rounded-2xl border-2 border-slate-200 bg-slate-50 px-4 py-4 pl-10 text-base font-extrabold text-slate-800 outline-none"
+                    />
+                  </div>
+                </div>
+              )}
 
-            {selectedService === "fidelity" && (
-              <div className="-mt-3">
-                <FidelityForm />
-              </div>
-            )}
+              {selectedService === "facetrace" && (
+                <div className="flex h-[300px] flex-col">
+                  {!faceTraceImage ? (
+                    <UploadDropzone onUpload={handleFaceTraceUpload} accent={accent} />
+                  ) : (
+                    <div className="relative flex-1 overflow-hidden rounded-2xl border-4 border-emerald-500">
+                      <Image
+                        src={faceTraceImage}
+                        alt="Preview"
+                        fill
+                        sizes="(max-width: 768px) 100vw, 480px"
+                        className="object-cover"
+                        unoptimized
+                      />
+                      <button
+                        onClick={clearFaceTraceImage}
+                        className="absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full bg-rose-500 text-white shadow-[0_4px_12px_rgba(0,0,0,0.2)]"
+                      >
+                        <X size={18} strokeWidth={3} />
+                      </button>
+                      <div className="absolute bottom-3 left-3 flex items-center gap-2 rounded-lg bg-emerald-500 px-3 py-1.5 text-[12px] font-bold text-white">
+                        <Check size={14} strokeWidth={3} />
+                        Photo ready
+                      </div>
+                    </div>
+                  )}
+                </div>
+              )}
 
-            {selectedService !== "fidelity" && (
-              <button
-                onClick={handleActionClick}
-                className={cn(
-                  "hero-btn shimmer-effect relative mt-2 flex w-full items-center justify-center overflow-hidden rounded-full border border-white/10 px-6 py-4 text-white shadow-[0_8px_24px_rgba(0,0,0,0.2)]",
-                  currentContent.buttonClass
-                )}
-              >
-                <div className="shimmer-bar absolute inset-0 bg-hero-shimmer" />
-                <div className="relative z-20 flex items-center gap-4">
-                  <span className="opacity-90">{currentContent.buttonIcon}</span>
-                  <span className="text-lg font-black uppercase tracking-[0.1em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
-                    {currentContent.cta} {currentContent.ctaEmoji}
+              {selectedService === "fidelity" && (
+                <div className="flex flex-col max-h-[380px] overflow-y-auto -mx-1 px-1">
+                  <FidelityForm />
+                </div>
+              )}
+
+              {selectedService !== "fidelity" && (
+                <button
+                  onClick={handleActionClick}
+                  className={cn(
+                    "hero-btn shimmer-effect relative mt-2 flex w-full items-center justify-center overflow-hidden rounded-full border border-white/10 px-6 py-4 text-white shadow-[0_8px_24px_rgba(0,0,0,0.2)]",
+                    currentContent.buttonClass
+                  )}
+                >
+                  <div className="shimmer-bar absolute inset-0 bg-hero-shimmer" />
+                  <div className="relative z-20 flex items-center gap-4">
+                    <span className="opacity-90">{currentContent.buttonIcon}</span>
+                    <span className="text-lg font-black uppercase tracking-[0.1em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.2)]">
+                      {currentContent.cta} {currentContent.ctaEmoji}
+                    </span>
+                    <ArrowRight size={20} strokeWidth={3} />
+                  </div>
+                  <span className="finger-point-animate pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-[28px] drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">
+                    👆
                   </span>
-                  <ArrowRight size={20} strokeWidth={3} />
-                </div>
-                <span className="finger-point-animate pointer-events-none absolute right-5 top-1/2 -translate-y-1/2 text-[28px] drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">
-                  👆
-                </span>
-              </button>
-            )}
+                </button>
+              )}
 
-            <div className="mt-4 flex flex-col items-center gap-2 border-t border-slate-100 pt-4">
-              <div className="flex items-center gap-2 rounded-full border border-yellow-200 bg-yellow-50 px-3 py-1">
-                <div className="flex">
-                  {[1, 2, 3, 4, 5].map(i => (
-                    <Star key={i} size={12} fill="#FFB800" color="#FFB800" />
-                  ))}
+              <div className="mt-4 flex flex-col items-center gap-2 border-t border-slate-100 pt-4">
+                <div className="flex items-center gap-2 rounded-full border border-yellow-200 bg-yellow-50 px-3 py-1">
+                  <div className="flex">
+                    {[1, 2, 3, 4, 5].map(i => (
+                      <Star key={i} size={12} fill="#FFB800" color="#FFB800" />
+                    ))}
+                  </div>
+                  <span className="text-[10px] font-bold text-slate-600">4.9/5 Rating</span>
                 </div>
-                <span className="text-[10px] font-bold text-slate-600">4.9/5 Rating</span>
-              </div>
-              <div className="flex items-center gap-2 text-slate-400">
-                <Activity size={12} className="text-emerald-500" />
-                <span className="text-[10px] font-extrabold uppercase tracking-[0.05em]">
-                  1,302 searches today
-                </span>
+                <div className="flex items-center gap-2 text-slate-400">
+                  <Activity size={12} className="text-emerald-500" />
+                  <span className="text-[10px] font-extrabold uppercase tracking-[0.05em]">
+                    1,302 searches today
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
 
-          <div className="pointer-events-none absolute -bottom-14 left-0 flex w-full justify-center">
-            <div className="flex items-center gap-4 rounded-full border border-white/20 bg-red-600 px-6 py-3 text-[10px] font-bold text-white shadow-[0_8px_24px_rgba(255,0,51,0.3)]">
-              <span className="flex items-center gap-2">
-                <Shield size={12} strokeWidth={3} /> 100% Private
-              </span>
-              <span className="h-3 w-px bg-white/30" />
-              <span className="flex items-center gap-2">
-                <Clock size={12} strokeWidth={3} /> Instant
-              </span>
-              <span className="h-3 w-px bg-white/30" />
-              <span className="flex items-center gap-2">
-                <Check size={12} strokeWidth={3} /> 99% Accuracy
-              </span>
+            <div className="pointer-events-none absolute -bottom-14 left-0 flex w-full justify-center">
+              <div className="flex items-center gap-4 rounded-full border border-white/20 bg-red-600 px-6 py-3 text-[10px] font-bold text-white shadow-[0_8px_24px_rgba(255,0,51,0.3)]">
+                <span className="flex items-center gap-2">
+                  <Shield size={12} strokeWidth={3} /> 100% Private
+                </span>
+                <span className="h-3 w-px bg-white/30" />
+                <span className="flex items-center gap-2">
+                  <Clock size={12} strokeWidth={3} /> Instant
+                </span>
+                <span className="h-3 w-px bg-white/30" />
+                <span className="flex items-center gap-2">
+                  <Check size={12} strokeWidth={3} /> 99% Accuracy
+                </span>
+              </div>
             </div>
           </div>
         </div>

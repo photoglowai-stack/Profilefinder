@@ -664,7 +664,7 @@ export function PaymentPage() {
                                                         textTransform: 'uppercase',
                                                         boxShadow: '0 1px 3px rgba(0,0,0,0.3)',
                                                     }}>
-                                                        Exemple
+                                                        Example
                                                     </div>
                                                 )}
 
@@ -845,14 +845,14 @@ export function PaymentPage() {
                                             fontWeight: 900,
                                             color: colors.indigo600,
                                             letterSpacing: '-0.05em',
-                                        }}>19.99€</span>
+                                        }}>19.90€</span>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginTop: '0.125rem' }}>
                                             <span style={{
                                                 fontSize: '0.75rem',
                                                 color: colors.gray400,
                                                 fontWeight: 600,
                                                 textDecoration: 'line-through',
-                                            }}>39.99€</span>
+                                            }}>39.90€</span>
                                             <span style={{
                                                 fontSize: '0.625rem',
                                                 fontWeight: 700,
@@ -1023,7 +1023,7 @@ export function PaymentPage() {
                                         color: colors.gray800,
                                         fontSize: '1.125rem',
                                         transition: 'transform 0.3s ease',
-                                    }}>14.99€</span>
+                                    }}>19.90€</span>
                                     <span style={{
                                         fontSize: '10px',
                                         color: colors.rose500,

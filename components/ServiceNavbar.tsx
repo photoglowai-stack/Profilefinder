@@ -156,6 +156,29 @@ export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
                                     {item}
                                 </a>
                             ))}
+
+                            {/* Services Section */}
+                            <div className="border-t border-white/10 pt-4 mt-2">
+                                <p className="text-[12px] font-bold uppercase tracking-[0.1em] text-white/50 mb-3 px-4">Our Services</p>
+                                <div className="flex flex-col gap-2">
+                                    {[
+                                        { label: 'Dating Search', path: '/', icon: '❤️' },
+                                        { label: 'Following AI', path: '/following-ai', icon: '👥' },
+                                        { label: 'Face Trace', path: '/face-trace', icon: '🔍' },
+                                        { label: 'Fidelity Test', path: '/fidelity-test', icon: '🛡️' },
+                                    ].map((service) => (
+                                        <a
+                                            key={service.label}
+                                            href={service.path}
+                                            onClick={() => setIsMenuOpen(false)}
+                                            className="flex items-center gap-3 rounded-xl bg-rose-500/15 px-4 py-2.5 text-base font-semibold text-white/90 no-underline transition-all duration-200 hover:bg-rose-500/25"
+                                        >
+                                            <span>{service.icon}</span>
+                                            {service.label}
+                                        </a>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
 
                         {/* Bottom Actions */}
