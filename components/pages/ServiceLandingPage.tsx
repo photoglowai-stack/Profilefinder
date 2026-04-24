@@ -17,7 +17,6 @@ const StatsSection = lazy(() => import("@/components/StatsSection").then(m => ({
 const ToolComparison = lazy(() => import("@/components/ToolComparison").then(m => ({ default: m.ToolComparison })));
 const CTASection = lazy(() => import("@/components/CTASection").then(m => ({ default: m.CTASection })));
 const FAQ = lazy(() => import("@/components/FAQ").then(m => ({ default: m.FAQ })));
-const SocialProofVideos = lazy(() => import("@/components/SocialProofVideos").then(m => ({ default: m.SocialProofVideos })));
 
 // Loading skeleton for lazy components
 function SectionSkeleton() {
@@ -88,9 +87,6 @@ export default function ServiceLandingPage({ service }: ServiceLandingPageProps)
                     <HeroAntigravity />
                     <StatsBar />
                     <HowItWorks />
-                    <Suspense fallback={<SectionSkeleton />}>
-                        <SocialProofVideos />
-                    </Suspense>
                     <UGCSection />
 
                     {/* Lazy loaded sections */}

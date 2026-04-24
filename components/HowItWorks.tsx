@@ -3,6 +3,7 @@ import { CheckCircle2, Eye, Sparkles } from "lucide-react";
 import { useService } from "../lib/ServiceContext";
 import { serviceContent } from "../lib/content";
 import { RevealOnScroll } from "./ui/RevealOnScroll";
+import { SocialProofVideos } from "./SocialProofVideos";
 
 // --- ICÔNES SVG INTÉGRÉES ---
 const IconZap = ({ style, className }: { style?: React.CSSProperties; className?: string }) => (
@@ -400,6 +401,9 @@ export function HowItWorks() {
           </div>
         </div>
       </div>
+
+      {/* Social Proof Videos - Between steps and toolkit */}
+      <SocialProofVideos />
 
       {/* OUR TOOLS SECTION - BENTO GRID */}
       <div style={{ maxWidth: '80rem', margin: '0 auto', marginTop: '5rem' }}>

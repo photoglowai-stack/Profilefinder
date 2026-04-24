@@ -16,7 +16,6 @@ const Testimonials = lazy(() => import("@/components/Testimonials").then(m => ({
 const StatsSection = lazy(() => import("@/components/StatsSection").then(m => ({ default: m.StatsSection })));
 const ToolComparison = lazy(() => import("@/components/ToolComparison").then(m => ({ default: m.ToolComparison })));
 const SEOBlogSection = lazy(() => import("@/components/SEOBlogSection").then(m => ({ default: m.SEOBlogSection })));
-const SocialProofVideos = lazy(() => import("@/components/SocialProofVideos").then(m => ({ default: m.SocialProofVideos })));
 const CTASection = lazy(() => import("@/components/CTASection").then(m => ({ default: m.CTASection })));
 const FAQ = lazy(() => import("@/components/FAQ").then(m => ({ default: m.FAQ })));
 
@@ -85,9 +84,6 @@ export default function HomePage() {
           <HeroAntigravity />
           <StatsBar />
           <HowItWorks />
-          <Suspense fallback={<SectionSkeleton />}>
-            <SocialProofVideos />
-          </Suspense>
           <UGCSection />
 
           {/* Lazy loaded sections */}

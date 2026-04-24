@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Heart, MessageCircle, Repeat2, Share, MoreHorizontal, Bookmark } from "lucide-react";
 import Image from "next/image";
 import { SectionHeader } from "./ui/SectionHeader";
+import { useService } from "../lib/ServiceContext";
 
 // Import avatars
 import imgSarah from "../assets/avatar-testimonial-sarah.png";
@@ -26,44 +27,160 @@ interface Review {
   comments?: number;
 }
 
-const reviews: Review[] = [
-  {
-    id: 1,
-    name: "Sarah M.",
-    handle: "sarah_finding",
-    content: "I finally found the truth. The reverse image search is scary accurate. Found profiles I didn't know existed in seconds. 🙏",
-    daysAgo: 2,
-    verified: true,
-    platform: 'twitter',
-    avatar: imgSarah,
-    likes: 47,
-    retweets: 12,
-    comments: 8,
-  },
-  {
-    id: 2,
-    name: "Marcus T.",
-    handle: "marcus_t",
-    content: "Amazing service to verify before a date. The support team helped me interpret the results. 5/5 for effectiveness.",
-    rating: 5,
-    daysAgo: 5,
-    verified: true,
-    platform: 'trustpilot',
-    avatar: imgMarcus,
-  },
-  {
-    id: 3,
-    name: "Jessica L.",
-    handle: "jess_real",
-    content: "Was skeptical seeing this on stories but tried the face trace. Worth every penny for the peace of mind! 🕵️‍♀️✨",
-    daysAgo: 1,
-    verified: true,
-    platform: 'instagram',
-    avatar: imgDavid,
-    likes: 234,
-    comments: 18,
-  },
-];
+const reviewsConfig: Record<string, Review[]> = {
+  dating: [
+    {
+      id: 1,
+      name: "Sarah M.",
+      handle: "sarah_finding",
+      content: "I finally found the truth. Found his hidden Tinder profile in seconds. 🙏",
+      daysAgo: 2,
+      verified: true,
+      platform: 'twitter',
+      avatar: imgSarah,
+      likes: 47,
+      retweets: 12,
+      comments: 8,
+    },
+    {
+      id: 2,
+      name: "Marcus T.",
+      handle: "marcus_t",
+      content: "Amazing service to verify before a date. Uncovered multiple dating profiles. 5/5 for effectiveness.",
+      rating: 5,
+      daysAgo: 5,
+      verified: true,
+      platform: 'trustpilot',
+      avatar: imgMarcus,
+    },
+    {
+      id: 3,
+      name: "Jessica L.",
+      handle: "jess_real",
+      content: "Was skeptical seeing this on stories but it found exactly what he was hiding on dating apps! 🕵️‍♀️✨",
+      daysAgo: 1,
+      verified: true,
+      platform: 'instagram',
+      avatar: imgDavid,
+      likes: 234,
+      comments: 18,
+    }
+  ],
+  following: [
+    {
+      id: 1,
+      name: "Sarah M.",
+      handle: "sarah_finding",
+      content: "The AI tracker spotted the late-night Instagram follows I completely missed. So glad I used this before confronting him. 🙏",
+      daysAgo: 2,
+      verified: true,
+      platform: 'twitter',
+      avatar: imgSarah,
+      likes: 47,
+      retweets: 12,
+      comments: 8,
+    },
+    {
+      id: 2,
+      name: "Marcus T.",
+      handle: "marcus_t",
+      content: "The automated activity reports are essential. It tracked who she was interacting with daily. 5/5 accuracy.",
+      rating: 5,
+      daysAgo: 5,
+      verified: true,
+      platform: 'trustpilot',
+      avatar: imgMarcus,
+    },
+    {
+      id: 3,
+      name: "Jessica L.",
+      handle: "jess_real",
+      content: "Following AI literally gave me the exact timezone patterns of when he was active. The data doesn't lie! 🕵️‍♀️✨",
+      daysAgo: 1,
+      verified: true,
+      platform: 'instagram',
+      avatar: imgDavid,
+      likes: 234,
+      comments: 18,
+    }
+  ],
+  facetrace: [
+    {
+      id: 1,
+      name: "Sarah M.",
+      handle: "sarah_finding",
+      content: "I reverse searched an old photo and found his newly created secret accounts across 3 different sites. Scary accurate. 🙏",
+      daysAgo: 2,
+      verified: true,
+      platform: 'twitter',
+      avatar: imgSarah,
+      likes: 47,
+      retweets: 12,
+      comments: 8,
+    },
+    {
+      id: 2,
+      name: "Marcus T.",
+      handle: "marcus_t",
+      content: "Face Trace uncovered a completely fake identity my 'match' was using. Saved me from a major scam. 5/5.",
+      rating: 5,
+      daysAgo: 5,
+      verified: true,
+      platform: 'trustpilot',
+      avatar: imgMarcus,
+    },
+    {
+      id: 3,
+      name: "Jessica L.",
+      handle: "jess_real",
+      content: "Found all the social media accounts tied to the picture he sent me. Better than any PI! 🕵️‍♀️✨",
+      daysAgo: 1,
+      verified: true,
+      platform: 'instagram',
+      avatar: imgDavid,
+      likes: 234,
+      comments: 18,
+    }
+  ],
+  fidelity: [
+    {
+      id: 1,
+      name: "Sarah M.",
+      handle: "sarah_finding",
+      content: "The fidelity check analyzed all the red flags I was ignoring. It gave me the clarity I needed to finally leave. 🙏",
+      daysAgo: 2,
+      verified: true,
+      platform: 'twitter',
+      avatar: imgSarah,
+      likes: 47,
+      retweets: 12,
+      comments: 8,
+    },
+    {
+      id: 2,
+      name: "Marcus T.",
+      handle: "marcus_t",
+      content: "Incredible AI assessment tool. It connected the dots between behavioral changes and digital footprints perfectly.",
+      rating: 5,
+      daysAgo: 5,
+      verified: true,
+      platform: 'trustpilot',
+      avatar: imgMarcus,
+    },
+    {
+      id: 3,
+      name: "Jessica L.",
+      handle: "jess_real",
+      content: "The 360° relationship scan highlighted exactly what was wrong. Gave me the ultimate peace of mind. 🕵️‍♀️✨",
+      daysAgo: 1,
+      verified: true,
+      platform: 'instagram',
+      avatar: imgDavid,
+      likes: 234,
+      comments: 18,
+    }
+  ]
+};
 
 function formatDate(daysAgo: number): string {
   if (daysAgo === 0) return "now";
@@ -307,6 +424,9 @@ function InstagramCard({ review }: { review: Review }) {
 // MAIN COMPONENT
 // ═══════════════════════════════════════════════════════════════
 export function Testimonials() {
+  const { selectedService } = useService();
+  const currentReviews = reviewsConfig[selectedService] || reviewsConfig.dating;
+
   return (
     <section id="testimonials" className="bg-gradient-to-b from-slate-50 via-white to-slate-50 py-16 md:py-24">
       <div className="max-w-[1760px] mx-auto px-4 md:px-8">
@@ -354,7 +474,7 @@ export function Testimonials() {
 
         {/* Cards Grid */}
         <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {reviews.map((review) => {
+          {currentReviews.map((review) => {
             switch (review.platform) {
               case 'twitter':
                 return <TwitterCard key={review.id} review={review} />;
