@@ -934,12 +934,10 @@ const HeroAntigravity: React.FC = () => {
                                         <span
                                             className="finger-point-animate"
                                             style={{
-                                                position: 'absolute',
-                                                left: '100%',
                                                 fontSize: 'clamp(32px, 6vw, 42px)',
                                                 filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
                                                 lineHeight: 1,
-                                                marginLeft: '12px',
+                                                marginLeft: '6px',
                                                 whiteSpace: 'nowrap'
                                             }}
                                         >
