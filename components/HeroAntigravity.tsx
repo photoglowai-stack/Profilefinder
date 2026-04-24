@@ -324,14 +324,16 @@ const HeroAntigravity: React.FC = () => {
             </p>
           </div>
 
-          <p className="mb-3 text-sm font-semibold uppercase tracking-[0.05em] text-white/90">
+          <p className="mb-3 hidden text-sm font-semibold uppercase tracking-[0.05em] text-white/90 md:block">
             Choose your service:
           </p>
-          <ServiceTabSelector
-            services={SERVICES}
-            selectedService={selectedService}
-            onSelect={handleServiceSelect}
-          />
+          <div className="hidden md:block">
+            <ServiceTabSelector
+              services={SERVICES}
+              selectedService={selectedService}
+              onSelect={handleServiceSelect}
+            />
+          </div>
         </div>
 
         {/* RIGHT COLUMN: Form card */}
@@ -541,8 +543,23 @@ const HeroNavbar = memo(function HeroNavbar({
         </button>
       </div>
 
+      <div className="flex items-center gap-2 md:hidden">
+        <span className="max-w-[98px] text-right text-[10px] font-bold uppercase tracking-[0.06em] text-white/90">
+          Choose service
+        </span>
+        <button
+          className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-white backdrop-blur transition"
+          onClick={onToggleMenu}
+          aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isMenuOpen}
+        >
+          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          <span className="sr-only">{isMenuOpen ? "Close menu" : "Menu"}</span>
+        </button>
+      </div>
+
       <button
-        className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-white backdrop-blur transition lg:hidden"
+        className="hidden h-11 w-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-white backdrop-blur transition md:flex lg:hidden"
         onClick={onToggleMenu}
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         aria-expanded={isMenuOpen}
