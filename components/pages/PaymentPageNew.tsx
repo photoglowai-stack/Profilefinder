@@ -257,44 +257,46 @@ export function PaymentPage() {
                                 padding: '1.25rem',
                             }}
                         >
-                            <div style={{ marginBottom: '0.75rem' }}>
-                                <h1 style={{
-                                    fontSize: '1.375rem',
-                                    fontWeight: 800,
-                                    color: '#1f2937',
-                                    lineHeight: 1.2,
-                                    marginBottom: '0.375rem',
-                                }}>
-                                    {config.title}{' '}
-                                    <span style={{
-                                        backgroundClip: 'text',
-                                        WebkitBackgroundClip: 'text',
-                                        color: 'transparent',
-                                        backgroundImage: config.accentColors.gradient,
+                            {activeService !== 'dating' && (
+                                <div style={{ marginBottom: '0.75rem' }}>
+                                    <h1 style={{
+                                        fontSize: '1.375rem',
+                                        fontWeight: 800,
+                                        color: '#1f2937',
+                                        lineHeight: 1.2,
+                                        marginBottom: '0.375rem',
                                     }}>
-                                        {config.subtitle}
-                                    </span>
-                                </h1>
-                                <div style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '0.375rem',
-                                    backgroundColor: `${config.accentColors.primary}15`,
-                                    color: config.accentColors.primary,
-                                    padding: '0.25rem 0.625rem',
-                                    borderRadius: '9999px',
-                                    fontSize: '0.6875rem',
-                                    fontWeight: 700,
-                                }}>
-                                    <span style={{
-                                        width: '6px', height: '6px',
-                                        borderRadius: '50%',
-                                        backgroundColor: config.accentColors.primary,
-                                        animation: 'pulse 2s infinite',
-                                    }} />
-                                    {config.badgeText}
+                                        {config.title}{' '}
+                                        <span style={{
+                                            backgroundClip: 'text',
+                                            WebkitBackgroundClip: 'text',
+                                            color: 'transparent',
+                                            backgroundImage: config.accentColors.gradient,
+                                        }}>
+                                            {config.subtitle}
+                                        </span>
+                                    </h1>
+                                    <div style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '0.375rem',
+                                        backgroundColor: `${config.accentColors.primary}15`,
+                                        color: config.accentColors.primary,
+                                        padding: '0.25rem 0.625rem',
+                                        borderRadius: '9999px',
+                                        fontSize: '0.6875rem',
+                                        fontWeight: 700,
+                                    }}>
+                                        <span style={{
+                                            width: '6px', height: '6px',
+                                            borderRadius: '50%',
+                                            backgroundColor: config.accentColors.primary,
+                                            animation: 'pulse 2s infinite',
+                                        }} />
+                                        {config.badgeText}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                             <PreviewComponent />
                         </motion.div>
 
@@ -378,44 +380,46 @@ export function PaymentPage() {
                                 padding: '1.5rem',
                             }}
                         >
-                            <div style={{ marginBottom: '1rem' }}>
-                                <h1 style={{
-                                    fontSize: '1.625rem',
-                                    fontWeight: 800,
-                                    color: '#1f2937',
-                                    lineHeight: 1.2,
-                                    marginBottom: '0.5rem',
-                                }}>
-                                    {config.title}{' '}
-                                    <span style={{
-                                        backgroundClip: 'text',
-                                        WebkitBackgroundClip: 'text',
-                                        color: 'transparent',
-                                        backgroundImage: config.accentColors.gradient,
+                            {activeService !== 'dating' && (
+                                <div style={{ marginBottom: '1rem' }}>
+                                    <h1 style={{
+                                        fontSize: '1.625rem',
+                                        fontWeight: 800,
+                                        color: '#1f2937',
+                                        lineHeight: 1.2,
+                                        marginBottom: '0.5rem',
                                     }}>
-                                        {config.subtitle}
-                                    </span>
-                                </h1>
-                                <div style={{
-                                    display: 'inline-flex',
-                                    alignItems: 'center',
-                                    gap: '0.5rem',
-                                    backgroundColor: `${config.accentColors.primary}15`,
-                                    color: config.accentColors.primary,
-                                    padding: '0.375rem 0.75rem',
-                                    borderRadius: '9999px',
-                                    fontSize: '0.75rem',
-                                    fontWeight: 700,
-                                }}>
-                                    <span style={{
-                                        width: '8px', height: '8px',
-                                        borderRadius: '50%',
-                                        backgroundColor: config.accentColors.primary,
-                                        animation: 'pulse 2s infinite',
-                                    }} />
-                                    {config.badgeText}
+                                        {config.title}{' '}
+                                        <span style={{
+                                            backgroundClip: 'text',
+                                            WebkitBackgroundClip: 'text',
+                                            color: 'transparent',
+                                            backgroundImage: config.accentColors.gradient,
+                                        }}>
+                                            {config.subtitle}
+                                        </span>
+                                    </h1>
+                                    <div style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: '0.5rem',
+                                        backgroundColor: `${config.accentColors.primary}15`,
+                                        color: config.accentColors.primary,
+                                        padding: '0.375rem 0.75rem',
+                                        borderRadius: '9999px',
+                                        fontSize: '0.75rem',
+                                        fontWeight: 700,
+                                    }}>
+                                        <span style={{
+                                            width: '8px', height: '8px',
+                                            borderRadius: '50%',
+                                            backgroundColor: config.accentColors.primary,
+                                            animation: 'pulse 2s infinite',
+                                        }} />
+                                        {config.badgeText}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                             <PreviewComponent />
 
                             <div style={{

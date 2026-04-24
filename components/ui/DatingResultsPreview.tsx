@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { Heart, MapPin, Lock, Sparkles } from 'lucide-react';
+import { Lock } from 'lucide-react';
 
 /**
  * DatingResultsPreview - Blurred dating profiles for payment teaser
@@ -38,170 +38,129 @@ export function DatingResultsPreview() {
     ];
 
     const selectedPhotos = gender === 'man' ? menPhotos : womenPhotos;
+    const nameStr = gender === 'man' ? 'afef' : 'afef';
 
     const profiles = [
-        { age: 24, distance: '2km', verified: true, img: selectedPhotos[0] },
-        { age: 27, distance: '5km', verified: true, img: selectedPhotos[1] },
-        { age: 23, distance: '3km', verified: false, img: selectedPhotos[2] },
-        { age: 26, distance: '8km', verified: true, img: selectedPhotos[3] },
-        { age: 25, distance: '1km', verified: true, img: selectedPhotos[4] },
-        { age: 29, distance: '4km', verified: false, img: selectedPhotos[5] },
+        { age: 24, distance: '4 km', match: 88, img: selectedPhotos[0] },
+        { age: 27, distance: '2 km', match: 91, img: selectedPhotos[1] },
+        { age: 23, distance: '5 km', match: 86, img: selectedPhotos[2] },
+        { age: 26, distance: '3 km', match: 90, img: selectedPhotos[3] },
+        { age: 25, distance: '1 km', match: 84, img: selectedPhotos[4] },
     ];
 
     return (
         <div style={{
-            padding: '1rem',
-            background: 'linear-gradient(135deg, #fff5f5 0%, #fff0f5 100%)',
+            background: 'transparent',
             position: 'relative',
-            overflow: 'hidden',
-            borderRadius: '1rem'
+            width: '100%',
         }}>
-            {/* Header */}
-            <div style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                marginBottom: '0.75rem'
-            }}>
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '0.5rem',
-                    background: 'linear-gradient(135deg, #ff4e71, #ff7f66)',
-                    color: 'white',
-                    padding: '0.375rem 0.75rem',
-                    borderRadius: '9999px',
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    boxShadow: '0 2px 8px rgba(255,78,113,0.3)'
-                }}>
-                    <Heart style={{ width: '0.875rem', height: '0.875rem', fill: 'white' }} />
-                    <span>Dating Profiles Found</span>
-                </div>
-                <div style={{
-                    background: '#fff',
-                    padding: '0.25rem 0.5rem',
-                    borderRadius: '0.5rem',
-                    fontSize: '0.625rem',
-                    fontWeight: 700,
-                    color: '#ff4e71',
-                    border: '1px solid #ffe4e9'
-                }}>
-                    <span style={{
-                        display: 'inline-block',
-                        width: '0.375rem',
-                        height: '0.375rem',
-                        background: '#22c55e',
-                        borderRadius: '50%',
-                        marginRight: '0.25rem',
-                        animation: 'pulse 2s infinite'
-                    }}></span>
-                    20+ Matches
+            {/* Header matching screenshot */}
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
+                <h2 style={{ color: '#ff4e71', fontSize: '1.625rem', fontWeight: 800, lineHeight: 1.1, maxWidth: '60%', letterSpacing: '-0.02em' }}>
+                    Voici les résultats<br />de votre<br />recherche
+                </h2>
+                <div style={{ background: '#ff4e71', color: 'white', padding: '6px 14px', borderRadius: '999px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', fontWeight: 600 }}>
+                    <span style={{ border: '2px solid #5eead4', color: '#5eead4', borderRadius: '50%', padding: '2px 4px', fontSize: '0.65rem' }}>80%</span> 
+                    Match 
+                    <span style={{ background: '#3b82f6', borderRadius: '50%', width: '18px', height: '18px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontStyle: 'italic', fontWeight: 700 }}>i</span>
                 </div>
             </div>
 
-            {/* Profile Grid */}
+            {/* Correspondances pill */}
+            <div style={{ background: '#fff0f5', color: '#ff4e71', display: 'inline-block', padding: '8px 24px', borderRadius: '999px', fontSize: '1rem', fontWeight: 700, marginBottom: '1.5rem' }}>
+                Correspondances : 20 +
+            </div>
+
+            {/* Scrollable Container Box */}
             <div style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(3, 1fr)',
-                gap: '0.5rem',
-                filter: 'blur(10px)',
-                pointerEvents: 'none'
+                background: '#ffffff',
+                borderRadius: '1rem',
+                padding: '1.25rem',
+                boxShadow: '0 4px 20px -2px rgba(0,0,0,0.05)',
+                border: '1px solid #f3f4f6',
+                position: 'relative'
             }}>
-                {profiles.map((profile, idx) => (
-                    <div
-                        key={idx}
-                        style={{
-                            aspectRatio: '3/4',
-                            borderRadius: '0.75rem',
-                            backgroundImage: `url(${profile.img})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
+                <div style={{ fontSize: '1.125rem', fontWeight: 600, color: '#1f2937', marginBottom: '1rem' }}>
+                    Potential Matches : {nameStr}<br />
+                    <span style={{ fontSize: '0.875rem', fontWeight: 400, color: '#4b5563' }}>Paris, France</span>
+                </div>
+
+                {/* Horizontal Carousel */}
+                <div className="hide-scrollbar" style={{
+                    display: 'flex',
+                    gap: '12px',
+                    overflowX: 'auto',
+                    paddingBottom: '8px',
+                    scrollSnapType: 'x mandatory',
+                    WebkitOverflowScrolling: 'touch',
+                }}>
+                    {profiles.map((p, idx) => (
+                        <div key={idx} style={{
+                            minWidth: '140px',
+                            width: '140px',
+                            height: '190px',
+                            borderRadius: '12px',
                             position: 'relative',
                             overflow: 'hidden',
-                            boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
-                        }}
-                    >
-                        {/* Info overlay */}
-                        <div style={{
-                            position: 'absolute',
-                            bottom: 0,
-                            left: 0,
-                            right: 0,
-                            padding: '0.5rem',
-                            background: 'linear-gradient(transparent, rgba(0,0,0,0.8))',
-                            color: 'white'
+                            scrollSnapAlign: 'start',
+                            border: '2px solid #ff4e71',
+                            flexShrink: 0
                         }}>
-                            <div style={{ fontSize: '0.625rem', fontWeight: 700 }}>
-                                Profile #{idx + 1}, {profile.age}
-                            </div>
+                            {/* Blurred Image Background */}
                             <div style={{
-                                fontSize: '0.5rem',
-                                opacity: 0.8,
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '0.25rem'
-                            }}>
-                                <MapPin style={{ width: '0.5rem', height: '0.5rem' }} />
-                                {profile.distance} away
+                                position: 'absolute', inset: -10,
+                                backgroundImage: `url(${p.img})`,
+                                backgroundSize: 'cover',
+                                backgroundPosition: 'center',
+                                filter: 'blur(8px)',
+                                zIndex: 1
+                            }} />
+                            {/* Dark gradient overlay for bottom text readability */}
+                            <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.85) 100%)', zIndex: 2 }} />
+
+                            {/* Match pill top */}
+                            <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', background: '#ff4e71', color: 'white', padding: '4px 12px', borderBottomLeftRadius: '8px', borderBottomRightRadius: '8px', fontSize: '0.7rem', fontWeight: 700, zIndex: 3, whiteSpace: 'nowrap' }}>
+                                {p.match}% Match
+                            </div>
+
+                            {/* Distance & Info bottom */}
+                            <div style={{ position: 'absolute', bottom: '8px', left: 0, right: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', zIndex: 3 }}>
+                                <div style={{ background: 'rgba(255,255,255,0.3)', backdropFilter: 'blur(4px)', color: 'white', padding: '2px 10px', borderRadius: '999px', fontSize: '0.65rem', marginBottom: '4px', fontWeight: 600 }}>
+                                    {p.distance} away
+                                </div>
+                                <div style={{ color: 'white', fontSize: '0.9rem', fontWeight: 700, fontStyle: 'italic' }}>
+                                    {nameStr}, {p.age}
+                                </div>
                             </div>
                         </div>
-
-                        {/* Verified badge */}
-                        {profile.verified && (
-                            <div style={{
-                                position: 'absolute',
-                                top: '0.375rem',
-                                right: '0.375rem',
-                                background: '#3b82f6',
-                                borderRadius: '50%',
-                                padding: '0.125rem',
-                                display: 'flex'
-                            }}>
-                                <Sparkles style={{ width: '0.5rem', height: '0.5rem', color: 'white' }} />
-                            </div>
-                        )}
-                    </div>
-                ))}
+                    ))}
+                </div>
             </div>
 
-            {/* Lock Overlay */}
-            <div style={{
-                position: 'absolute',
-                inset: 0,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                background: 'rgba(255,255,255,0.15)',
-                backdropFilter: 'blur(2px)'
-            }}>
+            {/* Détaillé Tab UI at bottom of preview */}
+            <div style={{ marginTop: '2rem', borderBottom: '2px solid #e5e7eb', display: 'flex' }}>
                 <div style={{
-                    background: 'white',
-                    padding: '0.75rem',
-                    borderRadius: '50%',
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-                    marginBottom: '0.5rem'
+                    display: 'flex', alignItems: 'center', gap: '8px',
+                    padding: '8px 16px',
+                    borderBottom: '2px solid #ff4e71',
+                    marginBottom: '-2px',
+                    fontSize: '1.125rem',
+                    fontWeight: 500,
+                    color: '#1f2937'
                 }}>
-                    <Lock style={{ width: '1.5rem', height: '1.5rem', color: '#ff4e71' }} />
+                    <Lock size={20} /> détaillé
                 </div>
-                <p style={{
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    color: '#1f2937',
-                    textAlign: 'center',
-                    textShadow: '0 2px 4px rgba(255,255,255,0.9)'
-                }}>
-                    Unlock to reveal profiles
-                </p>
             </div>
 
             <style>{`
-        @keyframes pulse {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.5; }
-        }
-      `}</style>
+            .hide-scrollbar::-webkit-scrollbar {
+                display: none;
+            }
+            .hide-scrollbar {
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+            `}</style>
         </div>
     );
 }
