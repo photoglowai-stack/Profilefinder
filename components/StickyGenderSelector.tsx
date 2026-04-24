@@ -227,7 +227,7 @@ export const StickyGenderSelector = () => {
     const handleSearch = (gender: 'man' | 'woman') => {
         setIsSearching(true);
         setTimeout(() => {
-            router.push(`/payment?gender=${gender}&service=dating`);
+            router.push(`/dating-search/form?gender=${gender}`);
             setIsSearching(false);
         }, 500);
     };
@@ -235,7 +235,7 @@ export const StickyGenderSelector = () => {
     const handleAnalyze = (username: string) => {
         setIsSearching(true);
         setTimeout(() => {
-            router.push(`/activity-tracker?username=${username}`);
+            router.push(`/following-ai/form?username=${username}`);
             setIsSearching(false);
         }, 500);
     };
@@ -243,7 +243,7 @@ export const StickyGenderSelector = () => {
     const handleScan = () => {
         setIsSearching(true);
         setTimeout(() => {
-            router.push('/face-trace');
+            router.push('/face-trace/form');
             setIsSearching(false);
         }, 500);
     };
@@ -251,7 +251,7 @@ export const StickyGenderSelector = () => {
     const handleFidelityTest = () => {
         setIsSearching(true);
         setTimeout(() => {
-            router.push('/payment?service=fidelity');
+            router.push('/fidelity-test/form');
             setIsSearching(false);
         }, 500);
     };
