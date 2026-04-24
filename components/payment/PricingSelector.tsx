@@ -64,7 +64,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                 <div style={{
                     position: 'absolute',
                     inset: '-3px',
-                    background: 'linear-gradient(135deg, #8b5cf6, #ec4899, #8b5cf6)',
+                    background: serviceConfig.accentColors.gradient,
                     borderRadius: '1.35rem',
                     opacity: isSubscriptionSelected ? 1 : 0.6,
                     filter: isSubscriptionSelected ? 'blur(0px)' : 'blur(1px)',
@@ -75,8 +75,8 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                 <motion.div
                     animate={{
                         boxShadow: isSubscriptionSelected
-                            ? ['0 0 20px rgba(139,92,246,0.4)', '0 0 40px rgba(139,92,246,0.6)', '0 0 20px rgba(139,92,246,0.4)']
-                            : '0 0 15px rgba(139,92,246,0.2)',
+                            ? [`0 0 20px ${serviceConfig.accentColors.primary}66`, `0 0 40px ${serviceConfig.accentColors.primary}99`, `0 0 20px ${serviceConfig.accentColors.primary}66`]
+                            : `0 0 15px ${serviceConfig.accentColors.primary}33`,
                     }}
                     transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                     style={{
@@ -127,13 +127,13 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                         height: '24px',
                         borderRadius: '50%',
                         background: isSubscriptionSelected
-                            ? 'linear-gradient(135deg, #8b5cf6, #a855f7)'
+                            ? serviceConfig.accentColors.gradient
                             : '#e5e7eb',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         transition: 'all 0.3s ease',
-                        boxShadow: isSubscriptionSelected ? '0 4px 10px rgba(139,92,246,0.4)' : 'none',
+                        boxShadow: isSubscriptionSelected ? `0 4px 10px ${serviceConfig.accentColors.primary}66` : 'none',
                     }}>
                         {isSubscriptionSelected && <Check style={{ width: '14px', height: '14px', color: 'white' }} />}
                     </div>
@@ -141,12 +141,12 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                     {/* Header */}
                     <div style={{ marginTop: '0.5rem', marginLeft: '2.5rem', marginBottom: '1rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                            <InfinityIcon style={{ width: '1.25rem', height: '1.25rem', color: '#8b5cf6' }} />
+                            <InfinityIcon style={{ width: '1.25rem', height: '1.25rem', color: serviceConfig.accentColors.primary }} />
                             <h3 style={{
                                 fontSize: '1.25rem',
                                 fontWeight: 900,
                                 color: '#1f2937',
-                                background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+                                background: serviceConfig.accentColors.gradient,
                                 backgroundClip: 'text',
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
@@ -167,7 +167,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                         <span style={{
                             fontSize: '2.5rem',
                             fontWeight: 900,
-                            color: '#8b5cf6',
+                            color: serviceConfig.accentColors.primary,
                             lineHeight: 1,
                         }}>
                             19,90€
@@ -206,7 +206,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                         <div style={{
                             fontSize: '0.6875rem',
                             fontWeight: 700,
-                            color: '#8b5cf6',
+                            color: serviceConfig.accentColors.primary,
                             textTransform: 'uppercase',
                             letterSpacing: '0.1em',
                             marginBottom: '0.75rem',
@@ -228,7 +228,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                                         width: '1.75rem',
                                         height: '1.75rem',
                                         borderRadius: '0.375rem',
-                                        background: 'linear-gradient(135deg, #8b5cf6, #a855f7)',
+                                        background: serviceConfig.accentColors.gradient,
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
@@ -300,7 +300,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                             width: '100%',
                             padding: '1rem',
                             background: isSubscriptionSelected
-                                ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
+                                ? serviceConfig.accentColors.gradient
                                 : 'linear-gradient(135deg, #9ca3af, #6b7280)',
                             color: 'white',
                             fontWeight: 700,
@@ -313,7 +313,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                             justifyContent: 'center',
                             gap: '0.5rem',
                             boxShadow: isSubscriptionSelected
-                                ? '0 10px 25px rgba(139,92,246,0.4)'
+                                ? `0 10px 25px ${serviceConfig.accentColors.primary}66`
                                 : '0 4px 10px rgba(0,0,0,0.1)',
                             transition: 'all 0.3s ease',
                             opacity: isProcessing ? 0.7 : 1,

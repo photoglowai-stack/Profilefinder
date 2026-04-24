@@ -334,7 +334,7 @@ export function PaymentPage() {
                                     marginTop: '1rem',
                                     padding: '1rem',
                                     background: selectedPlan === 'subscription'
-                                        ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
+                                        ? config.accentColors.gradient
                                         : 'linear-gradient(135deg, #4b5563, #374151)',
                                     color: 'white',
                                     borderRadius: '0.75rem',
@@ -347,7 +347,7 @@ export function PaymentPage() {
                                     justifyContent: 'center',
                                     gap: '0.5rem',
                                     boxShadow: selectedPlan === 'subscription'
-                                        ? '0 10px 25px rgba(139,92,246,0.35)'
+                                        ? `0 10px 25px ${config.accentColors.primary}66`
                                         : '0 4px 12px rgba(0,0,0,0.1)',
                                     opacity: isProcessing ? 0.7 : 1,
                                 }}
@@ -474,7 +474,7 @@ export function PaymentPage() {
                                     marginTop: '1.25rem',
                                     padding: '1rem',
                                     background: selectedPlan === 'subscription'
-                                        ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
+                                        ? config.accentColors.gradient
                                         : 'linear-gradient(135deg, #4b5563, #374151)',
                                     color: 'white',
                                     borderRadius: '0.875rem',
@@ -487,7 +487,7 @@ export function PaymentPage() {
                                     justifyContent: 'center',
                                     gap: '0.5rem',
                                     boxShadow: selectedPlan === 'subscription'
-                                        ? '0 12px 30px rgba(139,92,246,0.4)'
+                                        ? `0 12px 30px ${config.accentColors.primary}66`
                                         : '0 6px 15px rgba(0,0,0,0.15)',
                                     opacity: isProcessing ? 0.7 : 1,
                                     transition: 'all 0.3s ease',
