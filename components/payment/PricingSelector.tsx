@@ -337,7 +337,6 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                             </>
                         ) : (
                             <>
-                                <Sparkles style={{ width: '1.125rem', height: '1.125rem' }} />
                                 Unlock all now
                                 <ArrowRight style={{ width: '1.125rem', height: '1.125rem' }} />
                             </>

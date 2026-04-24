@@ -33,9 +33,9 @@ export const STRIPE_PRICES = {
 
 // Couleurs par défaut (Dating)
 const DATING_COLORS = {
-    primary: '#f43f5e',
-    secondary: '#db2777',
-    gradient: 'linear-gradient(to right, #f43f5e, #f97316)',
+    primary: '#ff085e',
+    secondary: '#e8003d',
+    gradient: 'linear-gradient(to right, #ff085e, #e8003d)',
 };
 
 const FIDELITY_COLORS = {
