@@ -2,7 +2,7 @@
 
 import React, { memo, useCallback, useMemo, useState } from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useService } from "../lib/ServiceContext";
 import { ServiceType } from "../lib/content";
@@ -198,6 +198,7 @@ const ACCENT_CLASSES: Record<ServiceType, AccentClasses> = {
 
 const HeroAntigravity: React.FC = () => {
   const router = useRouter();
+  const pathname = usePathname();
   const { selectedService, setSelectedService } = useService();
   const [selectedGender, setSelectedGender] = useState<GenderType>("man");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -225,6 +226,19 @@ const HeroAntigravity: React.FC = () => {
     setFaceTraceFile(null);
   }, []);
 
+  // Ensure mobile menu state and page scroll are reset on route change
+  React.useEffect(() => {
+    setIsMenuOpen(false);
+    document.body.style.overflow = "";
+  }, [pathname]);
+
+  React.useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
   const currentContent = useMemo(() => CONTENT_MAP[selectedService], [selectedService]);
   const heroGradient = HERO_GRADIENT_CLASSES[selectedService];
   const accent = ACCENT_CLASSES[selectedService];
@@ -242,12 +256,12 @@ const HeroAntigravity: React.FC = () => {
       if (typeof window !== "undefined" && faceTraceImage) {
         sessionStorage.setItem("pf_facetrace_image", faceTraceImage);
       }
-      router.push("/face-trace");
+      router.push("/face-trace/form");
       return;
     }
 
     if (selectedService === "following") {
-      router.push("/activity-tracker");
+      router.push("/following-ai/form");
       return;
     }
 
@@ -257,7 +271,7 @@ const HeroAntigravity: React.FC = () => {
       return;
     }
 
-    router.push("/payment");
+    router.push("/fidelity-test/form");
   }, [faceTraceImage, router, selectedService]);
 
   return (
@@ -504,7 +518,7 @@ const HeroNavbar = memo(function HeroNavbar({
         </span>
       </div>
 
-      <div className="desktop-nav flex items-center gap-8 text-[15px] font-semibold">
+      <div className="hidden items-center gap-8 text-[15px] font-semibold lg:flex">
         {NAV_ITEMS.map(item => (
           <a
             key={item}
@@ -516,7 +530,7 @@ const HeroNavbar = memo(function HeroNavbar({
         ))}
       </div>
 
-      <div className="desktop-nav flex items-center gap-4">
+      <div className="hidden items-center gap-4 lg:flex">
         <div className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-semibold text-white">
           <Globe size={16} />
           <span>EN</span>
@@ -528,12 +542,13 @@ const HeroNavbar = memo(function HeroNavbar({
       </div>
 
       <button
-        className="mobile-menu-btn flex h-11 w-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-white backdrop-blur transition"
+        className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/30 bg-white/10 text-white backdrop-blur transition lg:hidden"
         onClick={onToggleMenu}
         aria-label={isMenuOpen ? "Close menu" : "Open menu"}
         aria-expanded={isMenuOpen}
       >
         {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        <span className="sr-only">{isMenuOpen ? "Close menu" : "Menu"}</span>
       </button>
 
       {isMenuOpen && (

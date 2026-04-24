@@ -361,7 +361,15 @@ export const ServiceFormWidget = () => {
 
     const activeConfig = SERVICES.find(s => s.id === selectedService) || SERVICES[0];
 
+    const resetServiceTransientState = () => {
+        if (typeof window === 'undefined') return;
+        sessionStorage.removeItem('pf_following_query');
+        sessionStorage.removeItem('pf_facetrace_image');
+        sessionStorage.removeItem('pf_fidelity_uploads');
+    };
+
     const handleAction = (path: string) => {
+        resetServiceTransientState();
         setIsLoading(true);
         setTimeout(() => {
             router.push(path);
@@ -407,13 +415,13 @@ export const ServiceFormWidget = () => {
                 {/* Content */}
                 {selectedService === 'dating' && (
                     <DatingView
-                        onSearch={(g) => handleAction(`/dating-search?gender=${g}`)}
+                        onSearch={(g) => handleAction(`/dating-search/form?gender=${g}`)}
                         isLoading={isLoading}
                     />
                 )}
                 {selectedService === 'following' && (
                     <SocialView
-                        onAnalyze={(u) => handleAction(`/activity-tracker?username=${u}`)}
+                        onAnalyze={(u) => handleAction(`/following-ai/form?username=${u}`)}
                         isLoading={isLoading}
                     />
                 )}
@@ -423,7 +431,7 @@ export const ServiceFormWidget = () => {
                         title="Upload Photo"
                         subtitle="JPG/PNG Match"
                         btnLabel="SCAN"
-                        onAction={() => handleAction('/face-trace')}
+                        onAction={() => handleAction('/face-trace/form')}
                         isLoading={isLoading}
                     />
                 )}
@@ -433,7 +441,7 @@ export const ServiceFormWidget = () => {
                         title="Upload Chat"
                         subtitle="Analyze Logs"
                         btnLabel="TEST"
-                        onAction={() => handleAction('/fidelity-test/analysis')}
+                        onAction={() => handleAction('/fidelity-test/form')}
                         isLoading={isLoading}
                     />
                 )}

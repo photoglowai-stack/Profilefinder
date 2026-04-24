@@ -7,8 +7,10 @@ const UGCSection = () => {
   const [activeIndex, setActiveIndex] = useState(1); // Start with center video
   const [isInView, setIsInView] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const mobileScrollerRef = useRef<HTMLDivElement | null>(null);
 
   const TESTIMONIALS = [
     {
@@ -48,6 +50,13 @@ const UGCSection = () => {
 
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
+  useEffect(() => {
+    const checkViewport = () => setIsMobile(window.innerWidth < 768);
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
   }, []);
 
   // IntersectionObserver to detect when section is in view
@@ -249,7 +258,8 @@ const UGCSection = () => {
             alignItems: 'center',
             gap: '24px',
             position: 'relative',
-            minHeight: '520px'
+            minHeight: '520px',
+            ...(isMobile ? { display: 'none' } : {})
           }}>
             {TESTIMONIALS.map((item, index) => {
               const isActive = index === activeIndex;
@@ -306,6 +316,46 @@ const UGCSection = () => {
               );
             })}
           </div>
+
+          {isMobile && (
+            <div
+              ref={mobileScrollerRef}
+              onScroll={(e) => {
+                const container = e.currentTarget;
+                const child = container.firstElementChild as HTMLElement | null;
+                if (!child) return;
+                const step = child.offsetWidth + 16;
+                const nextIndex = Math.round(container.scrollLeft / step);
+                setActiveIndex(Math.max(0, Math.min(TESTIMONIALS.length - 1, nextIndex)));
+              }}
+              style={{
+                display: 'flex',
+                gap: '16px',
+                overflowX: 'auto',
+                scrollSnapType: 'x mandatory',
+                WebkitOverflowScrolling: 'touch',
+                padding: '0 4px 8px',
+                scrollbarWidth: 'none'
+              }}
+            >
+              {TESTIMONIALS.map((item, index) => (
+                <div
+                  key={`mobile-${item.id}`}
+                  style={{
+                    flex: '0 0 min(78vw, 280px)',
+                    scrollSnapAlign: 'center'
+                  }}
+                >
+                  <VideoCard
+                    data={item}
+                    colors={colors}
+                    isActive={index === activeIndex}
+                    videoRef={(el) => { videoRefs.current[index] = el; }}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Dots indicator */}
