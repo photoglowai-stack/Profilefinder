@@ -921,15 +921,31 @@ const HeroAntigravity: React.FC = () => {
                                             {currentContent.buttonIcon}
                                         </span>
                                     )}
-                                    <span style={{
-                                        fontSize: '18px',
-                                        fontWeight: 900,
-                                        letterSpacing: '0.1em',
-                                        textTransform: 'uppercase',
-                                        textShadow: '0 2px 4px rgba(0,0,0,0.2)'
-                                    }}>
-                                        {currentContent.cta} {currentContent.ctaEmoji}
-                                    </span>
+                                    <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                                        <span style={{
+                                            fontSize: '18px',
+                                            fontWeight: 900,
+                                            letterSpacing: '0.1em',
+                                            textTransform: 'uppercase',
+                                            textShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                                        }}>
+                                            {currentContent.cta} {currentContent.ctaEmoji}
+                                        </span>
+                                        <span
+                                            className="finger-point-animate"
+                                            style={{
+                                                position: 'absolute',
+                                                left: '100%',
+                                                fontSize: 'clamp(32px, 6vw, 42px)',
+                                                filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+                                                lineHeight: 1,
+                                                marginLeft: '12px',
+                                                whiteSpace: 'nowrap'
+                                            }}
+                                        >
+                                            👈
+                                        </span>
+                                    </div>
                                 </div>
                             </button>
                         )}
