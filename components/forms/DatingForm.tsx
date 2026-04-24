@@ -32,7 +32,7 @@ export function DatingForm() {
     if (selected) {
       setIsSearching(true);
       setTimeout(() => {
-        router.push("/payment");
+        router.push("/dating-search/form");
         setIsSearching(false);
       }, 800);
     }

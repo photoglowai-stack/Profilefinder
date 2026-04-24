@@ -42,7 +42,7 @@ export function FidelityForm() {
         sessionStorage.setItem('pf_fidelity_uploads', JSON.stringify(previews));
       }
       setTimeout(() => {
-        router.push("/fidelity-test/analysis");
+        router.push("/fidelity-test/form");
         setIsSearching(false);
       }, 800);
     }

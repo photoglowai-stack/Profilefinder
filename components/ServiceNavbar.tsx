@@ -88,7 +88,7 @@ export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
                     {navLinks.map((item) => (
                         <a
                             key={item}
-                            href="#"
+                            href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : item === 'Blog' ? '/blog' : '#'}
                             className="text-white/80 no-underline transition-colors duration-200 py-2 hover:text-white focus:text-white"
                         >
                             {item}
@@ -175,7 +175,7 @@ export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
                             {['Blog', 'Affiliate Program'].map((item) => (
                                 <a
                                     key={item}
-                                    href="#"
+                                    href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : item === 'Blog' ? '/blog' : '#'}
                                     onClick={() => setIsMenuOpen(false)}
                                     className="text-white/90 no-underline text-lg font-semibold px-4 py-3 rounded-xl bg-white/5 transition-all duration-200 hover:bg-white/10"
                                 >

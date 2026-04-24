@@ -204,7 +204,7 @@ const HeroAntigravity: React.FC = () => {
                     {['Search Profile', 'Blog', 'Affiliate Program'].map((item) => (
                         <a
                             key={item}
-                            href="#"
+                            href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : item === 'Blog' ? '/blog' : '#'}
                             style={{
                                 color: 'rgba(255,255,255,0.8)',
                                 textDecoration: 'none',
@@ -333,7 +333,7 @@ const HeroAntigravity: React.FC = () => {
                             {['Blog', 'Affiliate Program'].map((item) => (
                                 <a
                                     key={item}
-                                    href="#"
+                                    href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : item === 'Blog' ? '/blog' : '#'}
                                     style={{
                                         color: 'rgba(255,255,255,0.9)',
                                         textDecoration: 'none',

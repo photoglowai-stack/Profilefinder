@@ -417,7 +417,7 @@ export const ServiceFormWidget = () => {
                 {/* Content */}
                 {selectedService === 'dating' && (
                     <DatingView
-                        onSearch={(g) => handleAction(`/dating-search?gender=${g}`)}
+                        onSearch={(g) => handleAction(`/dating-search/form?gender=${g}`)}
                         isLoading={isLoading}
                     />
                 )}
@@ -433,7 +433,7 @@ export const ServiceFormWidget = () => {
                         title="Upload Photo"
                         subtitle="JPG/PNG Match"
                         btnLabel="SCAN"
-                        onAction={() => handleAction('/face-trace')}
+                        onAction={() => handleAction('/face-trace/form')}
                         isLoading={isLoading}
                     />
                 )}
@@ -443,7 +443,7 @@ export const ServiceFormWidget = () => {
                         title="Upload Chat"
                         subtitle="Analyze Logs"
                         btnLabel="TEST"
-                        onAction={() => handleAction('/fidelity-test/analysis')}
+                        onAction={() => handleAction('/fidelity-test/form')}
                         isLoading={isLoading}
                     />
                 )}
