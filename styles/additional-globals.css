@@ -805,8 +805,8 @@ body {
   position: fixed;
   inset: 0;
   z-index: 9999;
-  background-color: rgba(0, 0, 0, 0.95);
-  backdrop-filter: blur(20px);
+  background: linear-gradient(165deg, #ff1269 0%, #ff4f3b 45%, #7c3aed 100%);
+  backdrop-filter: blur(14px) saturate(110%);
   overflow-y: auto;
   animation: slideDown 0.3s ease-out;
 }
