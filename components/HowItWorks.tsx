@@ -296,56 +296,17 @@ export function HowItWorks() {
             )}
 
             {selectedService === 'following' && (
-              <div className="relative bg-white dark:bg-[#1e293b] rounded-[2rem] p-5 shadow-[0_20px_50px_rgba(0,0,0,0.4)] max-w-sm mx-auto transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700 border border-white/10">
-                <div className="absolute top-4 right-4 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 border z-10" style={{
-                  backgroundColor: `${serviceColors.primary}15`,
-                  color: serviceColors.primary,
-                  borderColor: `${serviceColors.primary}30`
-                }}>
-                  <div className="w-2 h-2 rounded-full animate-ping" style={{ backgroundColor: serviceColors.primary }}></div>
-                  ACTIVE SCAN
-                </div>
-                
-                <div className="text-center mb-6 mt-2">
-                  <h2 className="text-gray-900 dark:text-white text-xl font-bold flex items-center justify-center gap-2">
-                    <Eye className="w-5 h-5" style={{ color: serviceColors.primary }} /> Alert Detected
-                  </h2>
-                  <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-widest mt-1">
-                    Analysis Complete
-                  </p>
-                </div>
-
-                <div className="relative bg-slate-50 dark:bg-slate-800 rounded-2xl p-4 mb-5 border border-slate-100 dark:border-slate-700 h-[260px] flex flex-col justify-end">
-                  <div className="space-y-4 w-full opacity-60">
-                    <div className="bg-slate-200 dark:bg-slate-700 h-8 w-3/4 rounded-lg rounded-bl-none self-start"></div>
-                    <div className="bg-slate-300 dark:bg-slate-600 h-12 w-2/3 rounded-lg rounded-br-none self-end ml-auto"></div>
-                    <div className="bg-slate-200 dark:bg-slate-700 h-10 w-5/6 rounded-lg rounded-bl-none self-start"></div>
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-white dark:from-slate-800 via-white/80 dark:via-slate-800/80 to-transparent flex items-end justify-center pb-6">
-                    <div className="bg-white dark:bg-slate-900 shadow-xl border border-slate-100 dark:border-slate-700 rounded-xl p-4 text-center w-5/6">
-                      <span className="text-3xl font-black block mb-1" style={{ color: serviceColors.primary }}>High</span>
-                      <span className="text-xs font-bold text-slate-500 uppercase tracking-widest">Risk Level</span>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="space-y-3 bg-gray-50 dark:bg-[#0f172a] p-4 rounded-xl border border-gray-100 dark:border-gray-800">
-                  <div className="flex items-center justify-between text-gray-700 dark:text-gray-300 text-sm">
-                    <span className="flex items-center gap-2">
-                      <IconZap className="w-4 h-4" style={{ color: serviceColors.primary }} /> Hidden patterns
-                    </span>
-                    <span className="text-rose-500 font-medium">Found</span>
-                  </div>
-                </div>
-
-                <button className="mt-4 w-full py-3 text-white font-bold rounded-xl text-sm transition-all shadow-lg flex items-center justify-center gap-2 group" style={{
-                  background: `linear-gradient(135deg, ${serviceColors.primary}, ${serviceColors.secondary})`,
-                  boxShadow: `0 10px 30px ${serviceColors.primary}30`
-                }}>
-                  <Sparkles className="w-4 h-4 group-hover:text-yellow-300 transition-colors" />
-                  View detailed evidence
-                </button>
-
+              <div className="relative bg-white dark:bg-[#1e293b] rounded-[2rem] p-3 shadow-[0_20px_50px_rgba(0,0,0,0.4)] max-w-sm mx-auto transform rotate-[-3deg] hover:rotate-0 transition-transform duration-700 border border-white/10 overflow-hidden">
+                <img
+                  src="/assets/following-step-guide.png"
+                  alt="Following AI step-by-step guide"
+                  style={{
+                    width: '100%',
+                    height: 'auto',
+                    borderRadius: '1.25rem',
+                    display: 'block'
+                  }}
+                />
               </div>
             )}
           </motion.div>
