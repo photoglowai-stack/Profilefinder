@@ -5,11 +5,13 @@ import { motion } from "framer-motion";
 import { Instagram, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { serviceContent } from "../../lib/content";
+import { getServiceColors } from "../../lib/serviceColors";
 
 export function FollowingForm() {
   const router = useRouter();
   // Force the type since this form is only rendered for 'following' service
   const content = serviceContent.following.form;
+  const colors = getServiceColors("following");
   const [username, setUsername] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
@@ -31,7 +33,7 @@ export function FollowingForm() {
     <div className="bg-white relative rounded-3xl shadow-lg border border-gray-100 w-full max-w-md mx-auto p-6 md:p-8">
       {/* Icon */}
       <div className="flex justify-center mb-5">
-        <div className="bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] p-4 rounded-xl shadow-md">
+        <div className={`bg-gradient-to-br ${colors.gradient} p-4 rounded-xl shadow-md`}>
           <Instagram className="w-8 h-8 text-white" strokeWidth={2.5} />
         </div>
       </div>
@@ -60,15 +62,15 @@ export function FollowingForm() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder={content.placeholder || '@username'}
-            className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-[#ff4e71] focus:ring-2 focus:ring-[#ff4e71]/20 focus:outline-none transition-all text-base"
+            className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:outline-none transition-all text-base"
           />
         </div>
       </div>
 
       {/* Features List - Compact */}
-      <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-4 mb-5 border border-red-100">
-        <h4 className="text-xs font-semibold text-[#ff4e71] mb-3 flex items-center gap-2">
-          <span className="w-1.5 h-1.5 bg-[#ff4e71] rounded-full"></span>
+      <div className={`bg-gradient-to-br ${colors.lightBg} rounded-xl p-4 mb-5 border border-violet-100`}>
+        <h4 className="text-xs font-semibold mb-3 flex items-center gap-2" style={{ color: colors.primary }}>
+          <span className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: colors.primary }}></span>
           What you'll get:
         </h4>
         <ul className="space-y-2">
@@ -80,7 +82,7 @@ export function FollowingForm() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 + index * 0.05 }}
             >
-              <div className="w-4 h-4 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] rounded-full flex items-center justify-center shrink-0 mt-0.5">
+              <div className={`w-4 h-4 bg-gradient-to-br ${colors.gradient} rounded-full flex items-center justify-center shrink-0 mt-0.5`}>
                 <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
@@ -96,7 +98,7 @@ export function FollowingForm() {
         onClick={handleSearch}
         disabled={!username.trim() || isSearching}
         className={`w-full relative flex items-center justify-center gap-2 px-6 py-3 rounded-full transition-all ${username.trim() && !isSearching
-          ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-lg cursor-pointer"
+          ? `${colors.button} hover:shadow-lg cursor-pointer`
           : "bg-gray-300 cursor-not-allowed"
           }`}
         whileHover={username.trim() && !isSearching ? { scale: 1.02 } : {}}
@@ -123,7 +125,7 @@ export function FollowingForm() {
       </motion.button>
 
       {/* Bottom Badge - Compact */}
-      <div className="mt-4 bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] rounded-full py-2 px-3 flex flex-wrap items-center justify-center gap-2 text-white text-[10px] shadow-md">
+      <div className={`mt-4 bg-gradient-to-r ${colors.gradient} rounded-full py-2 px-3 flex flex-wrap items-center justify-center gap-2 text-white text-[10px] shadow-md`}>
         {content.badges && content.badges.map((badge, index) => (
           <span key={index} className="flex items-center gap-1">
             <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
@@ -133,6 +135,13 @@ export function FollowingForm() {
           </span>
         ))}
       </div>
+
+      <style jsx>{`
+        input:focus {
+          border-color: ${colors.primary};
+          box-shadow: 0 0 0 3px ${colors.primary}33;
+        }
+      `}</style>
     </div>
   );
 }
