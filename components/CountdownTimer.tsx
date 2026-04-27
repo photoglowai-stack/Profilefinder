@@ -17,11 +17,17 @@ export function CountdownTimer() {
 
             if (stored) {
                 const expiry = parseInt(stored);
-                const remaining = Math.max(0, Math.floor((expiry - now) / 1000));
+                let remaining = Math.floor((expiry - now) / 1000);
+                if (remaining <= 0) {
+                     const newExpiry = now + (15 * 60 * 1000);
+                     localStorage.setItem('promoExpiry', newExpiry.toString());
+                     remaining = 15 * 60;
+                }
                 setTimeLeft(remaining);
             } else {
-                const expiry = now + (10 * 60 * 1000);
+                const expiry = now + (15 * 60 * 1000);
                 localStorage.setItem('promoExpiry', expiry.toString());
+                setTimeLeft(15 * 60);
             }
 
             const interval = setInterval(() => {
@@ -30,8 +36,9 @@ export function CountdownTimer() {
                     const remaining = Math.max(0, Math.floor((parseInt(storedExpiry) - Date.now()) / 1000));
                     setTimeLeft(remaining);
 
-                    if (remaining === 0) {
-                        localStorage.removeItem('promoExpiry');
+                    if (remaining <= 0) {
+                        const newExpiry = Date.now() + (15 * 60 * 1000);
+                        localStorage.setItem('promoExpiry', newExpiry.toString());
                     }
                 }
             }, 1000);

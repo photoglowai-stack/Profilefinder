@@ -7,8 +7,25 @@ export function FAQ() {
   const { selectedService, colors } = useService();
   const content = serviceContent[selectedService].faq;
   const faqs = content.items;
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((faq) => ({
+      "@type": "Question",
+      name: faq.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: faq.answer,
+      },
+    })),
+  };
+
   return (
     <section id="faq" className="max-w-[1760px] mx-auto px-4 md:px-8 py-12 md:py-16">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
+      />
       <RevealOnScroll>
         <SectionHeader
           label="❓ FAQ"
@@ -25,10 +42,12 @@ export function FAQ() {
               className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 shadow-lg hover:shadow-xl transition-shadow group border border-gray-100"
             >
               <summary
-                className="cursor-pointer text-base md:text-lg text-slate-800 font-bold list-none flex items-start justify-between transition-colors"
+                className="cursor-pointer list-none flex items-start justify-between transition-colors"
                 style={{ '--hover-color': colors.primary } as React.CSSProperties}
               >
-                <span className="pr-4 flex-1 group-hover:opacity-80">{faq.question}</span>
+                <h3 className="text-base md:text-lg text-slate-800 font-bold pr-4 flex-1 group-hover:opacity-80 m-0">
+                  {faq.question}
+                </h3>
                 <span
                   className="text-2xl md:text-3xl group-open:rotate-45 transition-transform flex-shrink-0 leading-none"
                   style={{ color: colors.primary }}

@@ -19,7 +19,7 @@ const UGCSection = () => {
       author: "@julie_investigate",
       role: "Verified User",
       quote: "I had a doubt, now I have proof. Thanks ProfileFinder.",
-      avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=150&q=80"
+      avatar: "/assets/profiles/dating-woman-02.webp"
     },
     {
       id: 2,
@@ -27,7 +27,7 @@ const UGCSection = () => {
       author: "@alex_hunter",
       role: "Investigator",
       quote: "The face recognition tool is just mind-blowing accuracy.",
-      avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80"
+      avatar: "/assets/profiles/dating-man-03.webp"
     },
     {
       id: 3,
@@ -35,7 +35,7 @@ const UGCSection = () => {
       author: "@sarah_truth",
       role: "Daily User",
       quote: "Found him in 2 minutes flat. It's almost scary how effective it is.",
-      avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80"
+      avatar: "/assets/profiles/dating-woman-04.webp"
     }
   ];
 

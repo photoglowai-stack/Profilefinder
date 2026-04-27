@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import {
     Heart, MapPin, Lock, AlertTriangle, Clock, Eye,
     Radar, Wifi, CheckCircle2, Zap, Flame, User,
-    Navigation, Activity, Shield
+    Navigation, Activity, Shield, MessageSquare
 } from 'lucide-react';
 
 /**
@@ -24,7 +24,7 @@ export function FidelityCheckResultsPreview() {
     return (
         <div style={{
             padding: '1rem',
-            background: 'linear-gradient(135deg, #fef2f2 0%, #fff7ed 50%, #fef3c7 100%)',
+            background: 'linear-gradient(135deg, #fdf2f8 0%, #fff7ed 50%, #fef3c7 100%)',
             position: 'relative',
             overflow: 'hidden',
             borderRadius: '1rem',
@@ -46,7 +46,7 @@ export function FidelityCheckResultsPreview() {
                         width: '100%',
                         height: '100%',
                         borderRadius: '50%',
-                        border: '2px solid #dc2626',
+                        border: '2px solid #be185d',
                         position: 'relative'
                     }}
                 >
@@ -56,7 +56,7 @@ export function FidelityCheckResultsPreview() {
                         left: '50%',
                         width: '50%',
                         height: '2px',
-                        background: 'linear-gradient(90deg, #dc2626, transparent)',
+                        background: 'linear-gradient(90deg, #be185d, transparent)',
                         transformOrigin: 'left center'
                     }} />
                 </motion.div>
@@ -73,140 +73,70 @@ export function FidelityCheckResultsPreview() {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '0.5rem',
-                    background: 'linear-gradient(135deg, #dc2626, #f97316)',
+                    background: 'linear-gradient(135deg, #be185d, #db2777)',
                     color: 'white',
                     padding: '0.5rem 0.875rem',
                     borderRadius: '9999px',
                     fontSize: '0.75rem',
                     fontWeight: 700,
-                    boxShadow: '0 4px 14px rgba(220,38,38,0.4)'
+                    boxShadow: '0 4px 14px rgba(190,24,93,0.4)'
                 }}>
                     <AlertTriangle style={{ width: '1rem', height: '1rem' }} />
-                    <span>Suspected Profile Found</span>
+                    <span>Suspicious Chat Detected</span>
                 </div>
                 <motion.div
                     animate={{ scale: [1, 1.1, 1] }}
                     transition={{ duration: 1, repeat: Infinity }}
                     style={{
-                        background: '#fef2f2',
+                        background: '#fdf2f8',
                         padding: '0.375rem 0.625rem',
                         borderRadius: '0.5rem',
                         fontSize: '0.625rem',
                         fontWeight: 700,
-                        color: '#dc2626',
-                        border: '1px solid #fecaca',
+                        color: '#be185d',
+                        border: '1px solid #fbcfe8',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.25rem'
                     }}
                 >
-                    <Activity style={{ width: '0.75rem', height: '0.75rem' }} />
-                    ACTIVE NOW
+                    <AlertTriangle style={{ width: '0.75rem', height: '0.75rem' }} />
+                    RED FLAGS FOUND
                 </motion.div>
             </div>
 
-            {/* Tinder-Style Profile Card (Blurred) */}
+            {/* Conversation-Style Card (Blurred) */}
             <div style={{
                 position: 'relative',
                 borderRadius: '1rem',
                 overflow: 'hidden',
                 background: 'white',
                 boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
-                marginBottom: '0.75rem'
+                marginBottom: '0.75rem',
+                padding: '1rem',
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '0.5rem'
             }}>
-                {/* Profile Image Area */}
-                <div style={{
-                    height: '10rem',
-                    background: 'linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%)',
-                    position: 'relative',
-                    filter: 'blur(8px)',
-                    pointerEvents: 'none'
-                }}>
-                    {/* Abstract silhouette */}
+                <div style={{ filter: 'blur(5px)', pointerEvents: 'none', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+                    
+                    <div style={{ alignSelf: 'flex-start', background: '#f1f5f9', padding: '0.5rem', borderRadius: '0.5rem 0.5rem 0.5rem 0', width: '70%', height: '40px' }} />
+                    <div style={{ alignSelf: 'flex-end', background: '#e2e8f0', padding: '0.5rem', borderRadius: '0.5rem 0.5rem 0 0.5rem', width: '50%', height: '30px' }} />
+                    <div style={{ alignSelf: 'flex-start', background: '#f1f5f9', padding: '0.5rem', borderRadius: '0.5rem 0.5rem 0.5rem 0', width: '80%', height: '50px' }} />
+                    
                     <div style={{
-                        position: 'absolute',
-                        top: '15%',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        width: '35%',
-                        height: '40%',
-                        background: '#94a3b8',
-                        borderRadius: '50%'
-                    }} />
-                    <div style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        width: '55%',
-                        height: '45%',
-                        background: '#94a3b8',
-                        borderRadius: '50% 50% 0 0'
-                    }} />
-
-                    {/* Distance Badge */}
-                    <div style={{
-                        position: 'absolute',
-                        bottom: '0.75rem',
-                        left: '0.75rem',
-                        background: 'rgba(0,0,0,0.7)',
-                        color: 'white',
-                        padding: '0.375rem 0.625rem',
-                        borderRadius: '0.5rem',
-                        fontSize: '0.625rem',
-                        fontWeight: 600,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.25rem'
-                    }}>
-                        <Navigation style={{ width: '0.625rem', height: '0.625rem' }} />
-                        2km from your location
-                    </div>
-
-                    {/* Verified Badge */}
-                    <div style={{
-                        position: 'absolute',
-                        top: '0.75rem',
-                        right: '0.75rem',
-                        background: '#3b82f6',
-                        color: 'white',
-                        padding: '0.25rem 0.5rem',
-                        borderRadius: '0.25rem',
-                        fontSize: '0.5rem',
-                        fontWeight: 700,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.25rem'
-                    }}>
-                        <Shield style={{ width: '0.5rem', height: '0.5rem' }} />
-                        VERIFIED
-                    </div>
-                </div>
-
-                {/* Profile Info (Partially Revealed) */}
-                <div style={{ padding: '1rem', filter: 'blur(4px)', pointerEvents: 'none' }}>
-                    <div style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        marginBottom: '0.5rem'
-                    }}>
-                        <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#1f2937' }}>
-                            Juli***
-                        </span>
-                        <span style={{ fontSize: '1rem', color: '#6b7280' }}>27</span>
-                        <Flame style={{ width: '1rem', height: '1rem', color: '#f97316', fill: '#f97316' }} />
-                    </div>
-                    <div style={{
+                        marginTop: '0.5rem',
                         display: 'flex',
                         alignItems: 'center',
                         gap: '0.375rem',
-                        color: '#6b7280',
-                        fontSize: '0.75rem'
+                        color: '#be185d',
+                        fontSize: '0.75rem',
+                        fontWeight: 800
                     }}>
-                        <MapPin style={{ width: '0.75rem', height: '0.75rem' }} />
-                        <span>Looking for something casual 💋</span>
+                        <Eye style={{ width: '0.75rem', height: '0.75rem' }} />
+                        <span>Hidden Context Discovered</span>
                     </div>
+
                 </div>
             </div>
 
@@ -221,7 +151,7 @@ export function FidelityCheckResultsPreview() {
                     background: 'white',
                     borderRadius: '0.75rem',
                     padding: '0.75rem',
-                    border: '1px solid #fee2e2',
+                    border: '1px solid #fce7f3',
                     textAlign: 'center'
                 }}>
                     <div style={{
@@ -231,22 +161,22 @@ export function FidelityCheckResultsPreview() {
                         gap: '0.375rem',
                         marginBottom: '0.25rem'
                     }}>
-                        <Clock style={{ width: '0.875rem', height: '0.875rem', color: '#dc2626' }} />
-                        <span style={{ fontSize: '0.625rem', color: '#6b7280', fontWeight: 600 }}>Last Active</span>
+                        <MessageSquare style={{ width: '0.875rem', height: '0.875rem', color: '#be185d' }} />
+                        <span style={{ fontSize: '0.625rem', color: '#6b7280', fontWeight: 600 }}>Analyzed Msgs</span>
                     </div>
                     <motion.div
                         animate={{ scale: [1, 1.05, 1] }}
                         transition={{ duration: 2, repeat: Infinity }}
-                        style={{ fontSize: '1.125rem', fontWeight: 800, color: '#dc2626' }}
+                        style={{ fontSize: '1.125rem', fontWeight: 800, color: '#be185d' }}
                     >
-                        {lastSeen} min ago
+                        24+
                     </motion.div>
                 </div>
                 <div style={{
                     background: 'white',
                     borderRadius: '0.75rem',
                     padding: '0.75rem',
-                    border: '1px solid #fee2e2',
+                    border: '1px solid #fce7f3',
                     textAlign: 'center'
                 }}>
                     <div style={{
@@ -256,10 +186,10 @@ export function FidelityCheckResultsPreview() {
                         gap: '0.375rem',
                         marginBottom: '0.25rem'
                     }}>
-                        <Heart style={{ width: '0.875rem', height: '0.875rem', color: '#dc2626' }} />
-                        <span style={{ fontSize: '0.625rem', color: '#6b7280', fontWeight: 600 }}>Match Rate</span>
+                        <Shield style={{ width: '0.875rem', height: '0.875rem', color: '#be185d' }} />
+                        <span style={{ fontSize: '0.625rem', color: '#6b7280', fontWeight: 600 }}>Risk Level</span>
                     </div>
-                    <div style={{ fontSize: '1.125rem', fontWeight: 800, color: '#dc2626' }}>
+                    <div style={{ fontSize: '1.125rem', fontWeight: 800, color: '#be185d' }}>
                         High
                     </div>
                 </div>
@@ -272,10 +202,10 @@ export function FidelityCheckResultsPreview() {
                 gap: '0.5rem',
                 marginBottom: '0.5rem'
             }}>
-                {['Tinder', 'Bumble', 'Badoo'].map((app, idx) => (
+                {['WhatsApp', 'iMessage', 'Instagram'].map((app, idx) => (
                     <div key={idx} style={{
-                        background: idx === 0 ? '#ff4458' : idx === 1 ? '#ffc629' : '#783bf9',
-                        color: idx === 1 ? '#1f2937' : 'white',
+                        background: idx === 0 ? '#25D366' : idx === 1 ? '#007AFF' : '#E1306C',
+                        color: 'white',
                         padding: '0.25rem 0.625rem',
                         borderRadius: '9999px',
                         fontSize: '0.5rem',
@@ -305,11 +235,11 @@ export function FidelityCheckResultsPreview() {
                         background: 'white',
                         padding: '1rem',
                         borderRadius: '50%',
-                        boxShadow: '0 8px 32px rgba(220,38,38,0.25)',
+                        boxShadow: '0 8px 32px rgba(190,24,93,0.25)',
                         marginBottom: '0.75rem'
                     }}
                 >
-                    <Lock style={{ width: '1.75rem', height: '1.75rem', color: '#dc2626' }} />
+                    <Lock style={{ width: '1.75rem', height: '1.75rem', color: '#be185d' }} />
                 </motion.div>
                 <p style={{
                     fontSize: '0.8125rem',
@@ -320,7 +250,7 @@ export function FidelityCheckResultsPreview() {
                     maxWidth: '220px',
                     lineHeight: 1.4
                 }}>
-                    <span style={{ color: '#dc2626' }}>1 Highly Active</span> suspect profile found in your zone.
+                    <span style={{ color: '#be185d' }}>Multiple Boundary Violations</span> detected in conversation.
                 </p>
             </div>
         </div>

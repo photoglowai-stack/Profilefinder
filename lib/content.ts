@@ -645,37 +645,37 @@ export const serviceContent = {
     },
     howItWorks: {
       title: "How it works",
-      subtitle: "Turn vague suspicion into clear signals in 3 steps",
+      subtitle: "Scan Chat Screenshots for Red Flags in 3 steps",
       steps: [
         {
           number: "1",
-          title: "Answer targeted questions",
-          description: "The Fidelity Test is an interactive checklist that helps you evaluate whether someone's behaviour matches classic boundary-crossing patterns. Answer precise questions about phone habits, trips, money, social media and dating app usage.",
+          title: "Upload chat screenshots",
+          description: "Upload screenshots of suspicious conversations from WhatsApp, SMS, Instagram, or dating apps. Our system accepts multiple images at once to build context.",
           features: [
-            "Communication patterns",
-            "Travel behaviour",
-            "Financial anomalies"
+            "Any messaging app",
+            "Multiple images",
+            "100% confidential"
           ],
-          time: "2 minutes"
+          time: "1 minute"
         },
         {
           number: "2",
-          title: "AI pattern analysis",
-          description: "Our AI then scores the risk level based on your answers combined with what our tools discover. We analyze patterns that often indicate boundaries are being crossed.",
+          title: "AI conversation analysis",
+          description: "Our AI scans the text to detect deleted messages, schedule inconsistencies, hidden codes, emotional distance, and classic gaslighting or cheating patterns.",
           features: [
-            "Behavior scoring",
-            "Pattern recognition",
-            "Risk assessment"
+            "Deleted message detection",
+            "Timeline inconsistencies",
+            "Red flag identification"
           ],
           time: "30 seconds"
         },
         {
           number: "3",
           title: "Get actionable recommendations",
-          description: "Receive clear next steps, from running another Tinder profile lookup to using Face Trace. While no system can assess trust issues with 100% certainty, this structured approach is far more reliable than guessing.",
+          description: "Receive a detailed risk assessment based on the conversation's tone, gaps, and context, providing clarity instead of endless guessing and anxiety.",
           features: [
             "Risk percentage",
-            "Recommended actions",
+            "Behavioral breakdown",
             "Detailed PDF report"
           ],
           time: "Instant"

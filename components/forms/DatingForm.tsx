@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import svgPaths from "../../imports/svg-osb8kvu2n8";
 import { useService } from "../../lib/ServiceContext";
 import { serviceContent } from "../../lib/content";
+import { TrustPanel } from "../ui/TrustPanel";
 
 // Avatars from public folder
 const imgMan = '/assets/avatars/dating-man-3d.png';
@@ -32,7 +33,7 @@ export function DatingForm() {
     if (selected) {
       setIsSearching(true);
       setTimeout(() => {
-        router.push("/payment");
+        router.push("/dating-search/form");
         setIsSearching(false);
       }, 800);
     }
@@ -118,20 +119,14 @@ export function DatingForm() {
             whileHover={selected && !isSearching ? { scale: 1.02 } : {}}
             whileTap={selected && !isSearching ? { scale: 0.98 } : {}}
           >
-            <div className="flex flex-col items-center">
-              <span className="text-white font-bold text-lg">
+            <div className="flex flex-col items-center pr-9">
+              <span className="text-white font-bold text-lg whitespace-nowrap">
                 {isSearching ? content.searching : content.search}
               </span>
-              <span className="text-white/70 text-[10px] font-light">
+              <span className="text-white/70 text-[10px] font-light whitespace-nowrap">
                 {isSearching ? "Please wait..." : "Get your answer in 2 min"}
               </span>
             </div>
-
-            {!isSearching && (
-              <svg className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
-              </svg>
-            )}
 
             {isSearching && (
               <motion.div
@@ -141,15 +136,23 @@ export function DatingForm() {
               />
             )}
 
-            {/* Bouncing hand */}
-            {!isSearching && selected && (
-              <motion.span
-                className="absolute -right-2 -bottom-2 text-2xl"
-                animate={{ y: [0, -6, 0] }}
-                transition={{ duration: 1.2, repeat: Infinity, ease: "easeInOut" }}
+            {/* Waving finger */}
+            {!isSearching && (
+              <span
+                className="finger-point-animate"
+                style={{
+                  position: 'absolute',
+                  right: '-14px',
+                  top: '50%',
+                  fontSize: 'clamp(28px, 7vw, 36px)',
+                  display: 'inline-block',
+                  lineHeight: 1,
+                  filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+                  pointerEvents: 'none',
+                }}
               >
-                👆
-              </motion.span>
+                👈
+              </span>
             )}
           </motion.button>
         </div>
@@ -161,7 +164,7 @@ export function DatingForm() {
           {content.bottomText}
         </p>
 
-        <div className="flex justify-center">
+      <div className="flex justify-center">
           <div className="bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] rounded-full px-4 py-2 shadow-md">
             <div className="flex flex-wrap gap-3 items-center justify-center">
               {content.badges.map((badge, index) => (
@@ -177,6 +180,8 @@ export function DatingForm() {
             </div>
           </div>
         </div>
+
+        <TrustPanel service="dating" />
       </div>
     </div>
   );

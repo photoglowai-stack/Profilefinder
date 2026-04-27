@@ -10,11 +10,11 @@ import Link from 'next/link';
 
 export function FaceTraceResultsPage() {
     const results = [
-        { source: 'Instagram', url: 'instagram.com/user***', score: 98, type: 'exact' },
-        { source: 'Facebook', url: 'facebook.com/profile***', score: 95, type: 'exact' },
-        { source: 'LinkedIn', url: 'linkedin.com/in/***', score: 89, type: 'similar' },
-        { source: 'Twitter/X', url: 'x.com/user***', score: 87, type: 'similar' },
-        { source: 'Dating App', url: '[Hidden Profile]', score: 82, type: 'alert' },
+        { source: 'Instagram', url: 'instagram.com/user***', score: 98, type: 'exact', photo: '/assets/profiles/facetrace-match-01.webp' },
+        { source: 'Facebook', url: 'facebook.com/profile***', score: 95, type: 'exact', photo: '/assets/profiles/facetrace-match-02.webp' },
+        { source: 'LinkedIn', url: 'linkedin.com/in/***', score: 89, type: 'similar', photo: '/assets/profiles/facetrace-match-03.webp' },
+        { source: 'Twitter/X', url: 'x.com/user***', score: 87, type: 'similar', photo: '/assets/profiles/facetrace-match-04.webp' },
+        { source: 'Dating App', url: '[Hidden Profile]', score: 82, type: 'alert', photo: '/assets/profiles/facetrace-match-05.webp' },
     ];
 
     const lockedServices = [
@@ -62,14 +62,23 @@ export function FaceTraceResultsPage() {
                             >
                                 <div className="flex items-center justify-between">
                                     <div className="flex items-center gap-4">
-                                        <div className={`w-14 h-14 rounded-xl flex items-center justify-center ${result.type === 'exact' ? 'bg-gradient-to-br from-cyan-500 to-blue-600' :
-                                                result.type === 'alert' ? 'bg-gradient-to-br from-red-500 to-orange-600' :
-                                                    'bg-gradient-to-br from-gray-500 to-gray-600'
-                                            }`}>
-                                            {result.type === 'alert' ?
-                                                <AlertTriangle className="w-7 h-7 text-white" /> :
-                                                <Image className="w-7 h-7 text-white" />
-                                            }
+                                        <div className="relative w-14 h-14 rounded-xl overflow-hidden border border-white/10 shadow-lg shadow-black/20">
+                                            <img
+                                                src={result.photo}
+                                                alt={`${result.source} match`}
+                                                className="w-full h-full object-cover"
+                                            />
+                                            <div className={`absolute inset-0 ${result.type === 'exact'
+                                                ? 'bg-cyan-500/15'
+                                                : result.type === 'alert'
+                                                    ? 'bg-red-500/25'
+                                                    : 'bg-slate-900/20'
+                                            }`} />
+                                            {result.type === 'alert' && (
+                                                <div className="absolute bottom-1 right-1 rounded-full bg-red-500 p-1 shadow-md">
+                                                    <AlertTriangle className="w-3 h-3 text-white" />
+                                                </div>
+                                            )}
                                         </div>
                                         <div>
                                             <div className="flex items-center gap-2">

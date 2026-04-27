@@ -286,9 +286,9 @@ export function ChatAnalysisPaymentPage() {
                                         </p>
                                     </div>
                                     <div style={{ textAlign: 'right' }}>
-                                        <span style={{ display: 'block', fontSize: '1.875rem', fontWeight: 900, color: colors.primaryDark, letterSpacing: '-0.05em' }}>19.99€</span>
+                                        <span style={{ display: 'block', fontSize: '1.875rem', fontWeight: 900, color: colors.primaryDark, letterSpacing: '-0.05em' }}>19.90€</span>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.375rem', marginTop: '0.125rem' }}>
-                                            <span style={{ fontSize: '0.75rem', color: colors.gray400, fontWeight: 600, textDecoration: 'line-through' }}>39.99€</span>
+                                            <span style={{ fontSize: '0.75rem', color: colors.gray400, fontWeight: 600, textDecoration: 'line-through' }}>39.90€</span>
                                             <span style={{ fontSize: '0.625rem', fontWeight: 700, color: colors.green600, backgroundColor: 'rgba(34,197,94,0.1)', padding: '0.125rem 0.375rem', borderRadius: '0.25rem' }}>-50%</span>
                                         </div>
                                         <span style={{ fontSize: '10px', color: colors.gray400, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.05em' }}>/ month</span>
@@ -340,7 +340,7 @@ export function ChatAnalysisPaymentPage() {
                                     <span style={{ fontSize: '10px', color: colors.gray400 }}>One-time payment</span>
                                 </div>
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end' }}>
-                                    <span style={{ fontWeight: 700, color: colors.gray800, fontSize: '1.125rem' }}>9.99€</span>
+                                    <span style={{ fontWeight: 700, color: colors.gray800, fontSize: '1.125rem' }}>14.90€</span>
                                     <span style={{ fontSize: '10px', color: colors.primary, textDecoration: 'line-through', fontWeight: 500, opacity: 0.6 }}>19.90€</span>
                                 </div>
                             </div>

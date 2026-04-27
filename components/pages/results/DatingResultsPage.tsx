@@ -15,9 +15,9 @@ import Link from 'next/link';
 export function DatingResultsPage() {
     // Simulated results data
     const results = [
-        { name: 'Sarah M.', age: 28, platform: 'Tinder', location: 'Paris', lastActive: '2h ago', match: 98 },
-        { name: 'Julie K.', age: 25, platform: 'Bumble', location: 'Lyon', lastActive: '15min ago', match: 95 },
-        { name: 'Emma L.', age: 30, platform: 'Badoo', location: 'Paris', lastActive: '1d ago', match: 89 },
+        { name: 'Sarah M.', age: 28, platform: 'Tinder', location: 'Paris', lastActive: '2h ago', match: 98, photo: '/assets/profiles/dating-woman-01.webp' },
+        { name: 'Julie K.', age: 25, platform: 'Bumble', location: 'Lyon', lastActive: '15min ago', match: 95, photo: '/assets/profiles/dating-woman-02.webp' },
+        { name: 'Emma L.', age: 30, platform: 'Badoo', location: 'Paris', lastActive: '1d ago', match: 89, photo: '/assets/profiles/dating-woman-03.webp' },
     ];
 
     const lockedServices = [
@@ -81,8 +81,12 @@ export function DatingResultsPage() {
                             >
                                 <div className="flex items-start gap-4">
                                     {/* Avatar */}
-                                    <div className="w-20 h-20 rounded-xl bg-gradient-to-br from-rose-500 to-pink-600 flex items-center justify-center text-white text-2xl font-bold">
-                                        {profile.name.charAt(0)}
+                                    <div className="w-20 h-20 rounded-xl overflow-hidden border border-white/10 shadow-lg shadow-black/20">
+                                        <img
+                                            src={profile.photo}
+                                            alt={profile.name}
+                                            className="w-full h-full object-cover"
+                                        />
                                     </div>
 
                                     {/* Info */}
@@ -137,7 +141,7 @@ export function DatingResultsPage() {
                                 <Sparkles className="w-5 h-5" />
                                 Upgrade to Premium
                             </Link>
-                            <p className="text-center text-gray-500 text-xs mt-2">Only 19.99€/month</p>
+                            <p className="text-center text-gray-500 text-xs mt-2">Only 19.90€/month</p>
                         </div>
 
                         {/* Locked Services */}

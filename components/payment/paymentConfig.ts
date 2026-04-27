@@ -33,9 +33,9 @@ export const STRIPE_PRICES = {
 
 // Couleurs par défaut (Dating)
 const DATING_COLORS = {
-    primary: '#f43f5e',
-    secondary: '#db2777',
-    gradient: 'linear-gradient(to right, #f43f5e, #f97316)',
+    primary: '#ff085e',
+    secondary: '#e8003d',
+    gradient: 'linear-gradient(to right, #ff085e, #e8003d)',
 };
 
 const FIDELITY_COLORS = {
@@ -77,8 +77,8 @@ export const PAYMENT_CONFIG: Record<string, Omit<PaymentServiceConfig, 'previewC
         badgeText: '20+ Matches Found',
         singleReportName: '💕 Dating App Report',
         singleReportDescription: 'One-time search on Tinder, Bumble & Badoo',
-        singleReportPrice: 19.90,
-        singleReportOriginalPrice: 39.90,
+        singleReportPrice: 14.90,
+        singleReportOriginalPrice: 29.90,
         accentColors: DATING_COLORS,
         resultPage: '/results/dating',
         features: [
@@ -94,8 +94,8 @@ export const PAYMENT_CONFIG: Record<string, Omit<PaymentServiceConfig, 'previewC
         badgeText: '15+ Faces Detected',
         singleReportName: '🔍 Face Recognition Report',
         singleReportDescription: 'One-time reverse image search on 12M+ sources',
-        singleReportPrice: 19.90,
-        singleReportOriginalPrice: 39.90,
+        singleReportPrice: 14.90,
+        singleReportOriginalPrice: 29.90,
         accentColors: FACETRACE_COLORS,
         resultPage: '/results/face-trace',
         features: [
@@ -111,8 +111,8 @@ export const PAYMENT_CONFIG: Record<string, Omit<PaymentServiceConfig, 'previewC
         badgeText: 'Activity Detected',
         singleReportName: '👀 Instagram Activity Report',
         singleReportDescription: 'One-time analysis of follower interactions',
-        singleReportPrice: 19.90,
-        singleReportOriginalPrice: 39.90,
+        singleReportPrice: 14.90,
+        singleReportOriginalPrice: 29.90,
         accentColors: FOLLOWING_COLORS,
         resultPage: '/results/instagram',
         features: [
@@ -128,8 +128,8 @@ export const PAYMENT_CONFIG: Record<string, Omit<PaymentServiceConfig, 'previewC
         badgeText: '⚠️ Suspicious Activity',
         singleReportName: '💔 Partner Check Report',
         singleReportDescription: 'One-time dating profile detection by name/location',
-        singleReportPrice: 19.90,
-        singleReportOriginalPrice: 39.90,
+        singleReportPrice: 14.90,
+        singleReportOriginalPrice: 29.90,
         accentColors: FIDELITY_COLORS,
         resultPage: '/results/fidelity',
         features: [
@@ -145,8 +145,8 @@ export const PAYMENT_CONFIG: Record<string, Omit<PaymentServiceConfig, 'previewC
         badgeText: '🧠 Analysis Complete',
         singleReportName: '🧠 Chat Analysis Report',
         singleReportDescription: 'One-time AI analysis of conversation screenshots',
-        singleReportPrice: 19.90,
-        singleReportOriginalPrice: 39.90,
+        singleReportPrice: 14.90,
+        singleReportOriginalPrice: 29.90,
         accentColors: CHAT_ANALYSIS_COLORS,
         resultPage: '/results/chat-analysis',
         features: [
@@ -162,7 +162,7 @@ export const PAYMENT_CONFIG: Record<string, Omit<PaymentServiceConfig, 'previewC
 export const SUBSCRIPTION_CONFIG = {
     name: 'Premium All-Access',
     price: 19.90,
-    originalPrice: 39.90,
+        originalPrice: 39.90,
     period: 'month',
     stripePriceId: STRIPE_PRICES.subscription,
     features: [

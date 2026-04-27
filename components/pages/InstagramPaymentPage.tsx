@@ -396,7 +396,7 @@ export default function InstagramPaymentPage() {
                                         </p>
                                     </div>
                                     <div className="text-right">
-                                        <span className="block text-3xl font-black text-indigo-600 -tracking-wide">19.99€</span>
+                                        <span className="block text-3xl font-black text-indigo-600 -tracking-wide">19.90€</span>
                                         <span className="text-[10px] text-gray-400 font-bold uppercase tracking-wider">/ month</span>
                                     </div>
                                 </div>
@@ -460,7 +460,7 @@ export default function InstagramPaymentPage() {
                                         <span className="text-[10px] text-gray-400">One-time check</span>
                                     </div>
                                     <div className="flex flex-col items-end">
-                                        <span className="font-bold text-gray-800 text-lg">14.99€</span>
+                                        <span className="font-bold text-gray-800 text-lg">14.90€</span>
                                         <span className="text-[10px] text-rose-500 line-through font-medium opacity-60">29.90€</span>
                                     </div>
                                 </div>

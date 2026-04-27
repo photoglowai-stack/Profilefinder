@@ -24,15 +24,15 @@ const IconGlobe = ({ className }: { className?: string }) => (
 
 // Images de résultats pour FaceTrace
 const FACETRACE_RESULTS = [
-    "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop",
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop",
-    "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&h=150&fit=crop",
-    "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=150&h=150&fit=crop",
-    "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&h=150&fit=crop",
-    "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=150&h=150&fit=crop",
-    "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?w=150&h=150&fit=crop",
-    "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop",
-    "https://images.unsplash.com/photo-1552058544-f2b08422138a?w=150&h=150&fit=crop"
+    "/assets/profiles/facetrace-match-01.webp",
+    "/assets/profiles/facetrace-match-02.webp",
+    "/assets/profiles/facetrace-match-03.webp",
+    "/assets/profiles/facetrace-match-04.webp",
+    "/assets/profiles/facetrace-match-05.webp",
+    "/assets/profiles/dating-woman-01.webp",
+    "/assets/profiles/dating-woman-03.webp",
+    "/assets/profiles/dating-woman-05.webp",
+    "/assets/profiles/dating-woman-06.webp"
 ];
 
 export function FaceTraceResultsPreview() {

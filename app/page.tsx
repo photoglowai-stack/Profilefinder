@@ -1,4 +1,5 @@
 "use client";
+// ProfileFinder Landing Page
 
 import { useState, useEffect, lazy, Suspense, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -15,7 +16,6 @@ const Testimonials = lazy(() => import("@/components/Testimonials").then(m => ({
 const StatsSection = lazy(() => import("@/components/StatsSection").then(m => ({ default: m.StatsSection })));
 const ToolComparison = lazy(() => import("@/components/ToolComparison").then(m => ({ default: m.ToolComparison })));
 const SEOBlogSection = lazy(() => import("@/components/SEOBlogSection").then(m => ({ default: m.SEOBlogSection })));
-const RelatedSearches = lazy(() => import("@/components/RelatedSearches").then(m => ({ default: m.RelatedSearches })));
 const CTASection = lazy(() => import("@/components/CTASection").then(m => ({ default: m.CTASection })));
 const FAQ = lazy(() => import("@/components/FAQ").then(m => ({ default: m.FAQ })));
 
@@ -110,9 +110,7 @@ export default function HomePage() {
           <Suspense fallback={<SectionSkeleton />}>
             <SEOBlogSection />
           </Suspense>
-          <Suspense fallback={<SectionSkeleton />}>
-            <RelatedSearches />
-          </Suspense>
+
           <Suspense fallback={<SectionSkeleton />}>
             <CTASection />
           </Suspense>

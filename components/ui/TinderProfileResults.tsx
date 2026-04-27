@@ -187,7 +187,7 @@ export function TinderProfileResults() {
       school: "École des Beaux-Arts de Paris",
       interests: ["Voyages", "Photographie", "Yoga", "Cuisine", "Art"],
       instagram: "sophie.designs",
-      imageUrl: "https://images.unsplash.com/photo-1649589244330-09ca58e4fa64?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3b21hbiUyMHBvcnRyYWl0JTIwcHJvZmVzc2lvbmFsfGVufDF8fHx8MTc2Mzk2NDE5Mnww&ixlib=rb-4.1.0&q=80&w=1080",
+      imageUrl: "/assets/profiles/dating-woman-02.webp",
       verified: true,
       matchPercentage: 87
     },
@@ -200,7 +200,7 @@ export function TinderProfileResults() {
       school: "HEC Paris",
       interests: ["Technologie", "Sport", "Musique", "Entrepreneuriat", "Randonnée"],
       instagram: "thomas.ventures",
-      imageUrl: "https://images.unsplash.com/photo-1672685667592-0392f458f46f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYW4lMjBwb3J0cmFpdCUyMHByb2Zlc3Npb25hbHxlbnwxfHx8fDE3NjQwMzk4NzR8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      imageUrl: "/assets/profiles/dating-man-02.webp",
       verified: true,
       matchPercentage: 92
     }

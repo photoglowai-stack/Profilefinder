@@ -13,6 +13,7 @@ interface PricingSelectorProps {
     serviceId: string;
     onPlanSelect: (planType: 'subscription' | 'single') => void;
     selectedPlan: 'subscription' | 'single';
+    isProcessing?: boolean;
 }
 
 /**
@@ -20,17 +21,18 @@ interface PricingSelectorProps {
  * Subscription is the HERO (70% visual attention)
  * Single Report is the DECOY (dimmed, less attractive)
  */
-export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: PricingSelectorProps) {
+export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProcessing = false }: PricingSelectorProps) {
     const serviceConfig = getPaymentConfig(serviceId);
     const isSubscriptionSelected = selectedPlan === 'subscription';
+    const isSingleSelected = selectedPlan === 'single';
+    const formatPrice = (price: number) => price.toFixed(2).replace('.', ',');
 
     // Service icons for the features list
     const serviceIcons = [
         { icon: Scan, name: 'Face Trace', desc: 'Reverse image search' },
         { icon: Heart, name: 'Dating Search', desc: 'Find hidden profiles' },
         { icon: Eye, name: 'Instagram AI', desc: 'Activity monitoring' },
-        { icon: Search, name: 'Fidelity Check', desc: 'Partner detection' },
-        { icon: MessageSquare, name: 'Chat Analysis', desc: 'AI conversation insights' },
+        { icon: Search, name: 'Fidelity Check', desc: 'Partner detection' }
     ];
 
     return (
@@ -38,7 +40,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
             {/* Header */}
             <div className="text-center mb-2">
                 <h2 className="text-xl font-black text-gray-900 mb-1">Unlock Your Results</h2>
-                <p className="text-sm text-gray-500">Choose how you want to access</p>
+                <p className="text-sm text-gray-500">Pick one report, or unlock every tool.</p>
             </div>
 
             {/* ═══════════════════════════════════════════════════════════════════
@@ -64,7 +66,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                 <div style={{
                     position: 'absolute',
                     inset: '-3px',
-                    background: 'linear-gradient(135deg, #8b5cf6, #ec4899, #8b5cf6)',
+                    background: serviceConfig.accentColors.gradient,
                     borderRadius: '1.35rem',
                     opacity: isSubscriptionSelected ? 1 : 0.6,
                     filter: isSubscriptionSelected ? 'blur(0px)' : 'blur(1px)',
@@ -75,8 +77,8 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                 <motion.div
                     animate={{
                         boxShadow: isSubscriptionSelected
-                            ? ['0 0 20px rgba(139,92,246,0.4)', '0 0 40px rgba(139,92,246,0.6)', '0 0 20px rgba(139,92,246,0.4)']
-                            : '0 0 15px rgba(139,92,246,0.2)',
+                            ? [`0 0 20px ${serviceConfig.accentColors.primary}66`, `0 0 40px ${serviceConfig.accentColors.primary}99`, `0 0 20px ${serviceConfig.accentColors.primary}66`]
+                            : `0 0 15px ${serviceConfig.accentColors.primary}33`,
                     }}
                     transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
                     style={{
@@ -93,7 +95,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                         ? 'linear-gradient(135deg, #ffffff 0%, #faf5ff 100%)'
                         : '#ffffff',
                     borderRadius: '1.25rem',
-                    padding: '1.5rem',
+                    padding: '1.1rem',
                     border: '2px solid transparent',
                 }}>
                     {/* FLOATING BADGE - "MEILLEURE OFFRE" */}
@@ -127,26 +129,26 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                         height: '24px',
                         borderRadius: '50%',
                         background: isSubscriptionSelected
-                            ? 'linear-gradient(135deg, #8b5cf6, #a855f7)'
+                            ? serviceConfig.accentColors.gradient
                             : '#e5e7eb',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         transition: 'all 0.3s ease',
-                        boxShadow: isSubscriptionSelected ? '0 4px 10px rgba(139,92,246,0.4)' : 'none',
+                        boxShadow: isSubscriptionSelected ? `0 4px 10px ${serviceConfig.accentColors.primary}66` : 'none',
                     }}>
                         {isSubscriptionSelected && <Check style={{ width: '14px', height: '14px', color: 'white' }} />}
                     </div>
 
                     {/* Header */}
-                    <div style={{ marginTop: '0.5rem', marginLeft: '2.5rem', marginBottom: '1rem' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.25rem' }}>
-                            <InfinityIcon style={{ width: '1.25rem', height: '1.25rem', color: '#8b5cf6' }} />
+                    <div style={{ marginTop: '0.25rem', marginLeft: '2.25rem', marginBottom: '0.75rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                            <InfinityIcon style={{ width: '1.25rem', height: '1.25rem', color: serviceConfig.accentColors.primary }} />
                             <h3 style={{
                                 fontSize: '1.25rem',
                                 fontWeight: 900,
                                 color: '#1f2937',
-                                background: 'linear-gradient(135deg, #8b5cf6, #ec4899)',
+                                background: serviceConfig.accentColors.gradient,
                                 backgroundClip: 'text',
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
@@ -154,8 +156,14 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                                 All-Access Pass
                             </h3>
                         </div>
-                        <p style={{ fontSize: '0.8125rem', color: '#6b7280' }}>
-                            Full unlock • All tools • Unlimited
+                        <p style={{
+                            fontSize: '0.72rem',
+                            color: '#6b7280',
+                            fontWeight: 600,
+                            marginTop: '0.25rem',
+                            lineHeight: 1.4
+                        }}>
+                            Best if you want all ProfileFinder services, not just this report.
                         </p>
                     </div>
 
@@ -164,16 +172,16 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                         display: 'flex',
                         alignItems: 'baseline',
                         gap: '0.5rem',
-                        marginBottom: '1rem',
-                        marginLeft: '2.5rem',
+                        marginBottom: '0.75rem',
+                        marginLeft: '2.25rem',
                     }}>
                         <span style={{
-                            fontSize: '2.5rem',
+                            fontSize: '2.1rem',
                             fontWeight: 900,
-                            color: '#8b5cf6',
+                            color: serviceConfig.accentColors.primary,
                             lineHeight: 1,
                         }}>
-                            19,99€
+                            19,90€
                         </span>
                         <span style={{ fontSize: '1rem', color: '#9ca3af', fontWeight: 500 }}>/mo</span>
                         <div style={{
@@ -186,7 +194,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                                 fontSize: '0.875rem',
                                 color: '#9ca3af',
                                 textDecoration: 'line-through'
-                            }}>39,99€</span>
+                            }}>39,90€</span>
                             <span style={{
                                 fontSize: '0.75rem',
                                 fontWeight: 700,
@@ -202,27 +210,27 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                     <div style={{
                         background: 'linear-gradient(135deg, #faf5ff, #fdf4ff)',
                         borderRadius: '0.75rem',
-                        padding: '1rem',
-                        marginBottom: '1rem',
+                        padding: '0.75rem',
+                        marginBottom: '0.75rem',
                         border: '1px solid #e9d5ff',
                     }}>
                         <div style={{
                             fontSize: '0.6875rem',
                             fontWeight: 700,
-                            color: '#8b5cf6',
+                            color: serviceConfig.accentColors.primary,
                             textTransform: 'uppercase',
                             letterSpacing: '0.1em',
-                            marginBottom: '0.75rem',
+                            marginBottom: '0.55rem',
                         }}>
-                            ✨ Included in your access
+                            Included
                         </div>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.625rem' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.45rem' }}>
                             {serviceIcons.map((service, idx) => (
                                 <div key={idx} style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '0.5rem',
-                                    padding: '0.5rem',
+                                    padding: '0.4rem',
                                     background: 'white',
                                     borderRadius: '0.5rem',
                                     boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
@@ -231,7 +239,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                                         width: '1.75rem',
                                         height: '1.75rem',
                                         borderRadius: '0.375rem',
-                                        background: 'linear-gradient(135deg, #8b5cf6, #a855f7)',
+                                        background: serviceConfig.accentColors.gradient,
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
@@ -249,18 +257,17 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                     </div>
 
                     {/* Benefits List */}
-                    <div style={{ marginBottom: '1rem' }}>
+                    <div style={{ marginBottom: '0.75rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.35rem 0.75rem' }}>
                         {[
                             'UNLIMITED searches',
                             'Instant results',
-                            '24/7 priority support',
                             'Cancel anytime',
+                            'All reports included',
                         ].map((benefit, idx) => (
                             <div key={idx} style={{
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '0.5rem',
-                                marginBottom: '0.375rem',
                             }}>
                                 <div style={{
                                     width: '1.125rem',
@@ -284,31 +291,66 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                     <motion.button
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            if (window.location.pathname.includes('/payment')) {
+                                const desktopBtn = document.getElementById('outer-checkout-button');
+                                const mobileBtn = document.getElementById('outer-checkout-button-mobile');
+                                if (mobileBtn && window.getComputedStyle(mobileBtn.parentElement!).display !== 'none') {
+                                    mobileBtn.click();
+                                } else if (desktopBtn) {
+                                    desktopBtn.click();
+                                }
+                            } else {
+                                onPlanSelect('subscription');
+                            }
+                        }}
                         style={{
                             width: '100%',
                             padding: '1rem',
                             background: isSubscriptionSelected
-                                ? 'linear-gradient(135deg, #8b5cf6, #7c3aed)'
+                                ? serviceConfig.accentColors.gradient
                                 : 'linear-gradient(135deg, #9ca3af, #6b7280)',
                             color: 'white',
                             fontWeight: 700,
                             fontSize: '1rem',
                             borderRadius: '0.75rem',
                             border: 'none',
-                            cursor: 'pointer',
+                            cursor: isProcessing ? 'wait' : 'pointer',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             gap: '0.5rem',
                             boxShadow: isSubscriptionSelected
-                                ? '0 10px 25px rgba(139,92,246,0.4)'
+                                ? `0 10px 25px ${serviceConfig.accentColors.primary}66`
                                 : '0 4px 10px rgba(0,0,0,0.1)',
                             transition: 'all 0.3s ease',
+                            opacity: isProcessing ? 0.7 : 1,
                         }}
+                        disabled={isProcessing}
                     >
-                        <Sparkles style={{ width: '1.125rem', height: '1.125rem' }} />
-                        Unlock all now
-                        <ArrowRight style={{ width: '1.125rem', height: '1.125rem' }} />
+                        {isProcessing ? (
+                            <>
+                                <motion.div
+                                    animate={{ rotate: 360 }}
+                                    transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+                                    style={{
+                                        width: '1.25rem',
+                                        height: '1.25rem',
+                                        border: '2px solid white',
+                                        borderTopColor: 'transparent',
+                                        borderRadius: '50%',
+                                    }}
+                                />
+                                Processing...
+                            </>
+                        ) : (
+                            <>
+                                Unlock all now
+                                <ArrowRight style={{ width: '1.125rem', height: '1.125rem' }} />
+                            </>
+                        )}
                     </motion.button>
 
                     {/* Trust Badge */}
@@ -351,20 +393,43 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
             <motion.div
                 onClick={() => onPlanSelect('single')}
                 animate={{
-                    scale: !isSubscriptionSelected ? 1.01 : 1,
-                    opacity: isSubscriptionSelected ? 0.65 : 1,
+                    scale: isSingleSelected ? 1.01 : 1,
+                    opacity: isSubscriptionSelected ? 0.82 : 1,
                 }}
-                whileHover={{ opacity: 0.85, scale: 1.01 }}
+                whileHover={{ opacity: 1, scale: 1.01 }}
                 transition={{ duration: 0.2 }}
                 style={{
                     position: 'relative',
                     cursor: 'pointer',
-                    background: '#f9fafb',
-                    borderRadius: '1rem',
-                    padding: '1rem',
-                    border: !isSubscriptionSelected ? '2px solid #9ca3af' : '2px dashed #d1d5db',
+                    background: isSingleSelected
+                        ? `linear-gradient(135deg, #ffffff 0%, ${serviceConfig.accentColors.primary}10 100%)`
+                        : '#ffffff',
+                    borderRadius: '1.15rem',
+                    padding: '1.05rem',
+                    border: isSingleSelected
+                        ? `2px solid ${serviceConfig.accentColors.primary}`
+                        : '2px solid #d1d5db',
+                    boxShadow: isSingleSelected
+                        ? `0 12px 30px ${serviceConfig.accentColors.primary}24`
+                        : '0 5px 18px rgba(15,23,42,0.06)',
                 }}
             >
+                <div style={{
+                    position: 'absolute',
+                    top: '-12px',
+                    right: '16px',
+                    background: isSingleSelected ? serviceConfig.accentColors.gradient : '#111827',
+                    color: '#ffffff',
+                    fontSize: '0.68rem',
+                    fontWeight: 900,
+                    padding: '6px 12px',
+                    borderRadius: '999px',
+                    boxShadow: '0 8px 18px rgba(15,23,42,0.16)',
+                    letterSpacing: '0.04em'
+                }}>
+                    -50% today
+                </div>
+
                 {/* Selection Radio */}
                 <div style={{
                     position: 'absolute',
@@ -373,13 +438,14 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                     width: '20px',
                     height: '20px',
                     borderRadius: '50%',
-                    background: !isSubscriptionSelected ? '#6b7280' : '#e5e7eb',
+                    background: isSingleSelected ? serviceConfig.accentColors.gradient : '#e5e7eb',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     transition: 'all 0.3s ease',
+                    boxShadow: isSingleSelected ? `0 4px 10px ${serviceConfig.accentColors.primary}55` : 'none',
                 }}>
-                    {!isSubscriptionSelected && <Check style={{ width: '12px', height: '12px', color: 'white' }} />}
+                    {isSingleSelected && <Check style={{ width: '12px', height: '12px', color: 'white' }} />}
                 </div>
 
                 <div style={{ marginLeft: '2rem' }}>
@@ -388,51 +454,70 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                         <div>
                             <h4 style={{
                                 fontSize: '0.9375rem',
-                                fontWeight: 700,
-                                color: '#4b5563',
+                                fontWeight: 900,
+                                color: isSingleSelected ? '#111827' : '#4b5563',
                                 marginBottom: '0.125rem',
                             }}>
                                 {serviceConfig.singleReportName}
                             </h4>
-                            <p style={{ fontSize: '0.6875rem', color: '#9ca3af' }}>
-                                One-time payment • 1 report only
+                            <p style={{ fontSize: '0.6875rem', color: '#6b7280', fontWeight: 600, lineHeight: 1.35 }}>
+                                One-time payment • unlock this scan only
                             </p>
+                            {isSingleSelected && (
+                                <div style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '0.3rem',
+                                    marginTop: '0.45rem',
+                                    padding: '0.25rem 0.5rem',
+                                    borderRadius: '999px',
+                                    background: `${serviceConfig.accentColors.primary}14`,
+                                    color: serviceConfig.accentColors.primary,
+                                    fontSize: '0.65rem',
+                                    fontWeight: 800,
+                                }}>
+                                    <Check style={{ width: '0.75rem', height: '0.75rem' }} />
+                                    Selected single report
+                                </div>
+                            )}
                         </div>
                         <div style={{ textAlign: 'right' }}>
-                            <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#4b5563' }}>
-                                {serviceConfig.singleReportPrice}€
+                            <div style={{ fontSize: '1.45rem', fontWeight: 900, color: isSingleSelected ? serviceConfig.accentColors.primary : '#4b5563', lineHeight: 1 }}>
+                                {formatPrice(serviceConfig.singleReportPrice)}€
                             </div>
-                            <div style={{ fontSize: '0.6875rem', color: '#9ca3af', textDecoration: 'line-through' }}>
-                                {serviceConfig.singleReportOriginalPrice}€
+                            <div style={{ fontSize: '0.75rem', color: '#9ca3af', textDecoration: 'line-through', marginTop: '0.2rem', fontWeight: 700 }}>
+                                {formatPrice(serviceConfig.singleReportOriginalPrice)}€
                             </div>
                         </div>
                     </div>
 
-                    {/* Limitations Warning */}
                     <div style={{
-                        marginTop: '0.75rem',
-                        padding: '0.625rem',
-                        background: '#fef2f2',
-                        borderRadius: '0.5rem',
-                        border: '1px solid #fecaca',
+                        marginTop: '0.85rem',
+                        padding: '0.75rem',
+                        background: '#ffffff',
+                        borderRadius: '0.75rem',
+                        border: `1px solid ${isSingleSelected ? `${serviceConfig.accentColors.primary}33` : '#e5e7eb'}`,
                     }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
                             {[
-                                `Only ${serviceConfig.title}`,
-                                'No access to other tools',
-                                '24h validity only',
-                            ].map((limitation, idx) => (
+                                { icon: Check, text: `Unlock this ${serviceConfig.title} report`, color: serviceConfig.accentColors.primary },
+                                { icon: X, text: 'Other ProfileFinder tools stay locked', color: '#ef4444' },
+                                { icon: Clock, text: '24h access to this result', color: '#d97706' },
+                            ].map((item, idx) => {
+                                const ItemIcon = item.icon;
+                                return (
                                 <div key={idx} style={{
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '0.375rem',
+                                    gap: '0.45rem',
                                 }}>
-                                    <X style={{ width: '0.75rem', height: '0.75rem', color: '#ef4444' }} />
-                                    <span style={{ fontSize: '0.6875rem', color: '#7f1d1d' }}>
-                                        {limitation}
+                                    <ItemIcon style={{ width: '0.8rem', height: '0.8rem', color: item.color, flexShrink: 0 }} />
+                                    <span style={{ fontSize: '0.72rem', color: '#374151', fontWeight: 700, lineHeight: 1.25 }}>
+                                        {item.text}
                                     </span>
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
 
@@ -458,86 +543,53 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan }: Prici
                             </span>
                         </div>
 
-                        {!isSubscriptionSelected && (
-                            <button style={{
-                                padding: '0.5rem 1rem',
-                                background: '#4b5563',
-                                color: 'white',
-                                fontSize: '0.75rem',
-                                fontWeight: 600,
-                                borderRadius: '0.5rem',
-                                border: 'none',
-                                cursor: 'pointer',
+                        <button
+                            type="button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                if (!isSingleSelected) {
+                                    onPlanSelect('single');
+                                    return;
+                                }
+
+                                if (window.location.pathname.includes('/payment')) {
+                                    const desktopBtn = document.getElementById('outer-checkout-button');
+                                    const mobileBtn = document.getElementById('outer-checkout-button-mobile');
+                                    if (mobileBtn && window.getComputedStyle(mobileBtn.parentElement!).display !== 'none') {
+                                        mobileBtn.click();
+                                    } else if (desktopBtn) {
+                                        desktopBtn.click();
+                                    }
+                                }
+                            }}
+                            disabled={isProcessing}
+                            style={{
+                                padding: '0.58rem 1rem',
+                                background: isSingleSelected ? serviceConfig.accentColors.gradient : '#ffffff',
+                                color: isSingleSelected ? 'white' : serviceConfig.accentColors.primary,
+                                fontSize: '0.78rem',
+                                fontWeight: 800,
+                                borderRadius: '0.65rem',
+                                border: isSingleSelected ? 'none' : `1px solid ${serviceConfig.accentColors.primary}55`,
+                                cursor: isProcessing ? 'wait' : 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '0.25rem',
-                            }}>
-                                Continue <ArrowRight style={{ width: '0.75rem', height: '0.75rem' }} />
-                            </button>
-                        )}
+                                opacity: isProcessing ? 0.7 : 1,
+                                boxShadow: isSingleSelected ? `0 8px 18px ${serviceConfig.accentColors.primary}36` : 'none',
+                            }}
+                        >
+                            {isProcessing ? 'Processing...' : (
+                                isSingleSelected
+                                    ? <>Continue <ArrowRight style={{ width: '0.75rem', height: '0.75rem' }} /></>
+                                    : <>Select report</>
+                            )}
+                        </button>
                     </div>
                 </div>
             </motion.div>
 
-            {/* Upsell message when Single is selected */}
-            <AnimatePresence>
-                {!isSubscriptionSelected && (
-                    <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        style={{
-                            overflow: 'hidden',
-                        }}
-                    >
-                        <div style={{
-                            background: 'linear-gradient(135deg, #fffbeb, #fef3c7)',
-                            border: '1px solid #fcd34d',
-                            borderRadius: '0.75rem',
-                            padding: '1rem',
-                            display: 'flex',
-                            gap: '0.75rem',
-                        }}>
-                            <div style={{
-                                width: '2.5rem',
-                                height: '2.5rem',
-                                borderRadius: '50%',
-                                background: '#fde68a',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                flexShrink: 0,
-                            }}>
-                                <Star style={{ width: '1.25rem', height: '1.25rem', color: '#d97706' }} />
-                            </div>
-                            <div>
-                                <p style={{ fontSize: '0.8125rem', fontWeight: 700, color: '#92400e', marginBottom: '0.25rem' }}>
-                                    💡 Save 40% with All-Access!
-                                </p>
-                                <p style={{ fontSize: '0.6875rem', color: '#a16207', lineHeight: 1.4 }}>
-                                    For only €5 more, get unlimited access to all 5 services instead of a single report.
-                                </p>
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); onPlanSelect('subscription'); }}
-                                    style={{
-                                        marginTop: '0.5rem',
-                                        fontSize: '0.75rem',
-                                        fontWeight: 700,
-                                        color: '#8b5cf6',
-                                        background: 'none',
-                                        border: 'none',
-                                        cursor: 'pointer',
-                                        textDecoration: 'underline',
-                                        padding: 0,
-                                    }}
-                                >
-                                    Switch to All-Access →
-                                </button>
-                            </div>
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
+
         </div>
     );
 }
