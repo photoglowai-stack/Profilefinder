@@ -170,6 +170,32 @@ video {
   animation: finger-point 1.2s ease-in-out infinite;
 }
 
+@keyframes finger-point-inline {
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(-15deg);
+  }
+
+  25% {
+    transform: translate(-4px, 2px) rotate(-20deg);
+  }
+
+  50% {
+    transform: translate(-2px, 1px) rotate(-15deg) scale(0.95);
+  }
+
+  75% {
+    transform: translate(-4px, 2px) rotate(-20deg);
+  }
+}
+
+.finger-point-inline {
+  display: inline-block;
+  transform-origin: center;
+  animation: finger-point-inline 1.2s ease-in-out infinite;
+}
+
 @keyframes cta-arrow-nudge {
 
   0%,
@@ -202,6 +228,28 @@ video {
   display: inline-block;
   animation: cta-finger-sway 1.2s ease-in-out infinite;
   transform-origin: center;
+}
+
+@keyframes cta-finger-outside {
+
+  0%,
+  100% {
+    transform: translateY(-50%) translateX(0) rotate(-12deg);
+  }
+
+  50% {
+    transform: translateY(-50%) translateX(-2px) rotate(-18deg);
+  }
+}
+
+.cta-finger-outside {
+  position: absolute;
+  top: 50%;
+  right: -34px;
+  display: inline-block;
+  animation: cta-finger-outside 1.2s ease-in-out infinite;
+  transform-origin: center;
+  pointer-events: none;
 }
 
 /* Utility classes */

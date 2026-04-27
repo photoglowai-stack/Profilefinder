@@ -20,14 +20,15 @@ export function FaceTraceResultsPreview() {
         return () => clearInterval(interval);
     }, []);
 
-    // Simulated face match results
+    const sourcePhoto = "/assets/profiles/facetrace-source.webp";
+
     const faceMatches = [
-        { score: 98, source: 'Instagram', date: '2h ago', type: 'exact' },
-        { score: 95, source: 'Facebook', date: '1d ago', type: 'exact' },
-        { score: 89, source: 'LinkedIn', date: '3d ago', type: 'similar' },
-        { score: 87, source: 'Twitter/X', date: '5d ago', type: 'similar' },
-        { score: 82, source: 'Dating App', date: '1w ago', type: 'similar' },
-        { score: 78, source: 'Unknown', date: '2w ago', type: 'partial' },
+        { score: 98, source: 'Instagram', date: '2h ago', type: 'exact', photo: "/assets/profiles/facetrace-match-01.webp" },
+        { score: 95, source: 'Facebook', date: '1d ago', type: 'exact', photo: "/assets/profiles/facetrace-match-02.webp" },
+        { score: 89, source: 'LinkedIn', date: '3d ago', type: 'similar', photo: "/assets/profiles/facetrace-match-03.webp" },
+        { score: 87, source: 'Twitter/X', date: '5d ago', type: 'similar', photo: "/assets/profiles/facetrace-match-04.webp" },
+        { score: 82, source: 'Dating App', date: '1w ago', type: 'similar', photo: "/assets/profiles/facetrace-match-05.webp" },
+        { score: 78, source: 'Unknown', date: '2w ago', type: 'partial', photo: "/assets/profiles/dating-woman-04.webp" },
     ];
 
     return (
@@ -102,34 +103,28 @@ export function FaceTraceResultsPreview() {
                 <div style={{
                     width: '5rem',
                     height: '6rem',
-                    borderRadius: '0.75rem',
-                    background: 'linear-gradient(180deg, #e2e8f0 0%, #cbd5e1 100%)',
+                    borderRadius: '0.9rem',
                     position: 'relative',
                     overflow: 'hidden',
                     border: '3px solid #06b6d4',
                     boxShadow: '0 4px 20px rgba(6,182,212,0.3)',
                     flexShrink: 0
                 }}>
-                    {/* Abstract silhouette */}
+                    <img
+                        src={sourcePhoto}
+                        alt="Source example"
+                        style={{
+                            position: 'absolute',
+                            inset: 0,
+                            width: '100%',
+                            height: '100%',
+                            objectFit: 'cover'
+                        }}
+                    />
                     <div style={{
                         position: 'absolute',
-                        top: '15%',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        width: '45%',
-                        height: '40%',
-                        background: '#94a3b8',
-                        borderRadius: '50%'
-                    }} />
-                    <div style={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
-                        width: '70%',
-                        height: '45%',
-                        background: '#94a3b8',
-                        borderRadius: '50% 50% 0 0'
+                        inset: 0,
+                        background: 'linear-gradient(180deg, rgba(6,182,212,0.04) 0%, rgba(15,23,42,0.22) 100%)'
                     }} />
                     {/* Scan Line Animation */}
                     <motion.div
@@ -178,34 +173,26 @@ export function FaceTraceResultsPreview() {
                             style={{
                                 aspectRatio: '4/5',
                                 borderRadius: '0.5rem',
-                                background: `linear-gradient(180deg, 
-                                    ${idx % 2 === 0 ? '#d1d5db' : '#e5e7eb'} 0%, 
-                                    ${idx % 2 === 0 ? '#9ca3af' : '#d1d5db'} 100%)`,
                                 position: 'relative',
                                 overflow: 'hidden',
                                 boxShadow: '0 2px 6px rgba(0,0,0,0.1)'
                             }}
                         >
-                            {/* Silhouette */}
+                            <img
+                                src={match.photo}
+                                alt={`${match.source} example`}
+                                style={{
+                                    position: 'absolute',
+                                    inset: 0,
+                                    width: '100%',
+                                    height: '100%',
+                                    objectFit: 'cover'
+                                }}
+                            />
                             <div style={{
                                 position: 'absolute',
-                                top: '15%',
-                                left: '50%',
-                                transform: 'translateX(-50%)',
-                                width: '50%',
-                                height: '35%',
-                                background: '#6b7280',
-                                borderRadius: '50%'
-                            }} />
-                            <div style={{
-                                position: 'absolute',
-                                top: '48%',
-                                left: '50%',
-                                transform: 'translateX(-50%)',
-                                width: '65%',
-                                height: '40%',
-                                background: '#6b7280',
-                                borderRadius: '50% 50% 0 0'
+                                inset: 0,
+                                background: 'linear-gradient(180deg, rgba(2,132,199,0.08) 0%, rgba(15,23,42,0.28) 100%)'
                             }} />
 
                             {/* Score Badge */}

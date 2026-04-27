@@ -19,23 +19,22 @@ export function DatingResultsPreview() {
         }
     }, []);
 
-    // Reliable high-quality portrait photos from Unsplash
     const womenPhotos = [
-        "/assets/avatars/dating-woman-3d.png",
-        "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80",
-        "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80",
-        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80",
-        "https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?auto=format&fit=crop&w=500&q=80",
-        "https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=500&q=80"
+        "/assets/profiles/dating-woman-01.webp",
+        "/assets/profiles/dating-woman-02.webp",
+        "/assets/profiles/dating-woman-03.webp",
+        "/assets/profiles/dating-woman-04.webp",
+        "/assets/profiles/dating-woman-05.webp",
+        "/assets/profiles/dating-woman-06.webp"
     ];
 
     const menPhotos = [
-        "/assets/avatars/dating-man-3d.png",
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80",
-        "https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=500&q=80",
-        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80",
-        "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?auto=format&fit=crop&w=500&q=80",
-        "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=500&q=80"
+        "/assets/profiles/dating-man-01.webp",
+        "/assets/profiles/dating-man-02.webp",
+        "/assets/profiles/dating-man-03.webp",
+        "/assets/profiles/dating-man-04.webp",
+        "/assets/profiles/dating-man-05.webp",
+        "/assets/profiles/dating-man-06.webp"
     ];
 
     const selectedPhotos = gender === 'man' ? menPhotos : womenPhotos;

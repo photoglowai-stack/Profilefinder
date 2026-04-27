@@ -189,7 +189,7 @@ export function FidelityForm() {
           }
         }}
         disabled={isSearching}
-        className={`w-full relative flex items-center justify-between gap-3 px-5 py-3.5 rounded-full transition-all shadow-lg ${
+        className={`w-full relative flex items-center justify-between gap-2 sm:gap-3 px-4 sm:px-5 py-3.5 rounded-full transition-all shadow-lg overflow-visible ${
           !isSearching
             ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-xl cursor-pointer"
             : "bg-gray-300 cursor-not-allowed"
@@ -197,11 +197,11 @@ export function FidelityForm() {
         whileHover={!isSearching ? { scale: 1.02 } : {}}
         whileTap={!isSearching ? { scale: 0.98 } : {}}
       >
-        <div className="flex items-center justify-between gap-3 w-full">
-          <MessageSquare className="w-7 h-7 text-white shrink-0" strokeWidth={2.4} />
+        <div className="relative flex items-center gap-2 sm:gap-3 w-full min-w-0">
+          <MessageSquare className="w-6 h-6 sm:w-7 sm:h-7 text-white shrink-0" strokeWidth={2.4} />
 
-          <span className="text-white text-base md:text-lg font-black tracking-wide text-center flex-1">
-            {isSearching ? content.searching : screenshots.length === 0 ? 'UPLOAD SCREENSHOTS' : 'ANALYZE CHATS'}
+          <span className="text-white text-[clamp(0.95rem,4vw,1.125rem)] font-black tracking-wide text-center flex-1 min-w-0 whitespace-nowrap pr-[58px]">
+            {isSearching ? content.searching : screenshots.length === 0 ? 'UPLOAD CHATS' : 'ANALYZE CHATS'}
           </span>
 
           {isSearching ? (
@@ -211,14 +211,14 @@ export function FidelityForm() {
               transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
             />
           ) : (
-            <div className="flex items-center gap-3 shrink-0">
-              <span className="w-10 h-10 rounded-full bg-white/18 border border-white/22 flex items-center justify-center">
-                <ArrowRight className="w-6 h-6 text-white cta-arrow-animate" />
+            <div className="absolute right-[-30px] sm:right-[-34px] top-1/2 -translate-y-1/2 flex items-center gap-2 shrink-0 pointer-events-none">
+              <span className="w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white/18 border border-white/22 flex items-center justify-center">
+                <ArrowRight className="w-5 h-5 sm:w-6 sm:h-6 text-white cta-arrow-animate" />
               </span>
               <span
-                className="finger-point-animate"
+                className="finger-point-inline"
                 style={{
-                  fontSize: '32px',
+                  fontSize: 'clamp(26px, 7vw, 34px)',
                   display: 'inline-block',
                   lineHeight: 1,
                   filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.24))',

@@ -64,10 +64,10 @@ const HeroAntigravity: React.FC = () => {
     const avatarWoman = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/FEMME.svg";
 
     const trustedUsers = [
-        "https://i.pravatar.cc/100?img=1",
-        "https://i.pravatar.cc/100?img=5",
-        "https://i.pravatar.cc/100?img=9",
-        "https://i.pravatar.cc/100?img=32"
+        "/assets/profiles/dating-woman-02.webp",
+        "/assets/profiles/dating-man-03.webp",
+        "/assets/profiles/dating-woman-04.webp",
+        "/assets/profiles/dating-woman-05.webp"
     ];
 
     const services = [
@@ -95,7 +95,7 @@ const HeroAntigravity: React.FC = () => {
             h1: "Reveal Hidden Instagram Connections",
             desc: "Analyze their entire following list instantly. See who they recently followed and uncover suspicious interactions.",
             instruction: "ENTER TARGET USERNAME",
-            cta: "ANALYZE FOLLOWINGS",
+            cta: "SCAN FOLLOWINGS",
             ctaEmoji: "",
             buttonIcon: <Instagram size={22} strokeWidth={2.5} />,
             buttonBg: "linear-gradient(135deg, #5b21b6 0%, #7c3aed 50%, #8b5cf6 100%)"
@@ -104,7 +104,7 @@ const HeroAntigravity: React.FC = () => {
             h1: "AI Face Search Engine",
             desc: "Reverse Image Search — Upload any photo and instantly find someone's presence across the web, social networks and dating apps.",
             instruction: "UPLOAD PHOTO TO SCAN",
-            cta: "START WEB SCAN",
+            cta: "WEB SCAN",
             ctaEmoji: "",
             buttonIcon: <ScanFace size={22} strokeWidth={2.5} />,
             buttonBg: "linear-gradient(135deg, #075985 0%, #0284c7 50%, #0ea5e9 100%)"
@@ -131,9 +131,9 @@ const HeroAntigravity: React.FC = () => {
 
     const heroTrustMap: Record<ServiceType, string> = {
         dating: "The #1 AI fidelity check app",
-        following: "Top-rated social signal scan",
-        facetrace: "Top-rated face lookup",
-        fidelity: "Top-rated chat analysis"
+        following: "The #1 following check app",
+        facetrace: "The #1 face search app",
+        fidelity: "The #1 chat fidelity app"
     };
 
     // Premium mesh-style radial gradient backgrounds per service (CheatEye inspired)
@@ -166,14 +166,15 @@ const HeroAntigravity: React.FC = () => {
             borderRadius: '0 0 48px 48px',
             transition: 'background 0.5s ease'
         }}>
-            {/* Soft white gradient fade at bottom */}
+            {/* Keep the transition into the white sections below, but low enough
+                that it does not create a visible horizontal band behind the form. */}
             <div style={{
                 position: 'absolute',
                 bottom: 0,
                 left: 0,
                 right: 0,
-                height: '150px',
-                background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.1) 30%, rgba(255,255,255,0.4) 60%, rgba(255,255,255,0.9) 85%, #ffffff 100%)',
+                height: 'clamp(64px, 9vw, 96px)',
+                background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.05) 52%, rgba(255,255,255,0.22) 72%, rgba(255,255,255,0.65) 88%, #ffffff 100%)',
                 pointerEvents: 'none',
                 borderRadius: '0 0 48px 48px'
             }} />
@@ -467,7 +468,8 @@ const HeroAntigravity: React.FC = () => {
                                     height: '32px',
                                     borderRadius: '50%',
                                     border: '2px solid #ff6b6b',
-                                    marginLeft: i > 0 ? '-12px' : '0'
+                                    marginLeft: i > 0 ? '-12px' : '0',
+                                    objectFit: 'cover'
                                 }}
                             />
                         ))}
@@ -504,33 +506,50 @@ const HeroAntigravity: React.FC = () => {
                         style={{
                             display: 'inline-flex',
                             alignItems: 'center',
-                            gap: '12px',
-                            background: 'rgba(255,255,255,0.16)',
-                            border: '1px solid rgba(255,255,255,0.28)',
-                            borderRadius: '9999px',
-                            padding: '9px 16px',
-                            backdropFilter: 'blur(12px)',
-                            boxShadow: '0 10px 24px rgba(0,0,0,0.12)',
+                            gap: '9px',
+                            background: 'transparent',
+                            border: 'none',
+                            borderRadius: 0,
+                            padding: '2px 0',
+                            boxShadow: 'none',
                             color: '#ffffff',
                             marginBottom: '14px',
                             maxWidth: '100%'
                         }}
                     >
+                        <span aria-hidden="true" style={{
+                            fontSize: '14px',
+                            lineHeight: 1,
+                            flexShrink: 0
+                        }}>✦</span>
                         <span style={{
-                            fontSize: 'clamp(13px, 2.6vw, 16px)',
-                            fontFamily: 'Georgia, serif',
+                            fontSize: 'clamp(13px, 2.6vw, 15px)',
+                            fontFamily: "Georgia, 'Times New Roman', serif",
                             fontStyle: 'italic',
-                            fontWeight: 800,
+                            fontWeight: 700,
                             lineHeight: 1.1,
-                            whiteSpace: 'nowrap'
+                            whiteSpace: 'nowrap',
+                            letterSpacing: '0.01em',
+                            textShadow: '0 1px 0 rgba(255,255,255,0.08)'
                         }}>
                             {heroTrustMap[selectedService]}
                         </span>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
+                        <span aria-hidden="true" style={{
+                            width: '1px',
+                            height: '14px',
+                            background: 'rgba(255,255,255,0.32)',
+                            flexShrink: 0
+                        }} />
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '2px', flexShrink: 0 }}>
                             {[1, 2, 3, 4, 5].map((star) => (
-                                <Star key={star} size={15} fill="#ffffff" color="#ffffff" />
+                                <Star key={star} size={13} fill="#ffffff" color="#ffffff" />
                             ))}
                         </div>
+                        <span aria-hidden="true" style={{
+                            fontSize: '14px',
+                            lineHeight: 1,
+                            flexShrink: 0
+                        }}>✦</span>
                     </div>
                     <h1 className="font-extrabold mb-2 leading-[1.05] tracking-tight text-white drop-shadow-lg"
                         style={{
@@ -984,7 +1003,7 @@ const HeroAntigravity: React.FC = () => {
                                     justifyContent: 'center',
                                     border: '1px solid rgba(255,255,255,0.1)',
                                     cursor: 'pointer',
-                                    overflow: 'hidden',
+                                    overflow: 'visible',
                                     marginTop: '8px',
                                     boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
                                     transition: 'transform 0.3s'
@@ -1008,52 +1027,47 @@ const HeroAntigravity: React.FC = () => {
                                     )}
                                     <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
                                         <span style={{
-                                            fontSize: '18px',
+                                            fontSize: 'clamp(14px, 3.8vw, 18px)',
                                             fontWeight: 900,
                                             letterSpacing: '0.1em',
                                             textTransform: 'uppercase',
-                                            textShadow: '0 2px 4px rgba(0,0,0,0.2)'
+                                            textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+                                            whiteSpace: 'nowrap',
+                                            paddingLeft: currentContent.buttonIcon ? '34px' : '0',
+                                            paddingRight: '58px'
                                         }}>
                                             {currentContent.cta} {currentContent.ctaEmoji}
                                         </span>
                                     </div>
-                                    <div
+                                    <span
+                                        className="cta-arrow-animate"
                                         style={{
                                             position: 'absolute',
-                                            right: '0',
+                                            right: '14px',
                                             display: 'flex',
                                             alignItems: 'center',
-                                            gap: '8px',
-                                            whiteSpace: 'nowrap'
+                                            justifyContent: 'center',
+                                            width: '32px',
+                                            height: '32px',
+                                            borderRadius: '9999px',
+                                            backgroundColor: 'rgba(255,255,255,0.16)',
+                                            border: '1px solid rgba(255,255,255,0.22)',
+                                            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+                                            pointerEvents: 'none'
                                         }}
                                     >
-                                        <span
-                                            className="cta-arrow-animate"
-                                            style={{
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                                width: '32px',
-                                                height: '32px',
-                                                borderRadius: '9999px',
-                                                backgroundColor: 'rgba(255,255,255,0.16)',
-                                                border: '1px solid rgba(255,255,255,0.22)',
-                                                filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
-                                            }}
-                                        >
-                                            <ArrowRight size={18} strokeWidth={3} />
-                                        </span>
-                                        <span
-                                            className="cta-finger-animate"
-                                            style={{
-                                                fontSize: 'clamp(28px, 5vw, 38px)',
-                                                filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
-                                                lineHeight: 1
-                                            }}
-                                        >
-                                            👈
-                                        </span>
-                                    </div>
+                                        <ArrowRight size={18} strokeWidth={3} />
+                                    </span>
+                                    <span
+                                        className="cta-finger-outside"
+                                        style={{
+                                            fontSize: 'clamp(26px, 5vw, 36px)',
+                                            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+                                            lineHeight: 1
+                                        }}
+                                    >
+                                        👈
+                                    </span>
                                 </div>
                             </button>
                         )}
@@ -1363,7 +1377,9 @@ const GenderCard: React.FC<GenderCardProps> = ({ gender, selected, onClick, img,
             <div style={{
                 position: 'absolute',
                 inset: 0,
-                backgroundColor: selected ? '#ffffff' : '#f1f5f9'
+                backgroundColor: selected ? '#ffffff' : '#f1f5f9',
+                borderRadius: '20px',
+                overflow: 'hidden'
             }} />
 
             {/* Image container */}
@@ -1377,19 +1393,22 @@ const GenderCard: React.FC<GenderCardProps> = ({ gender, selected, onClick, img,
                 alignItems: 'flex-end',
                 justifyContent: 'center',
                 overflow: 'hidden',
-                paddingBottom: '8px'
+                paddingBottom: '4px',
+                zIndex: 10,
+                pointerEvents: 'none'
             }}>
                 <img
                     src={img}
                     alt={gender}
                     style={{
-                        width: isWoman ? '82%' : '85%',
+                        width: isWoman ? '88%' : '91%',
                         height: 'auto',
-                        maxHeight: '100%',
+                        maxHeight: '106%',
                         objectFit: 'contain',
                         objectPosition: 'bottom',
-                        filter: 'drop-shadow(0 8px 16px rgba(0,0,0,0.15))',
-                        transition: 'transform 0.7s'
+                        filter: 'drop-shadow(0 10px 16px rgba(15,23,42,0.16))',
+                        transition: 'transform 0.7s',
+                        transform: selected ? 'translateY(2px) scale(1.02)' : 'translateY(3px) scale(1)'
                     }}
                 />
             </div>

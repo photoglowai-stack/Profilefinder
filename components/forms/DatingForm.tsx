@@ -119,11 +119,11 @@ export function DatingForm() {
             whileHover={selected && !isSearching ? { scale: 1.02 } : {}}
             whileTap={selected && !isSearching ? { scale: 0.98 } : {}}
           >
-            <div className="flex flex-col items-center">
-              <span className="text-white font-bold text-lg">
+            <div className="flex flex-col items-center pr-9">
+              <span className="text-white font-bold text-lg whitespace-nowrap">
                 {isSearching ? content.searching : content.search}
               </span>
-              <span className="text-white/70 text-[10px] font-light">
+              <span className="text-white/70 text-[10px] font-light whitespace-nowrap">
                 {isSearching ? "Please wait..." : "Get your answer in 2 min"}
               </span>
             </div>
@@ -141,11 +141,14 @@ export function DatingForm() {
               <span
                 className="finger-point-animate"
                 style={{
-                  fontSize: '36px',
+                  position: 'absolute',
+                  right: '-14px',
+                  top: '50%',
+                  fontSize: 'clamp(28px, 7vw, 36px)',
                   display: 'inline-block',
                   lineHeight: 1,
                   filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
-                  marginLeft: '4px',
+                  pointerEvents: 'none',
                 }}
               >
                 👈
