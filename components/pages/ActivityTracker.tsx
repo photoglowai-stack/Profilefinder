@@ -7,6 +7,7 @@ import {
     Cloud, Link, Users, Loader2, ArrowRight
 } from 'lucide-react';
 import { ServiceLayout } from '@/components/layouts/ServiceLayout';
+import { TrustPanel } from '@/components/ui/TrustPanel';
 import '@/styles/dating-search.css';
 
 // Logo URL
@@ -142,8 +143,16 @@ export default function ActivityTracker() {
                     {/* ==================== STEP 1: LOADING ==================== */}
                     <div className={`dating-step ${currentStep === 1 ? 'active' : ''}`}>
                         
+                        <div className="analysis-pulse-card analysis-pulse-following">
+                            <div className="analysis-radar-dot" />
+                            <div>
+                                <div className="analysis-pulse-title">Following activity scan</div>
+                                <div className="analysis-pulse-copy">Reviewing recent follows, hidden signals and profile categories.</div>
+                            </div>
+                        </div>
+
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '8px' }}>
-                            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#a855f7' }}>Analyzing Followings...</h2>
+                            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#a855f7' }}>Analyzing social activity...</h2>
                             <span style={{ fontSize: '18px', fontWeight: 700, color: '#111' }}>{loadingPercent}%</span>
                         </div>
 
@@ -163,21 +172,21 @@ export default function ActivityTracker() {
                                 <div className={`dating-log-icon ${activeLogs.includes(1) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(1) ? <Check size={16} /> : <Users size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Fetching profile network data...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Reading recent follow patterns...</span>
                             </div>
 
                             <div className={`dating-log-item ${!activeLogs.includes(2) ? 'inactive' : ''}`}>
                                 <div className={`dating-log-icon ${activeLogs.includes(2) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(2) ? <Check size={16} /> : <Link size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Scanning suspicious bio links (OF/MYM)...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Detecting adult links and private creator pages...</span>
                             </div>
 
                             <div className={`dating-log-item ${!activeLogs.includes(3) ? 'inactive' : ''}`}>
                                 <div className={`dating-log-icon ${activeLogs.includes(3) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(3) ? <Check size={16} /> : <Cloud size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Generating hidden interactions report...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Building the risk summary by profile type...</span>
                             </div>
                         </div>
                     </div>
@@ -239,6 +248,8 @@ export default function ActivityTracker() {
                             </span>
                         </div>
                     </div>
+
+                    <TrustPanel service="following" />
                 </div>
             </div>
         </ServiceLayout>

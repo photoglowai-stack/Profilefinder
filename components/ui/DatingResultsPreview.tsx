@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { Lock } from 'lucide-react';
+import { Lock, X, MapPin, Clock, ShieldCheck } from 'lucide-react';
 
 /**
  * DatingResultsPreview - Blurred dating profiles for payment teaser
@@ -8,6 +8,7 @@ import { Lock } from 'lucide-react';
  */
 export function DatingResultsPreview() {
     const [gender, setGender] = useState<string>('woman'); // default
+    const [showExample, setShowExample] = useState(false);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
@@ -20,7 +21,7 @@ export function DatingResultsPreview() {
 
     // Reliable high-quality portrait photos from Unsplash
     const womenPhotos = [
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=500&q=80",
+        "/assets/avatars/dating-woman-3d.png",
         "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=500&q=80",
         "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80",
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=500&q=80",
@@ -29,7 +30,7 @@ export function DatingResultsPreview() {
     ];
 
     const menPhotos = [
-        "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=500&q=80",
+        "/assets/avatars/dating-man-3d.png",
         "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=500&q=80",
         "https://images.unsplash.com/photo-1488161628813-04466f872be2?auto=format&fit=crop&w=500&q=80",
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=500&q=80",
@@ -41,7 +42,7 @@ export function DatingResultsPreview() {
     const nameStr = gender === 'man' ? 'afef' : 'afef';
 
     const profiles = [
-        { age: 24, distance: '4 km', match: 88, img: selectedPhotos[0] },
+        { age: 24, distance: '4 km', match: 88, img: selectedPhotos[0], example: true },
         { age: 27, distance: '2 km', match: 91, img: selectedPhotos[1] },
         { age: 23, distance: '5 km', match: 86, img: selectedPhotos[2] },
         { age: 26, distance: '3 km', match: 90, img: selectedPhotos[3] },
@@ -54,21 +55,57 @@ export function DatingResultsPreview() {
             position: 'relative',
             width: '100%',
         }}>
-            {/* Header matching screenshot */}
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '1rem' }}>
-                <h2 style={{ color: '#ff4e71', fontSize: '1.625rem', fontWeight: 800, lineHeight: 1.1, maxWidth: '60%', letterSpacing: '-0.02em' }}>
-                    Here are your<br />search<br />results
-                </h2>
-                <div style={{ background: '#ff4e71', color: 'white', padding: '6px 14px', borderRadius: '999px', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.875rem', fontWeight: 600 }}>
-                    <span style={{ border: '2px solid #5eead4', color: '#5eead4', borderRadius: '50%', padding: '2px 4px', fontSize: '0.65rem' }}>80%</span> 
-                    Match 
-                    <span style={{ background: '#3b82f6', borderRadius: '50%', width: '18px', height: '18px', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px', fontStyle: 'italic', fontWeight: 700 }}>i</span>
+            <div style={{
+                background: 'linear-gradient(135deg, #fff7fb 0%, #ffffff 72%)',
+                border: '1px solid #ffe1eb',
+                borderRadius: '18px',
+                padding: '16px',
+                marginBottom: '1rem',
+                boxShadow: '0 14px 30px rgba(255, 78, 113, 0.08)'
+            }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: '14px', marginBottom: '14px' }}>
+                    <div style={{ minWidth: 0 }}>
+                        <div style={{ color: '#ff4e71', fontSize: '0.7rem', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '6px' }}>
+                            Sample report preview
+                        </div>
+                        <h2 style={{ color: '#111827', fontSize: '1.45rem', fontWeight: 900, lineHeight: 1.05, margin: 0 }}>
+                            Potential matches found
+                        </h2>
+                        <p style={{ color: '#6b7280', fontSize: '0.82rem', lineHeight: 1.4, margin: '8px 0 0', maxWidth: '260px' }}>
+                            Unlock to reveal full photos, profile details and activity signals.
+                        </p>
+                    </div>
+                    <div style={{
+                        flex: '0 0 auto',
+                        minWidth: '88px',
+                        background: '#ff4e71',
+                        color: 'white',
+                        borderRadius: '16px',
+                        padding: '10px 12px',
+                        textAlign: 'center',
+                        boxShadow: '0 10px 24px rgba(255, 78, 113, 0.24)'
+                    }}>
+                        <div style={{ fontSize: '1.25rem', fontWeight: 900, lineHeight: 1 }}>80%</div>
+                        <div style={{ fontSize: '0.65rem', fontWeight: 800, opacity: 0.9, textTransform: 'uppercase', letterSpacing: '0.04em' }}>match</div>
+                    </div>
                 </div>
-            </div>
 
-            {/* Correspondances pill */}
-            <div style={{ background: '#fff0f5', color: '#ff4e71', display: 'inline-block', padding: '8px 24px', borderRadius: '999px', fontSize: '1rem', fontWeight: 700, marginBottom: '1.5rem' }}>
-                Matches : 20 +
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px' }}>
+                    {['20+ matches', 'Paris scan', 'Recently active'].map((label, index) => (
+                        <span key={label} style={{
+                            background: index === 0 ? '#fff0f5' : '#ffffff',
+                            color: index === 0 ? '#ff4e71' : '#374151',
+                            border: '1px solid #ffe1eb',
+                            borderRadius: '999px',
+                            padding: '7px 10px',
+                            fontSize: '0.76rem',
+                            fontWeight: 800,
+                            whiteSpace: 'nowrap'
+                        }}>
+                            {label}
+                        </span>
+                    ))}
+                </div>
             </div>
 
             {/* Scrollable Container Box */}
@@ -95,7 +132,7 @@ export function DatingResultsPreview() {
                     WebkitOverflowScrolling: 'touch',
                 }}>
                     {profiles.map((p, idx) => (
-                        <div key={idx} style={{
+                        <button key={idx} type="button" aria-label={p.example ? 'View example result' : 'Locked match preview'} onClick={() => p.example && setShowExample(true)} style={{
                             minWidth: '140px',
                             width: '140px',
                             height: '190px',
@@ -104,7 +141,10 @@ export function DatingResultsPreview() {
                             overflow: 'hidden',
                             scrollSnapAlign: 'start',
                             border: '2px solid #ff4e71',
-                            flexShrink: 0
+                            flexShrink: 0,
+                            cursor: p.example ? 'pointer' : 'default',
+                            padding: 0,
+                            appearance: 'none'
                         }}>
                             {/* Blurred Image Background */}
                             <div style={{
@@ -112,7 +152,7 @@ export function DatingResultsPreview() {
                                 backgroundImage: `url(${p.img})`,
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
-                                filter: 'blur(8px)',
+                                filter: p.example ? 'none' : 'blur(8px)',
                                 zIndex: 1
                             }} />
                             {/* Dark gradient overlay for bottom text readability */}
@@ -120,7 +160,7 @@ export function DatingResultsPreview() {
 
                             {/* Match pill top */}
                             <div style={{ position: 'absolute', top: 0, left: '50%', transform: 'translateX(-50%)', background: '#ff4e71', color: 'white', padding: '4px 12px', borderBottomLeftRadius: '8px', borderBottomRightRadius: '8px', fontSize: '0.7rem', fontWeight: 700, zIndex: 3, whiteSpace: 'nowrap' }}>
-                                {p.match}% Match
+                                {p.example ? 'EXAMPLE' : `${p.match}% Match`}
                             </div>
 
                             {/* Distance & Info bottom */}
@@ -132,10 +172,90 @@ export function DatingResultsPreview() {
                                     {nameStr}, {p.age}
                                 </div>
                             </div>
-                        </div>
+                        </button>
                     ))}
                 </div>
             </div>
+
+            {showExample && (
+                <div
+                    onClick={() => setShowExample(false)}
+                    style={{
+                        position: 'fixed',
+                        inset: 0,
+                        zIndex: 80,
+                        background: 'rgba(15, 23, 42, 0.58)',
+                        backdropFilter: 'blur(8px)',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '1rem'
+                    }}
+                >
+                    <div
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                            width: '100%',
+                            maxWidth: '360px',
+                            background: '#ffffff',
+                            borderRadius: '1.5rem',
+                            overflow: 'hidden',
+                            boxShadow: '0 30px 80px rgba(15,23,42,0.35)'
+                        }}
+                    >
+                        <div style={{ position: 'relative', height: '260px' }}>
+                            <img src={profiles[0].img} alt="Example result" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                            <button
+                                type="button"
+                                onClick={() => setShowExample(false)}
+                                aria-label="Close example"
+                                style={{
+                                    position: 'absolute',
+                                    top: '12px',
+                                    right: '12px',
+                                    width: '34px',
+                                    height: '34px',
+                                    borderRadius: '999px',
+                                    border: 'none',
+                                    background: 'rgba(255,255,255,0.92)',
+                                    color: '#111827',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    cursor: 'pointer'
+                                }}
+                            >
+                                <X size={18} />
+                            </button>
+                            <div style={{ position: 'absolute', left: '16px', bottom: '16px', right: '16px', color: '#ffffff' }}>
+                                <div style={{ display: 'inline-flex', background: '#ff4e71', padding: '5px 12px', borderRadius: '999px', fontSize: '0.75rem', fontWeight: 800, marginBottom: '8px' }}>
+                                    Example result
+                                </div>
+                                <h3 style={{ fontSize: '1.75rem', fontWeight: 900, margin: 0, textShadow: '0 2px 12px rgba(0,0,0,0.4)' }}>
+                                    {nameStr}, 24
+                                </h3>
+                            </div>
+                        </div>
+                        <div style={{ padding: '1rem' }}>
+                            {[
+                                { icon: MapPin, label: 'Last seen near Paris, France' },
+                                { icon: Clock, label: 'Recently active dating profile' },
+                                { icon: ShieldCheck, label: 'Unlocked report shows full photos, bio and activity signals' }
+                            ].map((item) => (
+                                <div key={item.label} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.65rem 0', borderBottom: '1px solid #f3f4f6' }}>
+                                    <div style={{ width: '32px', height: '32px', borderRadius: '999px', background: '#fff1f2', color: '#ff4e71', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
+                                        <item.icon size={16} />
+                                    </div>
+                                    <span style={{ fontSize: '0.875rem', fontWeight: 700, color: '#1f2937' }}>{item.label}</span>
+                                </div>
+                            ))}
+                            <p style={{ margin: '0.85rem 0 0', fontSize: '0.75rem', color: '#6b7280', lineHeight: 1.5, textAlign: 'center' }}>
+                                This is a sample. Your unlocked report will show the real matches found in your scan.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Détaillé Tab UI at bottom of preview */}
             <div style={{ marginTop: '2rem', borderBottom: '2px solid #e5e7eb', display: 'flex' }}>

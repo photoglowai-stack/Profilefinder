@@ -7,6 +7,7 @@ import {
     Cloud, Fingerprint, Database, Loader2, ArrowRight
 } from 'lucide-react';
 import { ServiceLayout } from '@/components/layouts/ServiceLayout';
+import { TrustPanel } from '@/components/ui/TrustPanel';
 import '@/styles/dating-search.css';
 
 // Logo URL
@@ -155,8 +156,16 @@ export default function FaceTrace() {
                             </div>
                         </div>
 
+                        <div className="analysis-pulse-card analysis-pulse-face">
+                            <div className="analysis-radar-dot" />
+                            <div>
+                                <div className="analysis-pulse-title">Face lookup scan</div>
+                                <div className="analysis-pulse-copy">Comparing facial markers with public profile traces.</div>
+                            </div>
+                        </div>
+
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '8px' }}>
-                            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#06b6d4' }}>Analyzing Face Topology...</h2>
+                            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#06b6d4' }}>Scanning face matches...</h2>
                             <span style={{ fontSize: '18px', fontWeight: 700, color: '#111' }}>{loadingPercent}%</span>
                         </div>
 
@@ -176,21 +185,21 @@ export default function FaceTrace() {
                                 <div className={`dating-log-icon ${activeLogs.includes(1) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(1) ? <Check size={16} /> : <Fingerprint size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Extracting 128 biometric points...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Mapping face landmarks from the image...</span>
                             </div>
 
                             <div className={`dating-log-item ${!activeLogs.includes(2) ? 'inactive' : ''}`}>
                                 <div className={`dating-log-icon ${activeLogs.includes(2) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(2) ? <Check size={16} /> : <Database size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Cross-referencing global databases...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Comparing similar faces across public profiles...</span>
                             </div>
 
                             <div className={`dating-log-item ${!activeLogs.includes(3) ? 'inactive' : ''}`}>
                                 <div className={`dating-log-icon ${activeLogs.includes(3) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(3) ? <Check size={16} /> : <Cloud size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Finding active profiles...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Sorting matches by confidence and recency...</span>
                             </div>
                         </div>
                     </div>
@@ -252,6 +261,8 @@ export default function FaceTrace() {
                             </span>
                         </div>
                     </div>
+
+                    <TrustPanel service="facetrace" />
                 </div>
             </div>
 

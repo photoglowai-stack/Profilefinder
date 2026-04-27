@@ -4,9 +4,10 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import {
     Search, ChevronDown, Check, Lock, UserCircle, MapPin,
-    Cloud, Building, Users, Loader2, ArrowRight, ChevronLeft
+    Cloud, Building, Users, Loader2, ArrowRight, ChevronLeft, Shield
 } from 'lucide-react';
 import { ServiceLayout } from '@/components/layouts/ServiceLayout';
+import { TrustPanel } from '@/components/ui/TrustPanel';
 import { useService } from '@/lib/ServiceContext';
 import 'leaflet/dist/leaflet.css';
 import '@/styles/dating-search.css';
@@ -28,13 +29,14 @@ export default function DatingSearchWizard() {
     const router = useRouter();
     const { setSearchTarget } = useService();
 
-    // Steps: 1=Name, 2=Age, 3=Location, 4=Loading, 5=Result
+    // Steps: 1=Name, 2=Age, 3=Location, 4=Optional photo, 5=Loading, 6=Result
     const [currentStep, setCurrentStep] = useState(1);
     const [targetName, setTargetName] = useState('');
     const [targetAge, setTargetAge] = useState('20');
     const [locationInput, setLocationInput] = useState('');
     const [suggestions, setSuggestions] = useState<Array<{ display_name: string; lat: string; lon: string }>>([]);
     const [showSuggestions, setShowSuggestions] = useState(false);
+    const [optionalPhotoPreview, setOptionalPhotoPreview] = useState<string | null>(null);
 
     // Loading state
     const [loadingPercent, setLoadingPercent] = useState(0);
@@ -52,6 +54,7 @@ export default function DatingSearchWizard() {
 
     // Search timeout
     const searchTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const optionalPhotoInputRef = useRef<HTMLInputElement>(null);
 
 
     // ============================================
@@ -64,9 +67,20 @@ export default function DatingSearchWizard() {
         }
         setCurrentStep(step);
 
-        if (step === 4) {
+        if (step === 5) {
             startLoading();
         }
+    };
+
+    const handleOptionalPhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setOptionalPhotoPreview(reader.result as string);
+        };
+        reader.readAsDataURL(file);
     };
 
     // Initialize map when step 3 is reached
@@ -185,7 +199,7 @@ export default function DatingSearchWizard() {
 
             if (progress >= 100) {
                 clearInterval(interval);
-                setTimeout(() => goToStep(5), 600);
+                setTimeout(() => goToStep(6), 600);
             }
         }, 30);
     };
@@ -268,8 +282,8 @@ export default function DatingSearchWizard() {
                     </div>
 
                     {/* Progress Bar */}
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '8px', marginBottom: '32px' }}>
-                        {[1, 2, 3, 4].map((seg) => (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '8px', marginBottom: '32px' }}>
+                        {[1, 2, 3, 4, 5].map((seg) => (
                             <div
                                 key={seg}
                                 className={`dating-progress-segment ${currentStep >= seg ? 'active' : ''}`}
@@ -449,16 +463,142 @@ export default function DatingSearchWizard() {
                             </button>
                             <button onClick={() => goToStep(4)} className="dating-btn-primary" style={{ flex: 1 }}>
                                 <Search size={20} />
+                                <span>Continue</span>
+                                <ArrowRight size={18} />
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* ==================== STEP 4: OPTIONAL PHOTO ==================== */}
+                    <div className={`dating-step ${currentStep === 4 ? 'active' : ''}`}>
+                        <div style={{ marginBottom: '20px' }}>
+                            <div style={{ fontSize: '14px', fontWeight: 800, color: '#ff3b6b', marginBottom: '10px' }}>Optional</div>
+                            <h2 style={{ fontSize: '18px', fontWeight: 800, color: '#111', marginBottom: '8px', letterSpacing: '-0.03em' }}>
+                                Face match
+                            </h2>
+                            <p style={{ fontSize: '14px', color: '#6b7280', lineHeight: 1.5 }}>
+                                Add one photo to improve the scan.
+                            </p>
+                        </div>
+
+                        <div
+                            onClick={() => optionalPhotoInputRef.current?.click()}
+                            style={{
+                                marginBottom: '18px',
+                                borderRadius: '24px',
+                                border: '1px solid #d1d5db',
+                                backgroundColor: '#f5f5f5',
+                                padding: '18px',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'space-between',
+                                gap: '14px',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '14px', minWidth: 0 }}>
+                                <div style={{
+                                    width: '60px',
+                                    height: '60px',
+                                    borderRadius: '50%',
+                                    backgroundColor: '#ffffff',
+                                    border: '1px solid #e5e7eb',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    overflow: 'hidden',
+                                    flexShrink: 0
+                                }}>
+                                    {optionalPhotoPreview ? (
+                                        <img src={optionalPhotoPreview} alt="Optional upload preview" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                    ) : (
+                                        <UserCircle size={34} style={{ color: '#9ca3af' }} />
+                                    )}
+                                </div>
+                                <div style={{ minWidth: 0 }}>
+                                    <div style={{ fontSize: '13px', fontWeight: 700, color: '#111', marginBottom: '4px' }}>
+                                        Optional photo
+                                    </div>
+                                    <div style={{ fontSize: '13px', color: '#9ca3af', lineHeight: 1.45 }}>
+                                        Upload a photo of {targetName || 'this person'}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div style={{
+                                flexShrink: 0,
+                                backgroundColor: '#ffffff',
+                                borderRadius: '9999px',
+                                padding: '14px 20px',
+                                fontSize: '13px',
+                                fontWeight: 800,
+                                color: '#111',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: '8px',
+                                boxShadow: '0 1px 2px rgba(0,0,0,0.06)'
+                            }}>
+                                <span style={{ fontSize: '20px', lineHeight: 1 }}>👉</span>
+                                <span>{optionalPhotoPreview ? 'Replace' : 'Upload'}</span>
+                            </div>
+                        </div>
+
+                        <input
+                            ref={optionalPhotoInputRef}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleOptionalPhotoUpload}
+                            style={{ display: 'none' }}
+                        />
+
+                        <div style={{
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            gap: '12px',
+                            marginBottom: '32px'
+                        }}>
+                            <div style={{ color: '#ff3b6b', marginTop: '2px' }}>
+                                <Shield size={24} strokeWidth={2.2} />
+                            </div>
+                            <p style={{ fontSize: '13px', color: '#6b7280', lineHeight: 1.55, margin: 0 }}>
+                                Uploaded images stay private and are not reused.
+                            </p>
+                        </div>
+
+                        <div style={{ display: 'flex', gap: '12px' }}>
+                            <button
+                                onClick={() => goToStep(3)}
+                                className="dating-btn-secondary"
+                                style={{
+                                    flex: '0 0 auto',
+                                    padding: '14px',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}
+                            >
+                                <ChevronLeft size={20} />
+                            </button>
+                            <button onClick={() => goToStep(5)} className="dating-btn-primary" style={{ flex: 1 }}>
+                                <Search size={20} />
                                 <span>Start Full Scan</span>
                                 <ArrowRight size={18} />
                             </button>
                         </div>
                     </div>
 
-                    {/* ==================== STEP 4: LOADING ==================== */}
-                    <div className={`dating-step ${currentStep === 4 ? 'active' : ''}`} style={{ paddingTop: '16px' }}>
+                    {/* ==================== STEP 5: LOADING ==================== */}
+                    <div className={`dating-step ${currentStep === 5 ? 'active' : ''}`} style={{ paddingTop: '16px' }}>
+                        <div className="analysis-pulse-card analysis-pulse-dating">
+                            <div className="analysis-radar-dot" />
+                            <div>
+                                <div className="analysis-pulse-title">Dating profile scan</div>
+                                <div className="analysis-pulse-copy">Checking name, age, location and active dating-app signals.</div>
+                            </div>
+                        </div>
+
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '8px' }}>
-                            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#ec4899' }}>Scan Finished!</h2>
+                            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#ec4899' }}>Scanning dating apps...</h2>
                             <span style={{ fontSize: '18px', fontWeight: 700, color: '#111' }}>{loadingPercent}%</span>
                         </div>
 
@@ -478,27 +618,27 @@ export default function DatingSearchWizard() {
                                 <div className={`dating-log-icon ${activeLogs.includes(1) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(1) ? <Check size={16} /> : <Cloud size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Fetching database records...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Matching similar names and profile aliases...</span>
                             </div>
 
                             <div className={`dating-log-item ${!activeLogs.includes(2) ? 'inactive' : ''}`}>
                                 <div className={`dating-log-icon ${activeLogs.includes(2) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(2) ? <Check size={16} /> : <Building size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Filtering Business Accounts...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Filtering inactive and business profiles...</span>
                             </div>
 
                             <div className={`dating-log-item ${!activeLogs.includes(3) ? 'inactive' : ''}`}>
                                 <div className={`dating-log-icon ${activeLogs.includes(3) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(3) ? <Check size={16} /> : <Users size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Checking Mutual Friends...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Ranking nearby matches by confidence...</span>
                             </div>
                         </div>
                     </div>
 
-                    {/* ==================== STEP 5: RESULT GATE ==================== */}
-                    <div className={`dating-step ${currentStep === 5 ? 'active' : ''}`} style={{ paddingTop: '32px', textAlign: 'center', alignItems: 'center' }}>
+                    {/* ==================== STEP 6: RESULT GATE ==================== */}
+                    <div className={`dating-step ${currentStep === 6 ? 'active' : ''}`} style={{ paddingTop: '32px', textAlign: 'center', alignItems: 'center' }}>
 
                         <div className="dating-check-circle" style={{ marginBottom: '16px' }}>
                             <div style={{
@@ -564,6 +704,8 @@ export default function DatingSearchWizard() {
                             </span>
                         </div>
                     </div>
+
+                    <TrustPanel service="dating" step={currentStep} />
                 </div>
             </div>
         </ServiceLayout>

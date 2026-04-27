@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Upload, Image as ImageIcon, AlertCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { serviceContent } from "../../lib/content";
+import { TrustPanel } from "../ui/TrustPanel";
 
 export function FaceTraceForm() {
   const router = useRouter();
@@ -192,6 +193,8 @@ export function FaceTraceForm() {
           </span>
         ))}
       </div>
+
+      <TrustPanel service="facetrace" />
     </div>
   );
 }

@@ -170,6 +170,40 @@ video {
   animation: finger-point 1.2s ease-in-out infinite;
 }
 
+@keyframes cta-arrow-nudge {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(4px);
+  }
+}
+
+.cta-arrow-animate {
+  animation: cta-arrow-nudge 1.25s ease-in-out infinite;
+}
+
+@keyframes cta-finger-sway {
+
+  0%,
+  100% {
+    transform: translateX(0) rotate(-12deg);
+  }
+
+  50% {
+    transform: translateX(-5px) rotate(-18deg);
+  }
+}
+
+.cta-finger-animate {
+  display: inline-block;
+  animation: cta-finger-sway 1.2s ease-in-out infinite;
+  transform-origin: center;
+}
+
 /* Utility classes */
 .animate-pulse {
   animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;

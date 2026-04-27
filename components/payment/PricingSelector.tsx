@@ -24,6 +24,8 @@ interface PricingSelectorProps {
 export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProcessing = false }: PricingSelectorProps) {
     const serviceConfig = getPaymentConfig(serviceId);
     const isSubscriptionSelected = selectedPlan === 'subscription';
+    const isSingleSelected = selectedPlan === 'single';
+    const formatPrice = (price: number) => price.toFixed(2).replace('.', ',');
 
     // Service icons for the features list
     const serviceIcons = [
@@ -38,7 +40,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
             {/* Header */}
             <div className="text-center mb-2">
                 <h2 className="text-xl font-black text-gray-900 mb-1">Unlock Your Results</h2>
-                <p className="text-sm text-gray-500">Choose how you want to access</p>
+                <p className="text-sm text-gray-500">Pick one report, or unlock every tool.</p>
             </div>
 
             {/* ═══════════════════════════════════════════════════════════════════
@@ -93,7 +95,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                         ? 'linear-gradient(135deg, #ffffff 0%, #faf5ff 100%)'
                         : '#ffffff',
                     borderRadius: '1.25rem',
-                    padding: '1.5rem',
+                    padding: '1.1rem',
                     border: '2px solid transparent',
                 }}>
                     {/* FLOATING BADGE - "MEILLEURE OFFRE" */}
@@ -139,7 +141,7 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                     </div>
 
                     {/* Header */}
-                    <div style={{ marginTop: '0.5rem', marginLeft: '2.5rem', marginBottom: '1rem' }}>
+                    <div style={{ marginTop: '0.25rem', marginLeft: '2.25rem', marginBottom: '0.75rem' }}>
                         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
                             <InfinityIcon style={{ width: '1.25rem', height: '1.25rem', color: serviceConfig.accentColors.primary }} />
                             <h3 style={{
@@ -154,6 +156,15 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                                 All-Access Pass
                             </h3>
                         </div>
+                        <p style={{
+                            fontSize: '0.72rem',
+                            color: '#6b7280',
+                            fontWeight: 600,
+                            marginTop: '0.25rem',
+                            lineHeight: 1.4
+                        }}>
+                            Best if you want all ProfileFinder services, not just this report.
+                        </p>
                     </div>
 
                     {/* Price */}
@@ -161,11 +172,11 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                         display: 'flex',
                         alignItems: 'baseline',
                         gap: '0.5rem',
-                        marginBottom: '1rem',
-                        marginLeft: '2.5rem',
+                        marginBottom: '0.75rem',
+                        marginLeft: '2.25rem',
                     }}>
                         <span style={{
-                            fontSize: '2.5rem',
+                            fontSize: '2.1rem',
                             fontWeight: 900,
                             color: serviceConfig.accentColors.primary,
                             lineHeight: 1,
@@ -199,8 +210,8 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                     <div style={{
                         background: 'linear-gradient(135deg, #faf5ff, #fdf4ff)',
                         borderRadius: '0.75rem',
-                        padding: '1rem',
-                        marginBottom: '1rem',
+                        padding: '0.75rem',
+                        marginBottom: '0.75rem',
                         border: '1px solid #e9d5ff',
                     }}>
                         <div style={{
@@ -209,17 +220,17 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                             color: serviceConfig.accentColors.primary,
                             textTransform: 'uppercase',
                             letterSpacing: '0.1em',
-                            marginBottom: '0.75rem',
+                            marginBottom: '0.55rem',
                         }}>
-                            ✨ Included in your access
+                            Included
                         </div>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.625rem' }}>
+                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.45rem' }}>
                             {serviceIcons.map((service, idx) => (
                                 <div key={idx} style={{
                                     display: 'flex',
                                     alignItems: 'center',
                                     gap: '0.5rem',
-                                    padding: '0.5rem',
+                                    padding: '0.4rem',
                                     background: 'white',
                                     borderRadius: '0.5rem',
                                     boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
@@ -246,18 +257,17 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                     </div>
 
                     {/* Benefits List */}
-                    <div style={{ marginBottom: '1rem' }}>
+                    <div style={{ marginBottom: '0.75rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.35rem 0.75rem' }}>
                         {[
                             'UNLIMITED searches',
                             'Instant results',
-                            '24/7 priority support',
                             'Cancel anytime',
+                            'All reports included',
                         ].map((benefit, idx) => (
                             <div key={idx} style={{
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '0.5rem',
-                                marginBottom: '0.375rem',
                             }}>
                                 <div style={{
                                     width: '1.125rem',
@@ -383,20 +393,43 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
             <motion.div
                 onClick={() => onPlanSelect('single')}
                 animate={{
-                    scale: !isSubscriptionSelected ? 1.01 : 1,
-                    opacity: isSubscriptionSelected ? 0.65 : 1,
+                    scale: isSingleSelected ? 1.01 : 1,
+                    opacity: isSubscriptionSelected ? 0.82 : 1,
                 }}
-                whileHover={{ opacity: 0.85, scale: 1.01 }}
+                whileHover={{ opacity: 1, scale: 1.01 }}
                 transition={{ duration: 0.2 }}
                 style={{
                     position: 'relative',
                     cursor: 'pointer',
-                    background: '#f9fafb',
-                    borderRadius: '1rem',
-                    padding: '1rem',
-                    border: !isSubscriptionSelected ? '2px solid #9ca3af' : '2px dashed #d1d5db',
+                    background: isSingleSelected
+                        ? `linear-gradient(135deg, #ffffff 0%, ${serviceConfig.accentColors.primary}10 100%)`
+                        : '#ffffff',
+                    borderRadius: '1.15rem',
+                    padding: '1.05rem',
+                    border: isSingleSelected
+                        ? `2px solid ${serviceConfig.accentColors.primary}`
+                        : '2px solid #d1d5db',
+                    boxShadow: isSingleSelected
+                        ? `0 12px 30px ${serviceConfig.accentColors.primary}24`
+                        : '0 5px 18px rgba(15,23,42,0.06)',
                 }}
             >
+                <div style={{
+                    position: 'absolute',
+                    top: '-12px',
+                    right: '16px',
+                    background: isSingleSelected ? serviceConfig.accentColors.gradient : '#111827',
+                    color: '#ffffff',
+                    fontSize: '0.68rem',
+                    fontWeight: 900,
+                    padding: '6px 12px',
+                    borderRadius: '999px',
+                    boxShadow: '0 8px 18px rgba(15,23,42,0.16)',
+                    letterSpacing: '0.04em'
+                }}>
+                    -50% today
+                </div>
+
                 {/* Selection Radio */}
                 <div style={{
                     position: 'absolute',
@@ -405,13 +438,14 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                     width: '20px',
                     height: '20px',
                     borderRadius: '50%',
-                    background: !isSubscriptionSelected ? '#6b7280' : '#e5e7eb',
+                    background: isSingleSelected ? serviceConfig.accentColors.gradient : '#e5e7eb',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
                     transition: 'all 0.3s ease',
+                    boxShadow: isSingleSelected ? `0 4px 10px ${serviceConfig.accentColors.primary}55` : 'none',
                 }}>
-                    {!isSubscriptionSelected && <Check style={{ width: '12px', height: '12px', color: 'white' }} />}
+                    {isSingleSelected && <Check style={{ width: '12px', height: '12px', color: 'white' }} />}
                 </div>
 
                 <div style={{ marginLeft: '2rem' }}>
@@ -420,51 +454,70 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                         <div>
                             <h4 style={{
                                 fontSize: '0.9375rem',
-                                fontWeight: 700,
-                                color: '#4b5563',
+                                fontWeight: 900,
+                                color: isSingleSelected ? '#111827' : '#4b5563',
                                 marginBottom: '0.125rem',
                             }}>
                                 {serviceConfig.singleReportName}
                             </h4>
-                            <p style={{ fontSize: '0.6875rem', color: '#9ca3af' }}>
-                                One-time payment • 1 report only
+                            <p style={{ fontSize: '0.6875rem', color: '#6b7280', fontWeight: 600, lineHeight: 1.35 }}>
+                                One-time payment • unlock this scan only
                             </p>
+                            {isSingleSelected && (
+                                <div style={{
+                                    display: 'inline-flex',
+                                    alignItems: 'center',
+                                    gap: '0.3rem',
+                                    marginTop: '0.45rem',
+                                    padding: '0.25rem 0.5rem',
+                                    borderRadius: '999px',
+                                    background: `${serviceConfig.accentColors.primary}14`,
+                                    color: serviceConfig.accentColors.primary,
+                                    fontSize: '0.65rem',
+                                    fontWeight: 800,
+                                }}>
+                                    <Check style={{ width: '0.75rem', height: '0.75rem' }} />
+                                    Selected single report
+                                </div>
+                            )}
                         </div>
                         <div style={{ textAlign: 'right' }}>
-                            <div style={{ fontSize: '1.25rem', fontWeight: 700, color: '#4b5563' }}>
-                                {serviceConfig.singleReportPrice}€
+                            <div style={{ fontSize: '1.45rem', fontWeight: 900, color: isSingleSelected ? serviceConfig.accentColors.primary : '#4b5563', lineHeight: 1 }}>
+                                {formatPrice(serviceConfig.singleReportPrice)}€
                             </div>
-                            <div style={{ fontSize: '0.6875rem', color: '#9ca3af', textDecoration: 'line-through' }}>
-                                {serviceConfig.singleReportOriginalPrice}€
+                            <div style={{ fontSize: '0.75rem', color: '#9ca3af', textDecoration: 'line-through', marginTop: '0.2rem', fontWeight: 700 }}>
+                                {formatPrice(serviceConfig.singleReportOriginalPrice)}€
                             </div>
                         </div>
                     </div>
 
-                    {/* Limitations Warning */}
                     <div style={{
-                        marginTop: '0.75rem',
-                        padding: '0.625rem',
-                        background: '#fef2f2',
-                        borderRadius: '0.5rem',
-                        border: '1px solid #fecaca',
+                        marginTop: '0.85rem',
+                        padding: '0.75rem',
+                        background: '#ffffff',
+                        borderRadius: '0.75rem',
+                        border: `1px solid ${isSingleSelected ? `${serviceConfig.accentColors.primary}33` : '#e5e7eb'}`,
                     }}>
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.375rem' }}>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
                             {[
-                                `Only ${serviceConfig.title}`,
-                                'No access to other tools',
-                                '24h validity only',
-                            ].map((limitation, idx) => (
+                                { icon: Check, text: `Unlock this ${serviceConfig.title} report`, color: serviceConfig.accentColors.primary },
+                                { icon: X, text: 'Other ProfileFinder tools stay locked', color: '#ef4444' },
+                                { icon: Clock, text: '24h access to this result', color: '#d97706' },
+                            ].map((item, idx) => {
+                                const ItemIcon = item.icon;
+                                return (
                                 <div key={idx} style={{
                                     display: 'flex',
                                     alignItems: 'center',
-                                    gap: '0.375rem',
+                                    gap: '0.45rem',
                                 }}>
-                                    <X style={{ width: '0.75rem', height: '0.75rem', color: '#ef4444' }} />
-                                    <span style={{ fontSize: '0.6875rem', color: '#7f1d1d' }}>
-                                        {limitation}
+                                    <ItemIcon style={{ width: '0.8rem', height: '0.8rem', color: item.color, flexShrink: 0 }} />
+                                    <span style={{ fontSize: '0.72rem', color: '#374151', fontWeight: 700, lineHeight: 1.25 }}>
+                                        {item.text}
                                     </span>
                                 </div>
-                            ))}
+                                );
+                            })}
                         </div>
                     </div>
 
@@ -490,40 +543,48 @@ export function PricingSelector({ serviceId, onPlanSelect, selectedPlan, isProce
                             </span>
                         </div>
 
-                        {!isSubscriptionSelected && (
-                            <button 
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    if (window.location.pathname.includes('/payment')) {
-                                        const desktopBtn = document.getElementById('outer-checkout-button');
-                                        const mobileBtn = document.getElementById('outer-checkout-button-mobile');
-                                        if (mobileBtn && window.getComputedStyle(mobileBtn.parentElement!).display !== 'none') {
-                                            mobileBtn.click();
-                                        } else if (desktopBtn) {
-                                            desktopBtn.click();
-                                        }
+                        <button
+                            type="button"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                if (!isSingleSelected) {
+                                    onPlanSelect('single');
+                                    return;
+                                }
+
+                                if (window.location.pathname.includes('/payment')) {
+                                    const desktopBtn = document.getElementById('outer-checkout-button');
+                                    const mobileBtn = document.getElementById('outer-checkout-button-mobile');
+                                    if (mobileBtn && window.getComputedStyle(mobileBtn.parentElement!).display !== 'none') {
+                                        mobileBtn.click();
+                                    } else if (desktopBtn) {
+                                        desktopBtn.click();
                                     }
-                                }}
-                                disabled={isProcessing}
-                                style={{
-                                padding: '0.5rem 1rem',
-                                background: '#4b5563',
-                                color: 'white',
-                                fontSize: '0.75rem',
-                                fontWeight: 600,
-                                borderRadius: '0.5rem',
-                                border: 'none',
+                                }
+                            }}
+                            disabled={isProcessing}
+                            style={{
+                                padding: '0.58rem 1rem',
+                                background: isSingleSelected ? serviceConfig.accentColors.gradient : '#ffffff',
+                                color: isSingleSelected ? 'white' : serviceConfig.accentColors.primary,
+                                fontSize: '0.78rem',
+                                fontWeight: 800,
+                                borderRadius: '0.65rem',
+                                border: isSingleSelected ? 'none' : `1px solid ${serviceConfig.accentColors.primary}55`,
                                 cursor: isProcessing ? 'wait' : 'pointer',
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: '0.25rem',
                                 opacity: isProcessing ? 0.7 : 1,
-                            }}>
-                                {isProcessing ? 'Processing...' : (
-                                    <>Continue <ArrowRight style={{ width: '0.75rem', height: '0.75rem' }} /></>
-                                )}
-                            </button>
-                        )}
+                                boxShadow: isSingleSelected ? `0 8px 18px ${serviceConfig.accentColors.primary}36` : 'none',
+                            }}
+                        >
+                            {isProcessing ? 'Processing...' : (
+                                isSingleSelected
+                                    ? <>Continue <ArrowRight style={{ width: '0.75rem', height: '0.75rem' }} /></>
+                                    : <>Select report</>
+                            )}
+                        </button>
                     </div>
                 </div>
             </motion.div>

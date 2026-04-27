@@ -122,6 +122,20 @@ const HeroAntigravity: React.FC = () => {
 
     const currentContent = contentMap[selectedService];
 
+    const ctaProofMap: Record<ServiceType, string> = {
+        dating: '142 searches launched today',
+        following: '89 profile checks today',
+        facetrace: '76 photo scans today',
+        fidelity: '58 chat reviews today'
+    };
+
+    const heroTrustMap: Record<ServiceType, string> = {
+        dating: "The #1 AI fidelity check app",
+        following: "Top-rated social signal scan",
+        facetrace: "Top-rated face lookup",
+        fidelity: "Top-rated chat analysis"
+    };
+
     // Premium mesh-style radial gradient backgrounds per service (CheatEye inspired)
     const gradientMap: Record<ServiceType, string> = {
         dating: 'radial-gradient(ellipse 150% 80% at 50% 20%, #FF5E00 0%, #FF085E 35%, #FF004F 60%, #E8003D 100%)',
@@ -250,25 +264,44 @@ const HeroAntigravity: React.FC = () => {
                 </div>
 
                 {/* Mobile Hamburger Button */}
-                <button
-                    className="flex lg:hidden items-center justify-center"
-                    onClick={() => setIsMenuOpen(!isMenuOpen)}
-                    aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
-                    aria-expanded={isMenuOpen}
-                    style={{
-                        width: '44px',
-                        height: '44px',
-                        border: '1px solid rgba(255,255,255,0.3)',
-                        backgroundColor: 'rgba(255,255,255,0.1)',
-                        borderRadius: '12px',
+                <div className="flex lg:hidden items-center gap-2">
+                    <span style={{
                         color: '#ffffff',
-                        cursor: 'pointer',
+                        fontSize: '11px',
+                        fontWeight: 900,
+                        letterSpacing: '0.04em',
+                        textTransform: 'uppercase',
+                        padding: '8px 10px',
+                        borderRadius: '999px',
+                        backgroundColor: 'rgba(255,255,255,0.12)',
+                        border: '1px solid rgba(255,255,255,0.22)',
                         backdropFilter: 'blur(8px)',
-                        transition: 'all 0.3s'
-                    }}
-                >
-                    {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
+                        whiteSpace: 'nowrap',
+                        boxShadow: '0 8px 18px rgba(0,0,0,0.14)'
+                    }}>
+                        Choose service
+                    </span>
+                    <button
+                        className="flex items-center justify-center"
+                        onClick={() => setIsMenuOpen(!isMenuOpen)}
+                        aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+                        aria-expanded={isMenuOpen}
+                        style={{
+                            width: '44px',
+                            height: '44px',
+                            border: '1px solid rgba(255,255,255,0.35)',
+                            backgroundColor: 'rgba(255,255,255,0.16)',
+                            borderRadius: '12px',
+                            color: '#ffffff',
+                            cursor: 'pointer',
+                            backdropFilter: 'blur(8px)',
+                            transition: 'all 0.3s',
+                            boxShadow: '0 10px 24px rgba(0,0,0,0.18)'
+                        }}
+                    >
+                        {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                    </button>
+                </div>
 
                 {/* Mobile Menu Dropdown */}
                 {isMenuOpen && (
@@ -293,36 +326,56 @@ const HeroAntigravity: React.FC = () => {
                     >
                         {/* Services Section - AT TOP */}
                         <div>
-                            <p style={{ fontSize: '12px', fontWeight: 700, color: 'rgba(255,255,255,0.5)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
+                            <p style={{ fontSize: '12px', fontWeight: 800, color: 'rgba(255,255,255,0.72)', marginBottom: '12px', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
                                 Choose your service
                             </p>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                                 {[
-                                    { label: 'Tinder Search', path: '/', icon: '❤️' },
-                                    { label: 'Following AI', path: '/following-ai', icon: '👥' },
-                                    { label: 'Face Trace', path: '/face-trace', icon: '🔍' },
-                                    { label: 'Fidelity Test', path: '/fidelity-test', icon: '🛡️' }
+                                    { label: 'Tinder Search', description: 'Find hidden dating profiles', path: '/', icon: '❤️' },
+                                    { label: 'Following AI', description: 'Check suspicious new follows', path: '/following-ai', icon: '👥' },
+                                    { label: 'Face Trace', description: 'Search profiles from one photo', path: '/face-trace', icon: '🔍' },
+                                    { label: 'Fidelity Test', description: 'Analyze chats for red flags', path: '/fidelity-test', icon: '🛡️' }
                                 ].map((service) => (
                                     <a
                                         key={service.label}
                                         href={service.path}
                                         style={{
-                                            color: 'rgba(255,255,255,0.9)',
+                                            color: '#ffffff',
                                             textDecoration: 'none',
-                                            fontSize: '16px',
-                                            fontWeight: 600,
-                                            padding: '10px 16px',
-                                            borderRadius: '12px',
-                                            backgroundColor: 'rgba(239,62,92,0.15)',
+                                            padding: '12px 16px',
+                                            borderRadius: '16px',
+                                            background: 'rgba(255,255,255,0.075)',
+                                            border: '1px solid rgba(255,255,255,0.13)',
                                             display: 'flex',
                                             alignItems: 'center',
                                             gap: '12px',
-                                            transition: 'all 0.2s'
+                                            transition: 'all 0.2s',
+                                            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.08), 0 8px 20px rgba(0,0,0,0.08)'
                                         }}
                                         onClick={() => setIsMenuOpen(false)}
                                     >
-                                        <span>{service.icon}</span>
-                                        {service.label}
+                                        <span style={{
+                                            width: '34px',
+                                            height: '34px',
+                                            borderRadius: '11px',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            backgroundColor: 'rgba(255,255,255,0.09)',
+                                            border: '1px solid rgba(255,255,255,0.08)',
+                                            fontSize: '18px',
+                                            flexShrink: 0
+                                        }}>
+                                            {service.icon}
+                                        </span>
+                                        <span style={{ display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 }}>
+                                            <span style={{ fontSize: '16px', fontWeight: 800, lineHeight: 1.15 }}>
+                                                {service.label}
+                                            </span>
+                                            <span style={{ fontSize: '12px', fontWeight: 600, lineHeight: 1.25, color: 'rgba(255,255,255,0.62)' }}>
+                                                {service.description}
+                                            </span>
+                                        </span>
                                     </a>
                                 ))}
                             </div>
@@ -396,13 +449,13 @@ const HeroAntigravity: React.FC = () => {
             </nav>
 
             {/* Main Content */}
-            <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-[1280px] mx-auto px-4 pt-1 pb-6 lg:pt-2 lg:pb-12 gap-2 lg:gap-8 relative z-10">
+            <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between w-full max-w-[1280px] mx-auto px-4 pt-4 pb-6 lg:pt-2 lg:pb-12 gap-2 lg:gap-8 relative z-10">
                 
                 {/* Left Column */}
-                <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-[55%]">
+                <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-[55%]" style={{ position: 'relative' }}>
 
                 {/* Trusted Badge */}
-                <div className="flex items-center gap-[12px] bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 shadow-lg scale-[0.85] origin-top lg:scale-100 lg:origin-left transition-transform mb-6">
+                <div className="flex items-center gap-[12px] bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 shadow-lg scale-[0.85] origin-center lg:scale-100 lg:origin-left transition-transform mb-4 lg:mb-6">
                     <div className="flex">
                         {trustedUsers.map((url, i) => (
                             <img
@@ -447,6 +500,38 @@ const HeroAntigravity: React.FC = () => {
 
                 {/* Headlines */}
                 <div className="w-full mb-3 lg:mb-8">
+                    <div
+                        style={{
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            gap: '12px',
+                            background: 'rgba(255,255,255,0.16)',
+                            border: '1px solid rgba(255,255,255,0.28)',
+                            borderRadius: '9999px',
+                            padding: '9px 16px',
+                            backdropFilter: 'blur(12px)',
+                            boxShadow: '0 10px 24px rgba(0,0,0,0.12)',
+                            color: '#ffffff',
+                            marginBottom: '14px',
+                            maxWidth: '100%'
+                        }}
+                    >
+                        <span style={{
+                            fontSize: 'clamp(13px, 2.6vw, 16px)',
+                            fontFamily: 'Georgia, serif',
+                            fontStyle: 'italic',
+                            fontWeight: 800,
+                            lineHeight: 1.1,
+                            whiteSpace: 'nowrap'
+                        }}>
+                            {heroTrustMap[selectedService]}
+                        </span>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '3px', flexShrink: 0 }}>
+                            {[1, 2, 3, 4, 5].map((star) => (
+                                <Star key={star} size={15} fill="#ffffff" color="#ffffff" />
+                            ))}
+                        </div>
+                    </div>
                     <h1 className="font-extrabold mb-2 leading-[1.05] tracking-tight text-white drop-shadow-lg"
                         style={{
                             fontSize: 'clamp(1.7rem, 5vw, 4rem)',
@@ -915,13 +1000,13 @@ const HeroAntigravity: React.FC = () => {
                                     }}
                                 />
 
-                                <div style={{ display: 'flex', alignItems: 'center', gap: '12px', position: 'relative', zIndex: 20 }}>
+                                <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', minHeight: '32px', zIndex: 20 }}>
                                     {currentContent.buttonIcon && (
-                                        <span style={{ opacity: 0.9 }}>
+                                        <span style={{ opacity: 0.9, position: 'absolute', left: '0', display: 'flex', alignItems: 'center' }}>
                                             {currentContent.buttonIcon}
                                         </span>
                                     )}
-                                    <div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
                                         <span style={{
                                             fontSize: '18px',
                                             fontWeight: 900,
@@ -931,14 +1016,39 @@ const HeroAntigravity: React.FC = () => {
                                         }}>
                                             {currentContent.cta} {currentContent.ctaEmoji}
                                         </span>
+                                    </div>
+                                    <div
+                                        style={{
+                                            position: 'absolute',
+                                            right: '0',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            gap: '8px',
+                                            whiteSpace: 'nowrap'
+                                        }}
+                                    >
                                         <span
-                                            className="finger-point-animate"
+                                            className="cta-arrow-animate"
                                             style={{
-                                                fontSize: 'clamp(32px, 6vw, 42px)',
+                                                display: 'flex',
+                                                alignItems: 'center',
+                                                justifyContent: 'center',
+                                                width: '32px',
+                                                height: '32px',
+                                                borderRadius: '9999px',
+                                                backgroundColor: 'rgba(255,255,255,0.16)',
+                                                border: '1px solid rgba(255,255,255,0.22)',
                                                 filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
-                                                lineHeight: 1,
-                                                marginLeft: '6px',
-                                                whiteSpace: 'nowrap'
+                                            }}
+                                        >
+                                            <ArrowRight size={18} strokeWidth={3} />
+                                        </span>
+                                        <span
+                                            className="cta-finger-animate"
+                                            style={{
+                                                fontSize: 'clamp(28px, 5vw, 38px)',
+                                                filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+                                                lineHeight: 1
                                             }}
                                         >
                                             👈
@@ -953,9 +1063,9 @@ const HeroAntigravity: React.FC = () => {
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            gap: '8px',
-                            marginTop: '16px',
-                            paddingTop: '16px',
+                            gap: '10px',
+                            marginTop: '10px',
+                            paddingTop: '12px',
                             borderTop: '1px solid #f1f5f9'
                         }}>
                             <div style={{
@@ -972,9 +1082,20 @@ const HeroAntigravity: React.FC = () => {
                                 </div>
                                 <span style={{ fontSize: '10px', fontWeight: 700, color: '#475569' }}>4.9/5 Rating</span>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px', color: '#94a3b8' }}>
+                            <div style={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                gap: '6px',
+                                color: '#dc2626',
+                                background: 'linear-gradient(180deg, rgba(254,242,242,1) 0%, rgba(255,255,255,1) 100%)',
+                                border: '1px solid #fecaca',
+                                borderRadius: '9999px',
+                                padding: '6px 12px',
+                                boxShadow: '0 6px 16px rgba(220, 38, 38, 0.08)'
+                            }}>
                                 <Activity size={12} color="#22c55e" />
-                                <span style={{ fontSize: '10px', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.05em' }}>1,302 searches today</span>
+                                <span style={{ fontSize: '10px', fontWeight: 900, textTransform: 'uppercase', letterSpacing: '0.05em', color: '#dc2626' }}>{ctaProofMap[selectedService]}</span>
                             </div>
                         </div>
                     </div>

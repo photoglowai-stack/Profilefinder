@@ -7,6 +7,7 @@ import {
     Smartphone, Heart, Trash2, Moon, Loader2, ArrowRight
 } from 'lucide-react';
 import { ServiceLayout } from '@/components/layouts/ServiceLayout';
+import { TrustPanel } from '@/components/ui/TrustPanel';
 import '@/styles/dating-search.css';
 
 // Logo URL
@@ -159,8 +160,16 @@ export default function FidelityTestAnalysis() {
                             </div>
                         )}
 
+                        <div className="analysis-pulse-card analysis-pulse-fidelity">
+                            <div className="analysis-radar-dot" />
+                            <div>
+                                <div className="analysis-pulse-title">Conversation risk scan</div>
+                                <div className="analysis-pulse-copy">Checking timing, tone shifts and hidden flirt patterns.</div>
+                            </div>
+                        </div>
+
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '8px' }}>
-                            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#ef4444' }}>Testing Loyalty...</h2>
+                            <h2 style={{ fontSize: '18px', fontWeight: 700, color: '#ef4444' }}>Analyzing conversation...</h2>
                             <span style={{ fontSize: '18px', fontWeight: 700, color: '#111' }}>{loadingPercent}%</span>
                         </div>
 
@@ -180,21 +189,21 @@ export default function FidelityTestAnalysis() {
                                 <div className={`dating-log-icon ${activeLogs.includes(1) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(1) ? <Check size={16} /> : <Smartphone size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Reading chat patterns & timing...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Reading message timing and reply gaps...</span>
                             </div>
 
                             <div className={`dating-log-item ${!activeLogs.includes(2) ? 'inactive' : ''}`}>
                                 <div className={`dating-log-icon ${activeLogs.includes(2) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(2) ? <Check size={16} /> : <Heart size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Looking for disguised flirting...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Detecting intimacy, secrecy and tone changes...</span>
                             </div>
 
                             <div className={`dating-log-item ${!activeLogs.includes(3) ? 'inactive' : ''}`}>
                                 <div className={`dating-log-icon ${activeLogs.includes(3) ? 'done' : 'pending'}`}>
                                     {activeLogs.includes(3) ? <Check size={16} /> : <Moon size={16} />}
                                 </div>
-                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Detecting late night activity...</span>
+                                <span style={{ fontSize: '14px', fontWeight: 600, color: '#6b7280' }}>Preparing a clear red-flag summary...</span>
                             </div>
                         </div>
                     </div>
@@ -256,6 +265,8 @@ export default function FidelityTestAnalysis() {
                             </span>
                         </div>
                     </div>
+
+                    <TrustPanel service="fidelity" />
                 </div>
             </div>
         </ServiceLayout>

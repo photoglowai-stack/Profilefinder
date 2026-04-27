@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Upload, MessageSquare, AlertTriangle } from "lucide-react";
+import { Upload, MessageSquare, X, ShieldCheck, ArrowRight } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { serviceContent } from "../../lib/content";
+import { TrustPanel } from "../ui/TrustPanel";
 
 export function FidelityForm() {
   const router = useRouter();
@@ -49,39 +50,39 @@ export function FidelityForm() {
   };
 
   return (
-    <div className="bg-white relative rounded-3xl shadow-lg border border-gray-100 w-full max-w-md mx-auto p-4 md:p-6">
-      {/* Icon */}
-      <div className="flex justify-center mb-3">
-        <div className="bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] p-3 rounded-xl shadow-md">
+    <div className="bg-white relative rounded-3xl shadow-lg border border-gray-100 w-full max-w-md mx-auto p-4 md:p-5">
+      <div className="flex items-center gap-3 mb-3">
+        <div className="bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] p-3 rounded-2xl shadow-md shrink-0">
           <MessageSquare className="w-6 h-6 text-white" strokeWidth={2.5} />
+        </div>
+        <div className="min-w-0">
+          <h3 className="text-xl md:text-2xl text-gray-900 font-black leading-tight">
+            {content.title}
+          </h3>
+          <p className="text-gray-500 text-xs md:text-sm leading-snug mt-1">
+            {content.subtitle}
+          </p>
         </div>
       </div>
 
-      {/* Title */}
-      <h3 className="text-lg md:text-xl text-center text-gray-900 mb-1 font-bold">
-        {content.title}
-      </h3>
-
-      <p className="text-center text-gray-500 mb-4 text-xs md:text-sm">
-        {content.subtitle}
-      </p>
-
       {/* Upload Area - Compact */}
-      <div className="mb-4">
-        <label htmlFor="screenshots-upload" className="block text-xs font-semibold text-gray-700 mb-2">
+      <div className="mb-3">
+        <label htmlFor="screenshots-upload" className="block text-sm font-semibold text-gray-700 mb-2">
           {content.label || 'Upload conversation screenshots'}
         </label>
 
         {previews.length === 0 ? (
           <label
             htmlFor="screenshots-upload"
-            className="group border-2 border-dashed border-gray-300 rounded-xl p-4 flex flex-col items-center justify-center cursor-pointer hover:border-[#ff4e71] hover:bg-gradient-to-br hover:from-red-50 hover:to-orange-50 transition-all"
+            className="group border-2 border-dashed border-gray-300 rounded-xl p-4 flex items-center gap-4 cursor-pointer hover:border-[#ff4e71] hover:bg-gradient-to-br hover:from-red-50 hover:to-orange-50 transition-all"
           >
-            <div className="p-2 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] rounded-xl mb-2 group-hover:scale-110 transition-transform">
-              <Upload className="w-5 h-5 text-white" />
+            <div className="p-3 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] rounded-xl group-hover:scale-105 transition-transform shrink-0">
+              <Upload className="w-6 h-6 text-white" />
             </div>
-            <p className="text-gray-700 mb-0.5 font-medium text-xs">{content.uploadText || 'Click to upload screenshots'}</p>
-            <p className="text-[10px] text-gray-500">{content.uploadHint || 'JPG, PNG (multiple files accepted)'}</p>
+            <div className="min-w-0">
+              <p className="text-gray-800 mb-1 font-bold text-sm">{content.uploadText || 'Click to upload screenshots'}</p>
+              <p className="text-xs text-gray-500 leading-snug">{content.uploadHint || 'JPG, PNG (multiple files accepted)'}</p>
+            </div>
             <input
               id="screenshots-upload"
               type="file"
@@ -93,7 +94,7 @@ export function FidelityForm() {
           </label>
         ) : (
           <div>
-            <div className="grid grid-cols-3 gap-2 mb-3">
+            <div className="grid grid-cols-4 gap-2 mb-2">
               {previews.map((preview, index) => (
                 <motion.div
                   key={index}
@@ -105,22 +106,21 @@ export function FidelityForm() {
                   <img
                     src={preview}
                     alt={`Screenshot ${index + 1}`}
-                    className="w-full h-20 object-cover rounded-lg border-2 border-gray-200"
+                    className="w-full h-16 object-cover rounded-lg border-2 border-gray-200"
                   />
                   <button
                     onClick={() => removeImage(index)}
-                    className="absolute -top-1 -right-1 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] text-white p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg hover:scale-110"
+                    className="absolute -top-1 -right-1 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] text-white p-1 rounded-full opacity-100 shadow-lg hover:scale-110"
+                    aria-label={`Remove screenshot ${index + 1}`}
                   >
-                    <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <X className="w-3 h-3" />
                   </button>
                 </motion.div>
               ))}
             </div>
             <label
               htmlFor="screenshots-upload"
-              className="block text-center text-xs text-[#ff4e71] hover:text-[#ff7f66] cursor-pointer font-medium underline py-1"
+              className="inline-flex text-xs text-[#ff4e71] hover:text-[#ff7f66] cursor-pointer font-bold py-1"
             >
               + Add more screenshots
             </label>
@@ -138,13 +138,13 @@ export function FidelityForm() {
 
       {/* Warning Alert - Compact */}
       <motion.div
-        className="bg-amber-50 border border-amber-200 rounded-xl p-2 mb-4"
+        className="bg-amber-50 border border-amber-200 rounded-xl px-3 py-2 mb-3"
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
       >
         <div className="flex items-start gap-2">
-          <AlertTriangle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+          <ShieldCheck className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
           <div className="text-xs text-amber-800">
             <p className="font-semibold mb-0.5">{content.alert?.title || 'Privacy'}</p>
             <p className="text-amber-700">{content.alert?.description || 'Screenshots are analyzed locally and never stored.'}</p>
@@ -153,21 +153,21 @@ export function FidelityForm() {
       </motion.div>
 
       {/* Features List - Compact */}
-      <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-3 mb-4 border border-red-100">
-        <h4 className="text-xs font-semibold text-[#ff4e71] mb-2 flex items-center gap-2">
+      <div className="bg-gradient-to-br from-red-50 to-orange-50 rounded-xl p-3 mb-3 border border-red-100">
+        <h4 className="text-xs font-bold text-[#ff4e71] mb-2 flex items-center gap-2">
           <span className="w-1 h-1 bg-[#ff4e71] rounded-full"></span>
-          Our AI will detect:
+          Red flags checked:
         </h4>
-        <ul className="space-y-1">
-          {(content.features || []).map((item, index) => (
+        <div className="grid grid-cols-1 gap-1.5">
+          {(content.features || []).slice(0, 3).map((item, index) => (
             <motion.li
               key={index}
-              className="flex items-start gap-2 text-xs text-gray-700"
+              className="flex items-center gap-2 text-xs text-gray-700 bg-white/70 border border-white rounded-lg px-2.5 py-2"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 + index * 0.05 }}
             >
-              <div className="w-4 h-4 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] rounded-full flex items-center justify-center shrink-0 mt-0.5">
+              <div className="w-4 h-4 bg-gradient-to-br from-[#ff4e71] to-[#ff7f66] rounded-full flex items-center justify-center shrink-0">
                 <svg className="w-2.5 h-2.5 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
@@ -175,7 +175,7 @@ export function FidelityForm() {
               <span>{item}</span>
             </motion.li>
           ))}
-        </ul>
+        </div>
       </div>
 
       {/* Search Button - FIXED: Compact size */}
@@ -189,52 +189,49 @@ export function FidelityForm() {
           }
         }}
         disabled={isSearching}
-        className={`w-full relative flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl transition-all shadow-lg ${
+        className={`w-full relative flex items-center justify-between gap-3 px-5 py-3.5 rounded-full transition-all shadow-lg ${
           !isSearching
-            ? "bg-gradient-to-r from-[#ff4b5c] to-[#ff2a40] hover:shadow-xl cursor-pointer"
-            : "bg-gray-400 cursor-not-allowed"
+            ? "bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] hover:shadow-xl cursor-pointer"
+            : "bg-gray-300 cursor-not-allowed"
         }`}
         whileHover={!isSearching ? { scale: 1.02 } : {}}
         whileTap={!isSearching ? { scale: 0.98 } : {}}
       >
-        <div className="flex items-center justify-between w-full">
-          <div className="flex items-center gap-3">
-            {isSearching ? (
-              <>
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                >
-                  <MessageSquare className="w-5 h-5 text-white" />
-                </motion.div>
-                <span className="text-white text-lg font-bold">{content.searching}</span>
-              </>
-            ) : (
-              <>
-                <MessageSquare className="w-5 h-5 text-white" />
-                <span className="text-white text-lg font-bold">{content.search}</span>
-              </>
-            )}
-          </div>
-          {!isSearching && (
-            <div className="flex items-center gap-2">
-              <span className="finger-point-animate" style={{ fontSize: 'clamp(32px, 6vw, 42px)', display: 'inline-block', lineHeight: 1, filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))' }}>👈</span>
+        <div className="flex items-center justify-between gap-3 w-full">
+          <MessageSquare className="w-7 h-7 text-white shrink-0" strokeWidth={2.4} />
+
+          <span className="text-white text-base md:text-lg font-black tracking-wide text-center flex-1">
+            {isSearching ? content.searching : screenshots.length === 0 ? 'UPLOAD SCREENSHOTS' : 'ANALYZE CHATS'}
+          </span>
+
+          {isSearching ? (
+            <motion.div
+              className="w-10 h-10 border-2 border-white border-t-transparent rounded-full shrink-0"
+              animate={{ rotate: 360 }}
+              transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+            />
+          ) : (
+            <div className="flex items-center gap-3 shrink-0">
+              <span className="w-10 h-10 rounded-full bg-white/18 border border-white/22 flex items-center justify-center">
+                <ArrowRight className="w-6 h-6 text-white cta-arrow-animate" />
+              </span>
+              <span
+                className="finger-point-animate"
+                style={{
+                  fontSize: '32px',
+                  display: 'inline-block',
+                  lineHeight: 1,
+                  filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.24))',
+                }}
+              >
+                👈
+              </span>
             </div>
           )}
         </div>
       </motion.button>
 
-      {/* Bottom Badge - Compact */}
-      <div className="mt-3 bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] rounded-full py-1.5 px-3 flex flex-wrap items-center justify-center gap-2 text-white text-[9px] shadow-md">
-        {content.badges && content.badges.map((badge, index) => (
-          <span key={index} className="flex items-center gap-1">
-            <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-            </svg>
-            {badge}
-          </span>
-        ))}
-      </div>
-    </div>
+      <TrustPanel service="fidelity" />
+          </div>
   );
 }

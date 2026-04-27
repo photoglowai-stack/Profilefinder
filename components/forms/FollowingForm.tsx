@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Instagram, Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { serviceContent } from "../../lib/content";
+import { TrustPanel } from "../ui/TrustPanel";
 
 export function FollowingForm() {
   const router = useRouter();
@@ -133,6 +134,8 @@ export function FollowingForm() {
           </span>
         ))}
       </div>
+
+      <TrustPanel service="following" />
     </div>
   );
 }

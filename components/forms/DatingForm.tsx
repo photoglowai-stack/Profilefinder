@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import svgPaths from "../../imports/svg-osb8kvu2n8";
 import { useService } from "../../lib/ServiceContext";
 import { serviceContent } from "../../lib/content";
+import { TrustPanel } from "../ui/TrustPanel";
 
 // Avatars from public folder
 const imgMan = '/assets/avatars/dating-man-3d.png';
@@ -160,7 +161,7 @@ export function DatingForm() {
           {content.bottomText}
         </p>
 
-        <div className="flex justify-center">
+      <div className="flex justify-center">
           <div className="bg-gradient-to-r from-[#ff4e71] to-[#ff7f66] rounded-full px-4 py-2 shadow-md">
             <div className="flex flex-wrap gap-3 items-center justify-center">
               {content.badges.map((badge, index) => (
@@ -176,6 +177,8 @@ export function DatingForm() {
             </div>
           </div>
         </div>
+
+        <TrustPanel service="dating" />
       </div>
     </div>
   );

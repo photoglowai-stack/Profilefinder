@@ -91,6 +91,7 @@ const WebGLBackground = () => {
 // Service-specific preview components
 const PreviewComponents: Record<string, React.ComponentType> = {
     dating: DatingResultsPreview,
+    faceTrace: FaceTraceResultsPreview,
     fidelity: FidelityCheckResultsPreview,
     chatAnalysis: ChatAnalysisResultsPreview,
     following: FollowingResultsPreview,
@@ -138,6 +139,7 @@ export function PaymentPage() {
     const pathService = getServiceFromPath();
     const activeService = pathService || urlService || selectedService || 'dating';
     const config = getPaymentConfig(activeService);
+    const formatPrice = (price: number) => price.toFixed(2).replace('.', ',');
 
     // Plan selection state - default to subscription (HERO CHOICE)
     const [selectedPlan, setSelectedPlan] = useState<'subscription' | 'single'>('subscription');
@@ -333,9 +335,7 @@ export function PaymentPage() {
                                     width: '100%',
                                     marginTop: '1rem',
                                     padding: '1rem',
-                                    background: selectedPlan === 'subscription'
-                                        ? config.accentColors.gradient
-                                        : 'linear-gradient(135deg, #4b5563, #374151)',
+                                    background: config.accentColors.gradient,
                                     color: 'white',
                                     borderRadius: '0.75rem',
                                     fontSize: '1rem',
@@ -354,9 +354,9 @@ export function PaymentPage() {
                             >
                                 {isProcessing ? 'Processing...' : (
                                     <>
-                                        🔒 Unlock All Now {selectedPlan === 'subscription'
-                                            ? `${SUBSCRIPTION_CONFIG.price}€/mo`
-                                            : `${config.singleReportPrice}€`
+                                        🔒 {selectedPlan === 'subscription' ? 'Unlock All Now' : `Unlock ${config.title}`} {selectedPlan === 'subscription'
+                                            ? `${formatPrice(SUBSCRIPTION_CONFIG.price)}€/mo`
+                                            : `${formatPrice(config.singleReportPrice)}€`
                                         }
                                     </>
                                 )}
@@ -473,9 +473,7 @@ export function PaymentPage() {
                                     width: '100%',
                                     marginTop: '1.25rem',
                                     padding: '1rem',
-                                    background: selectedPlan === 'subscription'
-                                        ? config.accentColors.gradient
-                                        : 'linear-gradient(135deg, #4b5563, #374151)',
+                                    background: config.accentColors.gradient,
                                     color: 'white',
                                     borderRadius: '0.875rem',
                                     fontSize: '1rem',
@@ -511,8 +509,8 @@ export function PaymentPage() {
                                 ) : (
                                     <>
                                         🔒 {selectedPlan === 'subscription' ? 'Unlock All Now' : `Unlock ${config.title}`} {selectedPlan === 'subscription'
-                                            ? `${SUBSCRIPTION_CONFIG.price}€/mo`
-                                            : `${config.singleReportPrice}€`
+                                            ? `${formatPrice(SUBSCRIPTION_CONFIG.price)}€/mo`
+                                            : `${formatPrice(config.singleReportPrice)}€`
                                         }
                                         <IconArrowRight style={{ width: '1rem', height: '1rem' }} />
                                     </>
