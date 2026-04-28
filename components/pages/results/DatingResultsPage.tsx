@@ -1,24 +1,41 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import {
     Heart, Lock, Crown, ArrowRight, Check, Shield,
     MapPin, Clock, Eye, Star, Sparkles
 } from 'lucide-react';
 import Link from 'next/link';
+import { datingSamplePhotos, normalizeDatingGender, type DatingGender } from '../../../lib/profileSamples';
 
 /**
  * DatingResultsPage - Results page for single dating report purchase
  * Shows unlocked dating results with locked other services
  */
 export function DatingResultsPage() {
+    const [gender, setGender] = useState<DatingGender>('woman');
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setGender(normalizeDatingGender(sessionStorage.getItem('pf_dating_gender')));
+        }
+    }, []);
+
+    const selectedPhotos = datingSamplePhotos[gender];
+
     // Simulated results data
-    const results = [
-        { name: 'Sarah M.', age: 28, platform: 'Tinder', location: 'Paris', lastActive: '2h ago', match: 98, photo: '/assets/profiles/dating-woman-01.webp' },
-        { name: 'Julie K.', age: 25, platform: 'Bumble', location: 'Lyon', lastActive: '15min ago', match: 95, photo: '/assets/profiles/dating-woman-02.webp' },
-        { name: 'Emma L.', age: 30, platform: 'Badoo', location: 'Paris', lastActive: '1d ago', match: 89, photo: '/assets/profiles/dating-woman-03.webp' },
-    ];
+    const results = gender === 'man'
+        ? [
+            { name: 'Alex M.', age: 28, platform: 'Tinder', location: 'Paris', lastActive: '2h ago', match: 98, photo: selectedPhotos[0] },
+            { name: 'Thomas K.', age: 25, platform: 'Bumble', location: 'Lyon', lastActive: '15min ago', match: 95, photo: selectedPhotos[1] },
+            { name: 'Marc L.', age: 30, platform: 'Badoo', location: 'Paris', lastActive: '1d ago', match: 89, photo: selectedPhotos[2] },
+        ]
+        : [
+            { name: 'Sarah M.', age: 28, platform: 'Tinder', location: 'Paris', lastActive: '2h ago', match: 98, photo: selectedPhotos[0] },
+            { name: 'Julie K.', age: 25, platform: 'Bumble', location: 'Lyon', lastActive: '15min ago', match: 95, photo: selectedPhotos[1] },
+            { name: 'Emma L.', age: 30, platform: 'Badoo', location: 'Paris', lastActive: '1d ago', match: 89, photo: selectedPhotos[2] },
+        ];
 
     const lockedServices = [
         { name: 'Face Trace', icon: '🔍', description: 'Reverse image search' },

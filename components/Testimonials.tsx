@@ -189,6 +189,12 @@ function formatDate(daysAgo: number): string {
   return `${Math.floor(daysAgo / 7)}w`;
 }
 
+function formatReviewDate(daysAgo: number): string {
+  if (daysAgo === 0) return "today";
+  if (daysAgo === 1) return "1 day ago";
+  return `${daysAgo} days ago`;
+}
+
 // ═══════════════════════════════════════════════════════════════
 // TWITTER/X EMBED CARD
 // ═══════════════════════════════════════════════════════════════
@@ -199,11 +205,12 @@ function TwitterCard({ review }: { review: Review }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       whileHover={{ scale: 1.02 }}
-      className="bg-black rounded-2xl p-4 border border-zinc-800 text-white relative"
+      className="min-h-[244px] w-[min(84vw,360px)] shrink-0 rounded-[1.35rem] border border-slate-200/80 bg-white p-5 text-slate-950 shadow-[0_18px_45px_rgba(15,23,42,0.08)] relative overflow-hidden"
     >
+      <div className="absolute inset-x-0 top-0 h-1 bg-slate-950" />
       {/* X Logo */}
       <div className="absolute top-4 right-4">
-        <svg className="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor">
+        <svg className="w-5 h-5 text-slate-950" viewBox="0 0 24 24" fill="currentColor">
           <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
         </svg>
       </div>
@@ -226,22 +233,22 @@ function TwitterCard({ review }: { review: Review }) {
               </svg>
             )}
           </div>
-          <span className="text-zinc-500 text-[15px]">@{review.handle}</span>
+          <span className="text-slate-500 text-[15px]">@{review.handle}</span>
         </div>
       </div>
 
       {/* Content */}
-      <p className="text-[15px] leading-relaxed mb-3 whitespace-pre-wrap">
+      <p className="text-[15px] leading-relaxed mb-3 whitespace-pre-wrap text-slate-800">
         {review.content}
       </p>
 
       {/* Timestamp */}
-      <p className="text-zinc-500 text-sm mb-3">
-        {formatDate(review.daysAgo)} · <span className="text-white">ProfileFinder.ai</span>
+      <p className="text-slate-500 text-sm mb-3">
+        {formatDate(review.daysAgo)} · <span className="text-slate-900">ProfileFinder.ai</span>
       </p>
 
       {/* Actions */}
-      <div className="flex items-center justify-between pt-3 border-t border-zinc-800 text-zinc-500">
+      <div className="flex items-center justify-between pt-3 border-t border-slate-100 text-slate-500">
         <button className="flex items-center gap-2 hover:text-[#1d9bf0] transition-colors group">
           <MessageCircle className="w-[18px] h-[18px] group-hover:bg-[#1d9bf0]/10 rounded-full" />
           <span className="text-[13px]">{review.comments}</span>
@@ -273,17 +280,18 @@ function TrustpilotCard({ review }: { review: Review }) {
       viewport={{ once: true }}
       transition={{ delay: 0.15 }}
       whileHover={{ scale: 1.02 }}
-      className="bg-white rounded-2xl p-5 border border-gray-200 shadow-sm"
+      className="min-h-[244px] w-[min(84vw,360px)] shrink-0 rounded-[1.35rem] border border-emerald-100 bg-white p-5 shadow-[0_18px_45px_rgba(15,23,42,0.08)] relative overflow-hidden"
     >
+      <div className="absolute inset-x-0 top-0 h-1 bg-[#00b67a]" />
       {/* Trustpilot Header */}
       <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-2">
-          {/* Trustpilot Logo */}
-          <svg className="h-5" viewBox="0 0 126 31" fill="none">
-            <path d="M33.076 9.401h4.473v17.026h-4.473V9.401zm11.903 0h4.188l6.283 11.67V9.4h4.26v17.026h-4.188L49.24 14.756v11.671h-4.261V9.401zm-8.49 0h4.26v17.026h-4.26V9.401zm31.9 4.64c-.712-.656-1.67-.984-2.875-.984-1.507 0-2.616.574-3.328 1.722-.407.656-.611 1.476-.611 2.46v7.381h-4.26V9.401h4.116v2.132c.61-.82 1.181-1.394 1.71-1.722.956-.656 2.138-.984 3.542-.984 1.831 0 3.267.492 4.31 1.476 1.018.984 1.54 2.378 1.567 4.182v11.942h-4.331v-10.63c0-.902-.244-1.64-.732-2.214-.488-.574-1.161-.861-2.019-.861-.997 0-1.791.328-2.381.984-.407.41-.611.943-.611 1.599v11.122H62.4V9.401h4.116v2.214c.61-.902 1.181-1.517 1.71-1.845.997-.656 2.199-.984 3.603-.984 1.872 0 3.348.492 4.432 1.476 1.058.984 1.588 2.378 1.588 4.182v11.983h-4.33v-10.712c-.025-.82-.244-1.517-.659-2.091-.488-.574-1.161-.902-2.019-.902-1.058 0-1.872.369-2.443 1.107-.407.492-.611 1.066-.611 1.722v10.876H62.4V9.401h4.116v2.091c.61-.82 1.181-1.394 1.71-1.722.956-.656 2.138-.984 3.542-.984 1.831 0 3.267.492 4.31 1.476l.001-.001zm-56.612 0h9.412v3.116h-5.16v3.568h4.757v3.116h-4.757v4.016h5.384v3.21H11.777V9.401z" fill="#191919" />
-            <path d="M21.586 12.66l-6.524 4.74 2.493 7.672-6.524-4.74-6.524 4.74 2.493-7.672L.476 12.66h8.062l2.493-7.672 2.493 7.672h8.062z" fill="#00B67A" />
-            <path d="M15.565 19.08l-1.502-1.092-4.51 3.284 1.723-5.302-4.509-3.276 5.573-.001 1.723-5.301 1.502 4.623 4.51 3.276-4.51 3.284v.505z" fill="#005128" />
-          </svg>
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#00b67a] shadow-[0_8px_18px_rgba(0,182,122,0.22)]">
+            <svg className="h-4.5 w-4.5 text-white" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          </div>
+          <span className="text-[15px] font-black tracking-[-0.02em] text-slate-950">Trustpilot</span>
         </div>
         <span className="text-xs text-gray-400">{review.daysAgo === 1 ? 'Yesterday' : `${review.daysAgo} days ago`}</span>
       </div>
@@ -293,7 +301,7 @@ function TrustpilotCard({ review }: { review: Review }) {
         {[...Array(5)].map((_, i) => (
           <div
             key={i}
-            className={`w-6 h-6 flex items-center justify-center ${i < (review.rating || 5) ? 'bg-[#00b67a]' : 'bg-gray-200'}`}
+            className={`w-7 h-7 rounded-md flex items-center justify-center ${i < (review.rating || 5) ? 'bg-[#00b67a]' : 'bg-gray-200'}`}
           >
             <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
@@ -303,7 +311,7 @@ function TrustpilotCard({ review }: { review: Review }) {
       </div>
 
       {/* Review Content */}
-      <p className="text-gray-800 font-medium leading-relaxed mb-4">
+      <p className="text-[15px] text-slate-800 font-semibold leading-relaxed mb-4">
         {review.content}
       </p>
 
@@ -343,8 +351,9 @@ function InstagramCard({ review }: { review: Review }) {
       viewport={{ once: true }}
       transition={{ delay: 0.3 }}
       whileHover={{ scale: 1.02 }}
-      className="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm"
+      className="min-h-[244px] w-[min(84vw,360px)] shrink-0 rounded-[1.35rem] border border-pink-100 bg-white overflow-hidden shadow-[0_18px_45px_rgba(15,23,42,0.08)] relative"
     >
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600" />
       {/* Instagram Header */}
       <div className="flex items-center justify-between p-3 border-b border-gray-100">
         <div className="flex items-center gap-3">
@@ -420,15 +429,177 @@ function InstagramCard({ review }: { review: Review }) {
   );
 }
 
+function PlatformMark({ platform }: { platform: Platform }) {
+  if (platform === "trustpilot") {
+    return (
+      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#00b67a] text-white shadow-[0_10px_24px_rgba(0,182,122,0.22)]">
+        <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      </span>
+    );
+  }
+
+  if (platform === "instagram") {
+    return (
+      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 text-white shadow-[0_10px_24px_rgba(219,39,119,0.24)]">
+        <svg className="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+        </svg>
+      </span>
+    );
+  }
+
+  return (
+    <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-950 text-white shadow-[0_10px_24px_rgba(15,23,42,0.18)]">
+      <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+      </svg>
+    </span>
+  );
+}
+
+function platformName(platform: Platform): string {
+  if (platform === "trustpilot") return "Trustpilot";
+  if (platform === "instagram") return "Instagram";
+  return "Twitter/X";
+}
+
+function platformCardTheme(platform: Platform) {
+  if (platform === "trustpilot") {
+    return {
+      topLine: "via-[#00b67a]",
+      halo: "from-[#00b67a]/10",
+      pill: "border-emerald-100 bg-emerald-50 text-emerald-600",
+      label: "Trustpilot review",
+      stars: "text-[#00b67a]",
+    };
+  }
+
+  if (platform === "instagram") {
+    return {
+      topLine: "via-pink-400",
+      halo: "from-pink-500/10",
+      pill: "border-pink-100 bg-pink-50 text-pink-600",
+      label: "Instagram post",
+      stars: "text-[#ff9f00]",
+    };
+  }
+
+  return {
+    topLine: "via-slate-950",
+    halo: "from-slate-950/10",
+    pill: "border-slate-200 bg-slate-50 text-slate-700",
+    label: "Twitter/X post",
+    stars: "text-[#ff9f00]",
+  };
+}
+
+function PlatformFooterMeta({ review }: { review: Review }) {
+  if (review.platform === "trustpilot") {
+    return (
+      <div className="mt-4 flex items-center gap-1.5 text-xs font-bold text-[#00b67a]">
+        <svg className="h-3.5 w-3.5" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+        </svg>
+        <span>Verified Trustpilot review</span>
+      </div>
+    );
+  }
+
+  if (review.platform === "instagram") {
+    return (
+      <div className="mt-4 flex items-center gap-4 text-xs font-bold text-slate-400">
+        <span>{review.likes?.toLocaleString()} likes</span>
+        <span>{review.comments} comments</span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-4 flex items-center gap-4 text-xs font-bold text-slate-400">
+      <span>{review.comments} replies</span>
+      <span>{review.retweets} reposts</span>
+      <span>{review.likes} likes</span>
+    </div>
+  );
+}
+
+function OrganicReviewCard({ review, index }: { review: Review; index: number }) {
+  const isRaised = index % 4 === 1 || index % 4 === 2;
+  const theme = platformCardTheme(review.platform);
+
+  return (
+    <motion.article
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      whileHover={{ y: -6 }}
+      transition={{ duration: 0.35, ease: "easeOut" }}
+      className={`group relative flex min-h-[260px] w-[min(84vw,410px)] shrink-0 flex-col justify-between overflow-hidden rounded-[1.45rem] border border-slate-200 bg-white p-6 text-left shadow-[0_20px_55px_rgba(15,23,42,0.08)] md:w-[430px] md:p-7 ${isRaised ? "md:mt-8" : ""}`}
+    >
+      <div className={`pointer-events-none absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent ${theme.topLine} to-transparent`} />
+      <div className={`pointer-events-none absolute -right-16 -top-20 h-40 w-40 rounded-full bg-gradient-to-br ${theme.halo} to-transparent blur-2xl`} />
+      <div className="flex items-start justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <PlatformMark platform={review.platform} />
+          <div>
+            <p className="text-sm font-black tracking-[-0.02em] text-slate-950">{platformName(review.platform)}</p>
+            <p className="text-xs font-semibold text-slate-400">@{review.handle}</p>
+          </div>
+        </div>
+        <span className="shrink-0 text-sm font-semibold text-slate-400">{formatReviewDate(review.daysAgo)}</span>
+      </div>
+
+      <div className="mt-7">
+        <div className={`mb-4 flex gap-1.5 ${theme.stars}`} aria-label={`${review.rating || 5} out of 5 stars`}>
+          {[...Array(5)].map((_, starIndex) => (
+            <svg key={starIndex} className="h-5 w-5 drop-shadow-[0_6px_10px_rgba(255,159,0,0.2)]" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+            </svg>
+          ))}
+        </div>
+        <p className="text-[1.28rem] font-semibold leading-[1.45] tracking-[-0.02em] text-slate-800 md:text-[1.45rem]">
+          {review.content}
+        </p>
+        <PlatformFooterMeta review={review} />
+      </div>
+
+      <div className="mt-7 flex items-center justify-between border-t border-slate-100 pt-5">
+        <div className="flex items-center gap-3">
+          <Image
+            src={review.avatar}
+            alt={review.name}
+            width={46}
+            height={46}
+            className="rounded-full ring-2 ring-white shadow-[0_10px_24px_rgba(15,23,42,0.12)]"
+          />
+          <div>
+            <p className="text-lg font-black tracking-[-0.02em] text-slate-950">{review.name}</p>
+            {review.verified && <p className="text-sm font-semibold text-emerald-600">Verified</p>}
+          </div>
+        </div>
+        <div className={`rounded-full border px-3 py-1 text-xs font-black uppercase tracking-[0.12em] ${theme.pill}`}>
+          {theme.label}
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
 // ═══════════════════════════════════════════════════════════════
 // MAIN COMPONENT
 // ═══════════════════════════════════════════════════════════════
 export function Testimonials() {
   const { selectedService } = useService();
   const currentReviews = reviewsConfig[selectedService] || reviewsConfig.dating;
+  const otherReviews = Object.entries(reviewsConfig)
+    .filter(([service]) => service !== selectedService)
+    .flatMap(([, reviews]) => reviews);
+  const reviewRail = [...currentReviews, ...otherReviews, ...currentReviews, ...otherReviews];
 
   return (
-    <section id="testimonials" className="bg-gradient-to-b from-slate-50 via-white to-slate-50 py-16 md:py-24">
+    <section id="testimonials" className="bg-gradient-to-b from-slate-50 via-white to-slate-50 py-16 md:py-24 overflow-hidden">
       <div className="max-w-[1760px] mx-auto px-4 md:px-8">
         <SectionHeader
           label="Social Proof"
@@ -438,8 +609,8 @@ export function Testimonials() {
         />
 
         {/* Platform Logos Header */}
-        <div className="flex justify-center mb-12">
-          <div className="inline-flex items-center gap-4 bg-white border border-gray-200 rounded-full px-6 py-3 shadow-sm">
+        <div className="flex justify-center mb-10">
+          <div className="inline-flex items-center gap-4 bg-white/90 backdrop-blur border border-slate-200 rounded-full px-5 md:px-6 py-3 shadow-[0_14px_34px_rgba(15,23,42,0.08)]">
             {/* Trustpilot */}
             <div className="flex items-center gap-2">
               <div className="w-7 h-7 rounded bg-[#00b67a] flex items-center justify-center">
@@ -472,18 +643,22 @@ export function Testimonials() {
           </div>
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-          {currentReviews.map((review) => {
-            switch (review.platform) {
-              case 'twitter':
-                return <TwitterCard key={review.id} review={review} />;
-              case 'trustpilot':
-                return <TrustpilotCard key={review.id} review={review} />;
-              case 'instagram':
-                return <InstagramCard key={review.id} review={review} />;
-            }
-          })}
+        {/* Across the Web Rail */}
+        <div className="relative -mx-4 md:-mx-8">
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-12 md:w-28 bg-gradient-to-r from-slate-50 via-slate-50/80 to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-12 md:w-28 bg-gradient-to-l from-slate-50 via-slate-50/80 to-transparent" />
+
+          <div className="testimonials-marquee overflow-x-auto md:overflow-hidden px-4 md:px-8 py-4">
+            <div className="testimonials-marquee-track flex w-max items-stretch gap-5 md:gap-6">
+              {reviewRail.map((review, index) => (
+                <OrganicReviewCard
+                  key={`${review.platform}-${review.id}-${review.handle}-${index}`}
+                  review={review}
+                  index={index}
+                />
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </section>

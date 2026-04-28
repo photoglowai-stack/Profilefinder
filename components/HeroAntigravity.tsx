@@ -1,9 +1,10 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useService } from '../lib/ServiceContext';
 import { ServiceType } from '../lib/content';
+import { trustedUserPhotos } from '../lib/profileSamples';
 import {
     Search, Globe, User, Check, Shield, Clock, Menu, X,
     Heart, Users, ScanFace, MessageSquare, Instagram,
@@ -42,6 +43,14 @@ const HeroAntigravity: React.FC = () => {
     const [isPrivate, setIsPrivate] = useState(false);
     const [showError, setShowError] = useState(false);
 
+    useEffect(() => {
+        router.prefetch('/dating-search/form');
+        router.prefetch('/activity-tracker');
+        router.prefetch('/face-trace/form');
+        router.prefetch('/fidelity-test/form');
+        router.prefetch('/payment');
+    }, [router]);
+
     const handleFaceTraceUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -63,12 +72,7 @@ const HeroAntigravity: React.FC = () => {
     const avatarMan = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(6).svg";
     const avatarWoman = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/FEMME.svg";
 
-    const trustedUsers = [
-        "/assets/profiles/dating-woman-02.webp",
-        "/assets/profiles/dating-man-03.webp",
-        "/assets/profiles/dating-woman-04.webp",
-        "/assets/profiles/dating-woman-05.webp"
-    ];
+    const trustedUsers = trustedUserPhotos;
 
     const services = [
         { id: 'dating' as ServiceType, label: 'Dating Search', icon: <Heart size={20} strokeWidth={2.5} />, path: '/' },
@@ -154,6 +158,57 @@ const HeroAntigravity: React.FC = () => {
 
     const currentAccent = accentColors[selectedService];
 
+    const MobileServiceIcon = ({ type }: { type: 'tinder' | 'instagram' | 'facetrace' | 'message' }) => {
+        const baseStyle: React.CSSProperties = {
+            width: '42px',
+            height: '42px',
+            borderRadius: '14px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            flexShrink: 0,
+            border: '1px solid rgba(255,255,255,0.18)',
+            boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.22), 0 12px 24px rgba(0,0,0,0.24)'
+        };
+
+        if (type === 'tinder') {
+            return (
+                <span style={{ ...baseStyle, background: 'linear-gradient(135deg, #ff4458 0%, #ff6b2c 100%)' }}>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M12.2 21.5c-4.2 0-7.2-2.9-7.2-6.8 0-2.2 1-4.3 2.6-5.7.4-.3 1-.1 1.1.4.2 1 .7 1.8 1.4 2.2-.2-3.8 2-7 5.2-9 .4-.3 1-.1 1.1.4.7 2.7 2.8 4.1 4 6.2.7 1.2 1.1 2.5 1.1 4 0 4.9-3.7 8.3-9.3 8.3Z" fill="white" />
+                        <path d="M12.1 18.7c-1.9 0-3.3-1.3-3.3-3 0-1 .4-1.9 1.1-2.5.3-.2.7-.1.8.3.1.4.3.8.6 1 .1-1.7 1.1-3.1 2.6-4 .3-.2.7 0 .8.3.3 1.2 1.2 1.8 1.8 2.8.3.5.5 1.1.5 1.8 0 2-1.7 3.3-4.9 3.3Z" fill="#ff4458" opacity="0.35" />
+                    </svg>
+                </span>
+            );
+        }
+
+        if (type === 'instagram') {
+            return (
+                <span style={{ ...baseStyle, background: 'radial-gradient(circle at 30% 105%, #feda75 0%, #fa7e1e 28%, #d62976 58%, #962fbf 78%, #4f5bd5 100%)' }}>
+                    <Instagram size={24} color="#ffffff" strokeWidth={2.4} aria-hidden="true" />
+                </span>
+            );
+        }
+
+        if (type === 'facetrace') {
+            return (
+                <span style={{ ...baseStyle, background: 'linear-gradient(135deg, #075985 0%, #0ea5e9 100%)' }}>
+                    <ScanFace size={25} color="#ffffff" strokeWidth={2.4} aria-hidden="true" />
+                </span>
+            );
+        }
+
+        return (
+            <span style={{ ...baseStyle, background: 'linear-gradient(135deg, #34c759 0%, #0a8f3d 100%)' }}>
+                <svg width="25" height="25" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <rect x="2.5" y="4" width="19" height="15" rx="7.5" fill="white" />
+                    <path d="M8.1 18.1 5 21v-4.6" fill="white" />
+                    <path d="M7.8 10.9h8.4M7.8 13.4h5.5" stroke="#22c55e" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+            </span>
+        );
+    };
+
     return (
         <section style={{
             width: '100%',
@@ -164,21 +219,9 @@ const HeroAntigravity: React.FC = () => {
             position: 'relative',
             paddingBottom: '80px',
             borderRadius: '0 0 48px 48px',
-            transition: 'background 0.5s ease'
+            transition: 'background 0.5s ease',
+            isolation: 'isolate'
         }}>
-            {/* Keep the transition into the white sections below, but low enough
-                that it does not create a visible horizontal band behind the form. */}
-            <div style={{
-                position: 'absolute',
-                bottom: 0,
-                left: 0,
-                right: 0,
-                height: 'clamp(64px, 9vw, 96px)',
-                background: 'linear-gradient(to bottom, transparent 0%, rgba(255,255,255,0.05) 52%, rgba(255,255,255,0.22) 72%, rgba(255,255,255,0.65) 88%, #ffffff 100%)',
-                pointerEvents: 'none',
-                borderRadius: '0 0 48px 48px'
-            }} />
-
             {/* CSS is now in globals.css - no inline style tag needed */}
 
             {/* Navigation */}
@@ -219,7 +262,7 @@ const HeroAntigravity: React.FC = () => {
                     {['Search Profile', 'Blog', 'Affiliate Program'].map((item) => (
                         <a
                             key={item}
-                            href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : item === 'Blog' ? '/blog' : '#'}
+                            href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : '#'}
                             style={{
                                 color: 'rgba(255,255,255,0.8)',
                                 textDecoration: 'none',
@@ -331,12 +374,12 @@ const HeroAntigravity: React.FC = () => {
                                 Choose your service
                             </p>
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                                {[
-                                    { label: 'Tinder Search', description: 'Find hidden dating profiles', path: '/', icon: '❤️' },
-                                    { label: 'Following AI', description: 'Check suspicious new follows', path: '/following-ai', icon: '👥' },
-                                    { label: 'Face Trace', description: 'Search profiles from one photo', path: '/face-trace', icon: '🔍' },
-                                    { label: 'Fidelity Test', description: 'Analyze chats for red flags', path: '/fidelity-test', icon: '🛡️' }
-                                ].map((service) => (
+	                                {[
+	                                    { label: 'Tinder Search', description: 'Find hidden dating profiles', path: '/', icon: 'tinder' as const },
+	                                    { label: 'Following AI', description: 'Check suspicious new follows', path: '/following-ai', icon: 'instagram' as const },
+	                                    { label: 'Face Trace', description: 'Search profiles from one photo', path: '/face-trace', icon: 'facetrace' as const },
+	                                    { label: 'Fidelity Test', description: 'Analyze chats for red flags', path: '/fidelity-test', icon: 'message' as const }
+	                                ].map((service) => (
                                     <a
                                         key={service.label}
                                         href={service.path}
@@ -355,20 +398,7 @@ const HeroAntigravity: React.FC = () => {
                                         }}
                                         onClick={() => setIsMenuOpen(false)}
                                     >
-                                        <span style={{
-                                            width: '34px',
-                                            height: '34px',
-                                            borderRadius: '11px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            backgroundColor: 'rgba(255,255,255,0.09)',
-                                            border: '1px solid rgba(255,255,255,0.08)',
-                                            fontSize: '18px',
-                                            flexShrink: 0
-                                        }}>
-                                            {service.icon}
-                                        </span>
+	                                        <MobileServiceIcon type={service.icon} />
                                         <span style={{ display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 }}>
                                             <span style={{ fontSize: '16px', fontWeight: 800, lineHeight: 1.15 }}>
                                                 {service.label}
@@ -387,7 +417,7 @@ const HeroAntigravity: React.FC = () => {
                             {['Blog', 'Affiliate Program'].map((item) => (
                                 <a
                                     key={item}
-                                    href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : item === 'Blog' ? '/blog' : '#'}
+                                    href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : '#'}
                                     style={{
                                         color: 'rgba(255,255,255,0.9)',
                                         textDecoration: 'none',
@@ -450,10 +480,10 @@ const HeroAntigravity: React.FC = () => {
             </nav>
 
             {/* Main Content */}
-            <div className="flex flex-col lg:flex-row items-center lg:items-start justify-between w-full max-w-[1280px] mx-auto px-4 pt-4 pb-6 lg:pt-2 lg:pb-12 gap-2 lg:gap-8 relative z-10">
+            <div className="flex flex-col lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(360px,480px)] items-center lg:items-start justify-between w-full max-w-[1480px] mx-auto px-4 md:px-8 pt-4 pb-6 lg:pt-2 lg:pb-12 gap-2 lg:gap-10 relative z-10">
                 
                 {/* Left Column */}
-                <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full lg:w-[55%]" style={{ position: 'relative' }}>
+                <div className="flex flex-col items-center lg:items-start text-center lg:text-left w-full min-w-0" style={{ position: 'relative' }}>
 
                 {/* Trusted Badge */}
                 <div className="flex items-center gap-[12px] bg-white/10 backdrop-blur-md px-5 py-2 rounded-full border border-white/20 shadow-lg scale-[0.85] origin-center lg:scale-100 lg:origin-left transition-transform mb-4 lg:mb-6">
@@ -623,7 +653,7 @@ const HeroAntigravity: React.FC = () => {
                 </div>
 
                 {/* Right Column */}
-                <div className="w-full lg:w-[45%] flex justify-center lg:justify-end shrink-0">
+                <div className="w-full min-w-0 flex justify-center lg:justify-end">
 
                 {/* The Card */}
                 <div style={{
@@ -633,6 +663,7 @@ const HeroAntigravity: React.FC = () => {
                     padding: '20px',
                     width: '100%',
                     maxWidth: '480px',
+                    boxSizing: 'border-box',
                     boxShadow: '0 25px 60px rgba(0,0,0,0.25)',
                     position: 'relative',
                     marginBottom: '40px',
@@ -964,6 +995,7 @@ const HeroAntigravity: React.FC = () => {
 
                         {/* Action Button - Only for non-fidelity services */}
                         {selectedService !== 'fidelity' && (
+	                            <div style={{ position: 'relative', width: '100%', marginTop: '8px', paddingRight: '28px', boxSizing: 'border-box' }}>
                             <button
                                 onClick={() => {
                                     if (selectedService === 'facetrace') {
@@ -982,94 +1014,82 @@ const HeroAntigravity: React.FC = () => {
                                         if (typeof window !== 'undefined') {
                                             sessionStorage.setItem('pf_dating_gender', selectedGender);
                                         }
-                                        // Scroll to form instead of redirecting (SEO: avoid duplicate content)
-                                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                                        // Navigate to form wizard
                                         router.push('/dating-search/form');
                                     } else {
                                         router.push('/payment');
                                     }
                                 }}
-                                className="hero-btn shimmer-effect"
+                                className="hero-btn"
                                 style={{
                                     position: 'relative',
                                     width: '100%',
                                     background: currentContent.buttonBg,
                                     color: '#ffffff',
                                     borderRadius: '9999px',
-                                    padding: '16px 24px',
+	                                    padding: '16px 24px',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     border: '1px solid rgba(255,255,255,0.1)',
                                     cursor: 'pointer',
-                                    overflow: 'visible',
-                                    marginTop: '8px',
+	                                    overflow: 'hidden',
+                                    marginTop: 0,
                                     boxShadow: '0 8px 24px rgba(0,0,0,0.2)',
                                     transition: 'transform 0.3s'
                                 }}
                             >
-                                <div
-                                    className="shimmer-bar"
-                                    style={{
-                                        position: 'absolute',
-                                        inset: 0,
-                                        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
-                                        transform: 'translateX(-150%) skewX(-15deg)'
-                                    }}
-                                />
-
-                                <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', minHeight: '32px', zIndex: 20 }}>
+	                                <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%', minHeight: '32px', zIndex: 20 }}>
                                     {currentContent.buttonIcon && (
                                         <span style={{ opacity: 0.9, position: 'absolute', left: '0', display: 'flex', alignItems: 'center' }}>
                                             {currentContent.buttonIcon}
                                         </span>
                                     )}
-                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
-                                        <span style={{
-                                            fontSize: 'clamp(14px, 3.8vw, 18px)',
-                                            fontWeight: 900,
-                                            letterSpacing: '0.1em',
-                                            textTransform: 'uppercase',
-                                            textShadow: '0 2px 4px rgba(0,0,0,0.2)',
-                                            whiteSpace: 'nowrap',
-                                            paddingLeft: currentContent.buttonIcon ? '34px' : '0',
-                                            paddingRight: '58px'
-                                        }}>
-                                            {currentContent.cta} {currentContent.ctaEmoji}
-                                        </span>
-                                    </div>
-                                    <span
-                                        className="cta-arrow-animate"
-                                        style={{
-                                            position: 'absolute',
-                                            right: '14px',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            width: '32px',
-                                            height: '32px',
-                                            borderRadius: '9999px',
-                                            backgroundColor: 'rgba(255,255,255,0.16)',
-                                            border: '1px solid rgba(255,255,255,0.22)',
-                                            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
-                                            pointerEvents: 'none'
-                                        }}
-                                    >
-                                        <ArrowRight size={18} strokeWidth={3} />
-                                    </span>
-                                    <span
-                                        className="cta-finger-outside"
-                                        style={{
-                                            fontSize: 'clamp(26px, 5vw, 36px)',
-                                            filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
-                                            lineHeight: 1
-                                        }}
-                                    >
-                                        👈
-                                    </span>
-                                </div>
-                            </button>
+	                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px', width: '100%', minWidth: 0 }}>
+	                                        <span style={{
+	                                            fontSize: 'clamp(14px, 3.8vw, 18px)',
+	                                            fontWeight: 900,
+	                                            letterSpacing: '0.1em',
+	                                            textTransform: 'uppercase',
+	                                            textShadow: '0 2px 4px rgba(0,0,0,0.2)',
+	                                            whiteSpace: 'nowrap',
+	                                            paddingLeft: currentContent.buttonIcon ? '34px' : '0',
+	                                            paddingRight: 0
+	                                        }}>
+	                                            {currentContent.cta} {currentContent.ctaEmoji}
+	                                        </span>
+	                                        <span
+	                                            className="cta-arrow-animate"
+	                                            style={{
+	                                                display: 'flex',
+	                                                alignItems: 'center',
+	                                                justifyContent: 'center',
+	                                                width: '36px',
+	                                                height: '36px',
+	                                                borderRadius: '9999px',
+	                                                backgroundColor: 'rgba(255,255,255,0.16)',
+	                                                border: '1px solid rgba(255,255,255,0.22)',
+	                                                filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+	                                                pointerEvents: 'none',
+	                                                flexShrink: 0
+	                                            }}
+	                                        >
+	                                            <ArrowRight size={18} strokeWidth={3} />
+	                                        </span>
+	                                    </div>
+	                                </div>
+	                            </button>
+                            <span
+                                className="cta-finger-outside"
+                                style={{
+	                                    fontSize: 'clamp(34px, 8vw, 42px)',
+                                    filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))',
+                                    lineHeight: 1,
+                                    zIndex: 30
+                                }}
+                            >
+                                👈
+                            </span>
+                            </div>
                         )}
 
                         {/* Social Proof */}
@@ -1233,10 +1253,6 @@ const HeroAntigravity: React.FC = () => {
                     ))}
                 </div>
             </div>
-
-            {/* Hero Bottom Fade - Smooth transition to next section */}
-            <div className="hero-bottom-fade" />
-
         </section>
     );
 };

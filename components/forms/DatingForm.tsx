@@ -31,6 +31,9 @@ export function DatingForm() {
 
   const handleSearch = () => {
     if (selected) {
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("pf_dating_gender", selected);
+      }
       setIsSearching(true);
       setTimeout(() => {
         router.push("/dating-search/form");

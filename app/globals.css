@@ -247,22 +247,28 @@ video {
 
   0%,
   100% {
-    transform: translateY(-50%) translateX(0) rotate(-12deg);
+    transform: translateY(-50%) translateX(0) rotate(-10deg);
   }
 
   50% {
-    transform: translateY(-50%) translateX(-2px) rotate(-18deg);
+    transform: translateY(-50%) translateX(-4px) rotate(-16deg);
   }
 }
 
 .cta-finger-outside {
   position: absolute;
   top: 50%;
-  right: -34px;
+  right: 0;
   display: inline-block;
   animation: cta-finger-outside 1.2s ease-in-out infinite;
   transform-origin: center;
   pointer-events: none;
+}
+
+@media (max-width: 420px) {
+  .cta-finger-outside {
+    right: -2px;
+  }
 }
 
 /* Utility classes */
@@ -317,6 +323,41 @@ video {
   background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
   transform: translateX(-100%);
   animation: shimmer 2.5s infinite;
+}
+
+@keyframes testimonials-rail {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.testimonials-marquee {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.testimonials-marquee::-webkit-scrollbar {
+  display: none;
+}
+
+.testimonials-marquee-track {
+  animation: testimonials-rail 74s linear infinite;
+  will-change: transform;
+}
+
+.testimonials-marquee:hover .testimonials-marquee-track,
+.testimonials-marquee:active .testimonials-marquee-track {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-marquee-track {
+    animation: none;
+  }
 }
 
 /* Scrollbar styling */

@@ -1,44 +1,25 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { Lock, X, MapPin, Clock, ShieldCheck } from 'lucide-react';
+import { datingSamplePhotos, normalizeDatingGender, type DatingGender } from '../../lib/profileSamples';
 
 /**
  * DatingResultsPreview - Blurred dating profiles for payment teaser
  * Shows Tinder/Bumble style profile cards with real blurred photos
  */
 export function DatingResultsPreview() {
-    const [gender, setGender] = useState<string>('woman'); // default
+    const [gender, setGender] = useState<DatingGender>('woman'); // default
     const [showExample, setShowExample] = useState(false);
 
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const savedGender = sessionStorage.getItem('pf_dating_gender');
-            if (savedGender) {
-                setGender(savedGender);
-            }
+            setGender(normalizeDatingGender(savedGender));
         }
     }, []);
 
-    const womenPhotos = [
-        "/assets/profiles/dating-woman-01.webp",
-        "/assets/profiles/dating-woman-02.webp",
-        "/assets/profiles/dating-woman-03.webp",
-        "/assets/profiles/dating-woman-04.webp",
-        "/assets/profiles/dating-woman-05.webp",
-        "/assets/profiles/dating-woman-06.webp"
-    ];
-
-    const menPhotos = [
-        "/assets/profiles/dating-man-01.webp",
-        "/assets/profiles/dating-man-02.webp",
-        "/assets/profiles/dating-man-03.webp",
-        "/assets/profiles/dating-man-04.webp",
-        "/assets/profiles/dating-man-05.webp",
-        "/assets/profiles/dating-man-06.webp"
-    ];
-
-    const selectedPhotos = gender === 'man' ? menPhotos : womenPhotos;
-    const nameStr = gender === 'man' ? 'afef' : 'afef';
+    const selectedPhotos = datingSamplePhotos[gender];
+    const nameStr = gender === 'man' ? 'Alex' : 'Emma';
 
     const profiles = [
         { age: 24, distance: '4 km', match: 88, img: selectedPhotos[0], example: true },

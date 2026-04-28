@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { useService } from '@/lib/ServiceContext';
+import { datingSamplePhotos, normalizeDatingGender, type DatingGender } from '@/lib/profileSamples';
 import { getPaymentConfig } from '@/components/payment/paymentConfig';
 import { FaceTraceResultsPreview } from '@/components/payment/FaceTraceResultsPreview';
 
@@ -267,12 +268,19 @@ export function PaymentPage() {
 
     const [timeLeft, setTimeLeft] = useState(91);
     const [isHoveringMain, setIsHoveringMain] = useState(false);
+    const [datingGender, setDatingGender] = useState<DatingGender>('woman');
 
     useEffect(() => {
         const timer = setInterval(() => {
             setTimeLeft((prev) => (prev > 0 ? prev - 1 : 0));
         }, 1000);
         return () => clearInterval(timer);
+    }, []);
+
+    useEffect(() => {
+        if (typeof window !== 'undefined') {
+            setDatingGender(normalizeDatingGender(sessionStorage.getItem('pf_dating_gender')));
+        }
     }, []);
 
     const formatTime = (seconds: number) => {
@@ -287,6 +295,7 @@ export function PaymentPage() {
         { name: '🔍 Face Trace', description: 'Reverse face search across all platforms', Icon: IconShieldCheck },
         { name: '💔 Cheating Analytics', description: 'Complete reports and real-time alerts', Icon: IconStar },
     ];
+    const previewPhotos = datingSamplePhotos[datingGender];
 
     // Noms et pourcentages pour les profils
     const displayName = searchTarget || 'Target';
@@ -606,18 +615,9 @@ export function PaymentPage() {
                                     gap: '0.5rem',
                                     width: 'max-content',
                                 }}>
-                                    {[
-                                        "/assets/profiles/dating-man-01.webp",
-                                        "/assets/profiles/dating-woman-01.webp",
-                                        "/assets/profiles/dating-woman-02.webp",
-                                        "/assets/profiles/dating-man-02.webp",
-                                        "/assets/profiles/dating-man-03.webp",
-                                        "/assets/profiles/dating-woman-03.webp",
-                                        "/assets/profiles/dating-man-04.webp",
-                                        "/assets/profiles/dating-woman-04.webp",
-                                    ].map((src, i) => {
+                                    {previewPhotos.map((src, i) => {
                                         const isFirst = i === 0;
-                                        const isLast = i === 7;
+                                        const isLast = i === previewPhotos.length - 1;
 
                                         return (
                                             <div
@@ -1215,7 +1215,7 @@ export function PaymentPage() {
                         {/* Photo principale */}
                         <div style={{ position: 'relative' }}>
                             <img
-                                src="/assets/profiles/dating-man-01.webp"
+                                src={previewPhotos[0]}
                                 alt="Profile example"
                                 style={{
                                     width: '100%',

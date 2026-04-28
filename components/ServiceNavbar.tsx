@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Globe, User, Menu, X } from 'lucide-react';
+import { Globe, User, Menu, X, Flame, Instagram, ScanFace, MessageSquare } from 'lucide-react';
 
 const LOGO_URL = "https://pub-a708aef7cab14c7e8c61d131d5e3682d.r2.dev/Design%20sans%20titre%20(7).svg";
 
@@ -32,6 +32,20 @@ export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
     }, [isMenuOpen, handleKeyDown]);
 
     const navLinks = ['Search Profile', 'Blog', 'Affiliate Program'];
+
+    const ServiceIcon = ({ type }: { type: 'tinder' | 'instagram' | 'facetrace' | 'message' }) => {
+        const className = "flex h-9 w-9 shrink-0 items-center justify-center rounded-xl border border-white/15 shadow-[inset_0_1px_0_rgba(255,255,255,0.2),0_10px_18px_rgba(0,0,0,0.22)]";
+        if (type === 'tinder') {
+            return <span className={className} style={{ background: 'linear-gradient(135deg,#ff4458,#ff6b2c)' }}><Flame size={20} fill="white" color="white" /></span>;
+        }
+        if (type === 'instagram') {
+            return <span className={className} style={{ background: 'radial-gradient(circle at 30% 105%, #feda75 0%, #fa7e1e 28%, #d62976 58%, #962fbf 78%, #4f5bd5 100%)' }}><Instagram size={20} color="white" strokeWidth={2.4} /></span>;
+        }
+        if (type === 'facetrace') {
+            return <span className={className} style={{ background: 'linear-gradient(135deg,#075985,#0ea5e9)' }}><ScanFace size={21} color="white" strokeWidth={2.4} /></span>;
+        }
+        return <span className={className} style={{ background: 'linear-gradient(135deg,#34c759,#0a8f3d)' }}><MessageSquare size={20} fill="white" color="white" strokeWidth={2.2} /></span>;
+    };
 
     // Minimal mode: Logo only for conversion-focused pages
     if (minimal) {
@@ -88,7 +102,7 @@ export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
                     {navLinks.map((item) => (
                         <a
                             key={item}
-                            href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : item === 'Blog' ? '/blog' : '#'}
+                            href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : '#'}
                             className="text-white/80 no-underline transition-colors duration-200 py-2 hover:text-white focus:text-white"
                         >
                             {item}
@@ -151,10 +165,10 @@ export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
                             </p>
                             <div className="flex flex-col gap-2">
                                 {[
-                                    { label: 'Tinder Search', path: '/', icon: '❤️' },
-                                    { label: 'Following AI', path: '/following-ai', icon: '👥' },
-                                    { label: 'Face Trace', path: '/face-trace', icon: '🔍' },
-                                    { label: 'Fidelity Test', path: '/fidelity-test', icon: '🛡️' }
+	                                    { label: 'Tinder Search', path: '/', icon: 'tinder' as const },
+	                                    { label: 'Following AI', path: '/following-ai', icon: 'instagram' as const },
+	                                    { label: 'Face Trace', path: '/face-trace', icon: 'facetrace' as const },
+	                                    { label: 'Fidelity Test', path: '/fidelity-test', icon: 'message' as const }
                                 ].map((service) => (
                                     <a
                                         key={service.label}
@@ -163,7 +177,7 @@ export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
                                         className="text-white/90 no-underline text-base font-semibold px-4 py-3 rounded-xl transition-all duration-200 flex items-center gap-3"
                                         style={{ backgroundColor: 'rgba(239,62,92,0.15)' }}
                                     >
-                                        <span>{service.icon}</span>
+	                                        <ServiceIcon type={service.icon} />
                                         {service.label}
                                     </a>
                                 ))}
@@ -175,7 +189,7 @@ export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
                             {['Blog', 'Affiliate Program'].map((item) => (
                                 <a
                                     key={item}
-                                    href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : item === 'Blog' ? '/blog' : '#'}
+	                                    href={item === 'Affiliate Program' ? 'https://profilefinder.tolt.io/login' : '#'}
                                     onClick={() => setIsMenuOpen(false)}
                                     className="text-white/90 no-underline text-lg font-semibold px-4 py-3 rounded-xl bg-white/5 transition-all duration-200 hover:bg-white/10"
                                 >
@@ -188,10 +202,10 @@ export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
                                 <p className="text-[12px] font-bold uppercase tracking-[0.1em] text-white/50 mb-3 px-4">Our Services</p>
                                 <div className="flex flex-col gap-2">
                                     {[
-                                        { label: 'Dating Search', path: '/', icon: '❤️' },
-                                        { label: 'Following AI', path: '/following-ai', icon: '👥' },
-                                        { label: 'Face Trace', path: '/face-trace', icon: '🔍' },
-                                        { label: 'Fidelity Test', path: '/fidelity-test', icon: '🛡️' },
+	                                        { label: 'Dating Search', path: '/', icon: 'tinder' as const },
+	                                        { label: 'Following AI', path: '/following-ai', icon: 'instagram' as const },
+	                                        { label: 'Face Trace', path: '/face-trace', icon: 'facetrace' as const },
+	                                        { label: 'Fidelity Test', path: '/fidelity-test', icon: 'message' as const },
                                     ].map((service) => (
                                         <a
                                             key={service.label}
@@ -199,7 +213,7 @@ export default function ServiceNavbar({ minimal = false }: ServiceNavbarProps) {
                                             onClick={() => setIsMenuOpen(false)}
                                             className="flex items-center gap-3 rounded-xl bg-rose-500/15 px-4 py-2.5 text-base font-semibold text-white/90 no-underline transition-all duration-200 hover:bg-rose-500/25"
                                         >
-                                            <span>{service.icon}</span>
+	                                            <ServiceIcon type={service.icon} />
                                             {service.label}
                                         </a>
                                     ))}

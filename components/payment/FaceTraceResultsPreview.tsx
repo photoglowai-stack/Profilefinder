@@ -1,4 +1,5 @@
 // FaceTrace Results Preview Component
+import { faceTraceSamplePhotos } from "../../lib/profileSamples";
 
 // Icône ScanFace inline
 const IconScanFace = ({ className }: { className?: string }) => (
@@ -23,17 +24,7 @@ const IconGlobe = ({ className }: { className?: string }) => (
 );
 
 // Images de résultats pour FaceTrace
-const FACETRACE_RESULTS = [
-    "/assets/profiles/facetrace-match-01.webp",
-    "/assets/profiles/facetrace-match-02.webp",
-    "/assets/profiles/facetrace-match-03.webp",
-    "/assets/profiles/facetrace-match-04.webp",
-    "/assets/profiles/facetrace-match-05.webp",
-    "/assets/profiles/dating-woman-01.webp",
-    "/assets/profiles/dating-woman-03.webp",
-    "/assets/profiles/dating-woman-05.webp",
-    "/assets/profiles/dating-woman-06.webp"
-];
+const FACETRACE_RESULTS = faceTraceSamplePhotos;
 
 export function FaceTraceResultsPreview() {
     return (

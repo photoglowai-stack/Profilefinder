@@ -5,6 +5,7 @@ import {
     Scan, Camera, Globe, AlertTriangle, Lock, Eye,
     Shield, Fingerprint, Database, CheckCircle2, Zap
 } from 'lucide-react';
+import { faceTraceSamplePhotos } from '../../lib/profileSamples';
 
 /**
  * FaceTraceResultsPreview - Blurred reverse image search results
@@ -23,12 +24,12 @@ export function FaceTraceResultsPreview() {
     const sourcePhoto = "/assets/profiles/facetrace-source.webp";
 
     const faceMatches = [
-        { score: 98, source: 'Instagram', date: '2h ago', type: 'exact', photo: "/assets/profiles/facetrace-match-01.webp" },
-        { score: 95, source: 'Facebook', date: '1d ago', type: 'exact', photo: "/assets/profiles/facetrace-match-02.webp" },
-        { score: 89, source: 'LinkedIn', date: '3d ago', type: 'similar', photo: "/assets/profiles/facetrace-match-03.webp" },
-        { score: 87, source: 'Twitter/X', date: '5d ago', type: 'similar', photo: "/assets/profiles/facetrace-match-04.webp" },
-        { score: 82, source: 'Dating App', date: '1w ago', type: 'similar', photo: "/assets/profiles/facetrace-match-05.webp" },
-        { score: 78, source: 'Unknown', date: '2w ago', type: 'partial', photo: "/assets/profiles/dating-woman-04.webp" },
+        { score: 98, source: 'Instagram', date: '2h ago', type: 'exact', photo: faceTraceSamplePhotos[0] },
+        { score: 95, source: 'Facebook', date: '1d ago', type: 'exact', photo: faceTraceSamplePhotos[1] },
+        { score: 89, source: 'LinkedIn', date: '3d ago', type: 'similar', photo: faceTraceSamplePhotos[2] },
+        { score: 87, source: 'Twitter/X', date: '5d ago', type: 'similar', photo: faceTraceSamplePhotos[3] },
+        { score: 82, source: 'Dating App', date: '1w ago', type: 'similar', photo: faceTraceSamplePhotos[4] },
+        { score: 78, source: 'Unknown', date: '2w ago', type: 'partial', photo: faceTraceSamplePhotos[5] },
     ];
 
     return (

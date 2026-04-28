@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Play, Volume2, VolumeX, Star, Heart, ChevronLeft, ChevronRight } from 'lucide-react';
 import { useService } from '../lib/ServiceContext';
+import { trustedUserPhotos } from '../lib/profileSamples';
 
 const UGCSection = () => {
   const { colors } = useService();
@@ -19,7 +20,7 @@ const UGCSection = () => {
       author: "@julie_investigate",
       role: "Verified User",
       quote: "I had a doubt, now I have proof. Thanks ProfileFinder.",
-      avatar: "/assets/profiles/dating-woman-02.webp"
+      avatar: trustedUserPhotos[0]
     },
     {
       id: 2,
@@ -27,7 +28,7 @@ const UGCSection = () => {
       author: "@alex_hunter",
       role: "Investigator",
       quote: "The face recognition tool is just mind-blowing accuracy.",
-      avatar: "/assets/profiles/dating-man-03.webp"
+      avatar: trustedUserPhotos[1]
     },
     {
       id: 3,
@@ -35,7 +36,7 @@ const UGCSection = () => {
       author: "@sarah_truth",
       role: "Daily User",
       quote: "Found him in 2 minutes flat. It's almost scary how effective it is.",
-      avatar: "/assets/profiles/dating-woman-04.webp"
+      avatar: trustedUserPhotos[2]
     }
   ];
 

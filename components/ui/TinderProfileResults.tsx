@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { MapPin, Briefcase, GraduationCap, Heart, Instagram, CheckCircle2 } from "lucide-react";
 import { ImageWithFallback } from "../figma/ImageWithFallback";
+import { datingSamplePhotos } from "../../lib/profileSamples";
 
 interface ProfileCardProps {
   name: string;
@@ -187,7 +188,7 @@ export function TinderProfileResults() {
       school: "École des Beaux-Arts de Paris",
       interests: ["Voyages", "Photographie", "Yoga", "Cuisine", "Art"],
       instagram: "sophie.designs",
-      imageUrl: "/assets/profiles/dating-woman-02.webp",
+      imageUrl: datingSamplePhotos.woman[1],
       verified: true,
       matchPercentage: 87
     },
@@ -200,7 +201,7 @@ export function TinderProfileResults() {
       school: "HEC Paris",
       interests: ["Technologie", "Sport", "Musique", "Entrepreneuriat", "Randonnée"],
       instagram: "thomas.ventures",
-      imageUrl: "/assets/profiles/dating-man-02.webp",
+      imageUrl: datingSamplePhotos.man[1],
       verified: true,
       matchPercentage: 92
     }
